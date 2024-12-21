@@ -1,0 +1,87 @@
+package org.ninjaneers.motager.Authentication.presentation.mainScreen.components
+
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
+import motager.composeapp.generated.resources.LightLogoEn
+import motager.composeapp.generated.resources.Login_Signup
+import motager.composeapp.generated.resources.OutfitMedium
+import motager.composeapp.generated.resources.Res
+import motager.composeapp.generated.resources.menu
+import org.jetbrains.compose.resources.Font
+import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.stringResource
+
+@Composable
+fun MainNavBar() {
+    Row(
+        modifier = Modifier
+            .clip(RoundedCornerShape(6.dp))
+            .fillMaxWidth()
+            .height(56.dp)
+            .background(MaterialTheme.colorScheme.secondary)
+            .padding(8.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.SpaceBetween
+    ) {
+        Image(
+            modifier = Modifier.width(150.dp).height(38.dp),
+            painter = painterResource(Res.drawable.LightLogoEn),
+            contentDescription = "Logo"
+        )
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(6.dp)
+        ) {
+            Button(
+                onClick = {},
+                shape = RoundedCornerShape(6.dp),
+                colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary)
+            ) {
+                Text(
+                    text = stringResource(Res.string.Login_Signup),
+                    fontFamily = FontFamily(
+                        Font(
+                            resource = Res.font.OutfitMedium,
+                            weight = FontWeight.Medium,
+                        )
+                    ),
+                    color = MaterialTheme.colorScheme.onPrimary
+                )
+            }
+            Button(
+                onClick = {},
+                modifier = Modifier.size(40.dp),
+                shape = RoundedCornerShape(6.dp),
+                contentPadding = PaddingValues(8.dp),
+                colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.background)
+            ) {
+                Icon(
+                    painter = painterResource(Res.drawable.menu),
+                    contentDescription = "Menu",
+                    tint = MaterialTheme.colorScheme.onBackground
+                )
+            }
+        }
+    }
+}

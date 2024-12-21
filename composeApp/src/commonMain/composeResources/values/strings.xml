@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<resources>
+    <string name="Login_Signup">Login / Signup</string>
+    <string name="Brief">Motager | Where Your Store Comes to Life</string>
+    <string name="Title">Build, Launch, and Grow Your Dream Store with </string>
+    <string name="Motager">Motager</string>
+    <string name="SubTitle">Motager empowers you with everything you need to bring your store to life. From beautiful, customizable designs to powerful tools that fuel growth, take your business to the next level.</string>
+    <string name="FreeTrial">Start Your Free Trial</string>
+    <string name="Login">Login</string>
+    <string name="LoginDetails">Enter your details to login to your account.</string>
+    <string name="Email">Email</string>
+    <string name="Password">Password</string>
+    <string name="RememberLogin">Remember me for 14 days!</string>
+    <string name="NoAccount">Don’t have an account ?</string>
+    <string name="NewAccount">New Account</string>
+    <string name="SignupDetails">Enter your details to create a new account.</string>
+    <string name="FirstName">First Name</string>
+    <string name="SecondName">Second Name</string>
+    <string name="ConfirmPassword">Confirm Password</string>
+    <string name="CreateNewAccount">Create new account</string>
+    <string name="HaveAccount">Already have an account ?</string>
+    <string name="DashboardLinks">Dashboard Links</string>
+    <string name="Home">Home</string>
+    <string name="Orders">Orders</string>
+    <string name="Products">Products</string>
+    <string name="Collections">Collections</string>
+    <string name="Categories">Categories</string>
+    <string name="Customers">Customers</string>
+    <string name="Analytics">Analytics</string>
+    <string name="Discounts">Discounts</string>
+    <string name="Settings">Settings</string>
+    <string name="SalesChannels">Sales Channels</string>
+    <string name="OnlineStore">Online Store</string>
+    <string name="Support">Support</string>
+    <string name="CustomerNumber">Customer Number</string>
+    <string name="Customer">Customer</string>
+    <string name="Total">Total</string>
+    <string name="Status">Status</string>
+    <string name="Actions">Actions</string>
+    <string name="Image">Image</string>
+    <string name="Name">Name</string>
+    <string name="Price">Price</string>
+    <string name="Category">Category</string>
+    <string name="Description">Description</string>
+    <string name="AmountPaid">Amount Paid</string>
+    <string name="CreateOrder">Create Order</string>
+    <string name="Results">Results</string>
+    <string name="Arabic">Arabic</string>
+    <string name="English">English</string>
+
+
+</resources>
