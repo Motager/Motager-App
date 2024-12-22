@@ -1,5 +1,4 @@
 package org.ninjaneers.motager.Authentication.presentation
-
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.isSystemInDarkTheme
@@ -53,6 +52,7 @@ import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.ninjaneers.motager.Authentication.presentation.mainScreen.components.SwitchButton
+import org.ninjaneers.motager.core.presentation.components.PrimaryTextField
 
 @Composable
 @Preview
@@ -128,6 +128,7 @@ fun LoginScreen() {
                             fontSize = 18.sp,
                             modifier = Modifier.padding(7.dp)
                         )
+                        PrimaryTextField(modifier = Modifier.height(36.dp).fillMaxWidth())
                         Spacer(modifier = Modifier.height(12.dp))
                         Text(
                             stringResource(Res.string.Password),
@@ -135,6 +136,7 @@ fun LoginScreen() {
                             fontSize = 18.sp,
                             modifier = Modifier.padding(7.dp)
                         )
+                        PrimaryTextField(modifier = Modifier.height(36.dp).fillMaxWidth())
                         Spacer(modifier = Modifier.height(16.dp))
                         Row(
                             horizontalArrangement = Arrangement.Start,
@@ -163,17 +165,18 @@ fun LoginScreen() {
                         }
                         Spacer(modifier = Modifier.height(16.dp))
                         Button(
-                            modifier = Modifier.fillMaxWidth()
+                            modifier = Modifier.clip(RoundedCornerShape(6.dp)).fillMaxWidth()
                                 .background(
                                     Brush.verticalGradient(
                                         listOf(
                                             MaterialTheme.colorScheme.primary,
-                                            MaterialTheme.colorScheme.onPrimary
+                                            MaterialTheme.colorScheme.onPrimary.copy(.9f)
                                         )
                                     )
                                 )
                                 .height(43.dp),
                             onClick = {},
+                            shape = RoundedCornerShape(6.dp),
                             colors = ButtonDefaults.buttonColors(
                                 containerColor = Color.Transparent,
                             )
