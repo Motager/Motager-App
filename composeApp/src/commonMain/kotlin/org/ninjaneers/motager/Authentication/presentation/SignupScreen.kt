@@ -18,10 +18,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -34,7 +31,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -56,13 +52,12 @@ import motager.composeapp.generated.resources.Password
 import motager.composeapp.generated.resources.Res
 import motager.composeapp.generated.resources.SecondName
 import motager.composeapp.generated.resources.auth
-import motager.composeapp.generated.resources.eye
-import motager.composeapp.generated.resources.eyeoff
 import motager.composeapp.generated.resources.languages
 import motager.composeapp.generated.resources.moon
 import org.jetbrains.compose.resources.Font
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
+import org.ninjaneers.motager.core.presentation.components.PrimaryTextField
 
 @Composable
 fun SignupScreen() {
@@ -159,9 +154,9 @@ fun SignupScreen() {
                         horizontalArrangement = Arrangement.spacedBy(8.dp)
                     ) {
                         Column(
-                            modifier = Modifier.weight(1f),
+                            modifier = Modifier.padding(bottom = 12.dp).weight(1f),
                             horizontalAlignment = Alignment.Start,
-                            verticalArrangement = Arrangement.spacedBy(8.dp)
+                            verticalArrangement = Arrangement.spacedBy(4.dp)
                         ) {
                             Text(
                                 text = stringResource(Res.string.FirstName),
@@ -173,35 +168,12 @@ fun SignupScreen() {
                                 color = MaterialTheme.colorScheme.onSurface,
                                 fontSize = 14.sp
                             )
-                            OutlinedTextField(
-                                value = s,
-                                onValueChange = { s = it },
-                                shape = RoundedCornerShape(8.dp),
-                                textStyle = TextStyle(
-                                    fontSize = 14.sp,
-                                    color = MaterialTheme.colorScheme.onSurface,
-                                    fontFamily = FontFamily(
-                                        Font(
-                                            resource = Res.font.OutfitRegular,
-                                            weight = FontWeight.Normal
-                                        )
-                                    )
-                                ),
-                                colors = OutlinedTextFieldDefaults.colors(
-                                    focusedContainerColor = MaterialTheme.colorScheme.background,
-                                    unfocusedContainerColor = MaterialTheme.colorScheme.background,
-                                    focusedBorderColor = MaterialTheme.colorScheme.primary,
-                                    unfocusedBorderColor = MaterialTheme.colorScheme.outline,
-                                    focusedTextColor = MaterialTheme.colorScheme.onSurface,
-                                    unfocusedTextColor = MaterialTheme.colorScheme.surfaceVariant
-                                ),
-                                singleLine = true
-                            )
+                            PrimaryTextField(modifier = Modifier.height(36.dp).fillMaxWidth())
                         }
                         Column(
-                            modifier = Modifier.weight(1f),
+                            modifier = Modifier.padding(bottom = 12.dp).weight(1f),
                             horizontalAlignment = Alignment.Start,
-                            verticalArrangement = Arrangement.spacedBy(8.dp)
+                            verticalArrangement = Arrangement.spacedBy(4.dp)
                         ) {
                             Text(
                                 text = stringResource(Res.string.SecondName),
@@ -213,36 +185,13 @@ fun SignupScreen() {
                                 color = MaterialTheme.colorScheme.onSurface,
                                 fontSize = 14.sp
                             )
-                            OutlinedTextField(
-                                value = s,
-                                onValueChange = { s = it },
-                                shape = RoundedCornerShape(8.dp),
-                                textStyle = TextStyle(
-                                    fontSize = 14.sp,
-                                    color = MaterialTheme.colorScheme.onSurface,
-                                    fontFamily = FontFamily(
-                                        Font(
-                                            resource = Res.font.OutfitRegular,
-                                            weight = FontWeight.Normal
-                                        )
-                                    )
-                                ),
-                                colors = OutlinedTextFieldDefaults.colors(
-                                    focusedContainerColor = MaterialTheme.colorScheme.background,
-                                    unfocusedContainerColor = MaterialTheme.colorScheme.background,
-                                    focusedBorderColor = MaterialTheme.colorScheme.primary,
-                                    unfocusedBorderColor = MaterialTheme.colorScheme.outline,
-                                    focusedTextColor = MaterialTheme.colorScheme.onSurface,
-                                    unfocusedTextColor = MaterialTheme.colorScheme.surfaceVariant
-                                ),
-                                singleLine = true
-                            )
+                            PrimaryTextField(modifier = Modifier.height(36.dp).fillMaxWidth())
                         }
                     }
                     Column(
-                        modifier = Modifier.fillMaxWidth(),
+                        modifier = Modifier.padding(bottom = 12.dp).fillMaxWidth(),
                         horizontalAlignment = Alignment.Start,
-                        verticalArrangement = Arrangement.spacedBy(8.dp)
+                        verticalArrangement = Arrangement.spacedBy(4.dp)
                     ) {
                         Text(
                             text = stringResource(Res.string.Email), fontFamily = FontFamily(
@@ -251,36 +200,12 @@ fun SignupScreen() {
                                 )
                             ), color = MaterialTheme.colorScheme.onSurface, fontSize = 14.sp
                         )
-                        OutlinedTextField(
-                            modifier = Modifier.fillMaxWidth(),
-                            value = s,
-                            onValueChange = { s = it },
-                            shape = RoundedCornerShape(8.dp),
-                            textStyle = TextStyle(
-                                fontSize = 14.sp,
-                                color = MaterialTheme.colorScheme.onSurface,
-                                fontFamily = FontFamily(
-                                    Font(
-                                        resource = Res.font.OutfitRegular,
-                                        weight = FontWeight.Normal
-                                    )
-                                )
-                            ),
-                            colors = OutlinedTextFieldDefaults.colors(
-                                focusedContainerColor = MaterialTheme.colorScheme.background,
-                                unfocusedContainerColor = MaterialTheme.colorScheme.background,
-                                focusedBorderColor = MaterialTheme.colorScheme.primary,
-                                unfocusedBorderColor = MaterialTheme.colorScheme.outline,
-                                focusedTextColor = MaterialTheme.colorScheme.onSurface,
-                                unfocusedTextColor = MaterialTheme.colorScheme.surfaceVariant
-                            ),
-                            singleLine = true
-                        )
+                        PrimaryTextField(modifier = Modifier.height(36.dp).fillMaxWidth())
                     }
                     Column(
-                        modifier = Modifier.fillMaxWidth(),
+                        modifier = Modifier.padding(bottom = 12.dp).fillMaxWidth(),
                         horizontalAlignment = Alignment.Start,
-                        verticalArrangement = Arrangement.spacedBy(8.dp)
+                        verticalArrangement = Arrangement.spacedBy(4.dp)
                     ) {
                         Text(
                             text = stringResource(Res.string.Password), fontFamily = FontFamily(
@@ -289,48 +214,7 @@ fun SignupScreen() {
                                 )
                             ), color = MaterialTheme.colorScheme.onSurface, fontSize = 14.sp
                         )
-                        OutlinedTextField(
-                            modifier = Modifier.fillMaxWidth(),
-                            value = s,
-                            onValueChange = { s = it },
-                            shape = RoundedCornerShape(8.dp),
-                            textStyle = TextStyle(
-                                fontSize = 14.sp,
-                                color = MaterialTheme.colorScheme.onSurface,
-                                fontFamily = FontFamily(
-                                    Font(
-                                        resource = Res.font.OutfitRegular,
-                                        weight = FontWeight.Normal
-                                    )
-                                )
-                            ),
-                            trailingIcon = {
-                                IconButton(onClick = { e = !e }) {
-                                    if (e) Icon(
-                                        painter = painterResource(Res.drawable.eyeoff),
-                                        contentDescription = "Hide Password",
-                                        tint = MaterialTheme.colorScheme.onSurface
-                                    )
-                                    else Icon(
-                                        painter = painterResource(Res.drawable.eye),
-                                        contentDescription = "Show Password",
-                                        tint = MaterialTheme.colorScheme.onSurface
-                                    )
-                                }
-                            },
-                            colors = OutlinedTextFieldDefaults.colors(
-                                focusedContainerColor = MaterialTheme.colorScheme.background,
-                                unfocusedContainerColor = MaterialTheme.colorScheme.background,
-                                focusedBorderColor = MaterialTheme.colorScheme.primary,
-                                unfocusedBorderColor = MaterialTheme.colorScheme.outline,
-                                focusedTextColor = MaterialTheme.colorScheme.onSurface,
-                                unfocusedTextColor = MaterialTheme.colorScheme.surfaceVariant,
-                                disabledTrailingIconColor = MaterialTheme.colorScheme.surfaceVariant,
-                                unfocusedTrailingIconColor = MaterialTheme.colorScheme.surfaceVariant,
-                                focusedTrailingIconColor = MaterialTheme.colorScheme.onSurface
-                            ),
-                            singleLine = true
-                        )
+                        PrimaryTextField(modifier = Modifier.height(36.dp).fillMaxWidth())
 
                     }
                     Column(
@@ -348,48 +232,7 @@ fun SignupScreen() {
                             color = MaterialTheme.colorScheme.onSurface,
                             fontSize = 14.sp
                         )
-                        OutlinedTextField(
-                            modifier = Modifier.fillMaxWidth(),
-                            value = s,
-                            onValueChange = { s = it },
-                            shape = RoundedCornerShape(8.dp),
-                            textStyle = TextStyle(
-                                fontSize = 14.sp,
-                                color = MaterialTheme.colorScheme.onSurface,
-                                fontFamily = FontFamily(
-                                    Font(
-                                        resource = Res.font.OutfitRegular,
-                                        weight = FontWeight.Normal
-                                    )
-                                )
-                            ),
-                            trailingIcon = {
-                                IconButton(onClick = { e = !e }) {
-                                    if (e) Icon(
-                                        painter = painterResource(Res.drawable.eyeoff),
-                                        contentDescription = "Hide Password",
-                                        tint = MaterialTheme.colorScheme.onSurface
-                                    )
-                                    else Icon(
-                                        painter = painterResource(Res.drawable.eye),
-                                        contentDescription = "Show Password",
-                                        tint = MaterialTheme.colorScheme.onSurface
-                                    )
-                                }
-                            },
-                            colors = OutlinedTextFieldDefaults.colors(
-                                focusedContainerColor = MaterialTheme.colorScheme.background,
-                                unfocusedContainerColor = MaterialTheme.colorScheme.background,
-                                focusedBorderColor = MaterialTheme.colorScheme.primary,
-                                unfocusedBorderColor = MaterialTheme.colorScheme.outline,
-                                focusedTextColor = MaterialTheme.colorScheme.onSurface,
-                                unfocusedTextColor = MaterialTheme.colorScheme.surfaceVariant,
-                                disabledTrailingIconColor = MaterialTheme.colorScheme.surfaceVariant,
-                                unfocusedTrailingIconColor = MaterialTheme.colorScheme.surfaceVariant,
-                                focusedTrailingIconColor = MaterialTheme.colorScheme.onSurface
-                            ),
-                            singleLine = true
-                        )
+                        PrimaryTextField(modifier = Modifier.height(36.dp).fillMaxWidth())
                     }
                     Button(
                         modifier = Modifier.fillMaxWidth(),
@@ -426,7 +269,6 @@ fun SignupScreen() {
                     )
                 }
             }
-
         }
     }
 }
