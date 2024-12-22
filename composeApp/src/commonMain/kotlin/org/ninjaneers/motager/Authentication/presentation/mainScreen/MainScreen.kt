@@ -36,7 +36,9 @@ import motager.composeapp.generated.resources.pulse
 import org.jetbrains.compose.resources.Font
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
+import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.ninjaneers.motager.Authentication.presentation.mainScreen.components.MainNavBar
+import org.ninjaneers.motager.core.presentation.theme.MotagerTheme
 
 @Composable
 fun MainScreen() {

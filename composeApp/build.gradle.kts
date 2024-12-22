@@ -74,6 +74,9 @@ android {
 }
 
 dependencies {
+    implementation(libs.androidx.ui.tooling.preview.android)
+    implementation(libs.androidx.material3.android)
+    implementation(libs.androidx.material3.jvmstubs)
     debugImplementation(compose.uiTooling)
 }
 
