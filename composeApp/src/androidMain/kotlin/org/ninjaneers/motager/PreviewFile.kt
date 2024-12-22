@@ -1,5 +1,4 @@
 package org.ninjaneers.motager
-
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.PreviewLightDark
@@ -16,5 +15,6 @@ fun Preview() {
 
     MotagerTheme {
         SignupScreen()
+
     }
 }
