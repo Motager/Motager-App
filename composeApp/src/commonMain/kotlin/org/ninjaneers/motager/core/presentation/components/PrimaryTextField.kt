@@ -58,14 +58,6 @@ fun PrimaryTextField(
             singleLine = true,
             enabled = true,
             interactionSource = interactionSource,
-            colors = OutlinedTextFieldDefaults.colors(
-                focusedContainerColor = MaterialTheme.colorScheme.background,
-                unfocusedContainerColor = MaterialTheme.colorScheme.background,
-                focusedBorderColor = MaterialTheme.colorScheme.primary,
-                unfocusedBorderColor = MaterialTheme.colorScheme.outline,
-                focusedTextColor = MaterialTheme.colorScheme.onSurface,
-                unfocusedTextColor = MaterialTheme.colorScheme.surfaceVariant
-            ),
             contentPadding = PaddingValues(horizontal = 12.dp, vertical = 8.dp),
             container = {
                 Container(
