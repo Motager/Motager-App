@@ -150,7 +150,7 @@ fun LoginScreen() {
                             )
                         ),
                         color = MaterialTheme.colorScheme.onSurface,
-                        fontSize = 20.sp,
+                        fontSize = 24.sp,
                         textAlign = TextAlign.Start
                     )
                     Text(
