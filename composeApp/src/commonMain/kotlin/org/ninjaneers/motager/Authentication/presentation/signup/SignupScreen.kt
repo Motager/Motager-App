@@ -1,4 +1,4 @@
-package org.ninjaneers.motager.Authentication.presentation
+package org.ninjaneers.motager.Authentication.presentation.signup
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -68,7 +68,6 @@ fun SignupScreen() {
             modifier = Modifier.padding(innerPadding)
                 .background(MaterialTheme.colorScheme.background)
                 .padding(vertical = 8.dp, horizontal = 12.dp),
-//            contentAlignment = Alignment.Center
         ) {
             Image(
                 modifier = Modifier.fillMaxSize(),
@@ -76,42 +75,43 @@ fun SignupScreen() {
                 contentDescription = "Auth background",
                 contentScale = ContentScale.Crop
             )
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.Start,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Button(
+                    modifier = Modifier.padding(end = 8.dp).size(40.dp),
+                    onClick = {},
+                    contentPadding = PaddingValues(0.dp),
+                    shape = RoundedCornerShape(6.dp),
+                    colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.secondary)
+                ) {
+                    Icon(
+                        painter = painterResource(Res.drawable.moon),
+                        contentDescription = "Change the theme",
+                        tint = MaterialTheme.colorScheme.onBackground
+                    )
+                }
+                Button(
+                    modifier = Modifier.size(40.dp),
+                    onClick = {},
+                    contentPadding = PaddingValues(0.dp),
+                    shape = RoundedCornerShape(6.dp),
+                    colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.secondary)
+                ) {
+                    Icon(
+                        painter = painterResource(Res.drawable.languages),
+                        contentDescription = "Change the Language",
+                        tint = MaterialTheme.colorScheme.onBackground
+                    )
+                }
+            }
             Column(
                 modifier = Modifier.fillMaxSize(),
-                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Row(
-                    modifier = Modifier.padding(bottom = 50.dp).fillMaxWidth(),
-                    horizontalArrangement = Arrangement.Start,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Button(
-                        modifier = Modifier.padding(end = 8.dp).size(40.dp),
-                        onClick = {},
-                        contentPadding = PaddingValues(0.dp),
-                        shape = RoundedCornerShape(6.dp),
-                        colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.secondary)
-                    ) {
-                        Icon(
-                            painter = painterResource(Res.drawable.moon),
-                            contentDescription = "Change the theme",
-                            tint = MaterialTheme.colorScheme.onBackground
-                        )
-                    }
-                    Button(
-                        modifier = Modifier.size(40.dp),
-                        onClick = {},
-                        contentPadding = PaddingValues(0.dp),
-                        shape = RoundedCornerShape(6.dp),
-                        colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.secondary)
-                    ) {
-                        Icon(
-                            painter = painterResource(Res.drawable.languages),
-                            contentDescription = "Change the Language",
-                            tint = MaterialTheme.colorScheme.onBackground
-                        )
-                    }
-                }
                 Image(
                     modifier = Modifier.padding(bottom = 20.dp).width(160.dp).height(40.dp),
                     painter = painterResource(Res.drawable.DarkLogoEn),
@@ -123,14 +123,16 @@ fun SignupScreen() {
                         .fillMaxWidth()
                         .background(MaterialTheme.colorScheme.secondary.copy(alpha = 0.6f))
                         .border(width = 1.dp, color = MaterialTheme.colorScheme.outline)
-                        .padding(24.dp), horizontalAlignment = Alignment.CenterHorizontally
+                        .padding(24.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Text(
                         modifier = Modifier.padding(bottom = 6.dp).fillMaxWidth(),
                         text = stringResource(Res.string.NewAccount),
                         fontFamily = FontFamily(
                             Font(
-                                resource = Res.font.OutfitSemiBold, weight = FontWeight.SemiBold
+                                resource = Res.font.OutfitSemiBold,
+                                weight = FontWeight.SemiBold
                             )
                         ),
                         color = MaterialTheme.colorScheme.onSurface,
@@ -146,7 +148,7 @@ fun SignupScreen() {
                             )
                         ),
                         color = MaterialTheme.colorScheme.onTertiary,
-                        fontSize = 14.sp,
+                        fontSize = 16.sp,
                         textAlign = TextAlign.Start
                     )
                     Row(
@@ -166,9 +168,9 @@ fun SignupScreen() {
                                     )
                                 ),
                                 color = MaterialTheme.colorScheme.onSurface,
-                                fontSize = 14.sp
+                                fontSize = 16.sp
                             )
-                            PrimaryTextField(modifier = Modifier.height(36.dp).fillMaxWidth())
+                            PrimaryTextField(modifier = Modifier.height(40.dp).fillMaxWidth())
                         }
                         Column(
                             modifier = Modifier.padding(bottom = 12.dp).weight(1f),
@@ -183,9 +185,9 @@ fun SignupScreen() {
                                     )
                                 ),
                                 color = MaterialTheme.colorScheme.onSurface,
-                                fontSize = 14.sp
+                                fontSize = 16.sp
                             )
-                            PrimaryTextField(modifier = Modifier.height(36.dp).fillMaxWidth())
+                            PrimaryTextField(modifier = Modifier.height(40.dp).fillMaxWidth())
                         }
                     }
                     Column(
@@ -194,13 +196,15 @@ fun SignupScreen() {
                         verticalArrangement = Arrangement.spacedBy(4.dp)
                     ) {
                         Text(
-                            text = stringResource(Res.string.Email), fontFamily = FontFamily(
+                            text = stringResource(Res.string.Email),
+                            fontFamily = FontFamily(
                                 Font(
                                     resource = Res.font.OutfitBold, weight = FontWeight.Bold
                                 )
-                            ), color = MaterialTheme.colorScheme.onSurface, fontSize = 14.sp
+                            ), color = MaterialTheme.colorScheme.onSurface,
+                            fontSize = 16.sp
                         )
-                        PrimaryTextField(modifier = Modifier.height(36.dp).fillMaxWidth())
+                        PrimaryTextField(modifier = Modifier.height(40.dp).fillMaxWidth())
                     }
                     Column(
                         modifier = Modifier.padding(bottom = 12.dp).fillMaxWidth(),
@@ -208,13 +212,16 @@ fun SignupScreen() {
                         verticalArrangement = Arrangement.spacedBy(4.dp)
                     ) {
                         Text(
-                            text = stringResource(Res.string.Password), fontFamily = FontFamily(
+                            text = stringResource(Res.string.Password),
+                            fontFamily = FontFamily(
                                 Font(
                                     resource = Res.font.OutfitBold, weight = FontWeight.Bold
                                 )
-                            ), color = MaterialTheme.colorScheme.onSurface, fontSize = 14.sp
+                            ),
+                            color = MaterialTheme.colorScheme.onSurface,
+                            fontSize = 16.sp
                         )
-                        PrimaryTextField(modifier = Modifier.height(36.dp).fillMaxWidth())
+                        PrimaryTextField(modifier = Modifier.height(40.dp).fillMaxWidth())
 
                     }
                     Column(
@@ -230,9 +237,9 @@ fun SignupScreen() {
                                 )
                             ),
                             color = MaterialTheme.colorScheme.onSurface,
-                            fontSize = 14.sp
+                            fontSize = 16.sp
                         )
-                        PrimaryTextField(modifier = Modifier.height(36.dp).fillMaxWidth())
+                        PrimaryTextField(modifier = Modifier.height(40.dp).fillMaxWidth())
                     }
                     Button(
                         modifier = Modifier.fillMaxWidth(),
@@ -248,12 +255,13 @@ fun SignupScreen() {
                                     weight = FontWeight.Medium
                                 )
                             ),
-                            fontSize = 14.sp,
+                            fontSize = 18.sp,
                             color = MaterialTheme.colorScheme.onPrimary,
                         )
                     }
                 }
                 TextButton(
+                    contentPadding = PaddingValues(vertical = 4.dp, horizontal = 8.dp),
                     onClick = {}
                 ) {
                     Text(
@@ -264,7 +272,7 @@ fun SignupScreen() {
                                 weight = FontWeight.Medium
                             )
                         ),
-                        fontSize = 16.sp,
+                        fontSize = 14.sp,
                         color = MaterialTheme.colorScheme.primary
                     )
                 }

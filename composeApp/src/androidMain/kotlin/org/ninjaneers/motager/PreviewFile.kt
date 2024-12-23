@@ -1,19 +1,13 @@
 package org.ninjaneers.motager
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.tooling.preview.PreviewLightDark
-import org.ninjaneers.motager.Authentication.presentation.LoginScreen
+import androidx.compose.ui.tooling.preview.Preview
+import org.ninjaneers.motager.Authentication.presentation.login.LoginScreen
 import org.ninjaneers.motager.core.presentation.theme.MotagerTheme
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-@PreviewLightDark()
-//@Preview(locale = "ar", uiMode = UI_MODE_NIGHT_YES)
-//@Preview(locale = "en")
+@Preview
 fun Preview() {
-
-
-    MotagerTheme {
+    MotagerTheme(darkTheme = true) {
         LoginScreen()
     }
 }
