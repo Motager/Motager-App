@@ -57,6 +57,7 @@ import motager.composeapp.generated.resources.moon
 import org.jetbrains.compose.resources.Font
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
+import org.ninjaneers.motager.core.presentation.components.PrimaryButton
 import org.ninjaneers.motager.core.presentation.components.PrimaryTextField
 
 @Composable
@@ -73,7 +74,7 @@ fun SignupScreen() {
                 modifier = Modifier.fillMaxSize(),
                 painter = painterResource(Res.drawable.auth),
                 contentDescription = "Auth background",
-                contentScale = ContentScale.Crop
+                contentScale = ContentScale.Crop,
             )
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -241,11 +242,10 @@ fun SignupScreen() {
                         )
                         PrimaryTextField(modifier = Modifier.height(40.dp).fillMaxWidth())
                     }
-                    Button(
-                        modifier = Modifier.fillMaxWidth(),
+                    PrimaryButton(
+                        modifier = Modifier.height(42.dp).fillMaxWidth(),
                         onClick = {},
-                        shape = RoundedCornerShape(6.dp),
-                        colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary)
+                        shape = RoundedCornerShape(6.dp)
                     ) {
                         Text(
                             text = stringResource(Res.string.CreateNewAccount),
