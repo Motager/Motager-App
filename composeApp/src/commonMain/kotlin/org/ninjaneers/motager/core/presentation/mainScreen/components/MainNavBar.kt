@@ -1,4 +1,4 @@
-package org.ninjaneers.motager.Authentication.presentation.mainScreen.components
+package org.ninjaneers.motager.core.presentation.mainScreen.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
