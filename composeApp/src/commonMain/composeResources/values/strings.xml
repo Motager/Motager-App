@@ -44,7 +44,11 @@
     <string name="Description">Description</string>
     <string name="AmountPaid">Amount Paid</string>
     <string name="CreateOrder">Create Order</string>
-    <string name="Results">Results</string>
+    <string name="Results">Results:</string>
+    <string name="Prev">Prev</string>
+    <string name="Next">Next</string>
+    <string name="Page">Page</string>
+    <string name="Of">Of</string>
     <string name="Arabic">Arabic</string>
     <string name="English">English</string>
 

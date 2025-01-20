@@ -1,4 +1,4 @@
-package org.ninjaneers.motager.Authentication.presentation.signup
+package org.ninjaneers.motager.authentication.presentation.signup
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -171,7 +171,11 @@ fun SignupScreen() {
                                 color = MaterialTheme.colorScheme.onSurface,
                                 fontSize = 16.sp
                             )
-                            PrimaryTextField(modifier = Modifier.height(40.dp).fillMaxWidth())
+                            PrimaryTextField(
+                                value = "",
+                                onValueChange = {},
+                                modifier = Modifier.height(40.dp).fillMaxWidth()
+                            )
                         }
                         Column(
                             modifier = Modifier.padding(bottom = 12.dp).weight(1f),
@@ -188,7 +192,11 @@ fun SignupScreen() {
                                 color = MaterialTheme.colorScheme.onSurface,
                                 fontSize = 16.sp
                             )
-                            PrimaryTextField(modifier = Modifier.height(40.dp).fillMaxWidth())
+                            PrimaryTextField(
+                                value = "",
+                                onValueChange = {},
+                                modifier = Modifier.height(40.dp).fillMaxWidth()
+                            )
                         }
                     }
                     Column(
@@ -205,7 +213,11 @@ fun SignupScreen() {
                             ), color = MaterialTheme.colorScheme.onSurface,
                             fontSize = 16.sp
                         )
-                        PrimaryTextField(modifier = Modifier.height(40.dp).fillMaxWidth())
+                        PrimaryTextField(
+                            value = "",
+                            onValueChange = {},
+                            modifier = Modifier.height(40.dp).fillMaxWidth()
+                        )
                     }
                     Column(
                         modifier = Modifier.padding(bottom = 12.dp).fillMaxWidth(),
@@ -222,7 +234,11 @@ fun SignupScreen() {
                             color = MaterialTheme.colorScheme.onSurface,
                             fontSize = 16.sp
                         )
-                        PrimaryTextField(modifier = Modifier.height(40.dp).fillMaxWidth())
+                        PrimaryTextField(
+                            value = "",
+                            onValueChange = {},
+                            modifier = Modifier.height(40.dp).fillMaxWidth()
+                        )
 
                     }
                     Column(
@@ -240,7 +256,11 @@ fun SignupScreen() {
                             color = MaterialTheme.colorScheme.onSurface,
                             fontSize = 16.sp
                         )
-                        PrimaryTextField(modifier = Modifier.height(40.dp).fillMaxWidth())
+                        PrimaryTextField(
+                            value = "",
+                            onValueChange = {},
+                            modifier = Modifier.height(40.dp).fillMaxWidth()
+                        )
                     }
                     PrimaryButton(
                         modifier = Modifier.height(42.dp).fillMaxWidth(),
