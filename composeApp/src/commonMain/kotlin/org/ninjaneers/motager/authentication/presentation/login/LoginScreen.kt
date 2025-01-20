@@ -1,4 +1,4 @@
-package org.ninjaneers.motager.Authentication.presentation.login
+package org.ninjaneers.motager.authentication.presentation.login
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -180,7 +180,11 @@ fun LoginScreen() {
                             color = MaterialTheme.colorScheme.onSurface,
                             fontSize = 16.sp,
                         )
-                        PrimaryTextField(modifier = Modifier.height(40.dp).fillMaxWidth())
+                        PrimaryTextField(
+                            value = "",
+                            onValueChange = {},
+                            modifier = Modifier.height(40.dp).fillMaxWidth()
+                        )
                     }
                     Column(
                         modifier = Modifier.padding(bottom = 20.dp).fillMaxWidth(),
@@ -197,7 +201,11 @@ fun LoginScreen() {
                             color = MaterialTheme.colorScheme.onSurface,
                             fontSize = 16.sp,
                         )
-                        PrimaryTextField(modifier = Modifier.height(40.dp).fillMaxWidth())
+                        PrimaryTextField(
+                            value = "",
+                            onValueChange = {},
+                            modifier = Modifier.height(40.dp).fillMaxWidth()
+                        )
                     }
                     Column(verticalArrangement = Arrangement.spacedBy(20.dp)) {
                         Row(

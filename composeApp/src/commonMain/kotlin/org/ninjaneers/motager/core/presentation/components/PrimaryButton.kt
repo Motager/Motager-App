@@ -5,7 +5,8 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ButtonElevation
@@ -21,11 +22,12 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun PrimaryButton(
     onClick: () -> Unit,
-    modifier: Modifier,
+    modifier: Modifier = Modifier.height(42.dp),
     enabled: Boolean = true,
     shape: Shape = ButtonDefaults.shape,
     elevation: ButtonElevation? = ButtonDefaults.buttonElevation(),
     border: BorderStroke? = null,
+    contentPadding: PaddingValues = ButtonDefaults.ContentPadding,
     content: @Composable BoxScope.() -> Unit
 ) {
     Button(
@@ -41,14 +43,14 @@ fun PrimaryButton(
         ),
     ) {
         Box(
-            modifier = Modifier.fillMaxSize().background(
+            modifier = modifier.background(
                 Brush.verticalGradient(
                     colors = listOf(
                         MaterialTheme.colorScheme.primary.copy(alpha = 0.45f),
                         MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.45f)
                     )
                 )
-            ),
+            ).padding(contentPadding),
             contentAlignment = Alignment.Center,
             content = content
         )
