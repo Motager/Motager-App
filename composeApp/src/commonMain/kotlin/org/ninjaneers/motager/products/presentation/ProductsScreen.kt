@@ -1,4 +1,4 @@
-package org.ninjaneers.motager.orders.presentation
+package org.ninjaneers.motager.products.presentation
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.Spring
@@ -38,13 +38,14 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import motager.composeapp.generated.resources.CreateProduct
 import motager.composeapp.generated.resources.Next
 import motager.composeapp.generated.resources.Of
-import motager.composeapp.generated.resources.Orders
 import motager.composeapp.generated.resources.OutfitBold
 import motager.composeapp.generated.resources.OutfitRegular
 import motager.composeapp.generated.resources.Page
 import motager.composeapp.generated.resources.Prev
+import motager.composeapp.generated.resources.Products
 import motager.composeapp.generated.resources.Res
 import motager.composeapp.generated.resources.Results
 import motager.composeapp.generated.resources.chevronleft
@@ -62,22 +63,20 @@ import org.ninjaneers.motager.core.presentation.components.Table
 import org.ninjaneers.motager.core.presentation.components.TableActionCell
 import org.ninjaneers.motager.core.presentation.components.TableCell
 import org.ninjaneers.motager.core.presentation.components.TableHeader
+import org.ninjaneers.motager.core.presentation.components.TableImageCell
 import org.ninjaneers.motager.core.presentation.components.TableRow
-import org.ninjaneers.motager.core.presentation.components.TableStatusCell
 import org.ninjaneers.motager.core.presentation.components.TopBar
 
 @Composable
-fun OrdersScreen() {
-    val viewModel = remember { OrdersViewModel() }
+fun ProductsScreen() {
+    val viewModel = remember { ProductsViewModel() }
     val state by viewModel.state.collectAsStateWithLifecycle()
-    OrdersScreenContent(
-        state = state
-    )
+    ProductsScreenContent(state = state)
 }
 
 @Composable
-private fun OrdersScreenContent(
-    state: OrdersScreenState
+private fun ProductsScreenContent(
+    state: ProductsScreenState
 ) {
     Scaffold { innerPadding ->
         Column(
@@ -119,7 +118,7 @@ private fun OrdersScreenContent(
                         ) {
                             Text(
                                 modifier = Modifier.weight(1f),
-                                text = stringResource(Res.string.Orders),
+                                text = stringResource(Res.string.Products),
                                 fontFamily = FontFamily(
                                     Font(
                                         resource = Res.font.OutfitRegular,
@@ -163,7 +162,7 @@ private fun OrdersScreenContent(
                                             tint = MaterialTheme.colorScheme.onPrimary
                                         )
                                         Text(
-                                            text = "Create Order",
+                                            text = stringResource(Res.string.CreateProduct),
                                             color = MaterialTheme.colorScheme.onPrimary,
                                             fontSize = 14.sp
                                         )
@@ -259,16 +258,16 @@ private fun OrdersScreenContent(
                                 )
                         ) {
                             Table(
-                                items = state.ordersList,
+                                items = state.productsList,
                                 header = {
                                     TableHeader(state.tableHeaders)
                                 },
-                            ) { order ->
+                            ) { product ->
                                 TableRow {
-                                    TableCell(order.orderNumber)
-                                    TableCell(order.customer)
-                                    TableCell(order.total.toString())
-                                    TableStatusCell(order.status)
+                                    TableImageCell()
+                                    TableCell(product.name)
+                                    TableCell(product.price.toString())
+                                    TableCell(product.category)
                                     TableActionCell()
                                 }
                             }
@@ -430,6 +429,3 @@ private fun OrdersScreenContent(
         }
     }
 }
-
-//val orders = (1..25).map { Order() }
-//val columns = listOf("Order Number", "Customer", "Total", "Status", "Actions")

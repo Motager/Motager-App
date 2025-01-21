@@ -22,12 +22,12 @@ import motager.composeapp.generated.resources.Res
 import org.jetbrains.compose.resources.Font
 
 @Composable
-fun StatusTableCell(
+fun TableStatusCell(
     status: String
 ) {
     Box(
         modifier = Modifier
-            .widthIn(min = 150.dp, max = 200.dp)
+            .widthIn(min = 200.dp, max = 200.dp)
             .background(Color.Transparent),
         contentAlignment = Alignment.Center
 
@@ -41,6 +41,9 @@ fun StatusTableCell(
                         "Pending" -> Color(0xFFEAB308).copy(alpha = 0.1f)
                         "Cancelled" -> Color(0xFFEF4444).copy(alpha = 0.1f)
                         "Processing" -> Color(0xFF60A5FA).copy(alpha = 0.1f)
+                        "New" -> Color(0xFF22C55E).copy(alpha = 0.1f)
+                        "Active" -> Color(0xFF3B82F6).copy(alpha = 0.1f)
+                        "Premium" -> Color(0xFFA855F7).copy(alpha = 0.1f)
                         else -> Color.Transparent
                     }
                 )
@@ -58,6 +61,9 @@ fun StatusTableCell(
                 "Pending" -> Color(0xFFEAB308)
                 "Cancelled" -> Color(0xFFEF4444)
                 "Processing" -> Color(0xFF60A5FA)
+                "New" -> Color(0xFF22C55E)
+                "Active" -> Color(0xFF3B82F6)
+                "Premium" -> Color(0xFFA855F7)
                 else -> MaterialTheme.colorScheme.onBackground
             },
             maxLines = 2,

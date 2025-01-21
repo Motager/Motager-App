@@ -44,6 +44,7 @@
     <string name="Description">الوصف</string>
     <string name="AmountPaid">المبلغ المدفوع</string>
     <string name="CreateOrder">إنشاء طلب</string>
+    <string name="CreateProduct">إنشاء منتج</string>
     <string name="Results">النتائج:</string>
     <string name="Prev">السابق</string>
     <string name="Next">التالي</string>

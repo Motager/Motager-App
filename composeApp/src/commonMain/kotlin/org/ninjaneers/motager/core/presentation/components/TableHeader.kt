@@ -36,7 +36,7 @@ fun TableHeader(
             Box(
                 modifier = Modifier
                     .fillMaxHeight()
-                    .widthIn(min = 150.dp, max = 200.dp)
+                    .widthIn(min = 200.dp, max = 200.dp)
                     .background(MaterialTheme.colorScheme.secondary),
                 contentAlignment = Alignment.Center
 
