@@ -2,18 +2,14 @@ package org.ninjaneers.motager
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.tooling.preview.PreviewScreenSizes
 import org.ninjaneers.motager.core.presentation.theme.MotagerTheme
-import org.ninjaneers.motager.orders.presentation.OrdersScreen
+import org.ninjaneers.motager.products.presentation.ProductsScreen
 
 @Composable
 @Preview
-@PreviewScreenSizes
-//@PreviewLightDark
 fun Preview() {
     MotagerTheme(darkTheme = true) {
-        OrdersScreen()
+        ProductsScreen()
     }
 }
-
 

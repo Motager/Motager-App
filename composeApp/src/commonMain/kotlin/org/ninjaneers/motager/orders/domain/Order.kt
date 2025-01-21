@@ -5,5 +5,4 @@ data class Order(
     val customer: String = "John Doe",
     val total: Double = 120.05,
     val status: String = "Completed",
-    val actions: String = "...",
 )

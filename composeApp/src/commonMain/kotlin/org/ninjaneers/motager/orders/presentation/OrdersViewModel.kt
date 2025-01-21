@@ -5,7 +5,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
 class OrdersViewModel : ViewModel() {
-    private val _state = MutableStateFlow(OrderScreenState())
+    private val _state = MutableStateFlow(OrdersScreenState())
     val state = _state.asStateFlow()
 
     fun onAction(action: OrdersActions) {
