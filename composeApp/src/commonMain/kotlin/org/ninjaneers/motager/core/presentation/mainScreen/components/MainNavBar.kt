@@ -8,12 +8,10 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -31,6 +29,8 @@ import motager.composeapp.generated.resources.menu
 import org.jetbrains.compose.resources.Font
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
+import org.ninjaneers.motager.core.presentation.components.PrimaryButton
+import org.ninjaneers.motager.core.presentation.components.PrimaryIconButton
 
 @Composable
 fun MainNavBar() {
@@ -53,10 +53,16 @@ fun MainNavBar() {
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(6.dp)
         ) {
-            Button(
+            PrimaryButton(
+                modifier = Modifier
+                    .height(42.dp)
+                    .wrapContentWidth(),
                 onClick = {},
-                shape = RoundedCornerShape(6.dp),
-                colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary)
+                contentPadding = PaddingValues(
+                    horizontal = 16.dp,
+                    vertical = 8.dp
+                ),
+                shape = RoundedCornerShape(6.dp)
             ) {
                 Text(
                     text = stringResource(Res.string.Login_Signup),
@@ -69,19 +75,15 @@ fun MainNavBar() {
                     color = MaterialTheme.colorScheme.onPrimary
                 )
             }
-            Button(
+            PrimaryIconButton(
                 onClick = {},
-                modifier = Modifier.size(40.dp),
-                shape = RoundedCornerShape(6.dp),
-                contentPadding = PaddingValues(8.dp),
-                colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.background)
-            ) {
-                Icon(
-                    painter = painterResource(Res.drawable.menu),
-                    contentDescription = "Menu",
-                    tint = MaterialTheme.colorScheme.onBackground
+                painter = painterResource(Res.drawable.menu),
+                iconTint = MaterialTheme.colorScheme.onBackground,
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = MaterialTheme.colorScheme.background,
+                    contentColor = MaterialTheme.colorScheme.surfaceContainerLowest
                 )
-            }
+            )
         }
     }
 }

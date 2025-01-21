@@ -5,19 +5,22 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -36,6 +39,7 @@ import motager.composeapp.generated.resources.pulse
 import org.jetbrains.compose.resources.Font
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
+import org.ninjaneers.motager.core.presentation.components.PrimaryButton
 import org.ninjaneers.motager.core.presentation.mainScreen.components.MainNavBar
 
 @Composable
@@ -98,6 +102,14 @@ fun MainScreen() {
                             .fillMaxWidth(),
                         text = stringResource(Res.string.Motager),
                         color = MaterialTheme.colorScheme.primary,
+                        style = TextStyle(
+                            brush = Brush.verticalGradient(
+                                colors = listOf(
+                                    MaterialTheme.colorScheme.primary,
+                                    MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.3f)
+                                ),
+                            )
+                        ),
                         fontFamily = FontFamily(
                             Font(
                                 resource = Res.font.OutfitSemiBold,
@@ -122,13 +134,16 @@ fun MainScreen() {
                         fontSize = 18.sp,
                         textAlign = TextAlign.Center,
                     )
-                    Button(
+                    PrimaryButton(
+                        modifier = Modifier
+                            .height(42.dp)
+                            .wrapContentWidth(),
                         onClick = {},
-                        shape = RoundedCornerShape(6.dp),
-                        colors = ButtonDefaults.buttonColors(
-                            containerColor = MaterialTheme.colorScheme.primary,
-                            contentColor = MaterialTheme.colorScheme.onPrimary
-                        )
+                        contentPadding = PaddingValues(
+                            horizontal = 16.dp,
+                            vertical = 8.dp
+                        ),
+                        shape = RoundedCornerShape(6.dp)
                     ) {
                         Text(
                             text = stringResource(Res.string.FreeTrial),
