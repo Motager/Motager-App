@@ -45,6 +45,7 @@
     <string name="AmountPaid">Amount Paid</string>
     <string name="CreateOrder">Create Order</string>
     <string name="CreateProduct">Create Product</string>
+    <string name="CreateCollection">Create Collection</string>
     <string name="Results">Results:</string>
     <string name="Prev">Prev</string>
     <string name="Next">Next</string>
