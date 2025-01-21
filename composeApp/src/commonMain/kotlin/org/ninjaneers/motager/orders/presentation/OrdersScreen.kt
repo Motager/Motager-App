@@ -27,6 +27,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -35,6 +37,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import motager.composeapp.generated.resources.Next
 import motager.composeapp.generated.resources.Of
 import motager.composeapp.generated.resources.OutfitBold
@@ -60,10 +63,21 @@ import org.ninjaneers.motager.core.presentation.components.TableCell
 import org.ninjaneers.motager.core.presentation.components.TableHeader
 import org.ninjaneers.motager.core.presentation.components.TableRow
 import org.ninjaneers.motager.core.presentation.components.TopBar
-import org.ninjaneers.motager.orders.domain.Order
 
 @Composable
 fun OrdersScreen() {
+    val viewModel = remember { OrdersViewModel() }
+    val state by viewModel.state.collectAsStateWithLifecycle()
+    OrdersScreenContent(
+        state = state
+    )
+
+}
+
+@Composable
+private fun OrdersScreenContent(
+    state: OrderScreenState
+) {
     Scaffold { innerPadding ->
         Column(
             modifier = Modifier
@@ -243,9 +257,9 @@ fun OrdersScreen() {
                                 )
                         ) {
                             Table(
-                                items = orders,
+                                items = state.ordersList,
                                 header = {
-                                    TableHeader(columns)
+                                    TableHeader(state.tableHeaders)
                                 },
                             ) { order ->
                                 TableRow {
@@ -415,5 +429,5 @@ fun OrdersScreen() {
     }
 }
 
-val orders = (1..25).map { Order() }
-val columns = listOf("Order Number", "Customer", "Total", "Status", "Actions")
+//val orders = (1..25).map { Order() }
+//val columns = listOf("Order Number", "Customer", "Total", "Status", "Actions")
