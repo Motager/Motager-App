@@ -22,7 +22,7 @@ import org.jetbrains.compose.resources.painterResource
 fun TableImageCell() {
     Box(
         modifier = Modifier
-            .widthIn(min = 200.dp, max = 200.dp)
+            .widthIn(min = 180.dp, max = 180.dp)
             .background(Color.Transparent),
         contentAlignment = Alignment.Center
     ) {

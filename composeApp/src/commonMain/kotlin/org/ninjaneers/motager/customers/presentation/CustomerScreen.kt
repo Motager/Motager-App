@@ -37,7 +37,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import motager.composeapp.generated.resources.Customer
+import motager.composeapp.generated.resources.Customers
 import motager.composeapp.generated.resources.Next
 import motager.composeapp.generated.resources.Of
 import motager.composeapp.generated.resources.OutfitBold
@@ -77,7 +77,6 @@ fun CustomerScreen() {
 private fun CustomerScreenContent(
     state: CustomerScreenState
 ) {
-
     Scaffold { innerPadding ->
         Column(
             modifier = Modifier
@@ -119,7 +118,7 @@ private fun CustomerScreenContent(
                         {
                             Text(
                                 modifier = Modifier.weight(1f),
-                                text = stringResource(Res.string.Customer),
+                                text = stringResource(Res.string.Customers),
                                 fontFamily = FontFamily(
                                     Font(
                                         resource = Res.font.OutfitRegular,
@@ -127,7 +126,7 @@ private fun CustomerScreenContent(
                                     )
                                 ),
                                 color = MaterialTheme.colorScheme.onBackground,
-                                fontSize = 30.sp,
+                                fontSize = 28.sp,
                                 textAlign = TextAlign.Start
                             )
                             Row(
