@@ -37,6 +37,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import motager.composeapp.generated.resources.AddCustomer
 import motager.composeapp.generated.resources.Customers
 import motager.composeapp.generated.resources.Next
 import motager.composeapp.generated.resources.Of
@@ -48,9 +49,9 @@ import motager.composeapp.generated.resources.Res
 import motager.composeapp.generated.resources.Results
 import motager.composeapp.generated.resources.chevronleft
 import motager.composeapp.generated.resources.chevronright
-import motager.composeapp.generated.resources.filebox
 import motager.composeapp.generated.resources.hellipsis
 import motager.composeapp.generated.resources.switch
+import motager.composeapp.generated.resources.user_plus
 import org.jetbrains.compose.resources.Font
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
@@ -126,7 +127,7 @@ private fun CustomerScreenContent(
                                     )
                                 ),
                                 color = MaterialTheme.colorScheme.onBackground,
-                                fontSize = 28.sp,
+                                fontSize = 30.sp,
                                 textAlign = TextAlign.Start
                             )
                             Row(
@@ -157,11 +158,11 @@ private fun CustomerScreenContent(
                                         horizontalArrangement = Arrangement.spacedBy(8.dp)
                                     ) {
                                         Icon(
-                                            painter = painterResource(Res.drawable.filebox),
+                                            painter = painterResource(Res.drawable.user_plus),
                                             contentDescription = "more",
                                         )
                                         Text(
-                                            text = "Create Order",
+                                            text = stringResource(Res.string.AddCustomer),
                                             color = MaterialTheme.colorScheme.onPrimary,
                                             fontSize = 14.sp
                                         )
@@ -255,7 +256,7 @@ private fun CustomerScreenContent(
                                     )
                             ) {
                                 Table(
-                                    items = state.CustomerList,
+                                    items = state.customerList,
                                     header = {
                                         TableHeader(
                                             headers = state.tapleHeaders
@@ -264,10 +265,10 @@ private fun CustomerScreenContent(
                                 )
                                 { customer ->
                                     TableRow {
-                                        TableCell(customer.Name)
-                                        TableCell(customer.Email)
-                                        TableCell(customer.AmountPaid.toString())
-                                        TableCell(customer.Status)
+                                        TableCell(customer.name)
+                                        TableCell(customer.email)
+                                        TableCell(customer.amountPaid.toString())
+                                        TableCell(customer.status)
                                         TableActionCell()
                                     }
                                 }

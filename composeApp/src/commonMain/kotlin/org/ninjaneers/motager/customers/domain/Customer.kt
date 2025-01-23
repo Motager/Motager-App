@@ -1,10 +1,8 @@
 package org.ninjaneers.motager.customers.domain
 
 data class Customer(
-    val Name: String = "John Doe",
-    val Email: String = "m@example.com",
-    val AmountPaid: Int = 100,
-    val Status: String = "New",
-    val actions: String = ":",
-
-    )
+    val name: String,
+    val email: String,
+    val amountPaid: Int,
+    val status: String
+)
