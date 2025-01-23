@@ -44,8 +44,10 @@
     <string name="Description">الوصف</string>
     <string name="AmountPaid">المبلغ المدفوع</string>
     <string name="CreateOrder">إنشاء طلب</string>
-    <string name="CreateProduct">إنشاء منتج</string>
+    <string name="AddProduct">إضافة منتج</string>
     <string name="CreateCollection">إنشاء مجموعة</string>
+    <string name="AddCustomer">إضافة عميل</string>
+    <string name="CreateCategory">إنشاء مجموعة</string>
     <string name="Results">النتائج:</string>
     <string name="Prev">السابق</string>
     <string name="Next">التالي</string>

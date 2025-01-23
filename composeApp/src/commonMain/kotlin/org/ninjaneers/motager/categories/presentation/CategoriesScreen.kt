@@ -39,6 +39,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import motager.composeapp.generated.resources.Categories
+import motager.composeapp.generated.resources.CreateCategory
 import motager.composeapp.generated.resources.Next
 import motager.composeapp.generated.resources.Of
 import motager.composeapp.generated.resources.OutfitBold
@@ -47,9 +48,9 @@ import motager.composeapp.generated.resources.Page
 import motager.composeapp.generated.resources.Prev
 import motager.composeapp.generated.resources.Res
 import motager.composeapp.generated.resources.Results
+import motager.composeapp.generated.resources.boxes
 import motager.composeapp.generated.resources.chevronleft
 import motager.composeapp.generated.resources.chevronright
-import motager.composeapp.generated.resources.filebox
 import motager.composeapp.generated.resources.hellipsis
 import motager.composeapp.generated.resources.switch
 import org.jetbrains.compose.resources.Font
@@ -159,12 +160,12 @@ private fun CategoriesScreenContent(
                                         horizontalArrangement = Arrangement.spacedBy(8.dp)
                                     ) {
                                         Icon(
-                                            painter = painterResource(Res.drawable.filebox),
+                                            painter = painterResource(Res.drawable.boxes),
                                             contentDescription = "more",
                                             tint = MaterialTheme.colorScheme.onPrimary
                                         )
                                         Text(
-                                            text = "Add Product",
+                                            text = stringResource(Res.string.CreateCategory),
                                             color = MaterialTheme.colorScheme.onPrimary,
                                             fontSize = 14.sp
                                         )
@@ -252,15 +253,15 @@ private fun CategoriesScreenContent(
                                 )
                         ) {
                             Table(
-                                items = state.CategoryList,
+                                items = state.categoryList,
                                 header = {
                                     TableHeader(state.tapleHeaders)
                                 },
                             )
-                            { Category ->
+                            { category ->
                                 TableRow {
-                                    TableCell(Category.name)
-                                    TableCell(Category.discription)
+                                    TableCell(category.name)
+                                    TableCell(category.description)
                                     TableActionCell()
                                 }
                             }

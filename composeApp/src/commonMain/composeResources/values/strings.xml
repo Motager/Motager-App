@@ -44,8 +44,10 @@
     <string name="Description">Description</string>
     <string name="AmountPaid">Amount Paid</string>
     <string name="CreateOrder">Create Order</string>
-    <string name="CreateProduct">Create Product</string>
+    <string name="AddProduct">Add Product</string>
     <string name="CreateCollection">Create Collection</string>
+    <string name="AddCustomer">Add Customer</string>
+    <string name="CreateCategory">Create Category</string>
     <string name="Results">Results:</string>
     <string name="Prev">Prev</string>
     <string name="Next">Next</string>

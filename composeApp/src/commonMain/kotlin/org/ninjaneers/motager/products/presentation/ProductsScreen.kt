@@ -38,7 +38,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import motager.composeapp.generated.resources.CreateProduct
+import motager.composeapp.generated.resources.AddProduct
 import motager.composeapp.generated.resources.Next
 import motager.composeapp.generated.resources.Of
 import motager.composeapp.generated.resources.OutfitBold
@@ -162,7 +162,7 @@ private fun ProductsScreenContent(
                                             tint = MaterialTheme.colorScheme.onPrimary
                                         )
                                         Text(
-                                            text = stringResource(Res.string.CreateProduct),
+                                            text = stringResource(Res.string.AddProduct),
                                             color = MaterialTheme.colorScheme.onPrimary,
                                             fontSize = 14.sp
                                         )
