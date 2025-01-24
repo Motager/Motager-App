@@ -55,4 +55,6 @@
     <string name="Of">من</string>
     <string name="Arabic">العربية</string>
     <string name="English">الإنجليزية</string>
+    <string name="Logout">تسجيل خروج</string>
+
 </resources>

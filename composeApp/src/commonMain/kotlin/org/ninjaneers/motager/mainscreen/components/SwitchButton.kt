@@ -1,4 +1,4 @@
-package org.ninjaneers.motager.core.presentation.mainScreen.components
+package org.ninjaneers.motager.mainscreen.components
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.size
