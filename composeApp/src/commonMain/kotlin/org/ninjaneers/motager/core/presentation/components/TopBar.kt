@@ -5,11 +5,14 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
@@ -27,12 +30,21 @@ import motager.composeapp.generated.resources.panels
 import org.jetbrains.compose.resources.painterResource
 
 @Composable
-fun TopBar() {
+fun TopBar(
+    openNavDrawer: () -> Unit
+) {
+    TopBarContent(openNavDrawer = openNavDrawer)
+}
+
+
+@Composable
+private fun TopBarContent(openNavDrawer: () -> Unit) {
     Row(
         modifier = Modifier
+            .windowInsetsPadding(WindowInsets.statusBars)
+            .padding(horizontal = 8.dp)
             .clip(RoundedCornerShape(6.dp))
             .fillMaxWidth()
-            .height(56.dp)
             .background(MaterialTheme.colorScheme.secondary)
             .padding(8.dp),
         verticalAlignment = Alignment.CenterVertically,
@@ -43,7 +55,7 @@ fun TopBar() {
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             PrimaryIconButton(
-                onClick = {},
+                onClick = { openNavDrawer() },
                 painter = painterResource(Res.drawable.panels),
                 iconTint = MaterialTheme.colorScheme.onBackground,
                 colors = ButtonDefaults.buttonColors(

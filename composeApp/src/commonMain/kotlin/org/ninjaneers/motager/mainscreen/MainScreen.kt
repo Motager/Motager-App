@@ -1,4 +1,4 @@
-package org.ninjaneers.motager.core.presentation.mainScreen
+package org.ninjaneers.motager.mainscreen
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -40,7 +40,7 @@ import org.jetbrains.compose.resources.Font
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.ninjaneers.motager.core.presentation.components.PrimaryButton
-import org.ninjaneers.motager.core.presentation.mainScreen.components.MainNavBar
+import org.ninjaneers.motager.mainscreen.components.MainNavBar
 
 @Composable
 fun MainScreen() {
