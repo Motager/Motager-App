@@ -7,6 +7,7 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -14,12 +15,15 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.DrawerDefaults
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalDrawerSheet
@@ -37,15 +41,18 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import motager.composeapp.generated.resources.Analytics
 import motager.composeapp.generated.resources.Categories
 import motager.composeapp.generated.resources.Collections
 import motager.composeapp.generated.resources.Customers
+import motager.composeapp.generated.resources.Dark
 import motager.composeapp.generated.resources.DashboardLinks
 import motager.composeapp.generated.resources.Discounts
 import motager.composeapp.generated.resources.Home
+import motager.composeapp.generated.resources.Light
 import motager.composeapp.generated.resources.Logout
 import motager.composeapp.generated.resources.Orders
 import motager.composeapp.generated.resources.OutfitMedium
@@ -55,6 +62,7 @@ import motager.composeapp.generated.resources.Products
 import motager.composeapp.generated.resources.Res
 import motager.composeapp.generated.resources.Settings
 import motager.composeapp.generated.resources.Support
+import motager.composeapp.generated.resources.System
 import motager.composeapp.generated.resources.chart
 import motager.composeapp.generated.resources.curvedarrowright
 import motager.composeapp.generated.resources.customers
@@ -68,6 +76,7 @@ import motager.composeapp.generated.resources.orders
 import motager.composeapp.generated.resources.plan_img
 import motager.composeapp.generated.resources.products
 import motager.composeapp.generated.resources.settings
+import motager.composeapp.generated.resources.sun
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.Font
 import org.jetbrains.compose.resources.StringResource
@@ -76,9 +85,11 @@ import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun NavDrawer() {
+    var isThemeMenuExpanded by remember { mutableStateOf(false) }
+    var isLocalMenuExpanded by remember { mutableStateOf(false) }
     var selectedIndex by remember { mutableStateOf(0) }
     ModalDrawerSheet(
-        modifier = Modifier.width(300.dp).border(
+        modifier = Modifier.width(320.dp).border(
             width = 0.8f.dp,
             color = MaterialTheme.colorScheme.outline,
             shape = DrawerDefaults.shape
@@ -205,14 +216,108 @@ fun NavDrawer() {
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
-                    PrimaryIconButton(
-                        onClick = {},
-                        painter = painterResource(Res.drawable.moon),
-                        colors = ButtonDefaults.buttonColors(
-                            containerColor = MaterialTheme.colorScheme.background,
-                            contentColor = MaterialTheme.colorScheme.surfaceContainerLowest
+                    Box(
+                        modifier = Modifier.wrapContentSize(Alignment.TopStart)
+                    ) {
+                        PrimaryIconButton(
+                            onClick = { isThemeMenuExpanded = !isThemeMenuExpanded },
+                            painter = painterResource(Res.drawable.moon),
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = MaterialTheme.colorScheme.background,
+                                contentColor = MaterialTheme.colorScheme.surfaceContainerLowest
+                            )
                         )
-                    )
+                        DropdownMenu(
+                            expanded = isThemeMenuExpanded,
+                            onDismissRequest = { isThemeMenuExpanded = !isThemeMenuExpanded },
+                            border = BorderStroke(
+                                width = 0.8f.dp,
+                                color = MaterialTheme.colorScheme.outline
+                            ),
+                            offset = DpOffset((-5).dp, 0.dp),
+                            shape = RoundedCornerShape(6.dp),
+                            containerColor = MaterialTheme.colorScheme.inverseSurface
+                        ) {
+                            DropdownMenuItem(
+                                modifier = Modifier.padding(vertical = 6.dp, horizontal = 8.dp)
+                                    .clip(RoundedCornerShape(6.dp)),
+                                onClick = {},
+                                text = {
+                                    Text(
+                                        text = stringResource(Res.string.Light),
+                                        fontSize = 14.sp,
+                                        color = MaterialTheme.colorScheme.inverseOnSurface,
+                                        fontFamily = FontFamily(
+                                            Font(
+                                                resource = Res.font.OutfitRegular,
+                                                weight = FontWeight.Normal
+                                            )
+                                        ),
+                                        textAlign = TextAlign.Center
+                                    )
+                                },
+                                leadingIcon = {
+                                    Icon(
+                                        painter = painterResource(Res.drawable.sun),
+                                        contentDescription = "Light mode"
+                                    )
+                                },
+                                contentPadding = PaddingValues(horizontal = 16.dp)
+                            )
+                            DropdownMenuItem(
+                                modifier = Modifier.padding(vertical = 6.dp, horizontal = 8.dp)
+                                    .clip(RoundedCornerShape(6.dp)),
+                                onClick = {},
+                                text = {
+                                    Text(
+                                        text = stringResource(Res.string.Dark),
+                                        fontSize = 14.sp,
+                                        color = MaterialTheme.colorScheme.inverseOnSurface,
+                                        fontFamily = FontFamily(
+                                            Font(
+                                                resource = Res.font.OutfitRegular,
+                                                weight = FontWeight.Normal
+                                            )
+                                        ),
+                                        textAlign = TextAlign.Center
+                                    )
+                                },
+                                leadingIcon = {
+                                    Icon(
+                                        painter = painterResource(Res.drawable.moon),
+                                        contentDescription = "Dark mode"
+                                    )
+                                },
+                                contentPadding = PaddingValues(horizontal = 16.dp)
+                            )
+                            DropdownMenuItem(
+                                modifier = Modifier.padding(vertical = 6.dp, horizontal = 8.dp)
+                                    .clip(RoundedCornerShape(6.dp)),
+                                onClick = {},
+                                text = {
+                                    Text(
+                                        text = stringResource(Res.string.System),
+                                        fontSize = 14.sp,
+                                        color = MaterialTheme.colorScheme.inverseOnSurface,
+                                        fontFamily = FontFamily(
+                                            Font(
+                                                resource = Res.font.OutfitRegular,
+                                                weight = FontWeight.Normal
+                                            )
+                                        ),
+                                        textAlign = TextAlign.Center
+                                    )
+                                },
+                                leadingIcon = {
+                                    Icon(
+                                        painter = painterResource(Res.drawable.sun),
+                                        contentDescription = "System theme"
+                                    )
+                                },
+                                contentPadding = PaddingValues(horizontal = 16.dp)
+                            )
+                        }
+                    }
                     PrimaryIconButton(
                         onClick = {},
                         painter = painterResource(Res.drawable.languages),

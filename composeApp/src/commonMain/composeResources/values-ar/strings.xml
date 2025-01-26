@@ -55,6 +55,9 @@
     <string name="Of">من</string>
     <string name="Arabic">العربية</string>
     <string name="English">الإنجليزية</string>
+    <string name="Dark">داكن</string>
+    <string name="Light">فاتح</string>
+    <string name="System">النظام</string>
     <string name="Logout">تسجيل خروج</string>
 
 </resources>

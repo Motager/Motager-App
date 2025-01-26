@@ -30,14 +30,16 @@ fun TableHeader(
     Row(
         modifier = Modifier
             .fillMaxWidth()
+            .background(MaterialTheme.colorScheme.secondary)
+            .padding(vertical = 4.dp)
             .height(40.dp)
+
     ) {
         headers.forEach { header ->
             Box(
                 modifier = Modifier
                     .fillMaxHeight()
-                    .widthIn(min = 180.dp, max = 180.dp)
-                    .background(MaterialTheme.colorScheme.secondary),
+                    .widthIn(min = 180.dp, max = 180.dp),
                 contentAlignment = Alignment.Center
 
             ) {
