@@ -43,11 +43,8 @@
     <string name="Category">الفئة</string>
     <string name="Description">الوصف</string>
     <string name="AmountPaid">المبلغ المدفوع</string>
-    <string name="CreateOrder">إنشاء طلب</string>
-    <string name="AddProduct">إضافة منتج</string>
-    <string name="CreateCollection">إنشاء مجموعة</string>
-    <string name="AddCustomer">إضافة عميل</string>
-    <string name="CreateCategory">إنشاء مجموعة</string>
+    <string name="Create">إنشاء</string>
+    <string name="Add">إضافة</string>
     <string name="Results">النتائج:</string>
     <string name="Prev">السابق</string>
     <string name="Next">التالي</string>
@@ -59,5 +56,8 @@
     <string name="Light">فاتح</string>
     <string name="System">النظام</string>
     <string name="Logout">تسجيل خروج</string>
+    <string name="OrderNumber">رقم الطلب</string>
+    <string name="Search">إبحث بأي صفة ...</string>
+
 
 </resources>

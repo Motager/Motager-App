@@ -1,5 +1,10 @@
 package org.ninjaneers.motager.collections.presentation
 
+import motager.composeapp.generated.resources.Actions
+import motager.composeapp.generated.resources.Name
+import motager.composeapp.generated.resources.Products
+import motager.composeapp.generated.resources.Res
+import org.jetbrains.compose.resources.StringResource
 import org.ninjaneers.motager.collections.domain.Collection
 
 data class CollectionsScreenState(
@@ -11,6 +16,10 @@ data class CollectionsScreenState(
             productsNumber = 10
         )
     },
-    val tableHeaders: List<String> = listOf("Name", "Products", "Actions"),
+    val tableHeaders: List<StringResource> = listOf(
+        Res.string.Name,
+        Res.string.Products,
+        Res.string.Actions
+    ),
     val collectionsNumber: Int = collectionsList.size
 )

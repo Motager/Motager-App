@@ -44,15 +44,18 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.launch
+import motager.composeapp.generated.resources.Create
 import motager.composeapp.generated.resources.Next
 import motager.composeapp.generated.resources.Of
 import motager.composeapp.generated.resources.Orders
 import motager.composeapp.generated.resources.OutfitBold
+import motager.composeapp.generated.resources.OutfitMedium
 import motager.composeapp.generated.resources.OutfitRegular
 import motager.composeapp.generated.resources.Page
 import motager.composeapp.generated.resources.Prev
 import motager.composeapp.generated.resources.Res
 import motager.composeapp.generated.resources.Results
+import motager.composeapp.generated.resources.Search
 import motager.composeapp.generated.resources.chevronleft
 import motager.composeapp.generated.resources.chevronright
 import motager.composeapp.generated.resources.filebox
@@ -148,14 +151,14 @@ private fun OrdersScreenContent(
                                     text = stringResource(Res.string.Orders),
                                     fontFamily = FontFamily(
                                         Font(
-                                            resource = Res.font.OutfitRegular,
-                                            weight = FontWeight.Normal
+                                            resource = Res.font.OutfitMedium,
+                                            weight = FontWeight.Medium
                                         )
                                     ),
                                     maxLines = 1,
                                     overflow = TextOverflow.Ellipsis,
                                     color = MaterialTheme.colorScheme.onBackground,
-                                    fontSize = 24.sp,
+                                    fontSize = 30.sp,
                                     textAlign = TextAlign.Start
                                 )
                                 Row(
@@ -191,9 +194,15 @@ private fun OrdersScreenContent(
                                                 tint = MaterialTheme.colorScheme.onPrimary
                                             )
                                             Text(
-                                                text = "Create Order",
+                                                text = stringResource(Res.string.Create),
                                                 color = MaterialTheme.colorScheme.onPrimary,
-                                                fontSize = 14.sp
+                                                fontSize = 18.sp,
+                                                fontFamily = FontFamily(
+                                                    Font(
+                                                        resource = Res.font.OutfitMedium,
+                                                        weight = FontWeight.Medium
+                                                    )
+                                                )
                                             )
                                         }
                                     }
@@ -222,7 +231,7 @@ private fun OrdersScreenContent(
                                 placeholder = {
                                     Text(
                                         modifier = Modifier.padding(horizontal = 2.dp),
-                                        text = "Search by any key",
+                                        text = stringResource(Res.string.Search),
                                         fontFamily = FontFamily(
                                             Font(
                                                 resource = Res.font.OutfitRegular,

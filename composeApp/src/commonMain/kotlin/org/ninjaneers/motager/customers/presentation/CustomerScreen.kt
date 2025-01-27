@@ -43,16 +43,18 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.launch
-import motager.composeapp.generated.resources.AddCustomer
+import motager.composeapp.generated.resources.Add
 import motager.composeapp.generated.resources.Customers
 import motager.composeapp.generated.resources.Next
 import motager.composeapp.generated.resources.Of
 import motager.composeapp.generated.resources.OutfitBold
+import motager.composeapp.generated.resources.OutfitMedium
 import motager.composeapp.generated.resources.OutfitRegular
 import motager.composeapp.generated.resources.Page
 import motager.composeapp.generated.resources.Prev
 import motager.composeapp.generated.resources.Res
 import motager.composeapp.generated.resources.Results
+import motager.composeapp.generated.resources.Search
 import motager.composeapp.generated.resources.chevronleft
 import motager.composeapp.generated.resources.chevronright
 import motager.composeapp.generated.resources.hellipsis
@@ -70,6 +72,7 @@ import org.ninjaneers.motager.core.presentation.components.TableActionCell
 import org.ninjaneers.motager.core.presentation.components.TableCell
 import org.ninjaneers.motager.core.presentation.components.TableHeader
 import org.ninjaneers.motager.core.presentation.components.TableRow
+import org.ninjaneers.motager.core.presentation.components.TableStatusCell
 import org.ninjaneers.motager.core.presentation.components.TopBar
 
 @Composable
@@ -148,14 +151,14 @@ private fun CustomerScreenContent(
                                     text = stringResource(Res.string.Customers),
                                     fontFamily = FontFamily(
                                         Font(
-                                            resource = Res.font.OutfitRegular,
-                                            weight = FontWeight.Normal
+                                            resource = Res.font.OutfitMedium,
+                                            weight = FontWeight.Medium
                                         )
                                     ),
                                     maxLines = 1,
                                     overflow = TextOverflow.Ellipsis,
                                     color = MaterialTheme.colorScheme.onBackground,
-                                    fontSize = 24.sp,
+                                    fontSize = 30.sp,
                                     textAlign = TextAlign.Start
                                 )
                                 Row(
@@ -190,9 +193,15 @@ private fun CustomerScreenContent(
                                                 contentDescription = "more",
                                             )
                                             Text(
-                                                text = stringResource(Res.string.AddCustomer),
+                                                text = stringResource(Res.string.Add),
                                                 color = MaterialTheme.colorScheme.onPrimary,
-                                                fontSize = 14.sp
+                                                fontSize = 18.sp,
+                                                fontFamily = FontFamily(
+                                                    Font(
+                                                        resource = Res.font.OutfitMedium,
+                                                        weight = FontWeight.Medium
+                                                    )
+                                                )
                                             )
                                         }
                                     }
@@ -218,7 +227,7 @@ private fun CustomerScreenContent(
                                         .weight(1F),
                                     placeholder = {
                                         Text(
-                                            text = "Search by any key",
+                                            text = stringResource(Res.string.Search),
                                             fontFamily = FontFamily(
                                                 Font(
                                                     resource = Res.font.OutfitRegular,
@@ -287,7 +296,7 @@ private fun CustomerScreenContent(
                                         items = state.customerList,
                                         header = {
                                             TableHeader(
-                                                headers = state.tapleHeaders
+                                                headers = state.tableHeaders
                                             )
                                         }
                                     )
@@ -296,7 +305,7 @@ private fun CustomerScreenContent(
                                             TableCell(customer.name)
                                             TableCell(customer.email)
                                             TableCell(customer.amountPaid.toString())
-                                            TableCell(customer.status)
+                                            TableStatusCell(customer.status)
                                             TableActionCell()
                                         }
                                     }

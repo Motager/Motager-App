@@ -15,7 +15,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -63,10 +62,11 @@ import motager.composeapp.generated.resources.Res
 import motager.composeapp.generated.resources.Settings
 import motager.composeapp.generated.resources.Support
 import motager.composeapp.generated.resources.System
+import motager.composeapp.generated.resources.boxes
 import motager.composeapp.generated.resources.chart
-import motager.composeapp.generated.resources.curvedarrowright
 import motager.composeapp.generated.resources.customers
 import motager.composeapp.generated.resources.discounts
+import motager.composeapp.generated.resources.grid_plus
 import motager.composeapp.generated.resources.headset
 import motager.composeapp.generated.resources.home
 import motager.composeapp.generated.resources.languages
@@ -77,6 +77,7 @@ import motager.composeapp.generated.resources.plan_img
 import motager.composeapp.generated.resources.products
 import motager.composeapp.generated.resources.settings
 import motager.composeapp.generated.resources.sun
+import motager.composeapp.generated.resources.system
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.Font
 import org.jetbrains.compose.resources.StringResource
@@ -104,6 +105,7 @@ fun NavDrawer() {
             verticalArrangement = Arrangement.SpaceBetween
         ) {
             Column {
+                NavDrawerHeader()
                 Column {
                     Text(
                         modifier = Modifier
@@ -166,7 +168,7 @@ fun NavDrawer() {
                 ) {
                     Column(
                         modifier = Modifier
-                            .padding(top = 85.dp)
+                            .padding(top = 65.dp)
                             .clip(RoundedCornerShape(6.dp))
                             .background(MaterialTheme.colorScheme.primary.copy(alpha = 0.15f)),
                         horizontalAlignment = Alignment.CenterHorizontally,
@@ -206,7 +208,7 @@ fun NavDrawer() {
 
                     }
                     Image(
-                        modifier = Modifier.size(150.dp),
+                        modifier = Modifier.size(120.dp),
                         painter = painterResource(Res.drawable.plan_img),
                         contentDescription = "Plan"
                     )
@@ -216,9 +218,7 @@ fun NavDrawer() {
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
-                    Box(
-                        modifier = Modifier.wrapContentSize(Alignment.TopStart)
-                    ) {
+                    Box {
                         PrimaryIconButton(
                             onClick = { isThemeMenuExpanded = !isThemeMenuExpanded },
                             painter = painterResource(Res.drawable.moon),
@@ -234,14 +234,14 @@ fun NavDrawer() {
                                 width = 0.8f.dp,
                                 color = MaterialTheme.colorScheme.outline
                             ),
-                            offset = DpOffset((-5).dp, 0.dp),
+                            offset = DpOffset((-5).dp, (-5).dp),
                             shape = RoundedCornerShape(6.dp),
                             containerColor = MaterialTheme.colorScheme.inverseSurface
                         ) {
                             DropdownMenuItem(
-                                modifier = Modifier.padding(vertical = 6.dp, horizontal = 8.dp)
+                                modifier = Modifier.padding(horizontal = 6.dp)
                                     .clip(RoundedCornerShape(6.dp)),
-                                onClick = {},
+                                onClick = { isThemeMenuExpanded = !isThemeMenuExpanded },
                                 text = {
                                     Text(
                                         text = stringResource(Res.string.Light),
@@ -259,15 +259,16 @@ fun NavDrawer() {
                                 leadingIcon = {
                                     Icon(
                                         painter = painterResource(Res.drawable.sun),
-                                        contentDescription = "Light mode"
+                                        contentDescription = "Light mode",
+                                        tint = MaterialTheme.colorScheme.inverseOnSurface
                                     )
                                 },
-                                contentPadding = PaddingValues(horizontal = 16.dp)
+                                contentPadding = PaddingValues(horizontal = 12.dp)
                             )
                             DropdownMenuItem(
-                                modifier = Modifier.padding(vertical = 6.dp, horizontal = 8.dp)
+                                modifier = Modifier.padding(horizontal = 6.dp)
                                     .clip(RoundedCornerShape(6.dp)),
-                                onClick = {},
+                                onClick = { isThemeMenuExpanded = !isThemeMenuExpanded },
                                 text = {
                                     Text(
                                         text = stringResource(Res.string.Dark),
@@ -285,15 +286,18 @@ fun NavDrawer() {
                                 leadingIcon = {
                                     Icon(
                                         painter = painterResource(Res.drawable.moon),
-                                        contentDescription = "Dark mode"
+                                        contentDescription = "Dark mode",
+                                        tint = MaterialTheme.colorScheme.inverseOnSurface
                                     )
                                 },
-                                contentPadding = PaddingValues(horizontal = 16.dp)
+                                contentPadding = PaddingValues(horizontal = 12.dp)
                             )
                             DropdownMenuItem(
-                                modifier = Modifier.padding(vertical = 6.dp, horizontal = 8.dp)
+                                modifier = Modifier.padding(horizontal = 6.dp)
                                     .clip(RoundedCornerShape(6.dp)),
-                                onClick = {},
+                                onClick = {
+                                    isThemeMenuExpanded = !isThemeMenuExpanded
+                                },
                                 text = {
                                     Text(
                                         text = stringResource(Res.string.System),
@@ -310,11 +314,12 @@ fun NavDrawer() {
                                 },
                                 leadingIcon = {
                                     Icon(
-                                        painter = painterResource(Res.drawable.sun),
-                                        contentDescription = "System theme"
+                                        painter = painterResource(Res.drawable.system),
+                                        contentDescription = "System theme",
+                                        tint = MaterialTheme.colorScheme.inverseOnSurface
                                     )
                                 },
-                                contentPadding = PaddingValues(horizontal = 16.dp)
+                                contentPadding = PaddingValues(horizontal = 12.dp)
                             )
                         }
                     }
@@ -424,12 +429,12 @@ val navigationItems = listOf(
     NavDrawerItem(
         label = Res.string.Collections,
         selected = false,
-        icon = Res.drawable.curvedarrowright,
+        icon = Res.drawable.grid_plus,
     ),
     NavDrawerItem(
         label = Res.string.Categories,
         selected = false,
-        icon = Res.drawable.curvedarrowright,
+        icon = Res.drawable.boxes,
     ),
     NavDrawerItem(
         label = Res.string.Customers,

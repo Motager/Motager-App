@@ -1,5 +1,12 @@
 package org.ninjaneers.motager.customers.presentation
 
+import motager.composeapp.generated.resources.Actions
+import motager.composeapp.generated.resources.AmountPaid
+import motager.composeapp.generated.resources.Email
+import motager.composeapp.generated.resources.Name
+import motager.composeapp.generated.resources.Res
+import motager.composeapp.generated.resources.Status
+import org.jetbrains.compose.resources.StringResource
 import org.ninjaneers.motager.customers.domain.Customer
 
 data class CustomerScreenState(
@@ -13,6 +20,12 @@ data class CustomerScreenState(
             amountPaid = 100,
         )
     },
-    val tapleHeaders: List<String> = listOf("Name", "Email", "Amount Paid", "Status", "Actions"),
+    val tableHeaders: List<StringResource> = listOf(
+        Res.string.Name,
+        Res.string.Email,
+        Res.string.AmountPaid,
+        Res.string.Status,
+        Res.string.Actions
+    ),
     val customerNumber: Int = customerList.size
 )

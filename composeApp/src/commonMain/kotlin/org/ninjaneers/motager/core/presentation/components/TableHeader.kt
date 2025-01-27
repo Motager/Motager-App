@@ -22,10 +22,12 @@ import androidx.compose.ui.unit.sp
 import motager.composeapp.generated.resources.OutfitBold
 import motager.composeapp.generated.resources.Res
 import org.jetbrains.compose.resources.Font
+import org.jetbrains.compose.resources.StringResource
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun TableHeader(
-    headers: List<String>
+    headers: List<StringResource>
 ) {
     Row(
         modifier = Modifier
@@ -48,7 +50,7 @@ fun TableHeader(
                     horizontalArrangement = Arrangement.SpaceAround
                 ) {
                     Text(
-                        text = header,
+                        text = stringResource(header),
                         fontFamily = FontFamily(
                             Font(
                                 resource = Res.font.OutfitBold,

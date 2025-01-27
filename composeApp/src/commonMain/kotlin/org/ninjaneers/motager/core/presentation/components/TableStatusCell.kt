@@ -47,7 +47,7 @@ fun TableStatusCell(
                         else -> Color.Transparent
                     }
                 )
-                .padding(vertical = 2.dp, horizontal = 12.dp),
+                .padding(vertical = 4.dp, horizontal = 16.dp),
             text = status,
             fontFamily = FontFamily(
                 Font(

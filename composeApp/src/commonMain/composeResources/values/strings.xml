@@ -43,11 +43,8 @@
     <string name="Category">Category</string>
     <string name="Description">Description</string>
     <string name="AmountPaid">Amount Paid</string>
-    <string name="CreateOrder">Create Order</string>
-    <string name="AddProduct">Add Product</string>
-    <string name="CreateCollection">Create Collection</string>
-    <string name="AddCustomer">Add Customer</string>
-    <string name="CreateCategory">Create Category</string>
+    <string name="Create">Create</string>
+    <string name="Add">Add</string>
     <string name="Results">Results:</string>
     <string name="Prev">Prev</string>
     <string name="Next">Next</string>
@@ -59,6 +56,8 @@
     <string name="Light">Light</string>
     <string name="System">System</string>
     <string name="Logout">Logout</string>
+    <string name="OrderNumber">Order Number</string>
+    <string name="Search">Search by any key ...</string>
 
 
 </resources>

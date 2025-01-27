@@ -1,5 +1,10 @@
 package org.ninjaneers.motager.categories.presentation
 
+import motager.composeapp.generated.resources.Actions
+import motager.composeapp.generated.resources.Description
+import motager.composeapp.generated.resources.Name
+import motager.composeapp.generated.resources.Res
+import org.jetbrains.compose.resources.StringResource
 import org.ninjaneers.motager.categories.domain.Category
 
 data class CategoriesScreenState(
@@ -11,6 +16,10 @@ data class CategoriesScreenState(
             description = "Gadgets and devices"
         )
     },
-    val tapleHeaders: List<String> = listOf("Name", "Description", "Action"),
+    val tapleHeaders: List<StringResource> = listOf(
+        Res.string.Name,
+        Res.string.Description,
+        Res.string.Actions
+    ),
     val categoriesNumber: Int = categoryList.size
 )

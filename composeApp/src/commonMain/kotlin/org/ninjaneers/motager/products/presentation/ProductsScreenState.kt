@@ -1,5 +1,12 @@
 package org.ninjaneers.motager.products.presentation
 
+import motager.composeapp.generated.resources.Actions
+import motager.composeapp.generated.resources.Category
+import motager.composeapp.generated.resources.Image
+import motager.composeapp.generated.resources.Name
+import motager.composeapp.generated.resources.Price
+import motager.composeapp.generated.resources.Res
+import org.jetbrains.compose.resources.StringResource
 import org.ninjaneers.motager.products.domain.Product
 
 data class ProductsScreenState(
@@ -12,6 +19,12 @@ data class ProductsScreenState(
             category = "Electronics"
         )
     },
-    val tableHeaders: List<String> = listOf("Image", "Name", "Price", "Category", "Actions"),
+    val tableHeaders: List<StringResource> = listOf(
+        Res.string.Image,
+        Res.string.Name,
+        Res.string.Price,
+        Res.string.Category,
+        Res.string.Actions
+    ),
     val productsNumber: Int = productsList.size
 )
