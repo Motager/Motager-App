@@ -39,11 +39,22 @@ import motager.composeapp.generated.resources.pulse
 import org.jetbrains.compose.resources.Font
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
+import org.ninjaneers.motager.app.navigation.Navigator
+import org.ninjaneers.motager.app.navigation.Route
 import org.ninjaneers.motager.core.presentation.components.PrimaryButton
 import org.ninjaneers.motager.mainscreen.components.MainNavBar
 
 @Composable
-fun MainScreen() {
+fun MainScreen(
+    navigator: Navigator
+) {
+    MainScreenContent(navigator = navigator)
+}
+
+@Composable
+private fun MainScreenContent(
+    navigator: Navigator
+) {
     Scaffold { innerPadding ->
         Column(
             modifier = Modifier
@@ -138,7 +149,7 @@ fun MainScreen() {
                         modifier = Modifier
                             .height(42.dp)
                             .wrapContentWidth(),
-                        onClick = {},
+                        onClick = { navigator.navigate(Route.Products) },
                         contentPadding = PaddingValues(
                             horizontal = 16.dp,
                             vertical = 8.dp
