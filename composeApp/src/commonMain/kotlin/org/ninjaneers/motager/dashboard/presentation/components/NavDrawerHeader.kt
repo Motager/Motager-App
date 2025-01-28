@@ -1,0 +1,76 @@
+package org.ninjaneers.motager.dashboard.presentation.components
+
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import motager.composeapp.generated.resources.OutfitMedium
+import motager.composeapp.generated.resources.Res
+import motager.composeapp.generated.resources.avatar
+import org.jetbrains.compose.resources.Font
+import org.jetbrains.compose.resources.painterResource
+
+@Composable
+fun NavDrawerHeader() {
+    NavDrawerHeaderContent()
+}
+
+@Composable
+private fun NavDrawerHeaderContent() {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(MaterialTheme.colorScheme.background)
+            .padding(),
+        verticalArrangement = Arrangement.spacedBy(6.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Image(
+            modifier = Modifier
+                .clip(RoundedCornerShape(100.dp))
+                .size(80.dp)
+                .background(MaterialTheme.colorScheme.primary),
+            painter = painterResource(Res.drawable.avatar),
+            contentDescription = null
+        )
+        Text(
+            text = "User Name",
+            fontFamily = FontFamily(
+                Font(
+                    resource = Res.font.OutfitMedium,
+                    weight = FontWeight.Medium
+                )
+            ),
+            color = MaterialTheme.colorScheme.onBackground,
+            fontSize = 20.sp,
+            textAlign = TextAlign.Start
+        )
+        Text(
+            text = "Store Name",
+            fontFamily = FontFamily(
+                Font(
+                    resource = Res.font.OutfitMedium,
+                    weight = FontWeight.Medium
+                )
+            ),
+            color = MaterialTheme.colorScheme.onBackground,
+            fontSize = 28.sp,
+            textAlign = TextAlign.Start
+        )
+    }
+}
