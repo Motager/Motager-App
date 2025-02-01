@@ -8,10 +8,18 @@ class CustomersViewModel : ViewModel() {
     private val _state = MutableStateFlow(CustomerScreenState())
     val state = _state.asStateFlow()
 
-    fun onAction(action: CustomerActions) {
+    fun onAction(action: CustomerAction) {
         when (action) {
-            is CustomerActions.onLimitSearch -> CustomerActions.onLimitSearch(action.limit)
-            is CustomerActions.onProductSearch -> CustomerActions.onProductSearch(action.query)
+            is CustomerAction.OnLimitSearch -> onLimitSearch(action.limit)
+            is CustomerAction.OnProductSearch -> onProductSearch(action.query)
         }
+    }
+
+    private fun onProductSearch(query: String) {
+
+    }
+
+    private fun onLimitSearch(limit: Int) {
+
     }
 }
