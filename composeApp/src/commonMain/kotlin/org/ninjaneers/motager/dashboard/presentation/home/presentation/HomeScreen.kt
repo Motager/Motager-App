@@ -6,54 +6,56 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.IO
-import kotlinx.coroutines.launch
 import org.ninjaneers.motager.app.navigation.Navigator
+import org.ninjaneers.motager.dashboard.presentation.DashboardAction
+import org.ninjaneers.motager.dashboard.presentation.DashboardState
 import org.ninjaneers.motager.dashboard.presentation.components.NavDrawer
 import org.ninjaneers.motager.dashboard.presentation.components.TopBar
 
 @Composable
 fun HomeScreen(
-    navigator: Navigator
+    navigator: Navigator,
+    dashboardState: DashboardState,
+    onAction: suspend (DashboardAction) -> Unit
 ) {
     HomeScreenContent(
-        navigator = navigator
+        navigator = navigator,
+        dashboardState = dashboardState,
+        onAction = onAction
     )
 }
 
 @Composable
 private fun HomeScreenContent(
-    navigator: Navigator
+    navigator: Navigator,
+    dashboardState: DashboardState,
+    onAction: suspend (DashboardAction) -> Unit
 ) {
-    val scope = rememberCoroutineScope()
-    val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
+//    val scope = rememberCoroutineScope()
+//    val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     ModalNavigationDrawer(
         drawerContent = {
-            NavDrawer(navigator = navigator)
+            NavDrawer(
+                navigator = navigator,
+                navigationItems = dashboardState.navigationItems,
+                closeDrawer = onAction
+            )
         },
-        drawerState = drawerState,
+        drawerState = dashboardState.drawerState,
         scrimColor = MaterialTheme.colorScheme.background.copy(alpha = 0.5f)
     ) {
         Scaffold(
             topBar = {
                 TopBar(
-                    openNavDrawer = {
-                        scope.launch(Dispatchers.IO) {
-                            drawerState.open()
-                        }
-                    }
+                    openNavDrawer = onAction
                 )
             }
         ) { innerPadding ->
@@ -88,4 +90,4 @@ private fun HomeScreenContent(
         }
     }
 }
-//}
+

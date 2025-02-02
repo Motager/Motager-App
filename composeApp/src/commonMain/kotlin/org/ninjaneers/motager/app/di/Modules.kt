@@ -4,6 +4,7 @@ package org.ninjaneers.motager.app.di
 import org.koin.core.module.Module
 import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
+import org.ninjaneers.motager.dashboard.presentation.DashboardViewModel
 import org.ninjaneers.motager.dashboard.presentation.analytics.presentation.AnalyticsViewModel
 import org.ninjaneers.motager.dashboard.presentation.categories.presentation.CategoriesViewModel
 import org.ninjaneers.motager.dashboard.presentation.collections.presentation.CollectionsViewModel
@@ -26,4 +27,5 @@ val sharedModule = module {
     viewModelOf(::AnalyticsViewModel)
     viewModelOf(::DiscountsViewModel)
     viewModelOf(::SettingsViewModel)
+    viewModelOf(::DashboardViewModel)
 }

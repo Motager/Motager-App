@@ -17,10 +17,12 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
+import kotlinx.coroutines.launch
 import motager.composeapp.generated.resources.DarkLogoEn
 import motager.composeapp.generated.resources.LightLogoEn
 import motager.composeapp.generated.resources.Res
@@ -29,17 +31,19 @@ import motager.composeapp.generated.resources.bell
 import motager.composeapp.generated.resources.panels
 import org.jetbrains.compose.resources.painterResource
 import org.ninjaneers.motager.core.presentation.components.PrimaryIconButton
+import org.ninjaneers.motager.dashboard.presentation.DashboardAction
 
 @Composable
 fun TopBar(
-    openNavDrawer: () -> Unit
+    openNavDrawer: suspend (DashboardAction) -> Unit
 ) {
     TopBarContent(openNavDrawer = openNavDrawer)
 }
 
 
 @Composable
-private fun TopBarContent(openNavDrawer: () -> Unit) {
+private fun TopBarContent(openNavDrawer: suspend (DashboardAction) -> Unit) {
+    val coroutineScope = rememberCoroutineScope()
     Row(
         modifier = Modifier
             .windowInsetsPadding(WindowInsets.statusBars)
@@ -56,7 +60,9 @@ private fun TopBarContent(openNavDrawer: () -> Unit) {
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             PrimaryIconButton(
-                onClick = { openNavDrawer() },
+                onClick = {
+                    coroutineScope.launch { openNavDrawer(DashboardAction.OpenDrawer) }
+                },
                 painter = painterResource(Res.drawable.panels),
                 iconTint = MaterialTheme.colorScheme.onBackground,
                 colors = ButtonDefaults.buttonColors(

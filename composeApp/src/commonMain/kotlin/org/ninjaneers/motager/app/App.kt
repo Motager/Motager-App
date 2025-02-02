@@ -1,10 +1,8 @@
 package org.ninjaneers.motager.app
 
-import androidx.compose.animation.core.tween
-import androidx.compose.animation.slideInHorizontally
-import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -16,6 +14,7 @@ import org.ninjaneers.motager.app.navigation.Route
 import org.ninjaneers.motager.authentication.presentation.login.LoginScreen
 import org.ninjaneers.motager.authentication.presentation.signup.SignupScreen
 import org.ninjaneers.motager.core.presentation.theme.MotagerTheme
+import org.ninjaneers.motager.dashboard.presentation.DashboardViewModel
 import org.ninjaneers.motager.dashboard.presentation.analytics.presentation.AnalyticsScreen
 import org.ninjaneers.motager.dashboard.presentation.analytics.presentation.AnalyticsViewModel
 import org.ninjaneers.motager.dashboard.presentation.categories.presentation.CategoriesScreen
@@ -40,8 +39,9 @@ import org.ninjaneers.motager.mainscreen.MainScreen
 @Preview
 fun App() {
     MotagerTheme {
+        val dashboardViewModel = koinViewModel<DashboardViewModel>()
         val navController = rememberNavController()
-        val navigator = Navigator(navController)
+        val navigator = remember { Navigator(navController) }
         NavHost(navController = navController, startDestination = Route.Home) {
             composable<Route.MainScreen> {
                 MainScreen(navigator = navigator)
@@ -55,73 +55,131 @@ fun App() {
             }
 
             composable<Route.Home>(
-                enterTransition = { slideInHorizontally(animationSpec = tween(500)) { offset -> offset } },
-                exitTransition = { slideOutHorizontally(animationSpec = tween(500)) { offset -> offset } }
+                enterTransition = null,
+                exitTransition = null
             ) {
+                val dashboardState by dashboardViewModel.state.collectAsStateWithLifecycle()
                 val homeViewModel = koinViewModel<HomeViewModel>()
-                HomeScreen(navigator = navigator)
+                HomeScreen(
+                    navigator = navigator,
+                    dashboardState = dashboardState,
+                    onAction = dashboardViewModel::onAction
+                )
             }
             composable<Route.Orders>(
-                enterTransition = { slideInHorizontally(animationSpec = tween(500)) { offset -> offset } },
-                exitTransition = { slideOutHorizontally(animationSpec = tween(500)) { offset -> offset } }
+                enterTransition = null,
+                exitTransition = null
             ) {
+
+                val dashboardState by dashboardViewModel.state.collectAsStateWithLifecycle()
                 val ordersViewModel = koinViewModel<OrdersViewModel>()
                 val state by ordersViewModel.state.collectAsStateWithLifecycle()
-                OrdersScreen(state = state, navigator = navigator)
+                OrdersScreen(
+                    state = state,
+                    navigator = navigator,
+                    dashboardState = dashboardState,
+                    onAction = dashboardViewModel::onAction
+                )
             }
             composable<Route.Products>(
-                enterTransition = { slideInHorizontally(animationSpec = tween(500)) { offset -> offset } },
-                exitTransition = { slideOutHorizontally(animationSpec = tween(500)) { offset -> offset } }
+                enterTransition = null,
+                exitTransition = null
 
             ) {
+
+                val dashboardState by dashboardViewModel.state.collectAsStateWithLifecycle()
                 val productsViewModel = koinViewModel<ProductsViewModel>()
                 val state by productsViewModel.state.collectAsStateWithLifecycle()
-                ProductsScreen(state = state, navigator = navigator)
+                ProductsScreen(
+                    state = state,
+                    navigator = navigator,
+                    dashboardState = dashboardState,
+                    onAction = dashboardViewModel::onAction
+                )
             }
             composable<Route.Collections>(
-                enterTransition = { slideInHorizontally(animationSpec = tween(500)) { offset -> offset } },
-                exitTransition = { slideOutHorizontally(animationSpec = tween(500)) { offset -> offset } }
+                enterTransition = null,
+                exitTransition = null
             ) {
+
+                val dashboardState by dashboardViewModel.state.collectAsStateWithLifecycle()
                 val collectionsViewModel = koinViewModel<CollectionsViewModel>()
                 val state by collectionsViewModel.state.collectAsStateWithLifecycle()
-                CollectionsScreen(state = state, navigator = navigator)
+                CollectionsScreen(
+                    state = state,
+                    navigator = navigator,
+                    dashboardState = dashboardState,
+                    onAction = dashboardViewModel::onAction
+                )
             }
             composable<Route.Categories>(
-                enterTransition = { slideInHorizontally(animationSpec = tween(500)) { offset -> offset } },
-                exitTransition = { slideOutHorizontally(animationSpec = tween(500)) { offset -> offset } }
+                enterTransition = null,
+                exitTransition = null
             ) {
+
+                val dashboardState by dashboardViewModel.state.collectAsStateWithLifecycle()
                 val categoriesViewModel = koinViewModel<CategoriesViewModel>()
                 val state by categoriesViewModel.state.collectAsStateWithLifecycle()
-                CategoriesScreen(state = state, navigator = navigator)
+                CategoriesScreen(
+                    state = state,
+                    navigator = navigator,
+                    dashboardState = dashboardState,
+                    onAction = dashboardViewModel::onAction
+                )
             }
             composable<Route.Customers>(
-                enterTransition = { slideInHorizontally(animationSpec = tween(500)) { offset -> offset } },
-                exitTransition = { slideOutHorizontally(animationSpec = tween(500)) { offset -> offset } }
+                enterTransition = null,
+                exitTransition = null
             ) {
+
+                val dashboardState by dashboardViewModel.state.collectAsStateWithLifecycle()
                 val customersViewModel = koinViewModel<CustomersViewModel>()
                 val state by customersViewModel.state.collectAsStateWithLifecycle()
-                CustomersScreen(state = state, navigator = navigator)
+                CustomersScreen(
+                    state = state,
+                    navigator = navigator,
+                    dashboardState = dashboardState,
+                    onAction = dashboardViewModel::onAction
+                )
             }
             composable<Route.Analytics>(
-                enterTransition = { slideInHorizontally(animationSpec = tween(500)) { offset -> offset } },
-                exitTransition = { slideOutHorizontally(animationSpec = tween(500)) { offset -> offset } }
+                enterTransition = null,
+                exitTransition = null
             ) {
+
+                val dashboardState by dashboardViewModel.state.collectAsStateWithLifecycle()
                 val analyticsViewModel = koinViewModel<AnalyticsViewModel>()
-                AnalyticsScreen(navigator = navigator)
+                AnalyticsScreen(
+                    navigator = navigator,
+                    dashboardState = dashboardState,
+                    onAction = dashboardViewModel::onAction
+                )
             }
             composable<Route.Discounts>(
-                enterTransition = { slideInHorizontally(animationSpec = tween(500)) { offset -> offset } },
-                exitTransition = { slideOutHorizontally(animationSpec = tween(500)) { offset -> offset } }
+                enterTransition = null,
+                exitTransition = null
             ) {
+
+                val dashboardState by dashboardViewModel.state.collectAsStateWithLifecycle()
                 val discountsViewModel = koinViewModel<DiscountsViewModel>()
-                DiscountsScreen(navigator = navigator)
+                DiscountsScreen(
+                    navigator = navigator,
+                    dashboardState = dashboardState,
+                    onAction = dashboardViewModel::onAction
+                )
             }
             composable<Route.Settings>(
-                enterTransition = { slideInHorizontally(animationSpec = tween(500)) { offset -> offset } },
-                exitTransition = { slideOutHorizontally(animationSpec = tween(500)) { offset -> offset } }
+                enterTransition = null,
+                exitTransition = null
             ) {
+
+                val dashboardState by dashboardViewModel.state.collectAsStateWithLifecycle()
                 val settingsViewModel = koinViewModel<SettingsViewModel>()
-                SettingsScreen(navigator = navigator)
+                SettingsScreen(
+                    navigator = navigator,
+                    dashboardState = dashboardState,
+                    onAction = dashboardViewModel::onAction
+                )
             }
 
         }

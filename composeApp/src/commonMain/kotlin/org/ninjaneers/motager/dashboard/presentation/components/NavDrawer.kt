@@ -33,6 +33,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -44,64 +45,56 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import motager.composeapp.generated.resources.Analytics
+import kotlinx.coroutines.launch
 import motager.composeapp.generated.resources.Arabic
-import motager.composeapp.generated.resources.Categories
-import motager.composeapp.generated.resources.Collections
-import motager.composeapp.generated.resources.Customers
 import motager.composeapp.generated.resources.Dark
 import motager.composeapp.generated.resources.DashboardLinks
-import motager.composeapp.generated.resources.Discounts
 import motager.composeapp.generated.resources.English
-import motager.composeapp.generated.resources.Home
 import motager.composeapp.generated.resources.Light
 import motager.composeapp.generated.resources.Logout
-import motager.composeapp.generated.resources.Orders
 import motager.composeapp.generated.resources.OutfitMedium
 import motager.composeapp.generated.resources.OutfitRegular
 import motager.composeapp.generated.resources.OutfitSemiBold
-import motager.composeapp.generated.resources.Products
 import motager.composeapp.generated.resources.Res
-import motager.composeapp.generated.resources.Settings
 import motager.composeapp.generated.resources.Support
 import motager.composeapp.generated.resources.System
 import motager.composeapp.generated.resources.ar
-import motager.composeapp.generated.resources.boxes
-import motager.composeapp.generated.resources.chart
-import motager.composeapp.generated.resources.customers
-import motager.composeapp.generated.resources.discounts
 import motager.composeapp.generated.resources.en
-import motager.composeapp.generated.resources.grid_plus
 import motager.composeapp.generated.resources.headset
-import motager.composeapp.generated.resources.home
 import motager.composeapp.generated.resources.languages
 import motager.composeapp.generated.resources.log_out
 import motager.composeapp.generated.resources.moon
-import motager.composeapp.generated.resources.orders
 import motager.composeapp.generated.resources.plan_img
-import motager.composeapp.generated.resources.products
-import motager.composeapp.generated.resources.settings
 import motager.composeapp.generated.resources.sun
 import motager.composeapp.generated.resources.system
 import org.jetbrains.compose.resources.Font
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.ninjaneers.motager.app.navigation.Navigator
-import org.ninjaneers.motager.app.navigation.Route
 import org.ninjaneers.motager.core.presentation.components.PrimaryIconButton
 import org.ninjaneers.motager.dashboard.domain.NavDrawerItem
+import org.ninjaneers.motager.dashboard.presentation.DashboardAction
 
 @Composable
 fun NavDrawer(
-    navigator: Navigator
+    navigator: Navigator,
+    navigationItems: List<NavDrawerItem>,
+    closeDrawer: suspend (DashboardAction) -> Unit
 ) {
-    NavDrawerContent(navigator = navigator)
+    NavDrawerContent(
+        navigator = navigator,
+        navigationItems = navigationItems,
+        closeDrawer = closeDrawer
+    )
 }
 
 @Composable
 private fun NavDrawerContent(
-    navigator: Navigator
+    navigator: Navigator,
+    navigationItems: List<NavDrawerItem>,
+    closeDrawer: suspend (DashboardAction) -> Unit
 ) {
+    val coroutineScope = rememberCoroutineScope()
     var isThemeMenuExpanded by remember { mutableStateOf(false) }
     var isLocalMenuExpanded by remember { mutableStateOf(false) }
     var selectedIndex by remember { mutableStateOf(0) }
@@ -140,9 +133,12 @@ private fun NavDrawerContent(
                         NavigationDrawerItem(
                             selected = selectedIndex == index,
                             onClick = {
-                                navigator.navigate(item.route)
-                                item.selected = !item.selected
-                                selectedIndex = index
+                                coroutineScope.launch {
+                                    closeDrawer(DashboardAction.CloseDrawer)
+                                    navigator.navigate(item.route)
+                                    item.selected = !item.selected
+                                    selectedIndex = index
+                                }
                             },
                             label = {
                                 Text(
@@ -489,61 +485,3 @@ private fun NavDrawerContent(
 
 }
 
-
-
-val navigationItems = listOf(
-    NavDrawerItem(
-        label = Res.string.Home,
-        selected = true,
-        icon = Res.drawable.home,
-        route = Route.Home
-    ),
-    NavDrawerItem(
-        label = Res.string.Orders,
-        selected = false,
-        icon = Res.drawable.orders,
-        route = Route.Orders
-    ),
-    NavDrawerItem(
-        label = Res.string.Products,
-        selected = false,
-        icon = Res.drawable.products,
-        route = Route.Products
-    ),
-    NavDrawerItem(
-        label = Res.string.Collections,
-        selected = false,
-        icon = Res.drawable.grid_plus,
-        route = Route.Collections
-    ),
-    NavDrawerItem(
-        label = Res.string.Categories,
-        selected = false,
-        icon = Res.drawable.boxes,
-        route = Route.Categories
-    ),
-    NavDrawerItem(
-        label = Res.string.Customers,
-        selected = false,
-        icon = Res.drawable.customers,
-        route = Route.Customers
-    ),
-    NavDrawerItem(
-        label = Res.string.Analytics,
-        selected = false,
-        icon = Res.drawable.chart,
-        route = Route.Analytics
-    ),
-    NavDrawerItem(
-        label = Res.string.Discounts,
-        selected = false,
-        icon = Res.drawable.discounts,
-        route = Route.Discounts
-    ),
-    NavDrawerItem(
-        label = Res.string.Settings,
-        selected = false,
-        icon = Res.drawable.settings,
-        route = Route.Settings
-    )
-)

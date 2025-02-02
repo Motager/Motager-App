@@ -17,16 +17,13 @@ import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -36,9 +33,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.IO
-import kotlinx.coroutines.launch
 import motager.composeapp.generated.resources.Categories
 import motager.composeapp.generated.resources.Create
 import motager.composeapp.generated.resources.Next
@@ -63,6 +57,8 @@ import org.ninjaneers.motager.app.navigation.Navigator
 import org.ninjaneers.motager.core.presentation.components.PrimaryButton
 import org.ninjaneers.motager.core.presentation.components.PrimaryIconButton
 import org.ninjaneers.motager.core.presentation.components.PrimaryTextField
+import org.ninjaneers.motager.dashboard.presentation.DashboardAction
+import org.ninjaneers.motager.dashboard.presentation.DashboardState
 import org.ninjaneers.motager.dashboard.presentation.components.NavDrawer
 import org.ninjaneers.motager.dashboard.presentation.components.Table
 import org.ninjaneers.motager.dashboard.presentation.components.TableActionCell
@@ -74,36 +70,40 @@ import org.ninjaneers.motager.dashboard.presentation.components.TopBar
 @Composable
 fun CategoriesScreen(
     state: CategoriesScreenState,
-    navigator: Navigator
+    navigator: Navigator,
+    dashboardState: DashboardState,
+    onAction: suspend (DashboardAction) -> Unit
 ) {
     CategoriesScreenContent(
         state = state,
-        navigator = navigator
+        navigator = navigator,
+        dashboardState = dashboardState,
+        onAction = onAction
     )
 }
 
 @Composable
 private fun CategoriesScreenContent(
     state: CategoriesScreenState,
-    navigator: Navigator
+    navigator: Navigator,
+    dashboardState: DashboardState,
+    onAction: suspend (DashboardAction) -> Unit
 ) {
-    val scope = rememberCoroutineScope()
-    val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     ModalNavigationDrawer(
         drawerContent = {
-            NavDrawer(navigator = navigator)
+            NavDrawer(
+                navigator = navigator,
+                navigationItems = dashboardState.navigationItems,
+                closeDrawer = onAction
+            )
         },
-        drawerState = drawerState,
+        drawerState = dashboardState.drawerState,
         scrimColor = MaterialTheme.colorScheme.background.copy(alpha = 0.5f)
     ) {
         Scaffold(
             topBar = {
                 TopBar(
-                    openNavDrawer = {
-                        scope.launch(Dispatchers.IO) {
-                            drawerState.open()
-                        }
-                    }
+                    openNavDrawer = onAction
                 )
             }
         ) { innerPadding ->
@@ -127,111 +127,134 @@ private fun CategoriesScreenContent(
 //                    ),
 //                )
 //                {
+                Column(
+                    modifier = Modifier
+                        .clip(RoundedCornerShape(6.dp))
+                        .fillMaxSize()
+                        .background(MaterialTheme.colorScheme.secondary.copy(alpha = 0.5f))
+                        .padding(8.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.spacedBy(10.dp)
+
+                ) {
                     Column(
-                        modifier = Modifier
-                            .clip(RoundedCornerShape(6.dp))
-                            .fillMaxSize()
-                            .background(MaterialTheme.colorScheme.secondary.copy(alpha = 0.5f))
-                            .padding(8.dp),
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        verticalArrangement = Arrangement.spacedBy(10.dp)
-
+                        modifier = Modifier.fillMaxWidth(),
+                        verticalArrangement = Arrangement.spacedBy(8.dp),
+                        horizontalAlignment = Alignment.CenterHorizontally
                     ) {
-                        Column(
-                            modifier = Modifier.fillMaxWidth(),
-                            verticalArrangement = Arrangement.spacedBy(8.dp),
-                            horizontalAlignment = Alignment.CenterHorizontally
-                        ) {
-                            Row(
-                                modifier = Modifier
-                                    .fillMaxWidth(),
-                                verticalAlignment = Alignment.CenterVertically
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth(),
+                            verticalAlignment = Alignment.CenterVertically
 
-                            ) {
-                                Text(
-                                    modifier = Modifier.weight(1f),
-                                    text = stringResource(Res.string.Categories),
-                                    fontFamily = FontFamily(
-                                        Font(
-                                            resource = Res.font.OutfitMedium,
-                                            weight = FontWeight.Medium
-                                        )
-                                    ),
-                                    maxLines = 1,
-                                    overflow = TextOverflow.Ellipsis,
-                                    color = MaterialTheme.colorScheme.onBackground,
-                                    fontSize = 30.sp,
-                                    textAlign = TextAlign.Start
-                                )
-                                Row(
-                                    verticalAlignment = Alignment.CenterVertically,
-                                    horizontalArrangement = Arrangement.spacedBy(8.dp)
-                                ) {
-                                    PrimaryIconButton(
-                                        onClick = {},
-                                        painter = painterResource(Res.drawable.hellipsis),
-                                        colors = ButtonDefaults.buttonColors(
-                                            containerColor = MaterialTheme.colorScheme.secondary,
-                                            contentColor = MaterialTheme.colorScheme.surfaceContainerLowest
-                                        )
+                        ) {
+                            Text(
+                                modifier = Modifier.weight(1f),
+                                text = stringResource(Res.string.Categories),
+                                fontFamily = FontFamily(
+                                    Font(
+                                        resource = Res.font.OutfitMedium,
+                                        weight = FontWeight.Medium
                                     )
-                                    PrimaryButton(
-                                        onClick = {},
-                                        modifier = Modifier.height(42.dp)
-                                            .wrapContentWidth(),
-                                        contentPadding = PaddingValues(
-                                            horizontal = 16.dp,
-                                            vertical = 8.dp
-                                        ),
-                                        shape = RoundedCornerShape(6.dp)
+                                ),
+                                maxLines = 1,
+                                overflow = TextOverflow.Ellipsis,
+                                color = MaterialTheme.colorScheme.onBackground,
+                                fontSize = 30.sp,
+                                textAlign = TextAlign.Start
+                            )
+                            Row(
+                                verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.spacedBy(8.dp)
+                            ) {
+                                PrimaryIconButton(
+                                    onClick = {},
+                                    painter = painterResource(Res.drawable.hellipsis),
+                                    colors = ButtonDefaults.buttonColors(
+                                        containerColor = MaterialTheme.colorScheme.secondary,
+                                        contentColor = MaterialTheme.colorScheme.surfaceContainerLowest
+                                    )
+                                )
+                                PrimaryButton(
+                                    onClick = {},
+                                    modifier = Modifier.height(42.dp)
+                                        .wrapContentWidth(),
+                                    contentPadding = PaddingValues(
+                                        horizontal = 16.dp,
+                                        vertical = 8.dp
+                                    ),
+                                    shape = RoundedCornerShape(6.dp)
+                                ) {
+                                    Row(
+                                        verticalAlignment = Alignment.CenterVertically,
+                                        horizontalArrangement = Arrangement.spacedBy(8.dp)
                                     ) {
-                                        Row(
-                                            verticalAlignment = Alignment.CenterVertically,
-                                            horizontalArrangement = Arrangement.spacedBy(8.dp)
-                                        ) {
-                                            Icon(
-                                                painter = painterResource(Res.drawable.boxes),
-                                                contentDescription = "more",
-                                                tint = MaterialTheme.colorScheme.onPrimary
-                                            )
-                                            Text(
-                                                text = stringResource(Res.string.Create),
-                                                color = MaterialTheme.colorScheme.onPrimary,
-                                                fontSize = 18.sp,
-                                                fontFamily = FontFamily(
-                                                    Font(
-                                                        resource = Res.font.OutfitMedium,
-                                                        weight = FontWeight.Medium
-                                                    )
+                                        Icon(
+                                            painter = painterResource(Res.drawable.boxes),
+                                            contentDescription = "more",
+                                            tint = MaterialTheme.colorScheme.onPrimary
+                                        )
+                                        Text(
+                                            text = stringResource(Res.string.Create),
+                                            color = MaterialTheme.colorScheme.onPrimary,
+                                            fontSize = 18.sp,
+                                            fontFamily = FontFamily(
+                                                Font(
+                                                    resource = Res.font.OutfitMedium,
+                                                    weight = FontWeight.Medium
                                                 )
                                             )
-                                        }
+                                        )
                                     }
                                 }
                             }
-                            HorizontalDivider(
+                        }
+                        HorizontalDivider(
+                            modifier = Modifier
+                                .clip(RoundedCornerShape(100.dp)),
+                            thickness = 2.dp,
+                            color = MaterialTheme.colorScheme.outline,
+                        )
+                        Row(
+                            modifier = Modifier
+                                .height(40.dp)
+                                .fillMaxWidth(),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.spacedBy(8.dp)
+                        ) {
+                            PrimaryTextField(
+                                value = "",
+                                onValueChange = {},
                                 modifier = Modifier
-                                    .clip(RoundedCornerShape(100.dp)),
-                                thickness = 2.dp,
-                                color = MaterialTheme.colorScheme.outline,
+                                    .fillMaxHeight()
+                                    .weight(1f),
+                                placeholder = {
+                                    Text(
+                                        modifier = Modifier.padding(horizontal = 2.dp),
+                                        text = stringResource(Res.string.Search),
+                                        fontFamily = FontFamily(
+                                            Font(
+                                                resource = Res.font.OutfitRegular,
+                                                weight = FontWeight.Normal
+                                            )
+                                        ),
+                                        color = MaterialTheme.colorScheme.surfaceVariant,
+                                        textAlign = TextAlign.Start,
+                                        fontSize = 14.sp
+                                    )
+                                }
                             )
                             Row(
-                                modifier = Modifier
-                                    .height(40.dp)
-                                    .fillMaxWidth(),
                                 verticalAlignment = Alignment.CenterVertically,
-                                horizontalArrangement = Arrangement.spacedBy(8.dp)
+                                horizontalArrangement = Arrangement.spacedBy(4.dp)
                             ) {
                                 PrimaryTextField(
                                     value = "",
                                     onValueChange = {},
-                                    modifier = Modifier
-                                        .fillMaxHeight()
-                                        .weight(1f),
+                                    modifier = Modifier.size(40.dp),
                                     placeholder = {
                                         Text(
-                                            modifier = Modifier.padding(horizontal = 2.dp),
-                                            text = stringResource(Res.string.Search),
+                                            text = "10",
                                             fontFamily = FontFamily(
                                                 Font(
                                                     resource = Res.font.OutfitRegular,
@@ -244,193 +267,95 @@ private fun CategoriesScreenContent(
                                         )
                                     }
                                 )
-                                Row(
-                                    verticalAlignment = Alignment.CenterVertically,
-                                    horizontalArrangement = Arrangement.spacedBy(4.dp)
-                                ) {
-                                    PrimaryTextField(
-                                        value = "",
-                                        onValueChange = {},
-                                        modifier = Modifier.size(40.dp),
-                                        placeholder = {
-                                            Text(
-                                                text = "10",
-                                                fontFamily = FontFamily(
-                                                    Font(
-                                                        resource = Res.font.OutfitRegular,
-                                                        weight = FontWeight.Normal
-                                                    )
-                                                ),
-                                                color = MaterialTheme.colorScheme.surfaceVariant,
-                                                textAlign = TextAlign.Start,
-                                                fontSize = 14.sp
-                                            )
-                                        }
+                                PrimaryIconButton(
+                                    onClick = {},
+                                    painter = painterResource(Res.drawable.switch),
+                                    iconTint = MaterialTheme.colorScheme.onBackground,
+                                    colors = ButtonDefaults.buttonColors(
+                                        containerColor = MaterialTheme.colorScheme.background,
+                                        contentColor = MaterialTheme.colorScheme.surfaceContainerLowest
                                     )
-                                    PrimaryIconButton(
-                                        onClick = {},
-                                        painter = painterResource(Res.drawable.switch),
-                                        iconTint = MaterialTheme.colorScheme.onBackground,
-                                        colors = ButtonDefaults.buttonColors(
-                                            containerColor = MaterialTheme.colorScheme.background,
-                                            contentColor = MaterialTheme.colorScheme.surfaceContainerLowest
-                                        )
-                                    )
-                                }
-                            }
-                            Column(
-                                modifier = Modifier
-                                    .clip(RoundedCornerShape(6.dp))
-                                    .weight(1f)
-                                    .border(
-                                        width = 1.5f.dp,
-                                        color = MaterialTheme.colorScheme.outline,
-                                        shape = RoundedCornerShape(6.dp)
-                                    )
-                            ) {
-                                Table(
-                                    items = state.categoryList,
-                                    header = {
-                                        TableHeader(state.tapleHeaders)
-                                    },
                                 )
-                                { category ->
-                                    TableRow {
-                                        TableCell(category.name)
-                                        TableCell(category.description)
-                                        TableActionCell()
-                                    }
+                            }
+                        }
+                        Column(
+                            modifier = Modifier
+                                .clip(RoundedCornerShape(6.dp))
+                                .weight(1f)
+                                .border(
+                                    width = 1.5f.dp,
+                                    color = MaterialTheme.colorScheme.outline,
+                                    shape = RoundedCornerShape(6.dp)
+                                )
+                        ) {
+                            Table(
+                                items = state.categoryList,
+                                header = {
+                                    TableHeader(state.tapleHeaders)
+                                },
+                            )
+                            { category ->
+                                TableRow {
+                                    TableCell(category.name)
+                                    TableCell(category.description)
+                                    TableActionCell()
                                 }
                             }
+                        }
+                        Row(
+                            modifier = Modifier
+                                .padding(top = 8.dp)
+                                .height(38.dp)
+                                .fillMaxWidth(),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.SpaceBetween
+                        ) {
                             Row(
-                                modifier = Modifier
-                                    .padding(top = 8.dp)
-                                    .height(38.dp)
-                                    .fillMaxWidth(),
                                 verticalAlignment = Alignment.CenterVertically,
-                                horizontalArrangement = Arrangement.SpaceBetween
+                                horizontalArrangement = Arrangement.spacedBy(8.dp)
                             ) {
-                                Row(
-                                    verticalAlignment = Alignment.CenterVertically,
-                                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                                Button(
+                                    modifier = Modifier.fillMaxHeight(),
+                                    onClick = {},
+                                    contentPadding = PaddingValues(0.dp),
+                                    shape = RoundedCornerShape(6.dp),
+                                    border = BorderStroke(
+                                        width = 1.dp,
+                                        color = MaterialTheme.colorScheme.outline
+                                    ),
+                                    colors = ButtonDefaults.buttonColors(
+                                        containerColor = MaterialTheme.colorScheme.background,
+                                        contentColor = MaterialTheme.colorScheme.surfaceContainerLowest
+                                    )
                                 ) {
-                                    Button(
-                                        modifier = Modifier.fillMaxHeight(),
-                                        onClick = {},
-                                        contentPadding = PaddingValues(0.dp),
-                                        shape = RoundedCornerShape(6.dp),
-                                        border = BorderStroke(
-                                            width = 1.dp,
-                                            color = MaterialTheme.colorScheme.outline
-                                        ),
-                                        colors = ButtonDefaults.buttonColors(
-                                            containerColor = MaterialTheme.colorScheme.background,
-                                            contentColor = MaterialTheme.colorScheme.surfaceContainerLowest
-                                        )
-                                    ) {
-                                        Row(
-                                            modifier = Modifier.fillMaxHeight(),
-                                            verticalAlignment = Alignment.CenterVertically,
-                                        ) {
-                                            Icon(
-                                                painter = painterResource(Res.drawable.chevronleft),
-                                                contentDescription = stringResource(Res.string.Prev),
-                                                tint = MaterialTheme.colorScheme.surfaceVariant
-                                            )
-                                            Text(
-                                                text = stringResource(Res.string.Prev),
-                                                fontFamily = FontFamily(
-                                                    Font(
-                                                        resource = Res.font.OutfitRegular,
-                                                        weight = FontWeight.Normal
-                                                    )
-                                                ),
-                                                fontSize = 14.sp,
-                                                color = MaterialTheme.colorScheme.surfaceVariant
-                                            )
-                                        }
-                                    }
                                     Row(
-                                        verticalAlignment = Alignment.CenterVertically,
-                                        horizontalArrangement = Arrangement.spacedBy(2.dp)
-                                    ) {
-                                        Text(
-                                            text = stringResource(Res.string.Page),
-                                            fontFamily = FontFamily(
-                                                Font(
-                                                    resource = Res.font.OutfitRegular,
-                                                    weight = FontWeight.Normal
-                                                )
-                                            ),
-                                            fontSize = 14.sp,
-                                            color = MaterialTheme.colorScheme.onBackground
-                                        )
-                                        Text(
-                                            text = "1",
-                                            fontFamily = FontFamily(
-                                                Font(
-                                                    resource = Res.font.OutfitBold,
-                                                    weight = FontWeight.Bold
-                                                )
-                                            ),
-                                            fontSize = 14.sp,
-                                            color = MaterialTheme.colorScheme.primary
-                                        )
-                                        Text(
-                                            text = stringResource(Res.string.Of) + " 2",
-                                            fontFamily = FontFamily(
-                                                Font(
-                                                    resource = Res.font.OutfitRegular,
-                                                    weight = FontWeight.Normal
-                                                )
-                                            ),
-                                            fontSize = 14.sp,
-                                            color = MaterialTheme.colorScheme.onBackground
-                                        )
-                                    }
-                                    Button(
                                         modifier = Modifier.fillMaxHeight(),
-                                        onClick = {},
-                                        contentPadding = PaddingValues(0.dp),
-                                        shape = RoundedCornerShape(6.dp),
-                                        border = BorderStroke(
-                                            width = 1.dp,
-                                            color = MaterialTheme.colorScheme.outline
-                                        ),
-                                        colors = ButtonDefaults.buttonColors(
-                                            containerColor = MaterialTheme.colorScheme.background,
-                                            contentColor = MaterialTheme.colorScheme.surfaceContainerLowest
-                                        )
+                                        verticalAlignment = Alignment.CenterVertically,
                                     ) {
-                                        Row(
-                                            modifier = Modifier.fillMaxHeight(),
-                                            verticalAlignment = Alignment.CenterVertically,
-                                        ) {
-                                            Text(
-                                                text = stringResource(Res.string.Next),
-                                                fontFamily = FontFamily(
-                                                    Font(
-                                                        resource = Res.font.OutfitRegular,
-                                                        weight = FontWeight.Normal
-                                                    )
-                                                ),
-                                                fontSize = 14.sp,
-                                                color = MaterialTheme.colorScheme.surfaceVariant
-                                            )
-                                            Icon(
-                                                painter = painterResource(Res.drawable.chevronright),
-                                                contentDescription = stringResource(Res.string.Prev),
-                                                tint = MaterialTheme.colorScheme.surfaceVariant
-                                            )
-                                        }
+                                        Icon(
+                                            painter = painterResource(Res.drawable.chevronleft),
+                                            contentDescription = stringResource(Res.string.Prev),
+                                            tint = MaterialTheme.colorScheme.surfaceVariant
+                                        )
+                                        Text(
+                                            text = stringResource(Res.string.Prev),
+                                            fontFamily = FontFamily(
+                                                Font(
+                                                    resource = Res.font.OutfitRegular,
+                                                    weight = FontWeight.Normal
+                                                )
+                                            ),
+                                            fontSize = 14.sp,
+                                            color = MaterialTheme.colorScheme.surfaceVariant
+                                        )
                                     }
                                 }
                                 Row(
-                                    modifier = Modifier.fillMaxHeight(),
-                                    verticalAlignment = Alignment.CenterVertically
+                                    verticalAlignment = Alignment.CenterVertically,
+                                    horizontalArrangement = Arrangement.spacedBy(2.dp)
                                 ) {
                                     Text(
-                                        text = stringResource(Res.string.Results),
+                                        text = stringResource(Res.string.Page),
                                         fontFamily = FontFamily(
                                             Font(
                                                 resource = Res.font.OutfitRegular,
@@ -441,7 +366,7 @@ private fun CategoriesScreenContent(
                                         color = MaterialTheme.colorScheme.onBackground
                                     )
                                     Text(
-                                        text = " 9",
+                                        text = "1",
                                         fontFamily = FontFamily(
                                             Font(
                                                 resource = Res.font.OutfitBold,
@@ -451,7 +376,81 @@ private fun CategoriesScreenContent(
                                         fontSize = 14.sp,
                                         color = MaterialTheme.colorScheme.primary
                                     )
+                                    Text(
+                                        text = stringResource(Res.string.Of) + " 2",
+                                        fontFamily = FontFamily(
+                                            Font(
+                                                resource = Res.font.OutfitRegular,
+                                                weight = FontWeight.Normal
+                                            )
+                                        ),
+                                        fontSize = 14.sp,
+                                        color = MaterialTheme.colorScheme.onBackground
+                                    )
                                 }
+                                Button(
+                                    modifier = Modifier.fillMaxHeight(),
+                                    onClick = {},
+                                    contentPadding = PaddingValues(0.dp),
+                                    shape = RoundedCornerShape(6.dp),
+                                    border = BorderStroke(
+                                        width = 1.dp,
+                                        color = MaterialTheme.colorScheme.outline
+                                    ),
+                                    colors = ButtonDefaults.buttonColors(
+                                        containerColor = MaterialTheme.colorScheme.background,
+                                        contentColor = MaterialTheme.colorScheme.surfaceContainerLowest
+                                    )
+                                ) {
+                                    Row(
+                                        modifier = Modifier.fillMaxHeight(),
+                                        verticalAlignment = Alignment.CenterVertically,
+                                    ) {
+                                        Text(
+                                            text = stringResource(Res.string.Next),
+                                            fontFamily = FontFamily(
+                                                Font(
+                                                    resource = Res.font.OutfitRegular,
+                                                    weight = FontWeight.Normal
+                                                )
+                                            ),
+                                            fontSize = 14.sp,
+                                            color = MaterialTheme.colorScheme.surfaceVariant
+                                        )
+                                        Icon(
+                                            painter = painterResource(Res.drawable.chevronright),
+                                            contentDescription = stringResource(Res.string.Prev),
+                                            tint = MaterialTheme.colorScheme.surfaceVariant
+                                        )
+                                    }
+                                }
+                            }
+                            Row(
+                                modifier = Modifier.fillMaxHeight(),
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                Text(
+                                    text = stringResource(Res.string.Results),
+                                    fontFamily = FontFamily(
+                                        Font(
+                                            resource = Res.font.OutfitRegular,
+                                            weight = FontWeight.Normal
+                                        )
+                                    ),
+                                    fontSize = 14.sp,
+                                    color = MaterialTheme.colorScheme.onBackground
+                                )
+                                Text(
+                                    text = " 9",
+                                    fontFamily = FontFamily(
+                                        Font(
+                                            resource = Res.font.OutfitBold,
+                                            weight = FontWeight.Bold
+                                        )
+                                    ),
+                                    fontSize = 14.sp,
+                                    color = MaterialTheme.colorScheme.primary
+                                )
                             }
                         }
                     }
@@ -459,5 +458,5 @@ private fun CategoriesScreenContent(
             }
         }
     }
-//}
+}
 
