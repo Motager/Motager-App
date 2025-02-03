@@ -8,10 +8,10 @@ class ProductsViewModel : ViewModel() {
     private val _state = MutableStateFlow(ProductsScreenState())
     val state = _state.asStateFlow()
 
-    fun onAction(action: ProductsActions) {
+    fun onAction(action: ProductsAction) {
         when (action) {
-            is ProductsActions.onLimitSearch -> onLimitSearch(action.limit)
-            is ProductsActions.onProductSearch -> onProductSearch(action.query)
+            is ProductsAction.OnLimitSearch -> onLimitSearch(action.limit)
+            is ProductsAction.OnProductSearch -> onProductSearch(action.query)
         }
     }
 

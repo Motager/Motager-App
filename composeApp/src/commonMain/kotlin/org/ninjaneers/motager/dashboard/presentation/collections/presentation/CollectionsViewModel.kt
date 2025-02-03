@@ -8,18 +8,18 @@ class CollectionsViewModel : ViewModel() {
     private val _state = MutableStateFlow(CollectionsScreenState())
     val state = _state.asStateFlow()
 
-    fun onAction(action: CollectionsActions) {
+    fun onAction(action: CollectionsAction) {
         when (action) {
-            is CollectionsActions.OnSearchLimitChange -> OnSearchLimitChange(action.limit)
-            is CollectionsActions.OnSearchQueryChange -> OnSearchQueryChange(action.query)
+            is CollectionsAction.OnSearchLimitChange -> onSearchLimitChange(action.limit)
+            is CollectionsAction.OnSearchQueryChange -> onSearchQueryChange(action.query)
         }
     }
 
-    private fun OnSearchLimitChange(limit: Int) {
+    private fun onSearchLimitChange(limit: Int) {
 
     }
 
-    private fun OnSearchQueryChange(query: String) {
+    private fun onSearchQueryChange(query: String) {
 
     }
 }

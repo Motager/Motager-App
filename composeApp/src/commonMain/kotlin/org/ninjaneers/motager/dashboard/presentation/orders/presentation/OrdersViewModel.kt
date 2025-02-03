@@ -8,19 +8,17 @@ class OrdersViewModel : ViewModel() {
     private val _state = MutableStateFlow(OrdersScreenState())
     val state = _state.asStateFlow()
 
-    fun onAction(action: OrdersActions) {
+    fun onAction(action: OrdersAction) {
         when (action) {
-            is OrdersActions.onLimitSearch -> "TODO()"
-            is OrdersActions.onProductSearch -> "TODO()"
+            is OrdersAction.OnLimitSearch -> onLimitSearch(action.limit)
+            is OrdersAction.OnProductSearch -> onProductSearch(action.query)
         }
     }
 
     private fun onProductSearch(query: String) {
-        /////////////////////////////
     }
 
     private fun onLimitSearch(limit: Int) {
-        //////////////////////////////
     }
 }
 

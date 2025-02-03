@@ -16,16 +16,13 @@ import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -35,9 +32,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.IO
-import kotlinx.coroutines.launch
 import motager.composeapp.generated.resources.Add
 import motager.composeapp.generated.resources.Customers
 import motager.composeapp.generated.resources.Next
@@ -62,6 +56,8 @@ import org.ninjaneers.motager.app.navigation.Navigator
 import org.ninjaneers.motager.core.presentation.components.PrimaryButton
 import org.ninjaneers.motager.core.presentation.components.PrimaryIconButton
 import org.ninjaneers.motager.core.presentation.components.PrimaryTextField
+import org.ninjaneers.motager.dashboard.presentation.DashboardAction
+import org.ninjaneers.motager.dashboard.presentation.DashboardState
 import org.ninjaneers.motager.dashboard.presentation.components.NavDrawer
 import org.ninjaneers.motager.dashboard.presentation.components.Table
 import org.ninjaneers.motager.dashboard.presentation.components.TableActionCell
@@ -74,36 +70,40 @@ import org.ninjaneers.motager.dashboard.presentation.components.TopBar
 @Composable
 fun CustomersScreen(
     state: CustomerScreenState,
-    navigator: Navigator
+    navigator: Navigator,
+    dashboardState: DashboardState,
+    onAction: suspend (DashboardAction) -> Unit
 ) {
     CustomerScreenContent(
         state = state,
-        navigator = navigator
+        navigator = navigator,
+        dashboardState = dashboardState,
+        onAction = onAction
     )
 }
 
 @Composable
 private fun CustomerScreenContent(
     state: CustomerScreenState,
-    navigator: Navigator
+    navigator: Navigator,
+    dashboardState: DashboardState,
+    onAction: suspend (DashboardAction) -> Unit
 ) {
-    val scope = rememberCoroutineScope()
-    val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     ModalNavigationDrawer(
         drawerContent = {
-            NavDrawer(navigator = navigator)
+            NavDrawer(
+                navigator = navigator,
+                navigationItems = dashboardState.navigationItems,
+                closeDrawer = onAction
+            )
         },
-        drawerState = drawerState,
+        drawerState = dashboardState.drawerState,
         scrimColor = MaterialTheme.colorScheme.background.copy(alpha = 0.5f)
     ) {
         Scaffold(
             topBar = {
                 TopBar(
-                    openNavDrawer = {
-                        scope.launch(Dispatchers.IO) {
-                            drawerState.open()
-                        }
-                    }
+                    openNavDrawer = onAction
                 )
             }
         ) { innerPadding ->
@@ -460,5 +460,3 @@ private fun CustomerScreenContent(
         }
     }
 }
-
-//}
