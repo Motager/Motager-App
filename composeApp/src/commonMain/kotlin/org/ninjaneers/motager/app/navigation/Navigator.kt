@@ -46,6 +46,9 @@ class Navigator(private val navController: NavController) {
             Route.Settings -> navController.navigate(Route.Settings) {
                 popUpTo(Route.Settings)
             }
+
+            Route.AuthenticationGraph -> {}
+            Route.DashboardGraph -> {}
         }
     }
 }
