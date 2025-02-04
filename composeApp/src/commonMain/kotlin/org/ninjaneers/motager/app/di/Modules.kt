@@ -2,8 +2,13 @@ package org.ninjaneers.motager.app.di
 
 
 import org.koin.core.module.Module
+import org.koin.core.module.dsl.singleOf
 import org.koin.core.module.dsl.viewModelOf
+import org.koin.dsl.bind
 import org.koin.dsl.module
+import org.ninjaneers.motager.core.data.repository.AppSettingsRepositoryImpl
+import org.ninjaneers.motager.core.domain.AppSettingsRepository
+import org.ninjaneers.motager.core.presentation.CoreViewModel
 import org.ninjaneers.motager.dashboard.presentation.DashboardViewModel
 import org.ninjaneers.motager.dashboard.presentation.analytics.presentation.AnalyticsViewModel
 import org.ninjaneers.motager.dashboard.presentation.categories.presentation.CategoriesViewModel
@@ -28,4 +33,7 @@ val sharedModule = module {
     viewModelOf(::DiscountsViewModel)
     viewModelOf(::SettingsViewModel)
     viewModelOf(::DashboardViewModel)
+    viewModelOf(::CoreViewModel)
+
+    singleOf(::AppSettingsRepositoryImpl).bind<AppSettingsRepository>()
 }

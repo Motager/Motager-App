@@ -1,5 +1,6 @@
 package org.ninjaneers.motager.app
 
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -14,6 +15,8 @@ import org.ninjaneers.motager.app.navigation.Navigator
 import org.ninjaneers.motager.app.navigation.Route
 import org.ninjaneers.motager.authentication.presentation.login.LoginScreen
 import org.ninjaneers.motager.authentication.presentation.signup.SignupScreen
+import org.ninjaneers.motager.core.domain.Themes
+import org.ninjaneers.motager.core.presentation.CoreViewModel
 import org.ninjaneers.motager.core.presentation.koinSharedViewModel
 import org.ninjaneers.motager.core.presentation.theme.MotagerTheme
 import org.ninjaneers.motager.dashboard.presentation.DashboardViewModel
@@ -40,7 +43,15 @@ import org.ninjaneers.motager.mainscreen.MainScreen
 @Composable
 @Preview
 fun App() {
-    MotagerTheme {
+    val coreViewModel = koinViewModel<CoreViewModel>()
+    val coreState by coreViewModel.state.collectAsStateWithLifecycle()
+    MotagerTheme(
+        darkTheme = when (coreState.theme) {
+            Themes.Light -> false
+            Themes.Dark -> true
+            Themes.System -> isSystemInDarkTheme()
+        }
+    ) {
         val navController = rememberNavController()
         val navigator = remember { Navigator(navController) }
         NavHost(navController = navController, startDestination = Route.DashboardGraph) {
@@ -66,7 +77,9 @@ fun App() {
                     HomeScreen(
                         navigator = navigator,
                         dashboardState = dashboardState,
-                        onAction = dashboardViewModel::onAction
+                        onAction = dashboardViewModel::onAction,
+                        coreState = coreState,
+                        coreAction = coreViewModel::onAction
                     )
                 }
                 composable<Route.Orders>() {
@@ -79,7 +92,9 @@ fun App() {
                         state = state,
                         navigator = navigator,
                         dashboardState = dashboardState,
-                        onAction = dashboardViewModel::onAction
+                        onAction = dashboardViewModel::onAction,
+                        coreState = coreState,
+                        coreAction = coreViewModel::onAction
                     )
                 }
                 composable<Route.Products>() {
@@ -92,7 +107,9 @@ fun App() {
                         state = state,
                         navigator = navigator,
                         dashboardState = dashboardState,
-                        onAction = dashboardViewModel::onAction
+                        onAction = dashboardViewModel::onAction,
+                        coreState = coreState,
+                        coreAction = coreViewModel::onAction
                     )
                 }
                 composable<Route.Collections>() {
@@ -105,7 +122,9 @@ fun App() {
                         state = state,
                         navigator = navigator,
                         dashboardState = dashboardState,
-                        onAction = dashboardViewModel::onAction
+                        onAction = dashboardViewModel::onAction,
+                        coreState = coreState,
+                        coreAction = coreViewModel::onAction
                     )
                 }
                 composable<Route.Categories>() {
@@ -118,7 +137,9 @@ fun App() {
                         state = state,
                         navigator = navigator,
                         dashboardState = dashboardState,
-                        onAction = dashboardViewModel::onAction
+                        onAction = dashboardViewModel::onAction,
+                        coreState = coreState,
+                        coreAction = coreViewModel::onAction
                     )
                 }
                 composable<Route.Customers>() {
@@ -131,7 +152,9 @@ fun App() {
                         state = state,
                         navigator = navigator,
                         dashboardState = dashboardState,
-                        onAction = dashboardViewModel::onAction
+                        onAction = dashboardViewModel::onAction,
+                        coreState = coreState,
+                        coreAction = coreViewModel::onAction
                     )
                 }
                 composable<Route.Analytics>() {
@@ -142,7 +165,9 @@ fun App() {
                     AnalyticsScreen(
                         navigator = navigator,
                         dashboardState = dashboardState,
-                        onAction = dashboardViewModel::onAction
+                        onAction = dashboardViewModel::onAction,
+                        coreState = coreState,
+                        coreAction = coreViewModel::onAction
                     )
                 }
                 composable<Route.Discounts>() {
@@ -153,7 +178,9 @@ fun App() {
                     DiscountsScreen(
                         navigator = navigator,
                         dashboardState = dashboardState,
-                        onAction = dashboardViewModel::onAction
+                        onAction = dashboardViewModel::onAction,
+                        coreState = coreState,
+                        coreAction = coreViewModel::onAction
                     )
                 }
                 composable<Route.Settings>() {
@@ -164,7 +191,9 @@ fun App() {
                     SettingsScreen(
                         navigator = navigator,
                         dashboardState = dashboardState,
-                        onAction = dashboardViewModel::onAction
+                        onAction = dashboardViewModel::onAction,
+                        coreState = coreState,
+                        coreAction = coreViewModel::onAction
                     )
                 }
             }

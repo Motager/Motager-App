@@ -54,6 +54,8 @@ import org.jetbrains.compose.resources.Font
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.ninjaneers.motager.app.navigation.Navigator
+import org.ninjaneers.motager.core.presentation.CoreAction
+import org.ninjaneers.motager.core.presentation.CoreState
 import org.ninjaneers.motager.core.presentation.components.PrimaryButton
 import org.ninjaneers.motager.core.presentation.components.PrimaryIconButton
 import org.ninjaneers.motager.core.presentation.components.PrimaryTextField
@@ -73,14 +75,18 @@ fun ProductsScreen(
     state: ProductsScreenState,
     navigator: Navigator,
     dashboardState: DashboardState,
-    onAction: suspend (DashboardAction) -> Unit
+    onAction: suspend (DashboardAction) -> Unit,
+    coreState: CoreState,
+    coreAction: (CoreAction) -> Unit
 
 ) {
     ProductsScreenContent(
         state = state,
         navigator = navigator,
         dashboardState = dashboardState,
-        onAction = onAction
+        onAction = onAction,
+        coreState = coreState,
+        coreAction = coreAction
     )
 }
 
@@ -89,14 +95,17 @@ private fun ProductsScreenContent(
     state: ProductsScreenState,
     navigator: Navigator,
     dashboardState: DashboardState,
-    onAction: suspend (DashboardAction) -> Unit
+    onAction: suspend (DashboardAction) -> Unit,
+    coreState: CoreState,
+    coreAction: (CoreAction) -> Unit
 ) {
     ModalNavigationDrawer(
         drawerContent = {
             NavDrawer(
                 navigator = navigator,
                 navigationItems = dashboardState.navigationItems,
-                closeDrawer = onAction
+                closeDrawer = onAction,
+                coreAction = coreAction
             )
         },
         drawerState = dashboardState.drawerState,
