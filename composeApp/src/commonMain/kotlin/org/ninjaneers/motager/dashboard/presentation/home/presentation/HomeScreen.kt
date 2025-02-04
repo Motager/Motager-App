@@ -15,6 +15,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import org.ninjaneers.motager.app.navigation.Navigator
+import org.ninjaneers.motager.core.presentation.CoreAction
+import org.ninjaneers.motager.core.presentation.CoreState
 import org.ninjaneers.motager.dashboard.presentation.DashboardAction
 import org.ninjaneers.motager.dashboard.presentation.DashboardState
 import org.ninjaneers.motager.dashboard.presentation.components.NavDrawer
@@ -24,12 +26,16 @@ import org.ninjaneers.motager.dashboard.presentation.components.TopBar
 fun HomeScreen(
     navigator: Navigator,
     dashboardState: DashboardState,
-    onAction: suspend (DashboardAction) -> Unit
+    onAction: suspend (DashboardAction) -> Unit,
+    coreState: CoreState,
+    coreAction: (CoreAction) -> Unit
 ) {
     HomeScreenContent(
         navigator = navigator,
         dashboardState = dashboardState,
-        onAction = onAction
+        onAction = onAction,
+        coreState = coreState,
+        coreAction = coreAction
     )
 }
 
@@ -37,7 +43,9 @@ fun HomeScreen(
 private fun HomeScreenContent(
     navigator: Navigator,
     dashboardState: DashboardState,
-    onAction: suspend (DashboardAction) -> Unit
+    onAction: suspend (DashboardAction) -> Unit,
+    coreState: CoreState,
+    coreAction: (CoreAction) -> Unit
 ) {
 //    val scope = rememberCoroutineScope()
 //    val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
@@ -46,7 +54,8 @@ private fun HomeScreenContent(
             NavDrawer(
                 navigator = navigator,
                 navigationItems = dashboardState.navigationItems,
-                closeDrawer = onAction
+                closeDrawer = onAction,
+                coreAction = coreAction
             )
         },
         drawerState = dashboardState.drawerState,

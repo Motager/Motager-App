@@ -5,6 +5,7 @@ package org.ninjaneers.motager.core.data
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.PreferenceDataStoreFactory
 import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.edit
 import kotlinx.cinterop.ExperimentalForeignApi
 import okio.Path.Companion.toPath
 import org.ninjaneers.motager.core.domain.Languages
@@ -44,5 +45,17 @@ actual class SettingsDataStore : ApplicationSettings {
             language = settings[LOCALE_KEY] ?: Languages.English.locale
         }
         return language
+    }
+
+    override suspend fun setAppTheme(theme: String) {
+        settingsDataStore.edit { settings ->
+            settings[THEME_KEY] = theme
+        }
+    }
+
+    override suspend fun setAppLanguage(locale: String) {
+        settingsDataStore.edit { settings ->
+            settings[LOCALE_KEY] = locale
+        }
     }
 }

@@ -71,6 +71,9 @@ import org.jetbrains.compose.resources.Font
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.ninjaneers.motager.app.navigation.Navigator
+import org.ninjaneers.motager.core.domain.Languages
+import org.ninjaneers.motager.core.domain.Themes
+import org.ninjaneers.motager.core.presentation.CoreAction
 import org.ninjaneers.motager.core.presentation.components.PrimaryIconButton
 import org.ninjaneers.motager.dashboard.domain.NavDrawerItem
 import org.ninjaneers.motager.dashboard.presentation.DashboardAction
@@ -79,12 +82,14 @@ import org.ninjaneers.motager.dashboard.presentation.DashboardAction
 fun NavDrawer(
     navigator: Navigator,
     navigationItems: List<NavDrawerItem>,
-    closeDrawer: suspend (DashboardAction) -> Unit
+    closeDrawer: suspend (DashboardAction) -> Unit,
+    coreAction: (CoreAction) -> Unit
 ) {
     NavDrawerContent(
         navigator = navigator,
         navigationItems = navigationItems,
-        closeDrawer = closeDrawer
+        closeDrawer = closeDrawer,
+        coreAction = coreAction
     )
 }
 
@@ -92,7 +97,8 @@ fun NavDrawer(
 private fun NavDrawerContent(
     navigator: Navigator,
     navigationItems: List<NavDrawerItem>,
-    closeDrawer: suspend (DashboardAction) -> Unit
+    closeDrawer: suspend (DashboardAction) -> Unit,
+    coreAction: (CoreAction) -> Unit
 ) {
     val coroutineScope = rememberCoroutineScope()
     var isThemeMenuExpanded by remember { mutableStateOf(false) }
@@ -254,7 +260,10 @@ private fun NavDrawerContent(
                             DropdownMenuItem(
                                 modifier = Modifier.padding(horizontal = 6.dp)
                                     .clip(RoundedCornerShape(6.dp)),
-                                onClick = { isThemeMenuExpanded = !isThemeMenuExpanded },
+                                onClick = {
+                                    isThemeMenuExpanded = !isThemeMenuExpanded
+                                    coreAction(CoreAction.ChangeTheme(Themes.Light))
+                                },
                                 text = {
                                     Text(
                                         text = stringResource(Res.string.Light),
@@ -281,7 +290,10 @@ private fun NavDrawerContent(
                             DropdownMenuItem(
                                 modifier = Modifier.padding(horizontal = 6.dp)
                                     .clip(RoundedCornerShape(6.dp)),
-                                onClick = { isThemeMenuExpanded = !isThemeMenuExpanded },
+                                onClick = {
+                                    isThemeMenuExpanded = !isThemeMenuExpanded
+                                    coreAction(CoreAction.ChangeTheme(Themes.Dark))
+                                },
                                 text = {
                                     Text(
                                         text = stringResource(Res.string.Dark),
@@ -310,6 +322,7 @@ private fun NavDrawerContent(
                                     .clip(RoundedCornerShape(6.dp)),
                                 onClick = {
                                     isThemeMenuExpanded = !isThemeMenuExpanded
+                                    coreAction(CoreAction.ChangeTheme(Themes.System))
                                 },
                                 text = {
                                     Text(
@@ -359,7 +372,10 @@ private fun NavDrawerContent(
                             DropdownMenuItem(
                                 modifier = Modifier.padding(horizontal = 6.dp)
                                     .clip(RoundedCornerShape(6.dp)),
-                                onClick = { isLocalMenuExpanded = !isLocalMenuExpanded },
+                                onClick = {
+                                    isLocalMenuExpanded = !isLocalMenuExpanded
+                                    coreAction(CoreAction.ChangeLanguage(Languages.Arabic))
+                                },
                                 text = {
                                     Text(
                                         text = stringResource(Res.string.Arabic),
@@ -386,7 +402,10 @@ private fun NavDrawerContent(
                             DropdownMenuItem(
                                 modifier = Modifier.padding(horizontal = 6.dp)
                                     .clip(RoundedCornerShape(6.dp)),
-                                onClick = { isLocalMenuExpanded = !isLocalMenuExpanded },
+                                onClick = {
+                                    isLocalMenuExpanded = !isLocalMenuExpanded
+                                    coreAction(CoreAction.ChangeLanguage(Languages.English))
+                                },
                                 text = {
                                     Text(
                                         text = stringResource(Res.string.English),
