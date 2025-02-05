@@ -27,7 +27,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
@@ -37,9 +36,6 @@ import motager.composeapp.generated.resources.Categories
 import motager.composeapp.generated.resources.Create
 import motager.composeapp.generated.resources.Next
 import motager.composeapp.generated.resources.Of
-import motager.composeapp.generated.resources.OutfitBold
-import motager.composeapp.generated.resources.OutfitMedium
-import motager.composeapp.generated.resources.OutfitRegular
 import motager.composeapp.generated.resources.Page
 import motager.composeapp.generated.resources.Prev
 import motager.composeapp.generated.resources.Res
@@ -50,7 +46,6 @@ import motager.composeapp.generated.resources.chevronleft
 import motager.composeapp.generated.resources.chevronright
 import motager.composeapp.generated.resources.hellipsis
 import motager.composeapp.generated.resources.switch
-import org.jetbrains.compose.resources.Font
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.ninjaneers.motager.app.navigation.Navigator
@@ -59,6 +54,7 @@ import org.ninjaneers.motager.core.presentation.CoreState
 import org.ninjaneers.motager.core.presentation.components.PrimaryButton
 import org.ninjaneers.motager.core.presentation.components.PrimaryIconButton
 import org.ninjaneers.motager.core.presentation.components.PrimaryTextField
+import org.ninjaneers.motager.core.presentation.theme.FontFamily
 import org.ninjaneers.motager.dashboard.presentation.DashboardAction
 import org.ninjaneers.motager.dashboard.presentation.DashboardState
 import org.ninjaneers.motager.dashboard.presentation.components.NavDrawer
@@ -161,10 +157,8 @@ private fun CategoriesScreenContent(
                                 modifier = Modifier.weight(1f),
                                 text = stringResource(Res.string.Categories),
                                 fontFamily = FontFamily(
-                                    Font(
-                                        resource = Res.font.OutfitMedium,
-                                        weight = FontWeight.Medium
-                                    )
+                                    weight = FontWeight.Medium,
+                                    language = coreState.language
                                 ),
                                 maxLines = 1,
                                 overflow = TextOverflow.Ellipsis,
@@ -208,10 +202,8 @@ private fun CategoriesScreenContent(
                                             color = MaterialTheme.colorScheme.onPrimary,
                                             fontSize = 18.sp,
                                             fontFamily = FontFamily(
-                                                Font(
-                                                    resource = Res.font.OutfitMedium,
-                                                    weight = FontWeight.Medium
-                                                )
+                                                weight = FontWeight.Medium,
+                                                language = coreState.language
                                             )
                                         )
                                     }
@@ -242,10 +234,8 @@ private fun CategoriesScreenContent(
                                         modifier = Modifier.padding(horizontal = 2.dp),
                                         text = stringResource(Res.string.Search),
                                         fontFamily = FontFamily(
-                                            Font(
-                                                resource = Res.font.OutfitRegular,
-                                                weight = FontWeight.Normal
-                                            )
+                                            weight = FontWeight.Normal,
+                                            language = coreState.language
                                         ),
                                         color = MaterialTheme.colorScheme.surfaceVariant,
                                         textAlign = TextAlign.Start,
@@ -265,10 +255,8 @@ private fun CategoriesScreenContent(
                                         Text(
                                             text = "10",
                                             fontFamily = FontFamily(
-                                                Font(
-                                                    resource = Res.font.OutfitRegular,
-                                                    weight = FontWeight.Normal
-                                                )
+                                                weight = FontWeight.Normal,
+                                                language = coreState.language
                                             ),
                                             color = MaterialTheme.colorScheme.surfaceVariant,
                                             textAlign = TextAlign.Start,
@@ -349,10 +337,8 @@ private fun CategoriesScreenContent(
                                         Text(
                                             text = stringResource(Res.string.Prev),
                                             fontFamily = FontFamily(
-                                                Font(
-                                                    resource = Res.font.OutfitRegular,
-                                                    weight = FontWeight.Normal
-                                                )
+                                                weight = FontWeight.Normal,
+                                                language = coreState.language
                                             ),
                                             fontSize = 14.sp,
                                             color = MaterialTheme.colorScheme.surfaceVariant
@@ -366,10 +352,8 @@ private fun CategoriesScreenContent(
                                     Text(
                                         text = stringResource(Res.string.Page),
                                         fontFamily = FontFamily(
-                                            Font(
-                                                resource = Res.font.OutfitRegular,
-                                                weight = FontWeight.Normal
-                                            )
+                                            weight = FontWeight.Normal,
+                                            language = coreState.language
                                         ),
                                         fontSize = 14.sp,
                                         color = MaterialTheme.colorScheme.onBackground
@@ -377,10 +361,8 @@ private fun CategoriesScreenContent(
                                     Text(
                                         text = "1",
                                         fontFamily = FontFamily(
-                                            Font(
-                                                resource = Res.font.OutfitBold,
-                                                weight = FontWeight.Bold
-                                            )
+                                            weight = FontWeight.Bold,
+                                            language = coreState.language
                                         ),
                                         fontSize = 14.sp,
                                         color = MaterialTheme.colorScheme.primary
@@ -388,10 +370,8 @@ private fun CategoriesScreenContent(
                                     Text(
                                         text = stringResource(Res.string.Of) + " 2",
                                         fontFamily = FontFamily(
-                                            Font(
-                                                resource = Res.font.OutfitRegular,
-                                                weight = FontWeight.Normal
-                                            )
+                                            weight = FontWeight.Normal,
+                                            language = coreState.language
                                         ),
                                         fontSize = 14.sp,
                                         color = MaterialTheme.colorScheme.onBackground
@@ -418,10 +398,8 @@ private fun CategoriesScreenContent(
                                         Text(
                                             text = stringResource(Res.string.Next),
                                             fontFamily = FontFamily(
-                                                Font(
-                                                    resource = Res.font.OutfitRegular,
-                                                    weight = FontWeight.Normal
-                                                )
+                                                weight = FontWeight.Normal,
+                                                language = coreState.language
                                             ),
                                             fontSize = 14.sp,
                                             color = MaterialTheme.colorScheme.surfaceVariant
@@ -441,10 +419,8 @@ private fun CategoriesScreenContent(
                                 Text(
                                     text = stringResource(Res.string.Results),
                                     fontFamily = FontFamily(
-                                        Font(
-                                            resource = Res.font.OutfitRegular,
-                                            weight = FontWeight.Normal
-                                        )
+                                        weight = FontWeight.Normal,
+                                        language = coreState.language
                                     ),
                                     fontSize = 14.sp,
                                     color = MaterialTheme.colorScheme.onBackground
@@ -452,10 +428,8 @@ private fun CategoriesScreenContent(
                                 Text(
                                     text = " 9",
                                     fontFamily = FontFamily(
-                                        Font(
-                                            resource = Res.font.OutfitBold,
-                                            weight = FontWeight.Bold
-                                        )
+                                        weight = FontWeight.Bold,
+                                        language = coreState.language
                                     ),
                                     fontSize = 14.sp,
                                     color = MaterialTheme.colorScheme.primary

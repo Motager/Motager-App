@@ -71,8 +71,8 @@ import org.jetbrains.compose.resources.Font
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.ninjaneers.motager.app.navigation.Navigator
-import org.ninjaneers.motager.core.domain.Languages
-import org.ninjaneers.motager.core.domain.Themes
+import org.ninjaneers.motager.core.domain.Language
+import org.ninjaneers.motager.core.domain.Theme
 import org.ninjaneers.motager.core.presentation.CoreAction
 import org.ninjaneers.motager.core.presentation.components.PrimaryIconButton
 import org.ninjaneers.motager.dashboard.domain.NavDrawerItem
@@ -262,7 +262,7 @@ private fun NavDrawerContent(
                                     .clip(RoundedCornerShape(6.dp)),
                                 onClick = {
                                     isThemeMenuExpanded = !isThemeMenuExpanded
-                                    coreAction(CoreAction.ChangeTheme(Themes.Light))
+                                    coreAction(CoreAction.ChangeTheme(Theme.Light))
                                 },
                                 text = {
                                     Text(
@@ -292,7 +292,7 @@ private fun NavDrawerContent(
                                     .clip(RoundedCornerShape(6.dp)),
                                 onClick = {
                                     isThemeMenuExpanded = !isThemeMenuExpanded
-                                    coreAction(CoreAction.ChangeTheme(Themes.Dark))
+                                    coreAction(CoreAction.ChangeTheme(Theme.Dark))
                                 },
                                 text = {
                                     Text(
@@ -322,7 +322,7 @@ private fun NavDrawerContent(
                                     .clip(RoundedCornerShape(6.dp)),
                                 onClick = {
                                     isThemeMenuExpanded = !isThemeMenuExpanded
-                                    coreAction(CoreAction.ChangeTheme(Themes.System))
+                                    coreAction(CoreAction.ChangeTheme(Theme.System))
                                 },
                                 text = {
                                     Text(
@@ -374,7 +374,7 @@ private fun NavDrawerContent(
                                     .clip(RoundedCornerShape(6.dp)),
                                 onClick = {
                                     isLocalMenuExpanded = !isLocalMenuExpanded
-                                    coreAction(CoreAction.ChangeLanguage(Languages.Arabic))
+                                    coreAction(CoreAction.ChangeLanguage(Language.Arabic))
                                 },
                                 text = {
                                     Text(
@@ -404,7 +404,7 @@ private fun NavDrawerContent(
                                     .clip(RoundedCornerShape(6.dp)),
                                 onClick = {
                                     isLocalMenuExpanded = !isLocalMenuExpanded
-                                    coreAction(CoreAction.ChangeLanguage(Languages.English))
+                                    coreAction(CoreAction.ChangeLanguage(Language.English))
                                 },
                                 text = {
                                     Text(

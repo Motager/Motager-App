@@ -10,10 +10,14 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import org.ninjaneers.motager.core.domain.AppSettingsRepository
-import org.ninjaneers.motager.core.domain.Languages
-import org.ninjaneers.motager.core.domain.Themes
+import org.ninjaneers.motager.core.domain.Language
+import org.ninjaneers.motager.core.domain.Localization
+import org.ninjaneers.motager.core.domain.Theme
 
-class CoreViewModel(private val settingsRepository: AppSettingsRepository) : ViewModel() {
+class CoreViewModel(
+    private val settingsRepository: AppSettingsRepository,
+    private val localization: Localization
+) : ViewModel() {
     private val _state = MutableStateFlow(CoreState())
     val state = _state.asStateFlow()
 
@@ -22,17 +26,18 @@ class CoreViewModel(private val settingsRepository: AppSettingsRepository) : Vie
             _state.update {
                 it.copy(
                     theme = when (settingsRepository.getTheme()) {
-                        "light" -> Themes.Light
-                        "dark" -> Themes.Dark
-                        else -> Themes.System
+                        "light" -> Theme.Light
+                        "dark" -> Theme.Dark
+                        else -> Theme.System
                     },
                     language = when (settingsRepository.getLanguage()) {
-                        "en" -> Languages.English
-                        "ar" -> Languages.Arabic
-                        else -> Languages.English
+                        "en" -> Language.English
+                        "ar" -> Language.Arabic
+                        else -> Language.English
                     }
                 )
             }
+            localization.changeLanguage(_state.value.language.locale)
         }
     }
 
@@ -43,17 +48,18 @@ class CoreViewModel(private val settingsRepository: AppSettingsRepository) : Vie
         }
     }
 
-    private fun changeTheme(theme: Themes) {
+    private fun changeTheme(theme: Theme) {
         viewModelScope.launch(Dispatchers.IO) {
             settingsRepository.setAppTheme(theme.theme)
         }
         _state.update { it.copy(theme = theme) }
     }
 
-    private fun changeLanguage(language: Languages) {
+    private fun changeLanguage(language: Language) {
         viewModelScope.launch(Dispatchers.IO) {
             settingsRepository.setAppLanguage(language.locale)
         }
+        localization.changeLanguage(language.locale)
         _state.update { it.copy(language = language) }
     }
 }

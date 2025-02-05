@@ -1,6 +1,6 @@
 package org.ninjaneers.motager.core.data.repository
 
-import org.ninjaneers.motager.core.data.ApplicationSettings
+import org.ninjaneers.motager.core.data.local.ApplicationSettings
 import org.ninjaneers.motager.core.domain.AppSettingsRepository
 
 class AppSettingsRepositoryImpl(
