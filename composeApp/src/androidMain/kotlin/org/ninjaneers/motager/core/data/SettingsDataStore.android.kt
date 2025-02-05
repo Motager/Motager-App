@@ -5,6 +5,8 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.PreferenceDataStoreFactory
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.map
 import okio.Path.Companion.toPath
 import org.ninjaneers.motager.core.domain.Languages
 import org.ninjaneers.motager.core.domain.Themes
@@ -17,19 +19,15 @@ actual class SettingsDataStore(private val context: Context) : ApplicationSettin
         )
 
     override suspend fun getAppTheme(): String {
-        var theme: String = Themes.System.theme
-        settingsDataStore.data.collect { settings ->
-            theme = settings[THEME_KEY] ?: Themes.System.theme
-        }
-        return theme
+        return settingsDataStore.data.map { settings ->
+            settings[THEME_KEY] ?: Themes.System.theme
+        }.first()
     }
 
     override suspend fun getAppLanguage(): String {
-        var language: String = Languages.English.locale
-        settingsDataStore.data.collect { settings ->
-            language = settings[LOCALE_KEY] ?: Languages.English.locale
-        }
-        return language
+        return settingsDataStore.data.map { settings ->
+            settings[LOCALE_KEY] ?: Languages.English.locale
+        }.first()
     }
     override suspend fun setAppTheme(theme: String) {
         settingsDataStore.edit { settings ->
