@@ -64,7 +64,8 @@ private fun DashboardScreenContent(
     ModalNavigationDrawer(
         drawerContent = {
             NavDrawer(
-                navigationItems = state.navigationItems,
+                state = state,
+                items = state.navigationItems,
                 onAction = onAction,
                 coreAction = coreAction
             )

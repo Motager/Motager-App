@@ -29,58 +29,52 @@ data class DashboardState(
     val navigationItems: List<NavDrawerItem> = listOf(
         NavDrawerItem(
             label = Res.string.Home,
-            selected = true,
             icon = Res.drawable.home,
             content = DashboardContent.Home
         ),
         NavDrawerItem(
             label = Res.string.Orders,
-            selected = false,
             icon = Res.drawable.orders,
             content = DashboardContent.Orders
         ),
         NavDrawerItem(
             label = Res.string.Products,
-            selected = false,
             icon = Res.drawable.products,
             content = DashboardContent.Products
         ),
         NavDrawerItem(
             label = Res.string.Collections,
-            selected = false,
             icon = Res.drawable.grid_plus,
             content = DashboardContent.Collections
         ),
         NavDrawerItem(
             label = Res.string.Categories,
-            selected = false,
             icon = Res.drawable.boxes,
             content = DashboardContent.Categories
         ),
         NavDrawerItem(
             label = Res.string.Customers,
-            selected = false,
             icon = Res.drawable.customers,
             content = DashboardContent.Customers
         ),
         NavDrawerItem(
             label = Res.string.Analytics,
-            selected = false,
             icon = Res.drawable.chart,
             content = DashboardContent.Analytics
         ),
         NavDrawerItem(
             label = Res.string.Discounts,
-            selected = false,
             icon = Res.drawable.discounts,
             content = DashboardContent.Discounts
         ),
         NavDrawerItem(
             label = Res.string.Settings,
-            selected = false,
             icon = Res.drawable.settings,
             content = DashboardContent.Settings
         )
     ),
-    val content: DashboardContent = DashboardContent.Home
+    val content: DashboardContent = DashboardContent.Home,
+    val isThemeMenuExpanded: Boolean = false,
+    val isLocaleMenuExpanded: Boolean = false,
+    val selectedIndex: Int = 0
 )

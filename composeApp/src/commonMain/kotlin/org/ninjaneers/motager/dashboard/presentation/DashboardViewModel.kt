@@ -12,15 +12,17 @@ class DashboardViewModel : ViewModel() {
 
     suspend fun onAction(action: DashboardAction) {
         when (action) {
-            DashboardAction.CloseNavigationDrawer -> {
+            is DashboardAction.CloseNavigationDrawer -> {
                 closeNavigationDrawer()
             }
 
-            DashboardAction.OpenNavigationDrawer -> {
+            is DashboardAction.OpenNavigationDrawer -> {
                 openNavigationDrawer()
             }
 
-            is DashboardAction.OnContentChange -> changeContent(action.content)
+            is DashboardAction.OnContentChange -> changeContent(action.content, action.index)
+            is DashboardAction.OnLocaleMenuToggle -> toggleLocaleMenu(action.isExpanded)
+            is DashboardAction.OnThemeMenuToggle -> toggleThemeMenu(action.isExpanded)
         }
     }
 
@@ -32,10 +34,27 @@ class DashboardViewModel : ViewModel() {
         _state.value.drawerState.close()
     }
 
-    private fun changeContent(content: DashboardContent) {
+    private fun changeContent(content: DashboardContent, index: Int) {
         _state.update {
             it.copy(
-                content = content
+                content = content,
+                selectedIndex = index
+            )
+        }
+    }
+
+    private fun toggleThemeMenu(isExpanded: Boolean) {
+        _state.update {
+            it.copy(
+                isThemeMenuExpanded = !isExpanded
+            )
+        }
+    }
+
+    private fun toggleLocaleMenu(isExpanded: Boolean) {
+        _state.update {
+            it.copy(
+                isLocaleMenuExpanded = !isExpanded
             )
         }
     }

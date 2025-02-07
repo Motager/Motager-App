@@ -5,7 +5,6 @@ import org.jetbrains.compose.resources.StringResource
 
 data class NavDrawerItem(
     val label: StringResource,
-    var selected: Boolean,
     val icon: DrawableResource,
     val content: DashboardContent
 )
