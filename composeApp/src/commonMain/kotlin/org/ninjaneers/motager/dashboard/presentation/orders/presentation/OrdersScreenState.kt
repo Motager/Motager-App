@@ -20,5 +20,5 @@ data class OrdersScreenState(
         Res.string.Actions
     ),
     val ordersList: List<Order> = (1..20).map { Order() },
-    val ordersNumber: Int = ordersList.size
+    val ordersCount: Int = ordersList.size
 )

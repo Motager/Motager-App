@@ -27,14 +27,14 @@ import org.ninjaneers.motager.dashboard.presentation.components.TopBar
 fun SettingsScreen(
     navigator: Navigator,
     dashboardState: DashboardState,
-    onAction: suspend (DashboardAction) -> Unit,
     coreState: CoreState,
+    dashboardAction: suspend (DashboardAction) -> Unit,
     coreAction: (CoreAction) -> Unit
 ) {
     SettingsScreenContent(
         navigator = navigator,
         dashboardState = dashboardState,
-        onAction = onAction,
+        dashboardAction = dashboardAction,
         coreState = coreState,
         coreAction = coreAction
     )
@@ -44,8 +44,8 @@ fun SettingsScreen(
 private fun SettingsScreenContent(
     navigator: Navigator,
     dashboardState: DashboardState,
-    onAction: suspend (DashboardAction) -> Unit,
     coreState: CoreState,
+    dashboardAction: suspend (DashboardAction) -> Unit,
     coreAction: (CoreAction) -> Unit
 ) {
     ModalNavigationDrawer(
@@ -53,7 +53,7 @@ private fun SettingsScreenContent(
             NavDrawer(
                 navigator = navigator,
                 navigationItems = dashboardState.navigationItems,
-                closeDrawer = onAction,
+                closeDrawer = dashboardAction,
                 coreAction = coreAction
             )
         },
@@ -64,7 +64,8 @@ private fun SettingsScreenContent(
         Scaffold(
             topBar = {
                 TopBar(
-                    openNavDrawer = onAction
+                    openNavDrawer = dashboardAction,
+                    coreState = coreState
                 )
             }
         ) { innerPadding ->

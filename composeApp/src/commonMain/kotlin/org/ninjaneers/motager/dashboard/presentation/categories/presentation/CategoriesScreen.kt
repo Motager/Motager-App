@@ -1,6 +1,5 @@
 package org.ninjaneers.motager.dashboard.presentation.categories.presentation
 
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -15,7 +14,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
@@ -34,16 +32,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import motager.composeapp.generated.resources.Categories
 import motager.composeapp.generated.resources.Create
-import motager.composeapp.generated.resources.Next
-import motager.composeapp.generated.resources.Of
-import motager.composeapp.generated.resources.Page
-import motager.composeapp.generated.resources.Prev
 import motager.composeapp.generated.resources.Res
-import motager.composeapp.generated.resources.Results
 import motager.composeapp.generated.resources.Search
 import motager.composeapp.generated.resources.boxes
-import motager.composeapp.generated.resources.chevronleft
-import motager.composeapp.generated.resources.chevronright
 import motager.composeapp.generated.resources.hellipsis
 import motager.composeapp.generated.resources.switch
 import org.jetbrains.compose.resources.painterResource
@@ -58,6 +49,7 @@ import org.ninjaneers.motager.core.presentation.theme.FontFamily
 import org.ninjaneers.motager.dashboard.presentation.DashboardAction
 import org.ninjaneers.motager.dashboard.presentation.DashboardState
 import org.ninjaneers.motager.dashboard.presentation.components.NavDrawer
+import org.ninjaneers.motager.dashboard.presentation.components.Pagination
 import org.ninjaneers.motager.dashboard.presentation.components.Table
 import org.ninjaneers.motager.dashboard.presentation.components.TableActionCell
 import org.ninjaneers.motager.dashboard.presentation.components.TableCell
@@ -70,15 +62,15 @@ fun CategoriesScreen(
     state: CategoriesScreenState,
     navigator: Navigator,
     dashboardState: DashboardState,
-    onAction: suspend (DashboardAction) -> Unit,
     coreState: CoreState,
+    dashboardAction: suspend (DashboardAction) -> Unit,
     coreAction: (CoreAction) -> Unit
 ) {
     CategoriesScreenContent(
         state = state,
         navigator = navigator,
         dashboardState = dashboardState,
-        onAction = onAction,
+        dashboardAction = dashboardAction,
         coreState = coreState,
         coreAction = coreAction
     )
@@ -89,7 +81,7 @@ private fun CategoriesScreenContent(
     state: CategoriesScreenState,
     navigator: Navigator,
     dashboardState: DashboardState,
-    onAction: suspend (DashboardAction) -> Unit,
+    dashboardAction: suspend (DashboardAction) -> Unit,
     coreState: CoreState,
     coreAction: (CoreAction) -> Unit
 ) {
@@ -98,7 +90,7 @@ private fun CategoriesScreenContent(
             NavDrawer(
                 navigator = navigator,
                 navigationItems = dashboardState.navigationItems,
-                closeDrawer = onAction,
+                closeDrawer = dashboardAction,
                 coreAction = coreAction
             )
         },
@@ -108,7 +100,8 @@ private fun CategoriesScreenContent(
         Scaffold(
             topBar = {
                 TopBar(
-                    openNavDrawer = onAction
+                    openNavDrawer = dashboardAction,
+                    coreState = coreState
                 )
             }
         ) { innerPadding ->
@@ -176,7 +169,8 @@ private fun CategoriesScreenContent(
                                     colors = ButtonDefaults.buttonColors(
                                         containerColor = MaterialTheme.colorScheme.secondary,
                                         contentColor = MaterialTheme.colorScheme.surfaceContainerLowest
-                                    )
+                                    ),
+                                    language = coreState.language
                                 )
                                 PrimaryButton(
                                     onClick = {},
@@ -271,7 +265,8 @@ private fun CategoriesScreenContent(
                                     colors = ButtonDefaults.buttonColors(
                                         containerColor = MaterialTheme.colorScheme.background,
                                         contentColor = MaterialTheme.colorScheme.surfaceContainerLowest
-                                    )
+                                    ),
+                                    language = coreState.language
                                 )
                             }
                         }
@@ -299,143 +294,10 @@ private fun CategoriesScreenContent(
                                 }
                             }
                         }
-                        Row(
-                            modifier = Modifier
-                                .padding(top = 8.dp)
-                                .height(38.dp)
-                                .fillMaxWidth(),
-                            verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.SpaceBetween
-                        ) {
-                            Row(
-                                verticalAlignment = Alignment.CenterVertically,
-                                horizontalArrangement = Arrangement.spacedBy(8.dp)
-                            ) {
-                                Button(
-                                    modifier = Modifier.fillMaxHeight(),
-                                    onClick = {},
-                                    contentPadding = PaddingValues(0.dp),
-                                    shape = RoundedCornerShape(6.dp),
-                                    border = BorderStroke(
-                                        width = 1.dp,
-                                        color = MaterialTheme.colorScheme.outline
-                                    ),
-                                    colors = ButtonDefaults.buttonColors(
-                                        containerColor = MaterialTheme.colorScheme.background,
-                                        contentColor = MaterialTheme.colorScheme.surfaceContainerLowest
-                                    )
-                                ) {
-                                    Row(
-                                        modifier = Modifier.fillMaxHeight(),
-                                        verticalAlignment = Alignment.CenterVertically,
-                                    ) {
-                                        Icon(
-                                            painter = painterResource(Res.drawable.chevronleft),
-                                            contentDescription = stringResource(Res.string.Prev),
-                                            tint = MaterialTheme.colorScheme.surfaceVariant
-                                        )
-                                        Text(
-                                            text = stringResource(Res.string.Prev),
-                                            fontFamily = FontFamily(
-                                                weight = FontWeight.Normal,
-                                                language = coreState.language
-                                            ),
-                                            fontSize = 14.sp,
-                                            color = MaterialTheme.colorScheme.surfaceVariant
-                                        )
-                                    }
-                                }
-                                Row(
-                                    verticalAlignment = Alignment.CenterVertically,
-                                    horizontalArrangement = Arrangement.spacedBy(2.dp)
-                                ) {
-                                    Text(
-                                        text = stringResource(Res.string.Page),
-                                        fontFamily = FontFamily(
-                                            weight = FontWeight.Normal,
-                                            language = coreState.language
-                                        ),
-                                        fontSize = 14.sp,
-                                        color = MaterialTheme.colorScheme.onBackground
-                                    )
-                                    Text(
-                                        text = "1",
-                                        fontFamily = FontFamily(
-                                            weight = FontWeight.Bold,
-                                            language = coreState.language
-                                        ),
-                                        fontSize = 14.sp,
-                                        color = MaterialTheme.colorScheme.primary
-                                    )
-                                    Text(
-                                        text = stringResource(Res.string.Of) + " 2",
-                                        fontFamily = FontFamily(
-                                            weight = FontWeight.Normal,
-                                            language = coreState.language
-                                        ),
-                                        fontSize = 14.sp,
-                                        color = MaterialTheme.colorScheme.onBackground
-                                    )
-                                }
-                                Button(
-                                    modifier = Modifier.fillMaxHeight(),
-                                    onClick = {},
-                                    contentPadding = PaddingValues(0.dp),
-                                    shape = RoundedCornerShape(6.dp),
-                                    border = BorderStroke(
-                                        width = 1.dp,
-                                        color = MaterialTheme.colorScheme.outline
-                                    ),
-                                    colors = ButtonDefaults.buttonColors(
-                                        containerColor = MaterialTheme.colorScheme.background,
-                                        contentColor = MaterialTheme.colorScheme.surfaceContainerLowest
-                                    )
-                                ) {
-                                    Row(
-                                        modifier = Modifier.fillMaxHeight(),
-                                        verticalAlignment = Alignment.CenterVertically,
-                                    ) {
-                                        Text(
-                                            text = stringResource(Res.string.Next),
-                                            fontFamily = FontFamily(
-                                                weight = FontWeight.Normal,
-                                                language = coreState.language
-                                            ),
-                                            fontSize = 14.sp,
-                                            color = MaterialTheme.colorScheme.surfaceVariant
-                                        )
-                                        Icon(
-                                            painter = painterResource(Res.drawable.chevronright),
-                                            contentDescription = stringResource(Res.string.Prev),
-                                            tint = MaterialTheme.colorScheme.surfaceVariant
-                                        )
-                                    }
-                                }
-                            }
-                            Row(
-                                modifier = Modifier.fillMaxHeight(),
-                                verticalAlignment = Alignment.CenterVertically
-                            ) {
-                                Text(
-                                    text = stringResource(Res.string.Results),
-                                    fontFamily = FontFamily(
-                                        weight = FontWeight.Normal,
-                                        language = coreState.language
-                                    ),
-                                    fontSize = 14.sp,
-                                    color = MaterialTheme.colorScheme.onBackground
-                                )
-                                Text(
-                                    text = " 9",
-                                    fontFamily = FontFamily(
-                                        weight = FontWeight.Bold,
-                                        language = coreState.language
-                                    ),
-                                    fontSize = 14.sp,
-                                    color = MaterialTheme.colorScheme.primary
-                                )
-                            }
-                        }
+                        Pagination(
+                            language = coreState.language,
+                            resultsCount = state.categoriesCount
+                        )
                     }
                 }
             }

@@ -27,5 +27,5 @@ data class CustomerScreenState(
         Res.string.Status,
         Res.string.Actions
     ),
-    val customerNumber: Int = customerList.size
+    val customersCount: Int = customerList.size
 )

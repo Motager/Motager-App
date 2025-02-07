@@ -29,6 +29,7 @@ import motager.composeapp.generated.resources.menu
 import org.jetbrains.compose.resources.Font
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
+import org.ninjaneers.motager.core.domain.Language
 import org.ninjaneers.motager.core.presentation.components.PrimaryButton
 import org.ninjaneers.motager.core.presentation.components.PrimaryIconButton
 
@@ -82,7 +83,8 @@ fun MainNavBar() {
                 colors = ButtonDefaults.buttonColors(
                     containerColor = MaterialTheme.colorScheme.background,
                     contentColor = MaterialTheme.colorScheme.surfaceContainerLowest
-                )
+                ),
+                language = Language.English
             )
         }
     }

@@ -26,14 +26,14 @@ import org.ninjaneers.motager.dashboard.presentation.components.TopBar
 fun HomeScreen(
     navigator: Navigator,
     dashboardState: DashboardState,
-    onAction: suspend (DashboardAction) -> Unit,
     coreState: CoreState,
+    dashboardAction: suspend (DashboardAction) -> Unit,
     coreAction: (CoreAction) -> Unit
 ) {
     HomeScreenContent(
         navigator = navigator,
         dashboardState = dashboardState,
-        onAction = onAction,
+        dashboardAction = dashboardAction,
         coreState = coreState,
         coreAction = coreAction
     )
@@ -43,7 +43,7 @@ fun HomeScreen(
 private fun HomeScreenContent(
     navigator: Navigator,
     dashboardState: DashboardState,
-    onAction: suspend (DashboardAction) -> Unit,
+    dashboardAction: suspend (DashboardAction) -> Unit,
     coreState: CoreState,
     coreAction: (CoreAction) -> Unit
 ) {
@@ -54,7 +54,7 @@ private fun HomeScreenContent(
             NavDrawer(
                 navigator = navigator,
                 navigationItems = dashboardState.navigationItems,
-                closeDrawer = onAction,
+                closeDrawer = dashboardAction,
                 coreAction = coreAction
             )
         },
@@ -64,7 +64,8 @@ private fun HomeScreenContent(
         Scaffold(
             topBar = {
                 TopBar(
-                    openNavDrawer = onAction
+                    openNavDrawer = dashboardAction,
+                    coreState = coreState
                 )
             }
         ) { innerPadding ->

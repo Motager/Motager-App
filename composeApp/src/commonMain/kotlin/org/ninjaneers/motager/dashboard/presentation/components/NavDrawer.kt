@@ -9,12 +9,15 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -105,11 +108,13 @@ private fun NavDrawerContent(
     var isLocalMenuExpanded by remember { mutableStateOf(false) }
     var selectedIndex by remember { mutableStateOf(0) }
     ModalDrawerSheet(
-        modifier = Modifier.width(320.dp).border(
-            width = 0.8f.dp,
-            color = MaterialTheme.colorScheme.outline,
-            shape = DrawerDefaults.shape
-        ),
+        modifier = Modifier
+            .windowInsetsPadding(WindowInsets.statusBars)
+            .width(280.dp).border(
+                width = 0.8f.dp,
+                color = MaterialTheme.colorScheme.outline,
+                shape = DrawerDefaults.shape
+            ),
         drawerContainerColor = MaterialTheme.colorScheme.background,
     ) {
         Column(
@@ -244,7 +249,8 @@ private fun NavDrawerContent(
                             colors = ButtonDefaults.buttonColors(
                                 containerColor = MaterialTheme.colorScheme.background,
                                 contentColor = MaterialTheme.colorScheme.surfaceContainerLowest
-                            )
+                            ),
+                            language = Language.English
                         )
                         DropdownMenu(
                             expanded = isThemeMenuExpanded,
@@ -356,7 +362,8 @@ private fun NavDrawerContent(
                             colors = ButtonDefaults.buttonColors(
                                 containerColor = MaterialTheme.colorScheme.background,
                                 contentColor = MaterialTheme.colorScheme.surfaceContainerLowest
-                            )
+                            ),
+                            language = Language.English
                         )
                         DropdownMenu(
                             expanded = isLocalMenuExpanded,

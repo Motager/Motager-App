@@ -88,7 +88,7 @@ fun App() {
                         HomeScreen(
                             navigator = navigator,
                             dashboardState = dashboardState,
-                            onAction = dashboardViewModel::onAction,
+                            dashboardAction = dashboardViewModel::onAction,
                             coreState = coreState,
                             coreAction = coreViewModel::onAction
                         )
@@ -103,7 +103,7 @@ fun App() {
                             state = state,
                             navigator = navigator,
                             dashboardState = dashboardState,
-                            onAction = dashboardViewModel::onAction,
+                            dashboardAction = dashboardViewModel::onAction,
                             coreState = coreState,
                             coreAction = coreViewModel::onAction
                         )
@@ -118,7 +118,7 @@ fun App() {
                             state = state,
                             navigator = navigator,
                             dashboardState = dashboardState,
-                            onAction = dashboardViewModel::onAction,
+                            dashboardAction = dashboardViewModel::onAction,
                             coreState = coreState,
                             coreAction = coreViewModel::onAction
                         )
@@ -133,7 +133,7 @@ fun App() {
                             state = state,
                             navigator = navigator,
                             dashboardState = dashboardState,
-                            onAction = dashboardViewModel::onAction,
+                            dashboardAction = dashboardViewModel::onAction,
                             coreState = coreState,
                             coreAction = coreViewModel::onAction
                         )
@@ -148,7 +148,7 @@ fun App() {
                             state = state,
                             navigator = navigator,
                             dashboardState = dashboardState,
-                            onAction = dashboardViewModel::onAction,
+                            dashboardAction = dashboardViewModel::onAction,
                             coreState = coreState,
                             coreAction = coreViewModel::onAction
                         )
@@ -163,7 +163,7 @@ fun App() {
                             state = state,
                             navigator = navigator,
                             dashboardState = dashboardState,
-                            onAction = dashboardViewModel::onAction,
+                            dashboardAction = dashboardViewModel::onAction,
                             coreState = coreState,
                             coreAction = coreViewModel::onAction
                         )
@@ -176,7 +176,7 @@ fun App() {
                         AnalyticsScreen(
                             navigator = navigator,
                             dashboardState = dashboardState,
-                            onAction = dashboardViewModel::onAction,
+                            dashboardAction = dashboardViewModel::onAction,
                             coreState = coreState,
                             coreAction = coreViewModel::onAction
                         )
@@ -189,7 +189,7 @@ fun App() {
                         DiscountsScreen(
                             navigator = navigator,
                             dashboardState = dashboardState,
-                            onAction = dashboardViewModel::onAction,
+                            dashbaordAction = dashboardViewModel::onAction,
                             coreState = coreState,
                             coreAction = coreViewModel::onAction
                         )
@@ -202,7 +202,7 @@ fun App() {
                         SettingsScreen(
                             navigator = navigator,
                             dashboardState = dashboardState,
-                            onAction = dashboardViewModel::onAction,
+                            dashboardAction = dashboardViewModel::onAction,
                             coreState = coreState,
                             coreAction = coreViewModel::onAction
                         )

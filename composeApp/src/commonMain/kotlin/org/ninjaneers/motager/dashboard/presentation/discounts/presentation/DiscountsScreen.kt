@@ -27,14 +27,14 @@ import org.ninjaneers.motager.dashboard.presentation.components.TopBar
 fun DiscountsScreen(
     navigator: Navigator,
     dashboardState: DashboardState,
-    onAction: suspend (DashboardAction) -> Unit,
     coreState: CoreState,
+    dashbaordAction: suspend (DashboardAction) -> Unit,
     coreAction: (CoreAction) -> Unit
 ) {
     DiscountsScreenContent(
         navigator = navigator,
         dashboardState = dashboardState,
-        onAction = onAction,
+        dashboardAction = dashbaordAction,
         coreState = coreState,
         coreAction = coreAction
     )
@@ -44,8 +44,8 @@ fun DiscountsScreen(
 private fun DiscountsScreenContent(
     navigator: Navigator,
     dashboardState: DashboardState,
-    onAction: suspend (DashboardAction) -> Unit,
     coreState: CoreState,
+    dashboardAction: suspend (DashboardAction) -> Unit,
     coreAction: (CoreAction) -> Unit
 ) {
     ModalNavigationDrawer(
@@ -53,7 +53,7 @@ private fun DiscountsScreenContent(
             NavDrawer(
                 navigator = navigator,
                 navigationItems = dashboardState.navigationItems,
-                closeDrawer = onAction,
+                closeDrawer = dashboardAction,
                 coreAction = coreAction
             )
         },
@@ -63,7 +63,8 @@ private fun DiscountsScreenContent(
         Scaffold(
             topBar = {
                 TopBar(
-                    openNavDrawer = onAction
+                    openNavDrawer = dashboardAction,
+                    coreState = coreState
                 )
             }
         ) { innerPadding ->
