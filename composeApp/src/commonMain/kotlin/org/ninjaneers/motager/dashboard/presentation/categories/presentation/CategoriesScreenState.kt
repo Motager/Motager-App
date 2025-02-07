@@ -21,5 +21,5 @@ data class CategoriesScreenState(
         Res.string.Description,
         Res.string.Actions
     ),
-    val categoriesNumber: Int = categoryList.size
+    val categoriesCount: Int = categoryList.size
 )

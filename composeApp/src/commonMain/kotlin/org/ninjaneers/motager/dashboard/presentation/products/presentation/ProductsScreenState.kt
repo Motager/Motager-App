@@ -26,5 +26,5 @@ data class ProductsScreenState(
         Res.string.Category,
         Res.string.Actions
     ),
-    val productsNumber: Int = productsList.size
+    val productsCount: Int = productsList.size
 )

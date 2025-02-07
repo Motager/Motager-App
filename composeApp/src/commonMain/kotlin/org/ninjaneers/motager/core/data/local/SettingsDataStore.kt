@@ -1,4 +1,4 @@
-package org.ninjaneers.motager.core.data
+package org.ninjaneers.motager.core.data.local
 
 import androidx.datastore.preferences.core.stringPreferencesKey
 

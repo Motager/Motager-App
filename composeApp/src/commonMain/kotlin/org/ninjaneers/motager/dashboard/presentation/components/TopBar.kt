@@ -2,7 +2,6 @@ package org.ninjaneers.motager.dashboard.presentation.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
@@ -23,26 +22,22 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
-import motager.composeapp.generated.resources.DarkLogoEn
-import motager.composeapp.generated.resources.LightLogoEn
 import motager.composeapp.generated.resources.Res
 import motager.composeapp.generated.resources.avatar
 import motager.composeapp.generated.resources.bell
 import motager.composeapp.generated.resources.panels
 import org.jetbrains.compose.resources.painterResource
+import org.ninjaneers.motager.core.presentation.CoreState
 import org.ninjaneers.motager.core.presentation.components.PrimaryIconButton
+import org.ninjaneers.motager.core.presentation.theme.Logo
 import org.ninjaneers.motager.dashboard.presentation.DashboardAction
+
 
 @Composable
 fun TopBar(
+    coreState: CoreState,
     openNavDrawer: suspend (DashboardAction) -> Unit
 ) {
-    TopBarContent(openNavDrawer = openNavDrawer)
-}
-
-
-@Composable
-private fun TopBarContent(openNavDrawer: suspend (DashboardAction) -> Unit) {
     val coroutineScope = rememberCoroutineScope()
     Row(
         modifier = Modifier
@@ -68,15 +63,17 @@ private fun TopBarContent(openNavDrawer: suspend (DashboardAction) -> Unit) {
                 colors = ButtonDefaults.buttonColors(
                     containerColor = MaterialTheme.colorScheme.background,
                     MaterialTheme.colorScheme.surfaceContainerLowest
-                )
+                ),
+                language = coreState.language
             )
             Image(
                 modifier = Modifier
                     .width(150.dp)
                     .height(38.dp),
-                painter = if (isSystemInDarkTheme())
-                    painterResource(Res.drawable.DarkLogoEn)
-                else painterResource(Res.drawable.LightLogoEn),
+                painter = Logo(
+                    language = coreState.language,
+                    theme = coreState.theme
+                ),
                 contentDescription = "Logo"
             )
         }
@@ -91,7 +88,8 @@ private fun TopBarContent(openNavDrawer: suspend (DashboardAction) -> Unit) {
                 colors = ButtonDefaults.buttonColors(
                     containerColor = MaterialTheme.colorScheme.background,
                     MaterialTheme.colorScheme.surfaceContainerLowest
-                )
+                ),
+                language = coreState.language
             )
             Image(
                 modifier = Modifier

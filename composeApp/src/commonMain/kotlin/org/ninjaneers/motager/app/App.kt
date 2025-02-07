@@ -2,8 +2,11 @@ package org.ninjaneers.motager.app
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.ui.platform.LocalLayoutDirection
+import androidx.compose.ui.unit.LayoutDirection
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -15,7 +18,8 @@ import org.ninjaneers.motager.app.navigation.Navigator
 import org.ninjaneers.motager.app.navigation.Route
 import org.ninjaneers.motager.authentication.presentation.login.LoginScreen
 import org.ninjaneers.motager.authentication.presentation.signup.SignupScreen
-import org.ninjaneers.motager.core.domain.Themes
+import org.ninjaneers.motager.core.domain.Language
+import org.ninjaneers.motager.core.domain.Theme
 import org.ninjaneers.motager.core.presentation.CoreViewModel
 import org.ninjaneers.motager.core.presentation.koinSharedViewModel
 import org.ninjaneers.motager.core.presentation.theme.MotagerTheme
@@ -45,156 +49,164 @@ import org.ninjaneers.motager.mainscreen.MainScreen
 fun App() {
     val coreViewModel = koinViewModel<CoreViewModel>()
     val coreState by coreViewModel.state.collectAsStateWithLifecycle()
-    MotagerTheme(
-        darkTheme = when (coreState.theme) {
-            Themes.Light -> false
-            Themes.Dark -> true
-            Themes.System -> isSystemInDarkTheme()
-        }
+    CompositionLocalProvider(
+        LocalLayoutDirection provides
+                if (coreState.language == Language.Arabic)
+                    LayoutDirection.Rtl
+                else
+                    LayoutDirection.Ltr
     ) {
-        val navController = rememberNavController()
-        val navigator = remember { Navigator(navController) }
-        NavHost(navController = navController, startDestination = Route.DashboardGraph) {
-            composable<Route.MainScreen> {
-                MainScreen(navigator = navigator)
+        MotagerTheme(
+            darkTheme = when (coreState.theme) {
+                Theme.Light -> false
+                Theme.Dark -> true
+                Theme.System -> isSystemInDarkTheme()
             }
+        ) {
+            val navController = rememberNavController()
+            val navigator = remember { Navigator(navController) }
+            NavHost(navController = navController, startDestination = Route.DashboardGraph) {
+                composable<Route.MainScreen> {
+                    MainScreen(navigator = navigator)
+                }
 
-            navigation<Route.AuthenticationGraph>(startDestination = Route.Login) {
-                composable<Route.Login> {
-                    LoginScreen()
+                navigation<Route.AuthenticationGraph>(startDestination = Route.Login) {
+                    composable<Route.Login> {
+                        LoginScreen()
+                    }
+                    composable<Route.Signup> {
+                        SignupScreen()
+                    }
                 }
-                composable<Route.Signup> {
-                    SignupScreen()
-                }
-            }
 
-            navigation<Route.DashboardGraph>(startDestination = Route.Home) {
-                composable<Route.Home>() {
-                    val dashboardViewModel =
-                        it.koinSharedViewModel<DashboardViewModel>(navController = navController)
-                    val dashboardState by dashboardViewModel.state.collectAsStateWithLifecycle()
-                    val homeViewModel = koinViewModel<HomeViewModel>()
-                    HomeScreen(
-                        navigator = navigator,
-                        dashboardState = dashboardState,
-                        onAction = dashboardViewModel::onAction,
-                        coreState = coreState,
-                        coreAction = coreViewModel::onAction
-                    )
-                }
-                composable<Route.Orders>() {
-                    val dashboardViewModel =
-                        it.koinSharedViewModel<DashboardViewModel>(navController = navController)
-                    val dashboardState by dashboardViewModel.state.collectAsStateWithLifecycle()
-                    val ordersViewModel = koinViewModel<OrdersViewModel>()
-                    val state by ordersViewModel.state.collectAsStateWithLifecycle()
-                    OrdersScreen(
-                        state = state,
-                        navigator = navigator,
-                        dashboardState = dashboardState,
-                        onAction = dashboardViewModel::onAction,
-                        coreState = coreState,
-                        coreAction = coreViewModel::onAction
-                    )
-                }
-                composable<Route.Products>() {
-                    val dashboardViewModel =
-                        it.koinSharedViewModel<DashboardViewModel>(navController = navController)
-                    val dashboardState by dashboardViewModel.state.collectAsStateWithLifecycle()
-                    val productsViewModel = koinViewModel<ProductsViewModel>()
-                    val state by productsViewModel.state.collectAsStateWithLifecycle()
-                    ProductsScreen(
-                        state = state,
-                        navigator = navigator,
-                        dashboardState = dashboardState,
-                        onAction = dashboardViewModel::onAction,
-                        coreState = coreState,
-                        coreAction = coreViewModel::onAction
-                    )
-                }
-                composable<Route.Collections>() {
-                    val dashboardViewModel =
-                        it.koinSharedViewModel<DashboardViewModel>(navController = navController)
-                    val dashboardState by dashboardViewModel.state.collectAsStateWithLifecycle()
-                    val collectionsViewModel = koinViewModel<CollectionsViewModel>()
-                    val state by collectionsViewModel.state.collectAsStateWithLifecycle()
-                    CollectionsScreen(
-                        state = state,
-                        navigator = navigator,
-                        dashboardState = dashboardState,
-                        onAction = dashboardViewModel::onAction,
-                        coreState = coreState,
-                        coreAction = coreViewModel::onAction
-                    )
-                }
-                composable<Route.Categories>() {
-                    val dashboardViewModel =
-                        it.koinSharedViewModel<DashboardViewModel>(navController = navController)
-                    val dashboardState by dashboardViewModel.state.collectAsStateWithLifecycle()
-                    val categoriesViewModel = koinViewModel<CategoriesViewModel>()
-                    val state by categoriesViewModel.state.collectAsStateWithLifecycle()
-                    CategoriesScreen(
-                        state = state,
-                        navigator = navigator,
-                        dashboardState = dashboardState,
-                        onAction = dashboardViewModel::onAction,
-                        coreState = coreState,
-                        coreAction = coreViewModel::onAction
-                    )
-                }
-                composable<Route.Customers>() {
-                    val dashboardViewModel =
-                        it.koinSharedViewModel<DashboardViewModel>(navController = navController)
-                    val dashboardState by dashboardViewModel.state.collectAsStateWithLifecycle()
-                    val customersViewModel = koinViewModel<CustomersViewModel>()
-                    val state by customersViewModel.state.collectAsStateWithLifecycle()
-                    CustomersScreen(
-                        state = state,
-                        navigator = navigator,
-                        dashboardState = dashboardState,
-                        onAction = dashboardViewModel::onAction,
-                        coreState = coreState,
-                        coreAction = coreViewModel::onAction
-                    )
-                }
-                composable<Route.Analytics>() {
-                    val dashboardViewModel =
-                        it.koinSharedViewModel<DashboardViewModel>(navController = navController)
-                    val dashboardState by dashboardViewModel.state.collectAsStateWithLifecycle()
-                    val analyticsViewModel = koinViewModel<AnalyticsViewModel>()
-                    AnalyticsScreen(
-                        navigator = navigator,
-                        dashboardState = dashboardState,
-                        onAction = dashboardViewModel::onAction,
-                        coreState = coreState,
-                        coreAction = coreViewModel::onAction
-                    )
-                }
-                composable<Route.Discounts>() {
-                    val dashboardViewModel =
-                        it.koinSharedViewModel<DashboardViewModel>(navController = navController)
-                    val dashboardState by dashboardViewModel.state.collectAsStateWithLifecycle()
-                    val discountsViewModel = koinViewModel<DiscountsViewModel>()
-                    DiscountsScreen(
-                        navigator = navigator,
-                        dashboardState = dashboardState,
-                        onAction = dashboardViewModel::onAction,
-                        coreState = coreState,
-                        coreAction = coreViewModel::onAction
-                    )
-                }
-                composable<Route.Settings>() {
-                    val dashboardViewModel =
-                        it.koinSharedViewModel<DashboardViewModel>(navController = navController)
-                    val dashboardState by dashboardViewModel.state.collectAsStateWithLifecycle()
-                    val settingsViewModel = koinViewModel<SettingsViewModel>()
-                    SettingsScreen(
-                        navigator = navigator,
-                        dashboardState = dashboardState,
-                        onAction = dashboardViewModel::onAction,
-                        coreState = coreState,
-                        coreAction = coreViewModel::onAction
-                    )
+                navigation<Route.DashboardGraph>(startDestination = Route.Home) {
+                    composable<Route.Home>() {
+                        val dashboardViewModel =
+                            it.koinSharedViewModel<DashboardViewModel>(navController = navController)
+                        val dashboardState by dashboardViewModel.state.collectAsStateWithLifecycle()
+                        val homeViewModel = koinViewModel<HomeViewModel>()
+                        HomeScreen(
+                            navigator = navigator,
+                            dashboardState = dashboardState,
+                            dashboardAction = dashboardViewModel::onAction,
+                            coreState = coreState,
+                            coreAction = coreViewModel::onAction
+                        )
+                    }
+                    composable<Route.Orders>() {
+                        val dashboardViewModel =
+                            it.koinSharedViewModel<DashboardViewModel>(navController = navController)
+                        val dashboardState by dashboardViewModel.state.collectAsStateWithLifecycle()
+                        val ordersViewModel = koinViewModel<OrdersViewModel>()
+                        val state by ordersViewModel.state.collectAsStateWithLifecycle()
+                        OrdersScreen(
+                            state = state,
+                            navigator = navigator,
+                            dashboardState = dashboardState,
+                            dashboardAction = dashboardViewModel::onAction,
+                            coreState = coreState,
+                            coreAction = coreViewModel::onAction
+                        )
+                    }
+                    composable<Route.Products>() {
+                        val dashboardViewModel =
+                            it.koinSharedViewModel<DashboardViewModel>(navController = navController)
+                        val dashboardState by dashboardViewModel.state.collectAsStateWithLifecycle()
+                        val productsViewModel = koinViewModel<ProductsViewModel>()
+                        val state by productsViewModel.state.collectAsStateWithLifecycle()
+                        ProductsScreen(
+                            state = state,
+                            navigator = navigator,
+                            dashboardState = dashboardState,
+                            dashboardAction = dashboardViewModel::onAction,
+                            coreState = coreState,
+                            coreAction = coreViewModel::onAction
+                        )
+                    }
+                    composable<Route.Collections>() {
+                        val dashboardViewModel =
+                            it.koinSharedViewModel<DashboardViewModel>(navController = navController)
+                        val dashboardState by dashboardViewModel.state.collectAsStateWithLifecycle()
+                        val collectionsViewModel = koinViewModel<CollectionsViewModel>()
+                        val state by collectionsViewModel.state.collectAsStateWithLifecycle()
+                        CollectionsScreen(
+                            state = state,
+                            navigator = navigator,
+                            dashboardState = dashboardState,
+                            dashboardAction = dashboardViewModel::onAction,
+                            coreState = coreState,
+                            coreAction = coreViewModel::onAction
+                        )
+                    }
+                    composable<Route.Categories>() {
+                        val dashboardViewModel =
+                            it.koinSharedViewModel<DashboardViewModel>(navController = navController)
+                        val dashboardState by dashboardViewModel.state.collectAsStateWithLifecycle()
+                        val categoriesViewModel = koinViewModel<CategoriesViewModel>()
+                        val state by categoriesViewModel.state.collectAsStateWithLifecycle()
+                        CategoriesScreen(
+                            state = state,
+                            navigator = navigator,
+                            dashboardState = dashboardState,
+                            dashboardAction = dashboardViewModel::onAction,
+                            coreState = coreState,
+                            coreAction = coreViewModel::onAction
+                        )
+                    }
+                    composable<Route.Customers>() {
+                        val dashboardViewModel =
+                            it.koinSharedViewModel<DashboardViewModel>(navController = navController)
+                        val dashboardState by dashboardViewModel.state.collectAsStateWithLifecycle()
+                        val customersViewModel = koinViewModel<CustomersViewModel>()
+                        val state by customersViewModel.state.collectAsStateWithLifecycle()
+                        CustomersScreen(
+                            state = state,
+                            navigator = navigator,
+                            dashboardState = dashboardState,
+                            dashboardAction = dashboardViewModel::onAction,
+                            coreState = coreState,
+                            coreAction = coreViewModel::onAction
+                        )
+                    }
+                    composable<Route.Analytics>() {
+                        val dashboardViewModel =
+                            it.koinSharedViewModel<DashboardViewModel>(navController = navController)
+                        val dashboardState by dashboardViewModel.state.collectAsStateWithLifecycle()
+                        val analyticsViewModel = koinViewModel<AnalyticsViewModel>()
+                        AnalyticsScreen(
+                            navigator = navigator,
+                            dashboardState = dashboardState,
+                            dashboardAction = dashboardViewModel::onAction,
+                            coreState = coreState,
+                            coreAction = coreViewModel::onAction
+                        )
+                    }
+                    composable<Route.Discounts>() {
+                        val dashboardViewModel =
+                            it.koinSharedViewModel<DashboardViewModel>(navController = navController)
+                        val dashboardState by dashboardViewModel.state.collectAsStateWithLifecycle()
+                        val discountsViewModel = koinViewModel<DiscountsViewModel>()
+                        DiscountsScreen(
+                            navigator = navigator,
+                            dashboardState = dashboardState,
+                            dashbaordAction = dashboardViewModel::onAction,
+                            coreState = coreState,
+                            coreAction = coreViewModel::onAction
+                        )
+                    }
+                    composable<Route.Settings>() {
+                        val dashboardViewModel =
+                            it.koinSharedViewModel<DashboardViewModel>(navController = navController)
+                        val dashboardState by dashboardViewModel.state.collectAsStateWithLifecycle()
+                        val settingsViewModel = koinViewModel<SettingsViewModel>()
+                        SettingsScreen(
+                            navigator = navigator,
+                            dashboardState = dashboardState,
+                            dashboardAction = dashboardViewModel::onAction,
+                            coreState = coreState,
+                            coreAction = coreViewModel::onAction
+                        )
+                    }
                 }
             }
         }

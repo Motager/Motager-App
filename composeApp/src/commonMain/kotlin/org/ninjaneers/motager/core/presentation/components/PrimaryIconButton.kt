@@ -14,13 +14,16 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.unit.dp
+import org.ninjaneers.motager.core.domain.Language
 
 @Composable
 fun PrimaryIconButton(
     onClick: () -> Unit,
     painter: Painter,
+    language: Language,
     iconTint: Color = MaterialTheme.colorScheme.onSecondary,
     colors: ButtonColors = ButtonDefaults.buttonColors(),
     modifier: Modifier = Modifier.size(40.dp),
@@ -42,7 +45,11 @@ fun PrimaryIconButton(
         Icon(
             painter = painter,
             contentDescription = "more",
-            tint = iconTint
+            tint = iconTint,
+            modifier = Modifier.graphicsLayer {
+                if (language == Language.Arabic)
+                    scaleX = -1f
+            }
         )
     }
 }

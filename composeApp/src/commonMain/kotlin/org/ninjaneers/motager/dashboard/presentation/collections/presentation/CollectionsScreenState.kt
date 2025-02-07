@@ -21,5 +21,5 @@ data class CollectionsScreenState(
         Res.string.Products,
         Res.string.Actions
     ),
-    val collectionsNumber: Int = collectionsList.size
+    val collectionsCount: Int = collectionsList.size
 )

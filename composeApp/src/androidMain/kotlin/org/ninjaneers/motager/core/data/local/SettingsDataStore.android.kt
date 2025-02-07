@@ -1,4 +1,4 @@
-package org.ninjaneers.motager.core.data
+package org.ninjaneers.motager.core.data.local
 
 import android.content.Context
 import androidx.datastore.core.DataStore
@@ -8,8 +8,8 @@ import androidx.datastore.preferences.core.edit
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import okio.Path.Companion.toPath
-import org.ninjaneers.motager.core.domain.Languages
-import org.ninjaneers.motager.core.domain.Themes
+import org.ninjaneers.motager.core.domain.Language
+import org.ninjaneers.motager.core.domain.Theme
 
 @Suppress("EXPECT_ACTUAL_CLASSIFIERS_ARE_IN_BETA_WARNING")
 actual class SettingsDataStore(private val context: Context) : ApplicationSettings {
@@ -20,15 +20,16 @@ actual class SettingsDataStore(private val context: Context) : ApplicationSettin
 
     override suspend fun getAppTheme(): String {
         return settingsDataStore.data.map { settings ->
-            settings[THEME_KEY] ?: Themes.System.theme
+            settings[THEME_KEY] ?: Theme.System.theme
         }.first()
     }
 
     override suspend fun getAppLanguage(): String {
         return settingsDataStore.data.map { settings ->
-            settings[LOCALE_KEY] ?: Languages.English.locale
+            settings[LOCALE_KEY] ?: Language.English.locale
         }.first()
     }
+
     override suspend fun setAppTheme(theme: String) {
         settingsDataStore.edit { settings ->
             settings[THEME_KEY] = theme

@@ -1,6 +1,5 @@
 package org.ninjaneers.motager.dashboard.presentation.orders.presentation
 
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -15,7 +14,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
@@ -27,30 +25,18 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import motager.composeapp.generated.resources.Create
-import motager.composeapp.generated.resources.Next
-import motager.composeapp.generated.resources.Of
 import motager.composeapp.generated.resources.Orders
-import motager.composeapp.generated.resources.OutfitBold
-import motager.composeapp.generated.resources.OutfitMedium
-import motager.composeapp.generated.resources.OutfitRegular
-import motager.composeapp.generated.resources.Page
-import motager.composeapp.generated.resources.Prev
 import motager.composeapp.generated.resources.Res
-import motager.composeapp.generated.resources.Results
 import motager.composeapp.generated.resources.Search
-import motager.composeapp.generated.resources.chevronleft
-import motager.composeapp.generated.resources.chevronright
 import motager.composeapp.generated.resources.filebox
 import motager.composeapp.generated.resources.hellipsis
 import motager.composeapp.generated.resources.switch
-import org.jetbrains.compose.resources.Font
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.ninjaneers.motager.app.navigation.Navigator
@@ -59,9 +45,11 @@ import org.ninjaneers.motager.core.presentation.CoreState
 import org.ninjaneers.motager.core.presentation.components.PrimaryButton
 import org.ninjaneers.motager.core.presentation.components.PrimaryIconButton
 import org.ninjaneers.motager.core.presentation.components.PrimaryTextField
+import org.ninjaneers.motager.core.presentation.theme.FontFamily
 import org.ninjaneers.motager.dashboard.presentation.DashboardAction
 import org.ninjaneers.motager.dashboard.presentation.DashboardState
 import org.ninjaneers.motager.dashboard.presentation.components.NavDrawer
+import org.ninjaneers.motager.dashboard.presentation.components.Pagination
 import org.ninjaneers.motager.dashboard.presentation.components.Table
 import org.ninjaneers.motager.dashboard.presentation.components.TableActionCell
 import org.ninjaneers.motager.dashboard.presentation.components.TableCell
@@ -75,15 +63,15 @@ fun OrdersScreen(
     state: OrdersScreenState,
     navigator: Navigator,
     dashboardState: DashboardState,
-    onAction: suspend (DashboardAction) -> Unit,
     coreState: CoreState,
+    dashboardAction: suspend (DashboardAction) -> Unit,
     coreAction: (CoreAction) -> Unit
 ) {
     OrdersScreenContent(
         state = state,
         navigator = navigator,
         dashboardState = dashboardState,
-        onAction = onAction,
+        dashboardAction = dashboardAction,
         coreState = coreState,
         coreAction = coreAction
     )
@@ -94,8 +82,8 @@ private fun OrdersScreenContent(
     state: OrdersScreenState,
     navigator: Navigator,
     dashboardState: DashboardState,
-    onAction: suspend (DashboardAction) -> Unit,
     coreState: CoreState,
+    dashboardAction: suspend (DashboardAction) -> Unit,
     coreAction: (CoreAction) -> Unit
 ) {
     ModalNavigationDrawer(
@@ -103,7 +91,7 @@ private fun OrdersScreenContent(
             NavDrawer(
                 navigator = navigator,
                 navigationItems = dashboardState.navigationItems,
-                closeDrawer = onAction,
+                closeDrawer = dashboardAction,
                 coreAction = coreAction
             )
         },
@@ -113,7 +101,8 @@ private fun OrdersScreenContent(
         Scaffold(
             topBar = {
                 TopBar(
-                    openNavDrawer = onAction
+                    openNavDrawer = dashboardAction,
+                    coreState = coreState
                 )
             }
         ) { innerPadding ->
@@ -158,10 +147,8 @@ private fun OrdersScreenContent(
                                 modifier = Modifier.weight(1f),
                                 text = stringResource(Res.string.Orders),
                                 fontFamily = FontFamily(
-                                    Font(
-                                        resource = Res.font.OutfitMedium,
-                                        weight = FontWeight.Medium
-                                    )
+                                    weight = FontWeight.Medium,
+                                    language = coreState.language
                                 ),
                                 maxLines = 1,
                                 overflow = TextOverflow.Ellipsis,
@@ -179,7 +166,8 @@ private fun OrdersScreenContent(
                                     colors = ButtonDefaults.buttonColors(
                                         containerColor = MaterialTheme.colorScheme.secondary,
                                         contentColor = MaterialTheme.colorScheme.surfaceContainerLowest
-                                    )
+                                    ),
+                                    language = coreState.language
                                 )
                                 PrimaryButton(
                                     modifier = Modifier
@@ -206,11 +194,9 @@ private fun OrdersScreenContent(
                                             color = MaterialTheme.colorScheme.onPrimary,
                                             fontSize = 18.sp,
                                             fontFamily = FontFamily(
-                                                Font(
-                                                    resource = Res.font.OutfitMedium,
-                                                    weight = FontWeight.Medium
-                                                )
-                                            )
+                                                weight = FontWeight.Medium,
+                                                language = coreState.language
+                                            ),
                                         )
                                     }
                                 }
@@ -241,10 +227,8 @@ private fun OrdersScreenContent(
                                     modifier = Modifier.padding(horizontal = 2.dp),
                                     text = stringResource(Res.string.Search),
                                     fontFamily = FontFamily(
-                                        Font(
-                                            resource = Res.font.OutfitRegular,
-                                            weight = FontWeight.Normal
-                                        )
+                                        weight = FontWeight.Normal,
+                                        language = coreState.language
                                     ),
                                     color = MaterialTheme.colorScheme.surfaceVariant,
                                     textAlign = TextAlign.Start,
@@ -264,10 +248,8 @@ private fun OrdersScreenContent(
                                     Text(
                                         text = "10",
                                         fontFamily = FontFamily(
-                                            Font(
-                                                resource = Res.font.OutfitRegular,
-                                                weight = FontWeight.Normal
-                                            )
+                                            weight = FontWeight.Normal,
+                                            language = coreState.language
                                         ),
                                         color = MaterialTheme.colorScheme.surfaceVariant,
                                         textAlign = TextAlign.Start,
@@ -282,7 +264,8 @@ private fun OrdersScreenContent(
                                 colors = ButtonDefaults.buttonColors(
                                     containerColor = MaterialTheme.colorScheme.background,
                                     contentColor = MaterialTheme.colorScheme.surfaceContainerLowest
-                                )
+                                ),
+                                language = coreState.language
                             )
                         }
                     }
@@ -318,157 +301,10 @@ private fun OrdersScreenContent(
                                 }
                             }
                         }
-                        Row(
-                            modifier = Modifier
-                                .padding(top = 8.dp)
-                                .height(38.dp)
-                                .fillMaxWidth(),
-                            verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.SpaceBetween
-                        ) {
-                            Row(
-                                verticalAlignment = Alignment.CenterVertically,
-                                horizontalArrangement = Arrangement.spacedBy(8.dp)
-                            ) {
-                                Button(
-                                    modifier = Modifier.fillMaxHeight(),
-                                    onClick = {},
-                                    contentPadding = PaddingValues(0.dp),
-                                    shape = RoundedCornerShape(6.dp),
-                                    border = BorderStroke(
-                                        width = 1.dp,
-                                        color = MaterialTheme.colorScheme.outline
-                                    ),
-                                    colors = ButtonDefaults.buttonColors(
-                                        containerColor = MaterialTheme.colorScheme.background,
-                                        contentColor = MaterialTheme.colorScheme.surfaceContainerLowest
-                                    )
-                                ) {
-                                    Row(
-                                        modifier = Modifier.fillMaxHeight(),
-                                        verticalAlignment = Alignment.CenterVertically,
-                                    ) {
-                                        Icon(
-                                            painter = painterResource(Res.drawable.chevronleft),
-                                            contentDescription = stringResource(Res.string.Prev),
-                                            tint = MaterialTheme.colorScheme.surfaceVariant
-                                        )
-                                        Text(
-                                            text = stringResource(Res.string.Prev),
-                                            fontFamily = FontFamily(
-                                                Font(
-                                                    resource = Res.font.OutfitRegular,
-                                                    weight = FontWeight.Normal
-                                                )
-                                            ),
-                                            fontSize = 14.sp,
-                                            color = MaterialTheme.colorScheme.surfaceVariant
-                                        )
-                                    }
-                                }
-                                Row(
-                                    verticalAlignment = Alignment.CenterVertically,
-                                    horizontalArrangement = Arrangement.spacedBy(2.dp)
-                                ) {
-                                    Text(
-                                        text = stringResource(Res.string.Page),
-                                        fontFamily = FontFamily(
-                                            Font(
-                                                resource = Res.font.OutfitRegular,
-                                                weight = FontWeight.Normal
-                                            )
-                                        ),
-                                        fontSize = 14.sp,
-                                        color = MaterialTheme.colorScheme.onBackground
-                                    )
-                                    Text(
-                                        text = "1",
-                                        fontFamily = FontFamily(
-                                            Font(
-                                                resource = Res.font.OutfitBold,
-                                                weight = FontWeight.Bold
-                                            )
-                                        ),
-                                        fontSize = 14.sp,
-                                        color = MaterialTheme.colorScheme.primary
-                                    )
-                                    Text(
-                                        text = stringResource(Res.string.Of) + " 2",
-                                        fontFamily = FontFamily(
-                                            Font(
-                                                resource = Res.font.OutfitRegular,
-                                                weight = FontWeight.Normal
-                                            )
-                                        ),
-                                        fontSize = 14.sp,
-                                        color = MaterialTheme.colorScheme.onBackground
-                                    )
-                                }
-                                Button(
-                                    modifier = Modifier.fillMaxHeight(),
-                                    onClick = {},
-                                    contentPadding = PaddingValues(0.dp),
-                                    shape = RoundedCornerShape(6.dp),
-                                    border = BorderStroke(
-                                        width = 1.dp,
-                                        color = MaterialTheme.colorScheme.outline
-                                    ),
-                                    colors = ButtonDefaults.buttonColors(
-                                        containerColor = MaterialTheme.colorScheme.background,
-                                        contentColor = MaterialTheme.colorScheme.surfaceContainerLowest
-                                    )
-                                ) {
-                                    Row(
-                                        modifier = Modifier.fillMaxHeight(),
-                                        verticalAlignment = Alignment.CenterVertically,
-                                    ) {
-                                        Text(
-                                            text = stringResource(Res.string.Next),
-                                            fontFamily = FontFamily(
-                                                Font(
-                                                    resource = Res.font.OutfitRegular,
-                                                    weight = FontWeight.Normal
-                                                )
-                                            ),
-                                            fontSize = 14.sp,
-                                            color = MaterialTheme.colorScheme.surfaceVariant
-                                        )
-                                        Icon(
-                                            painter = painterResource(Res.drawable.chevronright),
-                                            contentDescription = stringResource(Res.string.Prev),
-                                            tint = MaterialTheme.colorScheme.surfaceVariant
-                                        )
-                                    }
-                                }
-                            }
-                            Row(
-                                modifier = Modifier.fillMaxHeight(),
-                                verticalAlignment = Alignment.CenterVertically
-                            ) {
-                                Text(
-                                    text = stringResource(Res.string.Results),
-                                    fontFamily = FontFamily(
-                                        Font(
-                                            resource = Res.font.OutfitRegular,
-                                            weight = FontWeight.Normal
-                                        )
-                                    ),
-                                    fontSize = 14.sp,
-                                    color = MaterialTheme.colorScheme.onBackground
-                                )
-                                Text(
-                                    text = " 9",
-                                    fontFamily = FontFamily(
-                                        Font(
-                                            resource = Res.font.OutfitBold,
-                                            weight = FontWeight.Bold
-                                        )
-                                    ),
-                                    fontSize = 14.sp,
-                                    color = MaterialTheme.colorScheme.primary
-                                )
-                            }
-                        }
+                        Pagination(
+                            language = coreState.language,
+                            resultsCount = state.ordersCount
+                        )
                     }
                 }
             }

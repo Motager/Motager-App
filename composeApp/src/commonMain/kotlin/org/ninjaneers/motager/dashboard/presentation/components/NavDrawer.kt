@@ -9,18 +9,20 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.DrawerDefaults
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
@@ -71,8 +73,8 @@ import org.jetbrains.compose.resources.Font
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.ninjaneers.motager.app.navigation.Navigator
-import org.ninjaneers.motager.core.domain.Languages
-import org.ninjaneers.motager.core.domain.Themes
+import org.ninjaneers.motager.core.domain.Language
+import org.ninjaneers.motager.core.domain.Theme
 import org.ninjaneers.motager.core.presentation.CoreAction
 import org.ninjaneers.motager.core.presentation.components.PrimaryIconButton
 import org.ninjaneers.motager.dashboard.domain.NavDrawerItem
@@ -85,32 +87,20 @@ fun NavDrawer(
     closeDrawer: suspend (DashboardAction) -> Unit,
     coreAction: (CoreAction) -> Unit
 ) {
-    NavDrawerContent(
-        navigator = navigator,
-        navigationItems = navigationItems,
-        closeDrawer = closeDrawer,
-        coreAction = coreAction
-    )
-}
-
-@Composable
-private fun NavDrawerContent(
-    navigator: Navigator,
-    navigationItems: List<NavDrawerItem>,
-    closeDrawer: suspend (DashboardAction) -> Unit,
-    coreAction: (CoreAction) -> Unit
-) {
     val coroutineScope = rememberCoroutineScope()
     var isThemeMenuExpanded by remember { mutableStateOf(false) }
     var isLocalMenuExpanded by remember { mutableStateOf(false) }
     var selectedIndex by remember { mutableStateOf(0) }
     ModalDrawerSheet(
-        modifier = Modifier.width(320.dp).border(
-            width = 0.8f.dp,
-            color = MaterialTheme.colorScheme.outline,
-            shape = DrawerDefaults.shape
-        ),
+        modifier = Modifier
+            .windowInsetsPadding(WindowInsets.statusBars)
+            .width(280.dp).border(
+                width = 0.8f.dp,
+                color = MaterialTheme.colorScheme.outline,
+                shape = RoundedCornerShape(topEnd = 6.dp, bottomEnd = 6.dp)
+            ),
         drawerContainerColor = MaterialTheme.colorScheme.background,
+        drawerShape = RoundedCornerShape(topEnd = 6.dp, bottomEnd = 6.dp)
     ) {
         Column(
             modifier = Modifier
@@ -244,7 +234,8 @@ private fun NavDrawerContent(
                             colors = ButtonDefaults.buttonColors(
                                 containerColor = MaterialTheme.colorScheme.background,
                                 contentColor = MaterialTheme.colorScheme.surfaceContainerLowest
-                            )
+                            ),
+                            language = Language.English
                         )
                         DropdownMenu(
                             expanded = isThemeMenuExpanded,
@@ -262,7 +253,7 @@ private fun NavDrawerContent(
                                     .clip(RoundedCornerShape(6.dp)),
                                 onClick = {
                                     isThemeMenuExpanded = !isThemeMenuExpanded
-                                    coreAction(CoreAction.ChangeTheme(Themes.Light))
+                                    coreAction(CoreAction.ChangeTheme(Theme.Light))
                                 },
                                 text = {
                                     Text(
@@ -292,7 +283,7 @@ private fun NavDrawerContent(
                                     .clip(RoundedCornerShape(6.dp)),
                                 onClick = {
                                     isThemeMenuExpanded = !isThemeMenuExpanded
-                                    coreAction(CoreAction.ChangeTheme(Themes.Dark))
+                                    coreAction(CoreAction.ChangeTheme(Theme.Dark))
                                 },
                                 text = {
                                     Text(
@@ -322,7 +313,7 @@ private fun NavDrawerContent(
                                     .clip(RoundedCornerShape(6.dp)),
                                 onClick = {
                                     isThemeMenuExpanded = !isThemeMenuExpanded
-                                    coreAction(CoreAction.ChangeTheme(Themes.System))
+                                    coreAction(CoreAction.ChangeTheme(Theme.System))
                                 },
                                 text = {
                                     Text(
@@ -356,7 +347,8 @@ private fun NavDrawerContent(
                             colors = ButtonDefaults.buttonColors(
                                 containerColor = MaterialTheme.colorScheme.background,
                                 contentColor = MaterialTheme.colorScheme.surfaceContainerLowest
-                            )
+                            ),
+                            language = Language.English
                         )
                         DropdownMenu(
                             expanded = isLocalMenuExpanded,
@@ -374,7 +366,7 @@ private fun NavDrawerContent(
                                     .clip(RoundedCornerShape(6.dp)),
                                 onClick = {
                                     isLocalMenuExpanded = !isLocalMenuExpanded
-                                    coreAction(CoreAction.ChangeLanguage(Languages.Arabic))
+                                    coreAction(CoreAction.ChangeLanguage(Language.Arabic))
                                 },
                                 text = {
                                     Text(
@@ -404,7 +396,7 @@ private fun NavDrawerContent(
                                     .clip(RoundedCornerShape(6.dp)),
                                 onClick = {
                                     isLocalMenuExpanded = !isLocalMenuExpanded
-                                    coreAction(CoreAction.ChangeLanguage(Languages.English))
+                                    coreAction(CoreAction.ChangeLanguage(Language.English))
                                 },
                                 text = {
                                     Text(

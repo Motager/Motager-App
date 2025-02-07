@@ -27,14 +27,14 @@ import org.ninjaneers.motager.dashboard.presentation.components.TopBar
 fun AnalyticsScreen(
     navigator: Navigator,
     dashboardState: DashboardState,
-    onAction: suspend (DashboardAction) -> Unit,
     coreState: CoreState,
+    dashboardAction: suspend (DashboardAction) -> Unit,
     coreAction: (CoreAction) -> Unit
 ) {
     AnalyticsScreenContent(
         navigator = navigator,
         dashboardState = dashboardState,
-        onAction = onAction,
+        dashboardAction = dashboardAction,
         coreState = coreState,
         coreAction = coreAction
     )
@@ -44,8 +44,8 @@ fun AnalyticsScreen(
 private fun AnalyticsScreenContent(
     navigator: Navigator,
     dashboardState: DashboardState,
-    onAction: suspend (DashboardAction) -> Unit,
     coreState: CoreState,
+    dashboardAction: suspend (DashboardAction) -> Unit,
     coreAction: (CoreAction) -> Unit
 ) {
     ModalNavigationDrawer(
@@ -53,7 +53,7 @@ private fun AnalyticsScreenContent(
             NavDrawer(
                 navigator = navigator,
                 navigationItems = dashboardState.navigationItems,
-                closeDrawer = onAction,
+                closeDrawer = dashboardAction,
                 coreAction = coreAction
             )
         },
@@ -63,7 +63,8 @@ private fun AnalyticsScreenContent(
         Scaffold(
             topBar = {
                 TopBar(
-                    openNavDrawer = onAction
+                    openNavDrawer = dashboardAction,
+                    coreState = coreState
                 )
             }
         ) { innerPadding ->
