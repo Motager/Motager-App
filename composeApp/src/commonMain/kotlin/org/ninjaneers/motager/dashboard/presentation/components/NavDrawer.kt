@@ -23,7 +23,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.DrawerDefaults
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
@@ -88,21 +87,6 @@ fun NavDrawer(
     closeDrawer: suspend (DashboardAction) -> Unit,
     coreAction: (CoreAction) -> Unit
 ) {
-    NavDrawerContent(
-        navigator = navigator,
-        navigationItems = navigationItems,
-        closeDrawer = closeDrawer,
-        coreAction = coreAction
-    )
-}
-
-@Composable
-private fun NavDrawerContent(
-    navigator: Navigator,
-    navigationItems: List<NavDrawerItem>,
-    closeDrawer: suspend (DashboardAction) -> Unit,
-    coreAction: (CoreAction) -> Unit
-) {
     val coroutineScope = rememberCoroutineScope()
     var isThemeMenuExpanded by remember { mutableStateOf(false) }
     var isLocalMenuExpanded by remember { mutableStateOf(false) }
@@ -113,9 +97,10 @@ private fun NavDrawerContent(
             .width(280.dp).border(
                 width = 0.8f.dp,
                 color = MaterialTheme.colorScheme.outline,
-                shape = DrawerDefaults.shape
+                shape = RoundedCornerShape(topEnd = 6.dp, bottomEnd = 6.dp)
             ),
         drawerContainerColor = MaterialTheme.colorScheme.background,
+        drawerShape = RoundedCornerShape(topEnd = 6.dp, bottomEnd = 6.dp)
     ) {
         Column(
             modifier = Modifier
