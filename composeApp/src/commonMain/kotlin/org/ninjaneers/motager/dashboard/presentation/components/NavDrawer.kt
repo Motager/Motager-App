@@ -72,7 +72,6 @@ import motager.composeapp.generated.resources.system
 import org.jetbrains.compose.resources.Font
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
-import org.ninjaneers.motager.app.navigation.Navigator
 import org.ninjaneers.motager.core.domain.Language
 import org.ninjaneers.motager.core.domain.Theme
 import org.ninjaneers.motager.core.presentation.CoreAction
@@ -82,9 +81,8 @@ import org.ninjaneers.motager.dashboard.presentation.DashboardAction
 
 @Composable
 fun NavDrawer(
-    navigator: Navigator,
     navigationItems: List<NavDrawerItem>,
-    closeDrawer: suspend (DashboardAction) -> Unit,
+    onAction: suspend (DashboardAction) -> Unit,
     coreAction: (CoreAction) -> Unit
 ) {
     val coroutineScope = rememberCoroutineScope()
@@ -130,8 +128,8 @@ fun NavDrawer(
                             selected = selectedIndex == index,
                             onClick = {
                                 coroutineScope.launch {
-                                    closeDrawer(DashboardAction.CloseDrawer)
-                                    navigator.navigate(item.route)
+                                    onAction(DashboardAction.CloseNavigationDrawer)
+                                    onAction(DashboardAction.OnContentChange(item.content))
                                     item.selected = !item.selected
                                     selectedIndex = index
                                 }

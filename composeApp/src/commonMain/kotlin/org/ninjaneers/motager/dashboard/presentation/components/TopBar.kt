@@ -56,7 +56,7 @@ fun TopBar(
         ) {
             PrimaryIconButton(
                 onClick = {
-                    coroutineScope.launch { openNavDrawer(DashboardAction.OpenDrawer) }
+                    coroutineScope.launch { openNavDrawer(DashboardAction.OpenNavigationDrawer) }
                 },
                 painter = painterResource(Res.drawable.panels),
                 iconTint = MaterialTheme.colorScheme.onBackground,
