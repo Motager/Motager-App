@@ -37,7 +37,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.DpOffset
@@ -50,9 +49,6 @@ import motager.composeapp.generated.resources.DashboardLinks
 import motager.composeapp.generated.resources.English
 import motager.composeapp.generated.resources.Light
 import motager.composeapp.generated.resources.Logout
-import motager.composeapp.generated.resources.OutfitMedium
-import motager.composeapp.generated.resources.OutfitRegular
-import motager.composeapp.generated.resources.OutfitSemiBold
 import motager.composeapp.generated.resources.Res
 import motager.composeapp.generated.resources.Support
 import motager.composeapp.generated.resources.System
@@ -65,13 +61,13 @@ import motager.composeapp.generated.resources.moon
 import motager.composeapp.generated.resources.plan_img
 import motager.composeapp.generated.resources.sun
 import motager.composeapp.generated.resources.system
-import org.jetbrains.compose.resources.Font
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.ninjaneers.motager.core.domain.Language
 import org.ninjaneers.motager.core.domain.Theme
 import org.ninjaneers.motager.core.presentation.CoreAction
 import org.ninjaneers.motager.core.presentation.components.PrimaryIconButton
+import org.ninjaneers.motager.core.presentation.theme.FontFamily
 import org.ninjaneers.motager.dashboard.domain.NavDrawerItem
 import org.ninjaneers.motager.dashboard.presentation.DashboardAction
 import org.ninjaneers.motager.dashboard.presentation.DashboardState
@@ -80,9 +76,10 @@ import org.ninjaneers.motager.dashboard.presentation.DashboardState
 @Composable
 fun NavDrawer(
     state: DashboardState,
-    items: List<NavDrawerItem>,
     onAction: suspend (DashboardAction) -> Unit,
     coreAction: (CoreAction) -> Unit,
+    items: List<NavDrawerItem>,
+    language: Language,
 ) {
     val coroutineScope = rememberCoroutineScope()
     ModalDrawerSheet(
@@ -115,11 +112,9 @@ fun NavDrawer(
                         fontSize = 14.sp,
                         color = MaterialTheme.colorScheme.onTertiary,
                         fontFamily = FontFamily(
-                            Font(
-                                resource = Res.font.OutfitRegular,
-                                weight = FontWeight.Normal
-                            )
-                        ),
+                            weight = FontWeight.Normal,
+                            language = language
+                        )
                     )
                 }
                 items(items.size, key = { it }) { index ->
@@ -142,10 +137,8 @@ fun NavDrawer(
                                 color = MaterialTheme.colorScheme.onBackground,
                                 fontSize = 18.sp,
                                 fontFamily = FontFamily(
-                                    Font(
-                                        resource = if (index == state.selectedIndex) Res.font.OutfitSemiBold else Res.font.OutfitMedium,
-                                        weight = if (index == state.selectedIndex) FontWeight.SemiBold else FontWeight.Medium
-                                    )
+                                    weight = if (index == state.selectedIndex) FontWeight.SemiBold else FontWeight.Medium,
+                                    language = language
                                 )
                             )
                         },
@@ -182,10 +175,8 @@ fun NavDrawer(
                                 text = "Starter Plan",
                                 fontSize = 20.sp,
                                 fontFamily = FontFamily(
-                                    Font(
-                                        resource = Res.font.OutfitSemiBold,
-                                        weight = FontWeight.SemiBold
-                                    )
+                                    weight = FontWeight.SemiBold,
+                                    language = language
                                 ),
                                 color = MaterialTheme.colorScheme.onBackground,
                                 textAlign = TextAlign.Center
@@ -200,10 +191,8 @@ fun NavDrawer(
                                 text = "Upgrade your plan to get the full power!",
                                 fontSize = 18.sp,
                                 fontFamily = FontFamily(
-                                    Font(
-                                        resource = Res.font.OutfitRegular,
-                                        weight = FontWeight.Normal
-                                    )
+                                    weight = FontWeight.Normal,
+                                    language = language
                                 ),
                                 color = MaterialTheme.colorScheme.onTertiary,
                                 textAlign = TextAlign.Center
@@ -242,7 +231,7 @@ fun NavDrawer(
                                 language = Language.English
                             )
                             DropdownMenu(
-                                expanded = false,
+                                expanded = state.isThemeMenuExpanded,
                                 onDismissRequest = {
                                     coroutineScope.launch {
                                         onAction(
@@ -279,10 +268,8 @@ fun NavDrawer(
                                             fontSize = 14.sp,
                                             color = MaterialTheme.colorScheme.inverseOnSurface,
                                             fontFamily = FontFamily(
-                                                Font(
-                                                    resource = Res.font.OutfitRegular,
-                                                    weight = FontWeight.Normal
-                                                )
+                                                weight = FontWeight.Normal,
+                                                language = language
                                             ),
                                             textAlign = TextAlign.Center
                                         )
@@ -315,10 +302,8 @@ fun NavDrawer(
                                             fontSize = 14.sp,
                                             color = MaterialTheme.colorScheme.inverseOnSurface,
                                             fontFamily = FontFamily(
-                                                Font(
-                                                    resource = Res.font.OutfitRegular,
-                                                    weight = FontWeight.Normal
-                                                )
+                                                weight = FontWeight.Normal,
+                                                language = language
                                             ),
                                             textAlign = TextAlign.Center
                                         )
@@ -351,10 +336,8 @@ fun NavDrawer(
                                             fontSize = 14.sp,
                                             color = MaterialTheme.colorScheme.inverseOnSurface,
                                             fontFamily = FontFamily(
-                                                Font(
-                                                    resource = Res.font.OutfitRegular,
-                                                    weight = FontWeight.Normal
-                                                )
+                                                weight = FontWeight.Normal,
+                                                language = language
                                             ),
                                             textAlign = TextAlign.Center
                                         )
@@ -389,7 +372,7 @@ fun NavDrawer(
                                 language = Language.English
                             )
                             DropdownMenu(
-                                expanded = false,
+                                expanded = state.isLocaleMenuExpanded,
                                 onDismissRequest = {
                                     coroutineScope.launch {
                                         onAction(
@@ -426,10 +409,8 @@ fun NavDrawer(
                                             fontSize = 14.sp,
                                             color = MaterialTheme.colorScheme.inverseOnSurface,
                                             fontFamily = FontFamily(
-                                                Font(
-                                                    resource = Res.font.OutfitRegular,
-                                                    weight = FontWeight.Normal
-                                                )
+                                                weight = FontWeight.Normal,
+                                                language = language
                                             ),
                                             textAlign = TextAlign.Center
                                         )
@@ -462,10 +443,8 @@ fun NavDrawer(
                                             fontSize = 14.sp,
                                             color = MaterialTheme.colorScheme.inverseOnSurface,
                                             fontFamily = FontFamily(
-                                                Font(
-                                                    resource = Res.font.OutfitRegular,
-                                                    weight = FontWeight.Normal
-                                                )
+                                                weight = FontWeight.Normal,
+                                                language = language
                                             ),
                                             textAlign = TextAlign.Center
                                         )
@@ -507,11 +486,9 @@ fun NavDrawer(
                                     text = stringResource(Res.string.Support),
                                     fontSize = 18.sp,
                                     fontFamily = FontFamily(
-                                        Font(
-                                            resource = Res.font.OutfitMedium,
-                                            weight = FontWeight.Medium
-                                        )
-                                    )
+                                        weight = FontWeight.Medium,
+                                        language = language
+                                    ),
                                 )
                             }
                         }
@@ -541,10 +518,8 @@ fun NavDrawer(
                                 text = stringResource(Res.string.Logout),
                                 fontSize = 20.sp,
                                 fontFamily = FontFamily(
-                                    Font(
-                                        resource = Res.font.OutfitMedium,
-                                        weight = FontWeight.Medium
-                                    )
+                                    weight = FontWeight.Medium,
+                                    language = language
                                 ),
                                 color = MaterialTheme.colorScheme.error
                             )

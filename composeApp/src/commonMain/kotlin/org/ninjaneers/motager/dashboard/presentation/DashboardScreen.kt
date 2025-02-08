@@ -65,9 +65,10 @@ private fun DashboardScreenContent(
         drawerContent = {
             NavDrawer(
                 state = state,
-                items = state.navigationItems,
                 onAction = onAction,
-                coreAction = coreAction
+                coreAction = coreAction,
+                items = state.navigationItems,
+                language = coreState.language
             )
         },
         drawerState = state.drawerState,

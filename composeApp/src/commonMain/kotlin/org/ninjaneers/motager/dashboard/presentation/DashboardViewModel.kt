@@ -1,6 +1,7 @@
 package org.ninjaneers.motager.dashboard.presentation
 
 import androidx.lifecycle.ViewModel
+import co.touchlab.kermit.Logger
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -44,6 +45,7 @@ class DashboardViewModel : ViewModel() {
     }
 
     private fun toggleThemeMenu(isExpanded: Boolean) {
+        Logger.i(tag = "Theme Menu", messageString = "toggle")
         _state.update {
             it.copy(
                 isThemeMenuExpanded = !isExpanded
