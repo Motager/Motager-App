@@ -2,7 +2,7 @@ package org.ninjaneers.motager.dashboard.presentation.components
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.horizontalScroll
-import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyItemScope
 import androidx.compose.foundation.lazy.items
@@ -17,14 +17,11 @@ fun <T> Table(
     header: @Composable LazyItemScope.() -> Unit,
     content: @Composable LazyItemScope.(T) -> Unit
 ) {
-    Row(
-        modifier = Modifier.horizontalScroll(rememberScrollState())
-    ) {
+    Box(modifier = Modifier.horizontalScroll(rememberScrollState())) {
         LazyColumn {
             stickyHeader {
                 header()
             }
-
             items(items) { item ->
                 content(item)
             }

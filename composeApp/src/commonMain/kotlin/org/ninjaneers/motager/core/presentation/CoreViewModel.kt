@@ -6,7 +6,9 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import org.ninjaneers.motager.core.domain.AppSettingsRepository
@@ -19,9 +21,15 @@ class CoreViewModel(
     private val localization: Localization
 ) : ViewModel() {
     private val _state = MutableStateFlow(CoreState())
-    val state = _state.asStateFlow()
+    val state = _state.onStart {
+        fetchAppSettings()
+    }.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(5000L),
+        initialValue = _state.value
+    )
 
-    init {
+    private fun fetchAppSettings() {
         viewModelScope.launch(Dispatchers.IO) {
             _state.update {
                 it.copy(

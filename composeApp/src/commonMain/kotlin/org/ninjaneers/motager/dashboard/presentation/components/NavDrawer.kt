@@ -82,7 +82,7 @@ fun NavDrawer(
     state: DashboardState,
     items: List<NavDrawerItem>,
     onAction: suspend (DashboardAction) -> Unit,
-    coreAction: (CoreAction) -> Unit
+    coreAction: (CoreAction) -> Unit,
 ) {
     val coroutineScope = rememberCoroutineScope()
     ModalDrawerSheet(
@@ -225,7 +225,15 @@ fun NavDrawer(
                     ) {
                         Box {
                             PrimaryIconButton(
-                                onClick = { },
+                                onClick = {
+                                    coroutineScope.launch {
+                                        onAction(
+                                            DashboardAction.OnThemeMenuToggle(
+                                                state.isThemeMenuExpanded
+                                            )
+                                        )
+                                    }
+                                },
                                 painter = painterResource(Res.drawable.moon),
                                 colors = ButtonDefaults.buttonColors(
                                     containerColor = MaterialTheme.colorScheme.background,
@@ -235,7 +243,15 @@ fun NavDrawer(
                             )
                             DropdownMenu(
                                 expanded = false,
-                                onDismissRequest = { },
+                                onDismissRequest = {
+                                    coroutineScope.launch {
+                                        onAction(
+                                            DashboardAction.OnThemeMenuToggle(
+                                                state.isThemeMenuExpanded
+                                            )
+                                        )
+                                    }
+                                },
                                 border = BorderStroke(
                                     width = 0.8f.dp,
                                     color = MaterialTheme.colorScheme.outline
@@ -248,7 +264,13 @@ fun NavDrawer(
                                     modifier = Modifier.padding(horizontal = 6.dp)
                                         .clip(RoundedCornerShape(6.dp)),
                                     onClick = {
-
+                                        coroutineScope.launch {
+                                            onAction(
+                                                DashboardAction.OnThemeMenuToggle(
+                                                    state.isThemeMenuExpanded
+                                                )
+                                            )
+                                        }
                                         coreAction(CoreAction.ChangeTheme(Theme.Light))
                                     },
                                     text = {
@@ -278,6 +300,13 @@ fun NavDrawer(
                                     modifier = Modifier.padding(horizontal = 6.dp)
                                         .clip(RoundedCornerShape(6.dp)),
                                     onClick = {
+                                        coroutineScope.launch {
+                                            onAction(
+                                                DashboardAction.OnThemeMenuToggle(
+                                                    state.isThemeMenuExpanded
+                                                )
+                                            )
+                                        }
                                         coreAction(CoreAction.ChangeTheme(Theme.Dark))
                                     },
                                     text = {
@@ -307,7 +336,13 @@ fun NavDrawer(
                                     modifier = Modifier.padding(horizontal = 6.dp)
                                         .clip(RoundedCornerShape(6.dp)),
                                     onClick = {
-
+                                        coroutineScope.launch {
+                                            onAction(
+                                                DashboardAction.OnThemeMenuToggle(
+                                                    state.isThemeMenuExpanded
+                                                )
+                                            )
+                                        }
                                         coreAction(CoreAction.ChangeTheme(Theme.System))
                                     },
                                     text = {
@@ -337,7 +372,15 @@ fun NavDrawer(
                         }
                         Box {
                             PrimaryIconButton(
-                                onClick = { },
+                                onClick = {
+                                    coroutineScope.launch {
+                                        onAction(
+                                            DashboardAction.OnLocaleMenuToggle(
+                                                state.isLocaleMenuExpanded
+                                            )
+                                        )
+                                    }
+                                },
                                 painter = painterResource(Res.drawable.languages),
                                 colors = ButtonDefaults.buttonColors(
                                     containerColor = MaterialTheme.colorScheme.background,
@@ -347,7 +390,15 @@ fun NavDrawer(
                             )
                             DropdownMenu(
                                 expanded = false,
-                                onDismissRequest = { },
+                                onDismissRequest = {
+                                    coroutineScope.launch {
+                                        onAction(
+                                            DashboardAction.OnLocaleMenuToggle(
+                                                state.isLocaleMenuExpanded
+                                            )
+                                        )
+                                    }
+                                },
                                 border = BorderStroke(
                                     width = 0.8f.dp,
                                     color = MaterialTheme.colorScheme.outline
@@ -360,7 +411,13 @@ fun NavDrawer(
                                     modifier = Modifier.padding(horizontal = 6.dp)
                                         .clip(RoundedCornerShape(6.dp)),
                                     onClick = {
-
+                                        coroutineScope.launch {
+                                            onAction(
+                                                DashboardAction.OnLocaleMenuToggle(
+                                                    state.isLocaleMenuExpanded
+                                                )
+                                            )
+                                        }
                                         coreAction(CoreAction.ChangeLanguage(Language.Arabic))
                                     },
                                     text = {
@@ -390,6 +447,13 @@ fun NavDrawer(
                                     modifier = Modifier.padding(horizontal = 6.dp)
                                         .clip(RoundedCornerShape(6.dp)),
                                     onClick = {
+                                        coroutineScope.launch {
+                                            onAction(
+                                                DashboardAction.OnLocaleMenuToggle(
+                                                    state.isLocaleMenuExpanded
+                                                )
+                                            )
+                                        }
                                         coreAction(CoreAction.ChangeLanguage(Language.English))
                                     },
                                     text = {

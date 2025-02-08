@@ -4,8 +4,8 @@ import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.spring
 import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInVertically
-import androidx.compose.animation.slideOutVertically
 import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -76,7 +76,7 @@ private fun DashboardScreenContent(
         Scaffold(
             topBar = {
                 TopBar(
-                    openNavDrawer = { onAction(DashboardAction.OpenNavigationDrawer) },
+                    openNavDrawer = onAction,
                     coreState = coreState
                 )
             }
@@ -98,7 +98,7 @@ private fun DashboardScreenContent(
                                 dampingRatio = Spring.DampingRatioMediumBouncy,
                                 stiffness = Spring.StiffnessLow
                             )
-                        ).togetherWith(slideOutVertically(animationSpec = tween(150)))
+                        ).togetherWith(fadeOut(animationSpec = tween(10)))
                     }
                 ) {
                     when (state.content) {
