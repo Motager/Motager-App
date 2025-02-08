@@ -21,7 +21,7 @@ import motager.composeapp.generated.resources.home
 import motager.composeapp.generated.resources.orders
 import motager.composeapp.generated.resources.products
 import motager.composeapp.generated.resources.settings
-import org.ninjaneers.motager.app.navigation.Route
+import org.ninjaneers.motager.dashboard.domain.DashboardContent
 import org.ninjaneers.motager.dashboard.domain.NavDrawerItem
 
 data class DashboardState(
@@ -29,57 +29,52 @@ data class DashboardState(
     val navigationItems: List<NavDrawerItem> = listOf(
         NavDrawerItem(
             label = Res.string.Home,
-            selected = true,
             icon = Res.drawable.home,
-            route = Route.Home
+            content = DashboardContent.Home
         ),
         NavDrawerItem(
             label = Res.string.Orders,
-            selected = false,
             icon = Res.drawable.orders,
-            route = Route.Orders
+            content = DashboardContent.Orders
         ),
         NavDrawerItem(
             label = Res.string.Products,
-            selected = false,
             icon = Res.drawable.products,
-            route = Route.Products
+            content = DashboardContent.Products
         ),
         NavDrawerItem(
             label = Res.string.Collections,
-            selected = false,
             icon = Res.drawable.grid_plus,
-            route = Route.Collections
+            content = DashboardContent.Collections
         ),
         NavDrawerItem(
             label = Res.string.Categories,
-            selected = false,
             icon = Res.drawable.boxes,
-            route = Route.Categories
+            content = DashboardContent.Categories
         ),
         NavDrawerItem(
             label = Res.string.Customers,
-            selected = false,
             icon = Res.drawable.customers,
-            route = Route.Customers
+            content = DashboardContent.Customers
         ),
         NavDrawerItem(
             label = Res.string.Analytics,
-            selected = false,
             icon = Res.drawable.chart,
-            route = Route.Analytics
+            content = DashboardContent.Analytics
         ),
         NavDrawerItem(
             label = Res.string.Discounts,
-            selected = false,
             icon = Res.drawable.discounts,
-            route = Route.Discounts
+            content = DashboardContent.Discounts
         ),
         NavDrawerItem(
             label = Res.string.Settings,
-            selected = false,
             icon = Res.drawable.settings,
-            route = Route.Settings
+            content = DashboardContent.Settings
         )
-    )
+    ),
+    val content: DashboardContent = DashboardContent.Home,
+    val isThemeMenuExpanded: Boolean = false,
+    val isLocaleMenuExpanded: Boolean = false,
+    val selectedIndex: Int = 0
 )

@@ -21,27 +21,9 @@ import org.ninjaneers.motager.authentication.presentation.signup.SignupScreen
 import org.ninjaneers.motager.core.domain.Language
 import org.ninjaneers.motager.core.domain.Theme
 import org.ninjaneers.motager.core.presentation.CoreViewModel
-import org.ninjaneers.motager.core.presentation.koinSharedViewModel
 import org.ninjaneers.motager.core.presentation.theme.MotagerTheme
+import org.ninjaneers.motager.dashboard.presentation.DashboardScreen
 import org.ninjaneers.motager.dashboard.presentation.DashboardViewModel
-import org.ninjaneers.motager.dashboard.presentation.analytics.presentation.AnalyticsScreen
-import org.ninjaneers.motager.dashboard.presentation.analytics.presentation.AnalyticsViewModel
-import org.ninjaneers.motager.dashboard.presentation.categories.presentation.CategoriesScreen
-import org.ninjaneers.motager.dashboard.presentation.categories.presentation.CategoriesViewModel
-import org.ninjaneers.motager.dashboard.presentation.collections.presentation.CollectionsScreen
-import org.ninjaneers.motager.dashboard.presentation.collections.presentation.CollectionsViewModel
-import org.ninjaneers.motager.dashboard.presentation.customers.presentation.CustomersScreen
-import org.ninjaneers.motager.dashboard.presentation.customers.presentation.CustomersViewModel
-import org.ninjaneers.motager.dashboard.presentation.discounts.presentation.DiscountsScreen
-import org.ninjaneers.motager.dashboard.presentation.discounts.presentation.DiscountsViewModel
-import org.ninjaneers.motager.dashboard.presentation.home.presentation.HomeScreen
-import org.ninjaneers.motager.dashboard.presentation.home.presentation.HomeViewModel
-import org.ninjaneers.motager.dashboard.presentation.orders.presentation.OrdersScreen
-import org.ninjaneers.motager.dashboard.presentation.orders.presentation.OrdersViewModel
-import org.ninjaneers.motager.dashboard.presentation.products.presentation.ProductsScreen
-import org.ninjaneers.motager.dashboard.presentation.products.presentation.ProductsViewModel
-import org.ninjaneers.motager.dashboard.presentation.settings.presentations.SettingsScreen
-import org.ninjaneers.motager.dashboard.presentation.settings.presentations.SettingsViewModel
 import org.ninjaneers.motager.mainscreen.MainScreen
 
 @Composable
@@ -79,132 +61,16 @@ fun App() {
                     }
                 }
 
-                navigation<Route.DashboardGraph>(startDestination = Route.Home) {
-                    composable<Route.Home>() {
-                        val dashboardViewModel =
-                            it.koinSharedViewModel<DashboardViewModel>(navController = navController)
-                        val dashboardState by dashboardViewModel.state.collectAsStateWithLifecycle()
-                        val homeViewModel = koinViewModel<HomeViewModel>()
-                        HomeScreen(
-                            navigator = navigator,
-                            dashboardState = dashboardState,
-                            dashboardAction = dashboardViewModel::onAction,
-                            coreState = coreState,
-                            coreAction = coreViewModel::onAction
-                        )
-                    }
-                    composable<Route.Orders>() {
-                        val dashboardViewModel =
-                            it.koinSharedViewModel<DashboardViewModel>(navController = navController)
-                        val dashboardState by dashboardViewModel.state.collectAsStateWithLifecycle()
-                        val ordersViewModel = koinViewModel<OrdersViewModel>()
-                        val state by ordersViewModel.state.collectAsStateWithLifecycle()
-                        OrdersScreen(
+                navigation<Route.DashboardGraph>(startDestination = Route.Dashboard) {
+                    composable<Route.Dashboard> {
+                        val viewModel = koinViewModel<DashboardViewModel>()
+                        val state by viewModel.state.collectAsStateWithLifecycle()
+                        DashboardScreen(
                             state = state,
-                            navigator = navigator,
-                            dashboardState = dashboardState,
-                            dashboardAction = dashboardViewModel::onAction,
                             coreState = coreState,
-                            coreAction = coreViewModel::onAction
-                        )
-                    }
-                    composable<Route.Products>() {
-                        val dashboardViewModel =
-                            it.koinSharedViewModel<DashboardViewModel>(navController = navController)
-                        val dashboardState by dashboardViewModel.state.collectAsStateWithLifecycle()
-                        val productsViewModel = koinViewModel<ProductsViewModel>()
-                        val state by productsViewModel.state.collectAsStateWithLifecycle()
-                        ProductsScreen(
-                            state = state,
-                            navigator = navigator,
-                            dashboardState = dashboardState,
-                            dashboardAction = dashboardViewModel::onAction,
-                            coreState = coreState,
-                            coreAction = coreViewModel::onAction
-                        )
-                    }
-                    composable<Route.Collections>() {
-                        val dashboardViewModel =
-                            it.koinSharedViewModel<DashboardViewModel>(navController = navController)
-                        val dashboardState by dashboardViewModel.state.collectAsStateWithLifecycle()
-                        val collectionsViewModel = koinViewModel<CollectionsViewModel>()
-                        val state by collectionsViewModel.state.collectAsStateWithLifecycle()
-                        CollectionsScreen(
-                            state = state,
-                            navigator = navigator,
-                            dashboardState = dashboardState,
-                            dashboardAction = dashboardViewModel::onAction,
-                            coreState = coreState,
-                            coreAction = coreViewModel::onAction
-                        )
-                    }
-                    composable<Route.Categories>() {
-                        val dashboardViewModel =
-                            it.koinSharedViewModel<DashboardViewModel>(navController = navController)
-                        val dashboardState by dashboardViewModel.state.collectAsStateWithLifecycle()
-                        val categoriesViewModel = koinViewModel<CategoriesViewModel>()
-                        val state by categoriesViewModel.state.collectAsStateWithLifecycle()
-                        CategoriesScreen(
-                            state = state,
-                            navigator = navigator,
-                            dashboardState = dashboardState,
-                            dashboardAction = dashboardViewModel::onAction,
-                            coreState = coreState,
-                            coreAction = coreViewModel::onAction
-                        )
-                    }
-                    composable<Route.Customers>() {
-                        val dashboardViewModel =
-                            it.koinSharedViewModel<DashboardViewModel>(navController = navController)
-                        val dashboardState by dashboardViewModel.state.collectAsStateWithLifecycle()
-                        val customersViewModel = koinViewModel<CustomersViewModel>()
-                        val state by customersViewModel.state.collectAsStateWithLifecycle()
-                        CustomersScreen(
-                            state = state,
-                            navigator = navigator,
-                            dashboardState = dashboardState,
-                            dashboardAction = dashboardViewModel::onAction,
-                            coreState = coreState,
-                            coreAction = coreViewModel::onAction
-                        )
-                    }
-                    composable<Route.Analytics>() {
-                        val dashboardViewModel =
-                            it.koinSharedViewModel<DashboardViewModel>(navController = navController)
-                        val dashboardState by dashboardViewModel.state.collectAsStateWithLifecycle()
-                        val analyticsViewModel = koinViewModel<AnalyticsViewModel>()
-                        AnalyticsScreen(
-                            navigator = navigator,
-                            dashboardState = dashboardState,
-                            dashboardAction = dashboardViewModel::onAction,
-                            coreState = coreState,
-                            coreAction = coreViewModel::onAction
-                        )
-                    }
-                    composable<Route.Discounts>() {
-                        val dashboardViewModel =
-                            it.koinSharedViewModel<DashboardViewModel>(navController = navController)
-                        val dashboardState by dashboardViewModel.state.collectAsStateWithLifecycle()
-                        val discountsViewModel = koinViewModel<DiscountsViewModel>()
-                        DiscountsScreen(
-                            navigator = navigator,
-                            dashboardState = dashboardState,
-                            dashbaordAction = dashboardViewModel::onAction,
-                            coreState = coreState,
-                            coreAction = coreViewModel::onAction
-                        )
-                    }
-                    composable<Route.Settings>() {
-                        val dashboardViewModel =
-                            it.koinSharedViewModel<DashboardViewModel>(navController = navController)
-                        val dashboardState by dashboardViewModel.state.collectAsStateWithLifecycle()
-                        val settingsViewModel = koinViewModel<SettingsViewModel>()
-                        SettingsScreen(
-                            navigator = navigator,
-                            dashboardState = dashboardState,
-                            dashboardAction = dashboardViewModel::onAction,
-                            coreState = coreState,
-                            coreAction = coreViewModel::onAction
+                            onAction = viewModel::onAction,
+                            coreAction = coreViewModel::onAction,
+                            navigator = navigator
                         )
                     }
                 }

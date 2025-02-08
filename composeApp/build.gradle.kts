@@ -52,6 +52,7 @@ kotlin {
             implementation(libs.koin.compose.viewmodel)
             implementation(libs.bundles.ktor)
             implementation(libs.bundles.coil)
+            implementation(libs.kermit.logger)
 
             api(libs.koin.core)
             api(libs.datastore)

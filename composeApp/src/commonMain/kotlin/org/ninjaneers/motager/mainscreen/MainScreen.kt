@@ -40,7 +40,6 @@ import org.jetbrains.compose.resources.Font
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.ninjaneers.motager.app.navigation.Navigator
-import org.ninjaneers.motager.app.navigation.Route
 import org.ninjaneers.motager.core.presentation.components.PrimaryButton
 import org.ninjaneers.motager.mainscreen.components.MainNavBar
 
@@ -149,7 +148,7 @@ private fun MainScreenContent(
                         modifier = Modifier
                             .height(42.dp)
                             .wrapContentWidth(),
-                        onClick = { navigator.navigate(Route.Products) },
+                        onClick = { },
                         contentPadding = PaddingValues(
                             horizontal = 16.dp,
                             vertical = 8.dp
