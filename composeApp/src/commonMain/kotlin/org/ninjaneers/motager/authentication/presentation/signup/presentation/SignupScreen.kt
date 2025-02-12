@@ -29,7 +29,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.DpOffset
@@ -46,10 +45,6 @@ import motager.composeapp.generated.resources.HaveAccount
 import motager.composeapp.generated.resources.Light
 import motager.composeapp.generated.resources.LoginDetails
 import motager.composeapp.generated.resources.NewAccount
-import motager.composeapp.generated.resources.OutfitBold
-import motager.composeapp.generated.resources.OutfitMedium
-import motager.composeapp.generated.resources.OutfitRegular
-import motager.composeapp.generated.resources.OutfitSemiBold
 import motager.composeapp.generated.resources.Password
 import motager.composeapp.generated.resources.Res
 import motager.composeapp.generated.resources.SecondName
@@ -61,7 +56,6 @@ import motager.composeapp.generated.resources.languages
 import motager.composeapp.generated.resources.moon
 import motager.composeapp.generated.resources.sun
 import motager.composeapp.generated.resources.system
-import org.jetbrains.compose.resources.Font
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.ninjaneers.motager.core.domain.Language
@@ -69,6 +63,7 @@ import org.ninjaneers.motager.core.presentation.CoreState
 import org.ninjaneers.motager.core.presentation.components.PrimaryButton
 import org.ninjaneers.motager.core.presentation.components.PrimaryIconButton
 import org.ninjaneers.motager.core.presentation.components.PrimaryTextField
+import org.ninjaneers.motager.core.presentation.theme.FontFamily
 import org.ninjaneers.motager.core.presentation.theme.Logo
 
 @Composable
@@ -162,7 +157,7 @@ private fun SignupScreenContent(
                                     text = stringResource(Res.string.Light),
                                     fontSize = 14.sp,
                                     color = MaterialTheme.colorScheme.inverseOnSurface,
-                                    fontFamily = org.ninjaneers.motager.core.presentation.theme.FontFamily(
+                                    fontFamily = FontFamily(
                                         weight = FontWeight.Normal,
                                         language = coreState.language
                                     ),
@@ -194,7 +189,7 @@ private fun SignupScreenContent(
                                     text = stringResource(Res.string.Dark),
                                     fontSize = 14.sp,
                                     color = MaterialTheme.colorScheme.inverseOnSurface,
-                                    fontFamily = org.ninjaneers.motager.core.presentation.theme.FontFamily(
+                                    fontFamily = FontFamily(
                                         weight = FontWeight.Normal,
                                         language = coreState.language
                                     ),
@@ -226,7 +221,7 @@ private fun SignupScreenContent(
                                     text = stringResource(Res.string.System),
                                     fontSize = 14.sp,
                                     color = MaterialTheme.colorScheme.inverseOnSurface,
-                                    fontFamily = org.ninjaneers.motager.core.presentation.theme.FontFamily(
+                                    fontFamily = FontFamily(
                                         weight = FontWeight.Normal,
                                         language = coreState.language
                                     ),
@@ -293,7 +288,7 @@ private fun SignupScreenContent(
                                     text = stringResource(Res.string.Arabic),
                                     fontSize = 14.sp,
                                     color = MaterialTheme.colorScheme.inverseOnSurface,
-                                    fontFamily = org.ninjaneers.motager.core.presentation.theme.FontFamily(
+                                    fontFamily = FontFamily(
                                         weight = FontWeight.Normal,
                                         language = coreState.language
                                     ),
@@ -325,7 +320,7 @@ private fun SignupScreenContent(
                                     text = stringResource(Res.string.English),
                                     fontSize = 14.sp,
                                     color = MaterialTheme.colorScheme.inverseOnSurface,
-                                    fontFamily = org.ninjaneers.motager.core.presentation.theme.FontFamily(
+                                    fontFamily = FontFamily(
                                         weight = FontWeight.Normal,
                                         language = coreState.language
                                     ),
@@ -367,10 +362,8 @@ private fun SignupScreenContent(
                         modifier = Modifier.padding(bottom = 6.dp).fillMaxWidth(),
                         text = stringResource(Res.string.NewAccount),
                         fontFamily = FontFamily(
-                            Font(
-                                resource = Res.font.OutfitSemiBold,
-                                weight = FontWeight.SemiBold
-                            )
+                            weight = FontWeight.SemiBold,
+                            language = coreState.language
                         ),
                         color = MaterialTheme.colorScheme.onSurface,
                         fontSize = 24.sp,
@@ -380,9 +373,8 @@ private fun SignupScreenContent(
                         modifier = Modifier.padding(bottom = 24.dp).fillMaxWidth(),
                         text = stringResource(Res.string.LoginDetails),
                         fontFamily = FontFamily(
-                            Font(
-                                resource = Res.font.OutfitRegular, weight = FontWeight.Normal
-                            )
+                            weight = FontWeight.Normal,
+                            language = coreState.language
                         ),
                         color = MaterialTheme.colorScheme.onTertiary,
                         fontSize = 16.sp,
@@ -400,9 +392,8 @@ private fun SignupScreenContent(
                             Text(
                                 text = stringResource(Res.string.FirstName),
                                 fontFamily = FontFamily(
-                                    Font(
-                                        resource = Res.font.OutfitBold, weight = FontWeight.Bold
-                                    )
+                                    weight = FontWeight.Bold,
+                                    language = coreState.language
                                 ),
                                 color = MaterialTheme.colorScheme.onSurface,
                                 fontSize = 16.sp
@@ -421,9 +412,8 @@ private fun SignupScreenContent(
                             Text(
                                 text = stringResource(Res.string.SecondName),
                                 fontFamily = FontFamily(
-                                    Font(
-                                        resource = Res.font.OutfitBold, weight = FontWeight.Bold
-                                    )
+                                    weight = FontWeight.Bold,
+                                    language = coreState.language
                                 ),
                                 color = MaterialTheme.colorScheme.onSurface,
                                 fontSize = 16.sp
@@ -443,10 +433,10 @@ private fun SignupScreenContent(
                         Text(
                             text = stringResource(Res.string.Email),
                             fontFamily = FontFamily(
-                                Font(
-                                    resource = Res.font.OutfitBold, weight = FontWeight.Bold
-                                )
-                            ), color = MaterialTheme.colorScheme.onSurface,
+                                weight = FontWeight.Bold,
+                                language = coreState.language
+                            ),
+                            color = MaterialTheme.colorScheme.onSurface,
                             fontSize = 16.sp
                         )
                         PrimaryTextField(
@@ -463,9 +453,8 @@ private fun SignupScreenContent(
                         Text(
                             text = stringResource(Res.string.Password),
                             fontFamily = FontFamily(
-                                Font(
-                                    resource = Res.font.OutfitBold, weight = FontWeight.Bold
-                                )
+                                weight = FontWeight.Bold,
+                                language = coreState.language
                             ),
                             color = MaterialTheme.colorScheme.onSurface,
                             fontSize = 16.sp
@@ -485,9 +474,8 @@ private fun SignupScreenContent(
                         Text(
                             text = stringResource(Res.string.ConfirmPassword),
                             fontFamily = FontFamily(
-                                Font(
-                                    resource = Res.font.OutfitBold, weight = FontWeight.Bold
-                                )
+                                weight = FontWeight.Bold,
+                                language = coreState.language
                             ),
                             color = MaterialTheme.colorScheme.onSurface,
                             fontSize = 16.sp
@@ -506,10 +494,8 @@ private fun SignupScreenContent(
                         Text(
                             text = stringResource(Res.string.CreateNewAccount),
                             fontFamily = FontFamily(
-                                Font(
-                                    resource = Res.font.OutfitMedium,
-                                    weight = FontWeight.Medium
-                                )
+                                weight = FontWeight.Medium,
+                                language = coreState.language
                             ),
                             fontSize = 18.sp,
                             color = MaterialTheme.colorScheme.onPrimary,
@@ -523,10 +509,8 @@ private fun SignupScreenContent(
                     Text(
                         text = stringResource(Res.string.HaveAccount),
                         fontFamily = FontFamily(
-                            Font(
-                                resource = Res.font.OutfitMedium,
-                                weight = FontWeight.Medium
-                            )
+                            weight = FontWeight.Medium,
+                            language = coreState.language
                         ),
                         fontSize = 14.sp,
                         color = MaterialTheme.colorScheme.primary
