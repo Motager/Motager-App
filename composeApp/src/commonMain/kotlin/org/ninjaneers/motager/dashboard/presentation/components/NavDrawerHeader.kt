@@ -1,6 +1,5 @@
 package org.ninjaneers.motager.dashboard.presentation.components
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -19,19 +18,16 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil3.compose.AsyncImage
 import motager.composeapp.generated.resources.OutfitMedium
 import motager.composeapp.generated.resources.Res
-import motager.composeapp.generated.resources.avatar
 import org.jetbrains.compose.resources.Font
-import org.jetbrains.compose.resources.painterResource
+
 
 @Composable
-fun NavDrawerHeader() {
-    NavDrawerHeaderContent()
-}
-
-@Composable
-private fun NavDrawerHeaderContent() {
+fun NavDrawerHeader(
+    avatar: String = "https://motager.vercel.app/images/male.png"
+) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -40,12 +36,12 @@ private fun NavDrawerHeaderContent() {
         verticalArrangement = Arrangement.spacedBy(6.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Image(
+        AsyncImage(
             modifier = Modifier
                 .clip(RoundedCornerShape(100.dp))
                 .size(80.dp)
                 .background(MaterialTheme.colorScheme.primary),
-            painter = painterResource(Res.drawable.avatar),
+            model = avatar,
             contentDescription = null
         )
         Text(

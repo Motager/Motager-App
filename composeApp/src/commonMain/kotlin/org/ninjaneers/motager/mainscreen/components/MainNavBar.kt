@@ -1,6 +1,5 @@
 package org.ninjaneers.motager.mainscreen.components
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
@@ -8,7 +7,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ButtonDefaults
@@ -21,7 +19,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import motager.composeapp.generated.resources.LightLogoEn
 import motager.composeapp.generated.resources.Login_Signup
 import motager.composeapp.generated.resources.OutfitMedium
 import motager.composeapp.generated.resources.Res
@@ -45,11 +42,11 @@ fun MainNavBar() {
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
-        Image(
-            modifier = Modifier.width(150.dp).height(38.dp),
-            painter = painterResource(Res.drawable.LightLogoEn),
-            contentDescription = "Logo"
-        )
+//        Image(
+//            modifier = Modifier.width(150.dp).height(38.dp),
+//            painter = painterResource(Res.drawable.light_en_logo),
+//            contentDescription = "Logo"
+//        )
         Row(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(6.dp)
