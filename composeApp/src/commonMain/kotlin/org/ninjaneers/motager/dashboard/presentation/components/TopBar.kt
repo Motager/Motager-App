@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.windowInsetsPadding
@@ -23,7 +22,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
 import motager.composeapp.generated.resources.Res
-import motager.composeapp.generated.resources.avatar
 import motager.composeapp.generated.resources.bell
 import motager.composeapp.generated.resources.panels
 import org.jetbrains.compose.resources.painterResource
@@ -36,7 +34,8 @@ import org.ninjaneers.motager.dashboard.presentation.DashboardAction
 @Composable
 fun TopBar(
     coreState: CoreState,
-    openNavDrawer: suspend (DashboardAction) -> Unit
+    openNavDrawer: suspend (DashboardAction) -> Unit,
+    avatar: String = "https://motager.vercel.app/images/male.png"
 ) {
     val coroutineScope = rememberCoroutineScope()
     Row(
@@ -91,14 +90,14 @@ fun TopBar(
                 ),
                 language = coreState.language
             )
-            Image(
-                modifier = Modifier
-                    .clip(RoundedCornerShape(1000.dp))
-                    .background(MaterialTheme.colorScheme.primary)
-                    .size(40.dp),
-                painter = painterResource(Res.drawable.avatar),
-                contentDescription = "Logo"
-            )
+//            AsyncImage(
+//                modifier = Modifier
+//                    .clip(RoundedCornerShape(100.dp))
+//                    .background(MaterialTheme.colorScheme.primary)
+//                    .size(40.dp),
+//                model = avatar,
+//                contentDescription = "Logo"
+//            )
         }
     }
 }

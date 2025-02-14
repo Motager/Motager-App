@@ -16,8 +16,10 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
 import org.ninjaneers.motager.app.navigation.Navigator
 import org.ninjaneers.motager.app.navigation.Route
-import org.ninjaneers.motager.authentication.presentation.login.LoginScreen
-import org.ninjaneers.motager.authentication.presentation.signup.SignupScreen
+import org.ninjaneers.motager.authentication.presentation.login.presentation.LoginScreen
+import org.ninjaneers.motager.authentication.presentation.login.presentation.LoginViewModel
+import org.ninjaneers.motager.authentication.presentation.signup.presentation.SignupScreen
+import org.ninjaneers.motager.authentication.presentation.signup.presentation.SignupViewModel
 import org.ninjaneers.motager.core.domain.Language
 import org.ninjaneers.motager.core.domain.Theme
 import org.ninjaneers.motager.core.presentation.CoreViewModel
@@ -47,17 +49,32 @@ fun App() {
         ) {
             val navController = rememberNavController()
             val navigator = remember { Navigator(navController) }
-            NavHost(navController = navController, startDestination = Route.DashboardGraph) {
+            NavHost(navController = navController, startDestination = Route.AuthenticationGraph) {
                 composable<Route.MainScreen> {
                     MainScreen(navigator = navigator)
                 }
 
                 navigation<Route.AuthenticationGraph>(startDestination = Route.Login) {
                     composable<Route.Login> {
-                        LoginScreen()
+                        val viewModel = koinViewModel<LoginViewModel>()
+                        val state by viewModel.state.collectAsStateWithLifecycle()
+                        LoginScreen(
+                            state = state,
+                            onAction = viewModel::onAction,
+                            goToSignup = { navController.navigate(Route.Signup) },
+                            goToDashboard = { navController.navigate(Route.DashboardGraph) },
+                            coreState = coreState
+                        )
                     }
                     composable<Route.Signup> {
-                        SignupScreen()
+                        val viewModel = koinViewModel<SignupViewModel>()
+                        val state by viewModel.state.collectAsStateWithLifecycle()
+                        SignupScreen(
+                            state = state,
+                            coreState = coreState,
+                            onAction = viewModel::onAction,
+                            backToLogin = { navController.navigate(Route.Login) }
+                        )
                     }
                 }
 

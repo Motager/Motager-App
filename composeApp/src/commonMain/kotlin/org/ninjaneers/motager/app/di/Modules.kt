@@ -6,6 +6,8 @@ import org.koin.core.module.dsl.singleOf
 import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.bind
 import org.koin.dsl.module
+import org.ninjaneers.motager.authentication.presentation.login.presentation.LoginViewModel
+import org.ninjaneers.motager.authentication.presentation.signup.presentation.SignupViewModel
 import org.ninjaneers.motager.core.data.repository.AppSettingsRepositoryImpl
 import org.ninjaneers.motager.core.domain.AppSettingsRepository
 import org.ninjaneers.motager.core.presentation.CoreViewModel
@@ -23,6 +25,12 @@ import org.ninjaneers.motager.dashboard.presentation.settings.presentations.Sett
 expect val platformModule: Module
 
 val sharedModule = module {
+    viewModelOf(::CoreViewModel)
+
+    viewModelOf(::LoginViewModel)
+    viewModelOf(::SignupViewModel)
+
+    viewModelOf(::DashboardViewModel)
     viewModelOf(::HomeViewModel)
     viewModelOf(::OrdersViewModel)
     viewModelOf(::ProductsViewModel)
@@ -32,8 +40,6 @@ val sharedModule = module {
     viewModelOf(::AnalyticsViewModel)
     viewModelOf(::DiscountsViewModel)
     viewModelOf(::SettingsViewModel)
-    viewModelOf(::DashboardViewModel)
-    viewModelOf(::CoreViewModel)
 
     singleOf(::AppSettingsRepositoryImpl).bind<AppSettingsRepository>()
 }
