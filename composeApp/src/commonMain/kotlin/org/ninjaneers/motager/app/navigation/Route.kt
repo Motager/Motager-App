@@ -5,7 +5,13 @@ import kotlinx.serialization.Serializable
 sealed interface Route {
 
     @Serializable
+    data object MotagerGraph : Route
+
+    @Serializable
     data object MainScreen : Route
+
+    @Serializable
+    data object Splash : Route
 
     @Serializable
     data object AuthenticationGraph : Route
