@@ -15,10 +15,13 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Switch
@@ -26,16 +29,28 @@ import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.focus.FocusDirection
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import kotlinx.coroutines.launch
 import motager.composeapp.generated.resources.Arabic
 import motager.composeapp.generated.resources.Dark
 import motager.composeapp.generated.resources.Email
@@ -51,15 +66,19 @@ import motager.composeapp.generated.resources.System
 import motager.composeapp.generated.resources.ar
 import motager.composeapp.generated.resources.auth
 import motager.composeapp.generated.resources.en
+import motager.composeapp.generated.resources.eye
+import motager.composeapp.generated.resources.eyeoff
 import motager.composeapp.generated.resources.languages
 import motager.composeapp.generated.resources.moon
 import motager.composeapp.generated.resources.sun
 import motager.composeapp.generated.resources.system
+import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.ninjaneers.motager.core.domain.Language
-import org.ninjaneers.motager.core.presentation.CoreState
+import org.ninjaneers.motager.core.domain.Theme
+import org.ninjaneers.motager.core.presentation.CoreAction
 import org.ninjaneers.motager.core.presentation.components.PrimaryButton
 import org.ninjaneers.motager.core.presentation.components.PrimaryIconButton
 import org.ninjaneers.motager.core.presentation.components.PrimaryTextField
@@ -69,15 +88,19 @@ import org.ninjaneers.motager.core.presentation.theme.Logo
 @Composable
 fun LoginScreen(
     state: LoginScreenState,
-    coreState: CoreState,
+    theme: Theme,
+    language: Language,
     onAction: (LoginAction) -> Unit,
+    coreAction: (CoreAction) -> Unit,
     goToSignup: () -> Unit,
     goToDashboard: () -> Unit
 ) {
     LoginScreenContent(
         state = state,
-        coreState = coreState,
+        theme = theme,
+        language = language,
         onAction = onAction,
+        coreAction = coreAction,
         goToSignup = goToSignup,
         goToDashboard = goToDashboard
     )
@@ -87,11 +110,19 @@ fun LoginScreen(
 @Preview
 private fun LoginScreenContent(
     state: LoginScreenState,
-    coreState: CoreState,
+    theme: Theme,
+    language: Language,
     onAction: (LoginAction) -> Unit,
+    coreAction: (CoreAction) -> Unit,
     goToSignup: () -> Unit,
     goToDashboard: () -> Unit,
 ) {
+    val coroutineScope = rememberCoroutineScope()
+    val focusRequester = remember { FocusRequester() }
+    val focusRequestManager = LocalFocusManager.current
+    LaunchedEffect(Unit) {
+        focusRequester.requestFocus()
+    }
     Scaffold { innerPadding ->
         Box(
             modifier = Modifier
@@ -149,12 +180,14 @@ private fun LoginScreenContent(
                             modifier = Modifier.padding(horizontal = 6.dp)
                                 .clip(RoundedCornerShape(6.dp)),
                             onClick = {
-                                onAction(
-                                    LoginAction.OnThemeMenuToggle(
-                                        state.isThemeMenuExpanded
+                                coroutineScope.launch {
+                                    onAction(
+                                        LoginAction.OnThemeMenuToggle(
+                                            state.isThemeMenuExpanded
+                                        )
                                     )
-                                )
-//                                coreAction(CoreAction.ChangeTheme(Theme.Light))
+                                    coreAction(CoreAction.ChangeTheme(Theme.Light))
+                                }
                             },
                             text = {
                                 Text(
@@ -163,7 +196,7 @@ private fun LoginScreenContent(
                                     color = MaterialTheme.colorScheme.inverseOnSurface,
                                     fontFamily = FontFamily(
                                         weight = FontWeight.Normal,
-                                        language = coreState.language
+                                        language = language
                                     ),
                                     textAlign = TextAlign.Center
                                 )
@@ -181,12 +214,14 @@ private fun LoginScreenContent(
                             modifier = Modifier.padding(horizontal = 6.dp)
                                 .clip(RoundedCornerShape(6.dp)),
                             onClick = {
-                                onAction(
-                                    LoginAction.OnThemeMenuToggle(
-                                        state.isThemeMenuExpanded
+                                coroutineScope.launch {
+                                    onAction(
+                                        LoginAction.OnThemeMenuToggle(
+                                            state.isThemeMenuExpanded
+                                        )
                                     )
-                                )
-//                                coreAction(CoreAction.ChangeTheme(Theme.Dark))
+                                    coreAction(CoreAction.ChangeTheme(Theme.Dark))
+                                }
                             },
                             text = {
                                 Text(
@@ -195,7 +230,7 @@ private fun LoginScreenContent(
                                     color = MaterialTheme.colorScheme.inverseOnSurface,
                                     fontFamily = FontFamily(
                                         weight = FontWeight.Normal,
-                                        language = coreState.language
+                                        language = language
                                     ),
                                     textAlign = TextAlign.Center
                                 )
@@ -213,12 +248,14 @@ private fun LoginScreenContent(
                             modifier = Modifier.padding(horizontal = 6.dp)
                                 .clip(RoundedCornerShape(6.dp)),
                             onClick = {
-                                onAction(
-                                    LoginAction.OnThemeMenuToggle(
-                                        state.isThemeMenuExpanded
+                                coroutineScope.launch {
+                                    onAction(
+                                        LoginAction.OnThemeMenuToggle(
+                                            state.isThemeMenuExpanded
+                                        )
                                     )
-                                )
-//                                coreAction(CoreAction.ChangeTheme(Theme.System))
+                                    coreAction(CoreAction.ChangeTheme(Theme.System))
+                                }
                             },
                             text = {
                                 Text(
@@ -227,7 +264,7 @@ private fun LoginScreenContent(
                                     color = MaterialTheme.colorScheme.inverseOnSurface,
                                     fontFamily = FontFamily(
                                         weight = FontWeight.Normal,
-                                        language = coreState.language
+                                        language = language
                                     ),
                                     textAlign = TextAlign.Center
                                 )
@@ -280,12 +317,14 @@ private fun LoginScreenContent(
                             modifier = Modifier.padding(horizontal = 6.dp)
                                 .clip(RoundedCornerShape(6.dp)),
                             onClick = {
-                                onAction(
-                                    LoginAction.OnLocaleMenuToggle(
-                                        state.isLocaleMenuExpanded
+                                coroutineScope.launch {
+                                    onAction(
+                                        LoginAction.OnLocaleMenuToggle(
+                                            state.isLocaleMenuExpanded
+                                        )
                                     )
-                                )
-//                                coreAction(CoreAction.ChangeLanguage(Language.Arabic))
+                                    coreAction(CoreAction.ChangeLanguage(Language.Arabic))
+                                }
                             },
                             text = {
                                 Text(
@@ -294,7 +333,7 @@ private fun LoginScreenContent(
                                     color = MaterialTheme.colorScheme.inverseOnSurface,
                                     fontFamily = FontFamily(
                                         weight = FontWeight.Normal,
-                                        language = coreState.language
+                                        language = language
                                     ),
                                     textAlign = TextAlign.Center
                                 )
@@ -312,12 +351,14 @@ private fun LoginScreenContent(
                             modifier = Modifier.padding(horizontal = 6.dp)
                                 .clip(RoundedCornerShape(6.dp)),
                             onClick = {
-                                onAction(
-                                    LoginAction.OnLocaleMenuToggle(
-                                        state.isLocaleMenuExpanded
+                                coroutineScope.launch {
+                                    onAction(
+                                        LoginAction.OnLocaleMenuToggle(
+                                            state.isLocaleMenuExpanded
+                                        )
                                     )
-                                )
-//                                coreAction(CoreAction.ChangeLanguage(Language.English))
+                                    coreAction(CoreAction.ChangeLanguage(Language.English))
+                                }
                             },
                             text = {
                                 Text(
@@ -326,7 +367,7 @@ private fun LoginScreenContent(
                                     color = MaterialTheme.colorScheme.inverseOnSurface,
                                     fontFamily = FontFamily(
                                         weight = FontWeight.Normal,
-                                        language = coreState.language
+                                        language = language
                                     ),
                                     textAlign = TextAlign.Center
                                 )
@@ -353,7 +394,7 @@ private fun LoginScreenContent(
                         .padding(bottom = 20.dp)
                         .width(160.dp)
                         .height(40.dp),
-                    painter = Logo(language = coreState.language, theme = coreState.theme),
+                    painter = Logo(language = language, theme = theme),
                     contentDescription = "Motager Logo"
                 )
                 Column(
@@ -371,7 +412,7 @@ private fun LoginScreenContent(
                         text = stringResource(Res.string.Login),
                         fontFamily = FontFamily(
                             weight = FontWeight.SemiBold,
-                            language = coreState.language
+                            language = language
                         ),
                         color = MaterialTheme.colorScheme.onSurface,
                         fontSize = 24.sp,
@@ -382,7 +423,7 @@ private fun LoginScreenContent(
                         text = stringResource(Res.string.LoginDetails),
                         fontFamily = FontFamily(
                             weight = FontWeight.Normal,
-                            language = coreState.language
+                            language = language
                         ),
                         color = MaterialTheme.colorScheme.onTertiary,
                         fontSize = 16.sp,
@@ -397,7 +438,7 @@ private fun LoginScreenContent(
                             text = stringResource(Res.string.Email),
                             fontFamily = FontFamily(
                                 weight = FontWeight.Bold,
-                                language = coreState.language
+                                language = language
                             ),
                             color = MaterialTheme.colorScheme.onSurface,
                             fontSize = 16.sp,
@@ -406,6 +447,15 @@ private fun LoginScreenContent(
                             value = state.email,
                             onValueChange = { onAction(LoginAction.OnEmailChange(it)) },
                             modifier = Modifier.height(40.dp).fillMaxWidth()
+                                .focusRequester(focusRequester),
+                            singleLine = true,
+                            keyboardOptions = KeyboardOptions(
+                                keyboardType = KeyboardType.Email,
+                                imeAction = ImeAction.Next
+                            ),
+                            keyboardActions = KeyboardActions(
+                                onNext = { focusRequestManager.moveFocus(FocusDirection.Down) }
+                            )
                         )
                     }
                     Column(
@@ -417,7 +467,7 @@ private fun LoginScreenContent(
                             text = stringResource(Res.string.Password),
                             fontFamily = FontFamily(
                                 weight = FontWeight.Bold,
-                                language = coreState.language
+                                language = language
                             ),
                             color = MaterialTheme.colorScheme.onSurface,
                             fontSize = 16.sp,
@@ -425,7 +475,38 @@ private fun LoginScreenContent(
                         PrimaryTextField(
                             value = state.password,
                             onValueChange = { onAction(LoginAction.OnPasswordChange(it)) },
-                            modifier = Modifier.height(40.dp).fillMaxWidth()
+                            modifier = Modifier.height(40.dp).fillMaxWidth(),
+                            keyboardOptions = KeyboardOptions(
+                                keyboardType = KeyboardType.Password,
+                                imeAction = ImeAction.Done
+                            ),
+                            keyboardActions = KeyboardActions(
+                                onDone = { goToDashboard() }
+                            ),
+                            trailingIcon = {
+                                IconButton(
+                                    onClick = {
+                                        onAction(
+                                            LoginAction.OnPasswordVisibilityToggle(
+                                                state.isPasswordVisible
+                                            )
+                                        )
+                                    }
+                                ) {
+                                    Icon(
+                                        painter = painterResource(
+                                            visibilityIcon(
+                                                state.isPasswordVisible
+                                            )
+                                        ),
+                                        contentDescription = "show/hide password"
+                                    )
+                                }
+                            },
+                            visualTransformation =
+                            if (state.isPasswordVisible)
+                                VisualTransformation.None
+                            else PasswordVisualTransformation()
                         )
                     }
                     Column(verticalArrangement = Arrangement.spacedBy(20.dp)) {
@@ -449,7 +530,10 @@ private fun LoginScreenContent(
                                 text = stringResource(Res.string.RememberLogin),
                                 color = MaterialTheme.colorScheme.onSurface,
                                 fontSize = 16.sp,
-                                fontWeight = FontWeight(700)
+                                fontFamily = FontFamily(
+                                    weight = FontWeight(700),
+                                    language = language
+                                )
                             )
                         }
                         PrimaryButton(
@@ -461,7 +545,7 @@ private fun LoginScreenContent(
                                 text = stringResource(Res.string.Login),
                                 fontFamily = FontFamily(
                                     weight = FontWeight.Medium,
-                                    language = coreState.language
+                                    language = language
                                 ),
                                 fontSize = 18.sp,
                                 color = MaterialTheme.colorScheme.onPrimary,
@@ -477,7 +561,7 @@ private fun LoginScreenContent(
                         stringResource(Res.string.NoAccount),
                         fontFamily = FontFamily(
                             weight = FontWeight.Medium,
-                            language = coreState.language
+                            language = language
                         ),
                         fontSize = 14.sp,
                         color = MaterialTheme.colorScheme.primary
@@ -486,4 +570,14 @@ private fun LoginScreenContent(
             }
         }
     }
+}
+
+@Composable
+private fun visibilityIcon(
+    isPasswordVisible: Boolean
+): DrawableResource {
+    return if (isPasswordVisible)
+        Res.drawable.eyeoff
+    else
+        Res.drawable.eye
 }

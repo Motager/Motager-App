@@ -65,10 +65,12 @@ fun NavigationGraph(
                     val state by viewModel.state.collectAsStateWithLifecycle()
                     LoginScreen(
                         state = state,
+                        theme = coreState.theme,
+                        language = coreState.language,
                         onAction = viewModel::onAction,
+                        coreAction = coreAction,
                         goToSignup = { navController.navigate(Route.Signup) },
                         goToDashboard = { navController.navigate(Route.DashboardGraph) },
-                        coreState = coreState
                     )
                 }
                 composable<Route.Signup> {
