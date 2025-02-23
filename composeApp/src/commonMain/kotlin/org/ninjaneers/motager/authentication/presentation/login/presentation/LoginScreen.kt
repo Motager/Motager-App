@@ -29,15 +29,11 @@ import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusDirection
-import androidx.compose.ui.focus.FocusRequester
-import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalFocusManager
@@ -118,11 +114,8 @@ private fun LoginScreenContent(
     goToDashboard: () -> Unit,
 ) {
     val coroutineScope = rememberCoroutineScope()
-    val focusRequester = remember { FocusRequester() }
     val focusRequestManager = LocalFocusManager.current
-    LaunchedEffect(Unit) {
-        focusRequester.requestFocus()
-    }
+
     Scaffold { innerPadding ->
         Box(
             modifier = Modifier
@@ -446,8 +439,7 @@ private fun LoginScreenContent(
                         PrimaryTextField(
                             value = state.email,
                             onValueChange = { onAction(LoginAction.OnEmailChange(it)) },
-                            modifier = Modifier.height(40.dp).fillMaxWidth()
-                                .focusRequester(focusRequester),
+                            modifier = Modifier.height(40.dp).fillMaxWidth(),
                             singleLine = true,
                             keyboardOptions = KeyboardOptions(
                                 keyboardType = KeyboardType.Email,

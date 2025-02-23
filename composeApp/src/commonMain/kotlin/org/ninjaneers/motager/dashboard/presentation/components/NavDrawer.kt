@@ -100,9 +100,9 @@ fun NavDrawer(
             verticalArrangement = Arrangement.SpaceBetween
         ) {
             LazyColumn {
-//                item {
-//                    NavDrawerHeader()
-//                }
+                item {
+                    NavDrawerHeader()
+                }
                 stickyHeader {
                     Text(
                         modifier = Modifier

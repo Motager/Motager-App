@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.windowInsetsPadding
@@ -20,6 +21,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
+import coil3.compose.AsyncImage
 import kotlinx.coroutines.launch
 import motager.composeapp.generated.resources.Res
 import motager.composeapp.generated.resources.bell
@@ -90,14 +92,14 @@ fun TopBar(
                 ),
                 language = coreState.language
             )
-//            AsyncImage(
-//                modifier = Modifier
-//                    .clip(RoundedCornerShape(100.dp))
-//                    .background(MaterialTheme.colorScheme.primary)
-//                    .size(40.dp),
-//                model = avatar,
-//                contentDescription = "Logo"
-//            )
+            AsyncImage(
+                modifier = Modifier
+                    .clip(RoundedCornerShape(100.dp))
+                    .background(MaterialTheme.colorScheme.primary)
+                    .size(40.dp),
+                model = avatar,
+                contentDescription = "Logo"
+            )
         }
     }
 }
