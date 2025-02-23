@@ -4,6 +4,7 @@ data class LoginScreenState(
     val email: String = "",
     val password: String = "",
     val rememberMe: Boolean = false,
+    val isPasswordVisible: Boolean = false,
     val isThemeMenuExpanded: Boolean = false,
     val isLocaleMenuExpanded: Boolean = false
 )

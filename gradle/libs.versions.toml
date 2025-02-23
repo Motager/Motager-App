@@ -1,5 +1,5 @@
 [versions]
-agp = "8.7.3"
+agp = "8.8.1"
 android-compileSdk = "34"
 android-minSdk = "24"
 android-targetSdk = "34"
@@ -25,6 +25,7 @@ koin = "4.0.0"
 ktor = "3.0.0"
 datastore = "1.1.2"
 kermitLogger = "2.0.4"
+kottie = "2.0.1"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
@@ -80,6 +81,9 @@ koin-compose-viewmodel = { module = "io.insert-koin:koin-compose-viewmodel", ver
 #DataStore
 datastore = { module = "androidx.datastore:datastore", version.ref = "datastore" }
 datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastore" }
+
+#Kottie animation
+kottie = { module = "io.github.ismai117:kottie", version.ref = "kottie" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

@@ -14,8 +14,17 @@ class LoginViewModel : ViewModel() {
             is LoginAction.OnEmailChange -> onEmailChange(action.email)
             is LoginAction.OnPasswordChange -> onPasswordChange(action.password)
             is LoginAction.OnRememberMeToggle -> onRememberMeToggle(action.rememberMe)
+            is LoginAction.OnPasswordVisibilityToggle -> onPasswordVisibilityToggle(action.isPasswordVisible)
             is LoginAction.OnThemeMenuToggle -> onThemeMenuToggle(action.isExpanded)
             is LoginAction.OnLocaleMenuToggle -> onLocaleMenuToggle(action.isExpanded)
+        }
+    }
+
+    private fun onPasswordVisibilityToggle(isPasswordVisible: Boolean) {
+        _state.update {
+            it.copy(
+                isPasswordVisible = !isPasswordVisible
+            )
         }
     }
 

@@ -53,6 +53,7 @@ kotlin {
             implementation(libs.bundles.ktor)
             implementation(libs.bundles.coil)
             implementation(libs.kermit.logger)
+            implementation(libs.kottie)
 
             api(libs.koin.core)
             api(libs.datastore)
@@ -83,6 +84,7 @@ android {
     buildTypes {
         getByName("release") {
             isMinifyEnabled = false
+            signingConfig = signingConfigs.getByName("debug")
         }
     }
     compileOptions {

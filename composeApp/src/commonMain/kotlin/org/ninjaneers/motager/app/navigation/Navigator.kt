@@ -20,6 +20,8 @@ class Navigator(private val navController: NavController) {
             }
 
             Route.Dashboard -> navController.navigate(Route.Dashboard)
+            Route.Splash -> {}
+            Route.MotagerGraph -> {}
         }
     }
 }
