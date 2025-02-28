@@ -10,12 +10,32 @@ import org.ninjaneers.motager.dashboard.presentation.collections.domain.Collecti
 data class CollectionsScreenState(
     val searchQuery: String = "",
     val searchLimit: Int = 10,
-    val collectionsList: List<Collection> = (1..20).map {
+    val collectionsList: List<Collection> = listOf(
         Collection(
             name = "Collection 1",
             productsNumber = 10
+        ),
+        Collection(
+            name = "Collection 2",
+            productsNumber = 15
+        ),
+        Collection(
+            name = "Collection 3",
+            productsNumber = 7
+        ),
+        Collection(
+            name = "Collection 1",
+            productsNumber = 10
+        ),
+        Collection(
+            name = "Collection 2",
+            productsNumber = 15
+        ),
+        Collection(
+            name = "Collection 3",
+            productsNumber = 7
         )
-    },
+    ),
     val tableHeaders: List<StringResource> = listOf(
         Res.string.Name,
         Res.string.Products,

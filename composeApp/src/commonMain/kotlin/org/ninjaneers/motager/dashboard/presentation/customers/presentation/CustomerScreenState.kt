@@ -12,14 +12,74 @@ import org.ninjaneers.motager.dashboard.presentation.customers.domain.Customer
 data class CustomerScreenState(
     val searchQuery: String = "",
     val searchLimit: Int = 10,
-    val customerList: List<Customer> = (1..20).map {
+    val customerList: List<Customer> = listOf(
         Customer(
             name = "john Doe",
             email = "m@example.com",
             status = "New",
             amountPaid = 100,
-        )
-    },
+        ),
+        Customer(
+            name = "Jane Smith",
+            email = "jane@example.com",
+            status = "Active",
+            amountPaid = 200,
+        ),
+        Customer(
+            name = "Mike Johnson",
+            email = "mike@example.com",
+            status = "New",
+            amountPaid = 50,
+        ),
+        Customer(
+            name = "Emily Davis",
+            email = "emily@example.com",
+            status = "Premium",
+            amountPaid = 300,
+        ),
+        Customer(
+            name = "john Doe",
+            email = "m@example.com",
+            status = "New",
+            amountPaid = 100,
+        ),
+        Customer(
+            name = "Jane Smith",
+            email = "jane@example.com",
+            status = "Active",
+            amountPaid = 200,
+        ),
+        Customer(
+            name = "Mike Johnson",
+            email = "mike@example.com",
+            status = "New",
+            amountPaid = 50,
+        ),
+        Customer(
+            name = "Emily Davis",
+            email = "emily@example.com",
+            status = "Premium",
+            amountPaid = 300,
+        ),
+        Customer(
+            name = "Jane Smith",
+            email = "jane@example.com",
+            status = "Active",
+            amountPaid = 200,
+        ),
+        Customer(
+            name = "Mike Johnson",
+            email = "mike@example.com",
+            status = "New",
+            amountPaid = 50,
+        ),
+        Customer(
+            name = "Emily Davis",
+            email = "emily@example.com",
+            status = "Premium",
+            amountPaid = 300,
+        ),
+    ),
     val tableHeaders: List<StringResource> = listOf(
         Res.string.Name,
         Res.string.Email,

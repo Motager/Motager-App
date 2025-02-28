@@ -96,7 +96,7 @@ private fun DashboardScreenContent(
                     transitionSpec = {
                         slideInVertically(
                             animationSpec = spring(
-                                dampingRatio = Spring.DampingRatioMediumBouncy,
+                                dampingRatio = Spring.DampingRatioLowBouncy,
                                 stiffness = Spring.StiffnessLow
                             )
                         ).togetherWith(fadeOut(animationSpec = tween(10)))

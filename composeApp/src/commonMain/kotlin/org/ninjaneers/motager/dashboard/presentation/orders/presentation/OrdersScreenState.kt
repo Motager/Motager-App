@@ -19,6 +19,63 @@ data class OrdersScreenState(
         Res.string.Status,
         Res.string.Actions
     ),
-    val ordersList: List<Order> = (1..20).map { Order() },
+    val ordersList: List<Order> = listOf(
+        Order(
+            orderNumber = "ORD001",
+            customer = "Jhon Doe",
+            total = 150.5,
+            status = "Completed"
+        ),
+        Order(
+            orderNumber = "ORD001",
+            customer = "Jhon Doe",
+            total = 150.5,
+            status = "Completed"
+        ),
+        Order(
+            orderNumber = "ORD002",
+            customer = "jane smith",
+            total = 299.99,
+            status = "Pending"
+        ), Order(
+            orderNumber = "ORD003",
+            customer = "Alice Johnson",
+            total = 75.0,
+            status = "Cancelled"
+        ), Order(
+            orderNumber = "ORD004",
+            customer = "Bob Brown",
+            total = 199.9,
+            status = "Processing"
+        ),
+        Order(
+            orderNumber = "ORD001",
+            customer = "Jhon Doe",
+            total = 150.5,
+            status = "Completed"
+        ),
+        Order(
+            orderNumber = "ORD001",
+            customer = "Jhon Doe",
+            total = 150.5,
+            status = "Completed"
+        ),
+        Order(
+            orderNumber = "ORD002",
+            customer = "jane smith",
+            total = 299.99,
+            status = "Pending"
+        ), Order(
+            orderNumber = "ORD003",
+            customer = "Alice Johnson",
+            total = 75.0,
+            status = "Cancelled"
+        ), Order(
+            orderNumber = "ORD004",
+            customer = "Bob Brown",
+            total = 199.9,
+            status = "Processing"
+        )
+    ),
     val ordersCount: Int = ordersList.size
 )

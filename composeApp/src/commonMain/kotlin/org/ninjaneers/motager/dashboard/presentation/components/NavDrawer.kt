@@ -2,7 +2,6 @@ package org.ninjaneers.motager.dashboard.presentation.components
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -42,13 +41,13 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil3.compose.AsyncImage
 import kotlinx.coroutines.launch
 import motager.composeapp.generated.resources.Arabic
 import motager.composeapp.generated.resources.Dark
 import motager.composeapp.generated.resources.DashboardLinks
 import motager.composeapp.generated.resources.English
 import motager.composeapp.generated.resources.Light
-import motager.composeapp.generated.resources.Logout
 import motager.composeapp.generated.resources.Res
 import motager.composeapp.generated.resources.Support
 import motager.composeapp.generated.resources.System
@@ -56,9 +55,7 @@ import motager.composeapp.generated.resources.ar
 import motager.composeapp.generated.resources.en
 import motager.composeapp.generated.resources.headset
 import motager.composeapp.generated.resources.languages
-import motager.composeapp.generated.resources.log_out
 import motager.composeapp.generated.resources.moon
-import motager.composeapp.generated.resources.plan_img
 import motager.composeapp.generated.resources.sun
 import motager.composeapp.generated.resources.system
 import org.jetbrains.compose.resources.painterResource
@@ -100,9 +97,6 @@ fun NavDrawer(
             verticalArrangement = Arrangement.SpaceBetween
         ) {
             LazyColumn {
-                item {
-                    NavDrawerHeader()
-                }
                 stickyHeader {
                     Text(
                         modifier = Modifier
@@ -199,16 +193,16 @@ fun NavDrawer(
                             )
 
                         }
-                        Image(
+                        AsyncImage(
                             modifier = Modifier.size(120.dp),
-                            painter = painterResource(Res.drawable.plan_img),
+                            model = "https://motager.vercel.app/_next/image?url=%2Fimages%2Fpro.png&w=256&q=75",
                             contentDescription = "Plan"
                         )
                     }
                 }
                 item {
                     Row(
-                        modifier = Modifier.fillMaxWidth(),
+                        modifier = Modifier.fillMaxWidth().padding(top = 8.dp),
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.spacedBy(8.dp)
                     ) {
@@ -461,7 +455,7 @@ fun NavDrawer(
                             }
                         }
                         Button(
-                            modifier = Modifier.weight(1f),
+                            modifier = Modifier.weight(1f).height(40.dp),
                             onClick = {},
                             shape = RoundedCornerShape(6.dp),
                             colors = ButtonDefaults.buttonColors(
@@ -491,38 +485,6 @@ fun NavDrawer(
                                     ),
                                 )
                             }
-                        }
-                    }
-                }
-                item {
-                    Button(
-                        modifier = Modifier.fillMaxWidth().height(40.dp),
-                        onClick = {},
-                        shape = RoundedCornerShape(6.dp),
-                        colors = ButtonDefaults.buttonColors(
-                            containerColor = MaterialTheme.colorScheme.error.copy(alpha = 0.3f),
-                            contentColor = MaterialTheme.colorScheme.surfaceContainerLowest
-                        )
-                    ) {
-                        Row(
-                            verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.Center
-                        ) {
-                            Icon(
-                                modifier = Modifier.size(28.dp).padding(end = 8.dp),
-                                painter = painterResource(Res.drawable.log_out),
-                                contentDescription = "support",
-                                tint = MaterialTheme.colorScheme.error
-                            )
-                            Text(
-                                text = stringResource(Res.string.Logout),
-                                fontSize = 20.sp,
-                                fontFamily = FontFamily(
-                                    weight = FontWeight.Medium,
-                                    language = language
-                                ),
-                                color = MaterialTheme.colorScheme.error
-                            )
                         }
                     }
                 }
