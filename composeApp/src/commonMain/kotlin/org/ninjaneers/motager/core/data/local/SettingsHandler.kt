@@ -1,7 +1,7 @@
 package org.ninjaneers.motager.core.data.local
 
 
-interface ApplicationSettings {
+interface SettingsHandler {
     suspend fun getAppTheme(): String
     suspend fun getAppLanguage(): String
     suspend fun setAppTheme(theme: String)

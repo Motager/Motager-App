@@ -1,15 +1,24 @@
 package org.ninjaneers.motager.app.di
 
 
+import io.ktor.client.HttpClient
 import org.koin.core.module.Module
 import org.koin.core.module.dsl.singleOf
 import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.bind
 import org.koin.dsl.module
+import org.ninjaneers.motager.authentication.data.remote.AuthenticationService
+import org.ninjaneers.motager.authentication.data.remote.AuthenticationServiceImpl
+import org.ninjaneers.motager.authentication.data.repository.AuthenticationRepositoryImpl
+import org.ninjaneers.motager.authentication.domain.AuthenticationRepository
 import org.ninjaneers.motager.authentication.presentation.login.presentation.LoginViewModel
+import org.ninjaneers.motager.authentication.presentation.signup.domain.UserDataValidator
 import org.ninjaneers.motager.authentication.presentation.signup.presentation.SignupViewModel
+import org.ninjaneers.motager.core.data.network.HttpClientFactory
 import org.ninjaneers.motager.core.data.repository.AppSettingsRepositoryImpl
+import org.ninjaneers.motager.core.data.repository.SessionRepositoryImpl
 import org.ninjaneers.motager.core.domain.AppSettingsRepository
+import org.ninjaneers.motager.core.domain.SessionRepository
 import org.ninjaneers.motager.core.presentation.CoreViewModel
 import org.ninjaneers.motager.dashboard.presentation.DashboardViewModel
 import org.ninjaneers.motager.dashboard.presentation.analytics.presentation.AnalyticsViewModel
@@ -25,11 +34,10 @@ import org.ninjaneers.motager.dashboard.presentation.settings.presentations.Sett
 expect val platformModule: Module
 
 val sharedModule = module {
+//    ViewModles
     viewModelOf(::CoreViewModel)
-
     viewModelOf(::LoginViewModel)
     viewModelOf(::SignupViewModel)
-
     viewModelOf(::DashboardViewModel)
     viewModelOf(::HomeViewModel)
     viewModelOf(::OrdersViewModel)
@@ -41,5 +49,33 @@ val sharedModule = module {
     viewModelOf(::DiscountsViewModel)
     viewModelOf(::SettingsViewModel)
 
+//    Repositories
     singleOf(::AppSettingsRepositoryImpl).bind<AppSettingsRepository>()
+    single<SessionRepositoryImpl> {
+        SessionRepositoryImpl(
+            sessionHandler = get()
+        )
+    }.bind<SessionRepository>()
+    single<AuthenticationRepositoryImpl> {
+        AuthenticationRepositoryImpl(
+            authenticationService = get()
+        )
+    }.bind<AuthenticationRepository>()
+
+//  network
+    single<HttpClient> {
+        HttpClientFactory(
+            engine = get(),
+            sessionRepository = get()
+        ).create()
+    }
+    single<AuthenticationServiceImpl> {
+        AuthenticationServiceImpl(
+            client = get()
+        )
+    }.bind<AuthenticationService>()
+
+
+    singleOf(::UserDataValidator)
+
 }

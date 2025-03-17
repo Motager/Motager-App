@@ -11,16 +11,14 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.OutlinedTextFieldDefaults.Container
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import motager.composeapp.generated.resources.OutfitRegular
@@ -50,7 +48,6 @@ fun PrimaryTextField(
     maxLines: Int = if (singleLine) 1 else Int.MAX_VALUE,
     minLines: Int = 1,
 ) {
-    var textValue by remember { mutableStateOf("") }
     val interactionSource = remember { MutableInteractionSource() }
     BasicTextField(
         value = value,
@@ -60,6 +57,7 @@ fun PrimaryTextField(
         enabled = enabled,
         readOnly = readOnly,
         textStyle = TextStyle(
+            textAlign = TextAlign.Start,
             fontSize = 14.sp,
             color = MaterialTheme.colorScheme.onSurface,
             fontFamily = FontFamily(
@@ -104,7 +102,12 @@ fun PrimaryTextField(
                         focusedBorderColor = MaterialTheme.colorScheme.primary,
                         unfocusedBorderColor = MaterialTheme.colorScheme.outline,
                         focusedTextColor = MaterialTheme.colorScheme.onSurface,
-                        unfocusedTextColor = MaterialTheme.colorScheme.surfaceVariant
+                        unfocusedTextColor = MaterialTheme.colorScheme.surfaceVariant,
+                        errorContainerColor = MaterialTheme.colorScheme.background,
+                        errorBorderColor = MaterialTheme.colorScheme.error,
+                        errorSupportingTextColor = MaterialTheme.colorScheme.error,
+                        unfocusedSupportingTextColor = MaterialTheme.colorScheme.error,
+                        focusedSupportingTextColor = MaterialTheme.colorScheme.error
                     )
                 )
             }

@@ -12,7 +12,7 @@ import org.ninjaneers.motager.core.domain.Language
 import org.ninjaneers.motager.core.domain.Theme
 
 @Suppress("EXPECT_ACTUAL_CLASSIFIERS_ARE_IN_BETA_WARNING")
-actual class SettingsDataStore(private val context: Context) : ApplicationSettings {
+actual class SettingsDataStore(private val context: Context) : SettingsHandler {
     private var settingsDataStore: DataStore<Preferences> =
         PreferenceDataStoreFactory.createWithPath(
             produceFile = { context.filesDir.resolve(SETTINGS_FILE_NAME).absolutePath.toPath() }

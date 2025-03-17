@@ -12,13 +12,17 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -27,10 +31,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -58,6 +69,7 @@ import motager.composeapp.generated.resources.sun
 import motager.composeapp.generated.resources.system
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
+import org.ninjaneers.motager.authentication.presentation.login.presentation.visibilityIcon
 import org.ninjaneers.motager.core.domain.Language
 import org.ninjaneers.motager.core.presentation.CoreState
 import org.ninjaneers.motager.core.presentation.components.PrimaryButton
@@ -74,10 +86,7 @@ fun SignupScreen(
     backToLogin: () -> Unit
 ) {
     SignupScreenContent(
-        state = state,
-        coreState = coreState,
-        onAction = onAction,
-        backToLogin = backToLogin
+        state = state, coreState = coreState, onAction = onAction, backToLogin = backToLogin
     )
 }
 
@@ -88,11 +97,10 @@ private fun SignupScreenContent(
     onAction: (SignupAction) -> Unit,
     backToLogin: () -> Unit
 ) {
+    val focusRequestManager = LocalFocusManager.current
     Scaffold { innerPadding ->
         Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(innerPadding)
+            modifier = Modifier.fillMaxSize().padding(innerPadding)
                 .background(MaterialTheme.colorScheme.background),
         ) {
             Image(
@@ -134,108 +142,89 @@ private fun SignupScreenContent(
                             )
                         },
                         border = BorderStroke(
-                            width = 0.8f.dp,
-                            color = MaterialTheme.colorScheme.outline
+                            width = 0.8f.dp, color = MaterialTheme.colorScheme.outline
                         ),
                         offset = DpOffset((-12).dp, (4).dp),
                         shape = RoundedCornerShape(6.dp),
                         containerColor = MaterialTheme.colorScheme.inverseSurface
                     ) {
-                        DropdownMenuItem(
-                            modifier = Modifier.padding(horizontal = 6.dp)
-                                .clip(RoundedCornerShape(6.dp)),
-                            onClick = {
-                                onAction(
-                                    SignupAction.OnThemeMenuToggle(
-                                        state.isThemeMenuExpanded
-                                    )
+                        DropdownMenuItem(modifier = Modifier.padding(horizontal = 6.dp)
+                            .clip(RoundedCornerShape(6.dp)), onClick = {
+                            onAction(
+                                SignupAction.OnThemeMenuToggle(
+                                    state.isThemeMenuExpanded
                                 )
+                            )
 //                                coreAction(CoreAction.ChangeTheme(Theme.Light))
-                            },
-                            text = {
-                                Text(
-                                    text = stringResource(Res.string.Light),
-                                    fontSize = 14.sp,
-                                    color = MaterialTheme.colorScheme.inverseOnSurface,
-                                    fontFamily = FontFamily(
-                                        weight = FontWeight.Normal,
-                                        language = coreState.language
-                                    ),
-                                    textAlign = TextAlign.Center
-                                )
-                            },
-                            leadingIcon = {
-                                Icon(
-                                    painter = painterResource(Res.drawable.sun),
-                                    contentDescription = "Light mode",
-                                    tint = MaterialTheme.colorScheme.inverseOnSurface
-                                )
-                            },
-                            contentPadding = PaddingValues(horizontal = 12.dp)
+                        }, text = {
+                            Text(
+                                text = stringResource(Res.string.Light),
+                                fontSize = 14.sp,
+                                color = MaterialTheme.colorScheme.inverseOnSurface,
+                                fontFamily = FontFamily(
+                                    weight = FontWeight.Normal, language = coreState.language
+                                ),
+                                textAlign = TextAlign.Center
+                            )
+                        }, leadingIcon = {
+                            Icon(
+                                painter = painterResource(Res.drawable.sun),
+                                contentDescription = "Light mode",
+                                tint = MaterialTheme.colorScheme.inverseOnSurface
+                            )
+                        }, contentPadding = PaddingValues(horizontal = 12.dp)
                         )
-                        DropdownMenuItem(
-                            modifier = Modifier.padding(horizontal = 6.dp)
-                                .clip(RoundedCornerShape(6.dp)),
-                            onClick = {
-                                onAction(
-                                    SignupAction.OnThemeMenuToggle(
-                                        state.isThemeMenuExpanded
-                                    )
+                        DropdownMenuItem(modifier = Modifier.padding(horizontal = 6.dp)
+                            .clip(RoundedCornerShape(6.dp)), onClick = {
+                            onAction(
+                                SignupAction.OnThemeMenuToggle(
+                                    state.isThemeMenuExpanded
                                 )
+                            )
 //                                coreAction(CoreAction.ChangeTheme(Theme.Dark))
-                            },
-                            text = {
-                                Text(
-                                    text = stringResource(Res.string.Dark),
-                                    fontSize = 14.sp,
-                                    color = MaterialTheme.colorScheme.inverseOnSurface,
-                                    fontFamily = FontFamily(
-                                        weight = FontWeight.Normal,
-                                        language = coreState.language
-                                    ),
-                                    textAlign = TextAlign.Center
-                                )
-                            },
-                            leadingIcon = {
-                                Icon(
-                                    painter = painterResource(Res.drawable.moon),
-                                    contentDescription = "Dark mode",
-                                    tint = MaterialTheme.colorScheme.inverseOnSurface
-                                )
-                            },
-                            contentPadding = PaddingValues(horizontal = 12.dp)
+                        }, text = {
+                            Text(
+                                text = stringResource(Res.string.Dark),
+                                fontSize = 14.sp,
+                                color = MaterialTheme.colorScheme.inverseOnSurface,
+                                fontFamily = FontFamily(
+                                    weight = FontWeight.Normal, language = coreState.language
+                                ),
+                                textAlign = TextAlign.Center
+                            )
+                        }, leadingIcon = {
+                            Icon(
+                                painter = painterResource(Res.drawable.moon),
+                                contentDescription = "Dark mode",
+                                tint = MaterialTheme.colorScheme.inverseOnSurface
+                            )
+                        }, contentPadding = PaddingValues(horizontal = 12.dp)
                         )
-                        DropdownMenuItem(
-                            modifier = Modifier.padding(horizontal = 6.dp)
-                                .clip(RoundedCornerShape(6.dp)),
-                            onClick = {
-                                onAction(
-                                    SignupAction.OnThemeMenuToggle(
-                                        state.isThemeMenuExpanded
-                                    )
+                        DropdownMenuItem(modifier = Modifier.padding(horizontal = 6.dp)
+                            .clip(RoundedCornerShape(6.dp)), onClick = {
+                            onAction(
+                                SignupAction.OnThemeMenuToggle(
+                                    state.isThemeMenuExpanded
                                 )
+                            )
 //                                coreAction(CoreAction.ChangeTheme(Theme.System))
-                            },
-                            text = {
-                                Text(
-                                    text = stringResource(Res.string.System),
-                                    fontSize = 14.sp,
-                                    color = MaterialTheme.colorScheme.inverseOnSurface,
-                                    fontFamily = FontFamily(
-                                        weight = FontWeight.Normal,
-                                        language = coreState.language
-                                    ),
-                                    textAlign = TextAlign.Center
-                                )
-                            },
-                            leadingIcon = {
-                                Icon(
-                                    painter = painterResource(Res.drawable.system),
-                                    contentDescription = "System theme",
-                                    tint = MaterialTheme.colorScheme.inverseOnSurface
-                                )
-                            },
-                            contentPadding = PaddingValues(horizontal = 12.dp)
+                        }, text = {
+                            Text(
+                                text = stringResource(Res.string.System),
+                                fontSize = 14.sp,
+                                color = MaterialTheme.colorScheme.inverseOnSurface,
+                                fontFamily = FontFamily(
+                                    weight = FontWeight.Normal, language = coreState.language
+                                ),
+                                textAlign = TextAlign.Center
+                            )
+                        }, leadingIcon = {
+                            Icon(
+                                painter = painterResource(Res.drawable.system),
+                                contentDescription = "System theme",
+                                tint = MaterialTheme.colorScheme.inverseOnSurface
+                            )
+                        }, contentPadding = PaddingValues(horizontal = 12.dp)
                         )
                     }
                 }
@@ -265,76 +254,63 @@ private fun SignupScreenContent(
                             )
                         },
                         border = BorderStroke(
-                            width = 0.8f.dp,
-                            color = MaterialTheme.colorScheme.outline
+                            width = 0.8f.dp, color = MaterialTheme.colorScheme.outline
                         ),
                         offset = DpOffset((-40).dp, (4).dp),
                         shape = RoundedCornerShape(6.dp),
                         containerColor = MaterialTheme.colorScheme.inverseSurface
                     ) {
-                        DropdownMenuItem(
-                            modifier = Modifier.padding(horizontal = 6.dp)
-                                .clip(RoundedCornerShape(6.dp)),
-                            onClick = {
-                                onAction(
-                                    SignupAction.OnLocaleMenuToggle(
-                                        state.isLocaleMenuExpanded
-                                    )
+                        DropdownMenuItem(modifier = Modifier.padding(horizontal = 6.dp)
+                            .clip(RoundedCornerShape(6.dp)), onClick = {
+                            onAction(
+                                SignupAction.OnLocaleMenuToggle(
+                                    state.isLocaleMenuExpanded
                                 )
+                            )
 //                                coreAction(CoreAction.ChangeLanguage(Language.Arabic))
-                            },
-                            text = {
-                                Text(
-                                    text = stringResource(Res.string.Arabic),
-                                    fontSize = 14.sp,
-                                    color = MaterialTheme.colorScheme.inverseOnSurface,
-                                    fontFamily = FontFamily(
-                                        weight = FontWeight.Normal,
-                                        language = coreState.language
-                                    ),
-                                    textAlign = TextAlign.Center
-                                )
-                            },
-                            leadingIcon = {
-                                Icon(
-                                    painter = painterResource(Res.drawable.ar),
-                                    contentDescription = "Arabic Language",
-                                    tint = Color.Unspecified
-                                )
-                            },
-                            contentPadding = PaddingValues(horizontal = 12.dp)
+                        }, text = {
+                            Text(
+                                text = stringResource(Res.string.Arabic),
+                                fontSize = 14.sp,
+                                color = MaterialTheme.colorScheme.inverseOnSurface,
+                                fontFamily = FontFamily(
+                                    weight = FontWeight.Normal, language = coreState.language
+                                ),
+                                textAlign = TextAlign.Center
+                            )
+                        }, leadingIcon = {
+                            Icon(
+                                painter = painterResource(Res.drawable.ar),
+                                contentDescription = "Arabic Language",
+                                tint = Color.Unspecified
+                            )
+                        }, contentPadding = PaddingValues(horizontal = 12.dp)
                         )
-                        DropdownMenuItem(
-                            modifier = Modifier.padding(horizontal = 6.dp)
-                                .clip(RoundedCornerShape(6.dp)),
-                            onClick = {
-                                onAction(
-                                    SignupAction.OnLocaleMenuToggle(
-                                        state.isLocaleMenuExpanded
-                                    )
+                        DropdownMenuItem(modifier = Modifier.padding(horizontal = 6.dp)
+                            .clip(RoundedCornerShape(6.dp)), onClick = {
+                            onAction(
+                                SignupAction.OnLocaleMenuToggle(
+                                    state.isLocaleMenuExpanded
                                 )
+                            )
 //                                coreAction(CoreAction.ChangeLanguage(Language.English))
-                            },
-                            text = {
-                                Text(
-                                    text = stringResource(Res.string.English),
-                                    fontSize = 14.sp,
-                                    color = MaterialTheme.colorScheme.inverseOnSurface,
-                                    fontFamily = FontFamily(
-                                        weight = FontWeight.Normal,
-                                        language = coreState.language
-                                    ),
-                                    textAlign = TextAlign.Center
-                                )
-                            },
-                            leadingIcon = {
-                                Icon(
-                                    painter = painterResource(Res.drawable.en),
-                                    contentDescription = "English Language",
-                                    tint = Color.Unspecified
-                                )
-                            },
-                            contentPadding = PaddingValues(horizontal = 12.dp)
+                        }, text = {
+                            Text(
+                                text = stringResource(Res.string.English),
+                                fontSize = 14.sp,
+                                color = MaterialTheme.colorScheme.inverseOnSurface,
+                                fontFamily = FontFamily(
+                                    weight = FontWeight.Normal, language = coreState.language
+                                ),
+                                textAlign = TextAlign.Center
+                            )
+                        }, leadingIcon = {
+                            Icon(
+                                painter = painterResource(Res.drawable.en),
+                                contentDescription = "English Language",
+                                tint = Color.Unspecified
+                            )
+                        }, contentPadding = PaddingValues(horizontal = 12.dp)
                         )
                     }
                 }
@@ -350,20 +326,16 @@ private fun SignupScreenContent(
                     contentDescription = "Motager Logo"
                 )
                 Column(
-                    modifier = Modifier
-                        .clip(RoundedCornerShape(6.dp))
-                        .fillMaxWidth()
+                    modifier = Modifier.clip(RoundedCornerShape(6.dp)).fillMaxWidth()
                         .background(MaterialTheme.colorScheme.secondary.copy(alpha = 0.6f))
                         .border(width = 1.dp, color = MaterialTheme.colorScheme.outline)
-                        .padding(24.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally
+                        .padding(24.dp), horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Text(
                         modifier = Modifier.padding(bottom = 6.dp).fillMaxWidth(),
                         text = stringResource(Res.string.NewAccount),
                         fontFamily = FontFamily(
-                            weight = FontWeight.SemiBold,
-                            language = coreState.language
+                            weight = FontWeight.SemiBold, language = coreState.language
                         ),
                         color = MaterialTheme.colorScheme.onSurface,
                         fontSize = 24.sp,
@@ -373,8 +345,7 @@ private fun SignupScreenContent(
                         modifier = Modifier.padding(bottom = 24.dp).fillMaxWidth(),
                         text = stringResource(Res.string.LoginDetails),
                         fontFamily = FontFamily(
-                            weight = FontWeight.Normal,
-                            language = coreState.language
+                            weight = FontWeight.Normal, language = coreState.language
                         ),
                         color = MaterialTheme.colorScheme.onTertiary,
                         fontSize = 16.sp,
@@ -392,16 +363,45 @@ private fun SignupScreenContent(
                             Text(
                                 text = stringResource(Res.string.FirstName),
                                 fontFamily = FontFamily(
-                                    weight = FontWeight.Bold,
-                                    language = coreState.language
+                                    weight = FontWeight.Bold, language = coreState.language
                                 ),
                                 color = MaterialTheme.colorScheme.onSurface,
                                 fontSize = 16.sp
                             )
                             PrimaryTextField(
+                                modifier = Modifier
+                                    .heightIn(min = 40.dp)
+                                    .fillMaxWidth(),
                                 value = state.firstName,
-                                onValueChange = { onAction(SignupAction.OnFirstNameChange(it)) },
-                                modifier = Modifier.height(40.dp).fillMaxWidth()
+                                onValueChange = {
+                                    onAction(SignupAction.OnFirstNameChange(it))
+                                    onAction(SignupAction.OnFirstNameValidate(it))
+                                },
+                                singleLine = true,
+                                isError = state.firstNameError != null,
+                                supportingText = {
+                                    state.firstNameError?.let { error ->
+                                        Text(
+                                            text = error.asString(),
+                                            fontSize = 10.sp,
+                                            textAlign = TextAlign.Start,
+                                            maxLines = 1,
+                                            overflow = TextOverflow.Ellipsis,
+                                            fontFamily = FontFamily(
+                                                weight = FontWeight.Normal,
+                                                language = coreState.language
+                                            ),
+                                            color = MaterialTheme.colorScheme.error
+                                        )
+                                    }
+                                },
+                                keyboardOptions = KeyboardOptions(
+                                    imeAction = ImeAction.Next
+                                ),
+                                keyboardActions = KeyboardActions(onNext = {
+                                    focusRequestManager.moveFocus(FocusDirection.Next)
+                                    onAction(SignupAction.OnFirstNameValidate(state.firstName))
+                                })
                             )
                         }
                         Column(
@@ -412,16 +412,43 @@ private fun SignupScreenContent(
                             Text(
                                 text = stringResource(Res.string.SecondName),
                                 fontFamily = FontFamily(
-                                    weight = FontWeight.Bold,
-                                    language = coreState.language
+                                    weight = FontWeight.Bold, language = coreState.language
                                 ),
                                 color = MaterialTheme.colorScheme.onSurface,
                                 fontSize = 16.sp
                             )
                             PrimaryTextField(
+                                modifier = Modifier.heightIn(min = 40.dp).fillMaxWidth(),
                                 value = state.secondName,
-                                onValueChange = { onAction(SignupAction.OnSecondNameChange(it)) },
-                                modifier = Modifier.height(40.dp).fillMaxWidth()
+                                onValueChange = {
+                                    onAction(SignupAction.OnSecondNameChange(it))
+                                    onAction(SignupAction.OnSecondNameValidate(it))
+                                },
+                                singleLine = true,
+                                isError = state.secondNameError != null,
+                                supportingText = {
+                                    state.secondNameError?.let { error ->
+                                        Text(
+                                            text = error.asString(),
+                                            fontSize = 10.sp,
+                                            textAlign = TextAlign.Start,
+                                            maxLines = 1,
+                                            overflow = TextOverflow.Ellipsis,
+                                            fontFamily = FontFamily(
+                                                weight = FontWeight.Normal,
+                                                language = coreState.language
+                                            ),
+                                            color = MaterialTheme.colorScheme.error
+                                        )
+                                    }
+                                },
+                                keyboardOptions = KeyboardOptions(
+                                    imeAction = ImeAction.Next
+                                ),
+                                keyboardActions = KeyboardActions(onNext = {
+                                    focusRequestManager.moveFocus(FocusDirection.Down)
+                                    onAction(SignupAction.OnSecondNameValidate(state.secondName))
+                                })
                             )
                         }
                     }
@@ -431,18 +458,41 @@ private fun SignupScreenContent(
                         verticalArrangement = Arrangement.spacedBy(4.dp)
                     ) {
                         Text(
-                            text = stringResource(Res.string.Email),
-                            fontFamily = FontFamily(
-                                weight = FontWeight.Bold,
-                                language = coreState.language
-                            ),
-                            color = MaterialTheme.colorScheme.onSurface,
-                            fontSize = 16.sp
+                            text = stringResource(Res.string.Email), fontFamily = FontFamily(
+                                weight = FontWeight.Bold, language = coreState.language
+                            ), color = MaterialTheme.colorScheme.onSurface, fontSize = 16.sp
                         )
                         PrimaryTextField(
+                            modifier = Modifier.heightIn(min = 40.dp).fillMaxWidth(),
                             value = state.email,
-                            onValueChange = { onAction(SignupAction.OnEmailChange(it)) },
-                            modifier = Modifier.height(40.dp).fillMaxWidth()
+                            onValueChange = {
+                                onAction(SignupAction.OnEmailChange(it))
+                                onAction(SignupAction.OnEmailValidate(it))
+                            },
+                            isError = state.emailError != null,
+                            supportingText = {
+                                state.emailError?.let { error ->
+                                    Text(
+                                        text = error.asString(),
+                                        fontSize = 10.sp,
+                                        textAlign = TextAlign.Start,
+                                        maxLines = 1,
+                                        overflow = TextOverflow.Ellipsis,
+                                        fontFamily = FontFamily(
+                                            weight = FontWeight.Normal,
+                                            language = coreState.language
+                                        ),
+                                        color = MaterialTheme.colorScheme.error
+                                    )
+                                }
+                            },
+                            keyboardOptions = KeyboardOptions(
+                                keyboardType = KeyboardType.Email, imeAction = ImeAction.Next
+                            ),
+                            keyboardActions = KeyboardActions(onNext = {
+                                focusRequestManager.moveFocus(FocusDirection.Down)
+                                onAction(SignupAction.OnEmailValidate(state.email))
+                            })
                         )
                     }
                     Column(
@@ -451,18 +501,68 @@ private fun SignupScreenContent(
                         verticalArrangement = Arrangement.spacedBy(4.dp)
                     ) {
                         Text(
-                            text = stringResource(Res.string.Password),
-                            fontFamily = FontFamily(
-                                weight = FontWeight.Bold,
-                                language = coreState.language
-                            ),
-                            color = MaterialTheme.colorScheme.onSurface,
-                            fontSize = 16.sp
+                            text = stringResource(Res.string.Password), fontFamily = FontFamily(
+                                weight = FontWeight.Bold, language = coreState.language
+                            ), color = MaterialTheme.colorScheme.onSurface, fontSize = 16.sp
                         )
                         PrimaryTextField(
+                            modifier = Modifier.heightIn(min = 40.dp).fillMaxWidth(),
                             value = state.password,
-                            onValueChange = { onAction(SignupAction.OnPasswordChange(it)) },
-                            modifier = Modifier.height(40.dp).fillMaxWidth()
+                            onValueChange = {
+                                onAction(SignupAction.OnPasswordChange(it))
+                                onAction(SignupAction.OnPasswordValidate(it))
+                            },
+                            singleLine = true,
+                            isError = state.passwordError != null,
+                            supportingText = {
+                                state.passwordError?.let { error ->
+                                    Text(
+                                        text = error.asString(),
+                                        fontSize = 10.sp,
+                                        textAlign = TextAlign.Start,
+                                        maxLines = 1,
+                                        overflow = TextOverflow.Ellipsis,
+                                        fontFamily = FontFamily(
+                                            weight = FontWeight.Normal,
+                                            language = coreState.language
+                                        ),
+                                        color = MaterialTheme.colorScheme.error
+                                    )
+                                }
+                            },
+                            keyboardOptions = KeyboardOptions(
+                                keyboardType = KeyboardType.Password, imeAction = ImeAction.Next
+                            ),
+                            keyboardActions = KeyboardActions(
+                                onNext = {
+                                    focusRequestManager.moveFocus(FocusDirection.Down)
+                                    onAction(SignupAction.OnPasswordValidate(state.password))
+                                },
+                            ),
+                            trailingIcon = {
+                                IconButton(
+                                    onClick = {
+                                        onAction(
+                                            SignupAction.OnPasswordVisibilityToggle(
+                                                state.isPasswordVisible
+                                            )
+                                        )
+                                    }
+                                ) {
+                                    Icon(
+                                        painter = painterResource(
+                                            visibilityIcon(
+                                                state.isPasswordVisible
+                                            )
+                                        ),
+                                        contentDescription = "show/hide password"
+                                    )
+                                }
+                            },
+                            visualTransformation =
+                            if (state.isPasswordVisible)
+                                VisualTransformation.None
+                            else PasswordVisualTransformation()
                         )
 
                     }
@@ -474,46 +574,86 @@ private fun SignupScreenContent(
                         Text(
                             text = stringResource(Res.string.ConfirmPassword),
                             fontFamily = FontFamily(
-                                weight = FontWeight.Bold,
-                                language = coreState.language
+                                weight = FontWeight.Bold, language = coreState.language
                             ),
                             color = MaterialTheme.colorScheme.onSurface,
                             fontSize = 16.sp
                         )
                         PrimaryTextField(
+                            modifier = Modifier.heightIn(min = 40.dp).fillMaxWidth(),
                             value = state.passwordConfirmation,
                             onValueChange = { onAction(SignupAction.OnPasswordConfirmationChange(it)) },
-                            modifier = Modifier.height(40.dp).fillMaxWidth()
+                            singleLine = true,
+                            isError = state.passwordConfirmationError != null,
+                            supportingText = {
+                                state.passwordConfirmationError?.let { error ->
+                                    Text(
+                                        text = error.asString(),
+                                        fontSize = 10.sp,
+                                        textAlign = TextAlign.Start,
+                                        maxLines = 1,
+                                        overflow = TextOverflow.Ellipsis,
+                                        fontFamily = FontFamily(
+                                            weight = FontWeight.Normal,
+                                            language = coreState.language
+                                        ),
+                                        color = MaterialTheme.colorScheme.error
+                                    )
+                                }
+                            },
+                            keyboardOptions = KeyboardOptions(
+                                keyboardType = KeyboardType.Password, imeAction = ImeAction.Done
+                            ),
+                            trailingIcon = {
+                                IconButton(
+                                    onClick = {
+                                        onAction(
+                                            SignupAction.OnPasswordVisibilityToggle(
+                                                state.isPasswordVisible
+                                            )
+                                        )
+                                    }
+                                ) {
+                                    Icon(
+                                        painter = painterResource(
+                                            visibilityIcon(
+                                                state.isPasswordVisible
+                                            )
+                                        ),
+                                        contentDescription = "show/hide password"
+                                    )
+                                }
+                            },
+                            visualTransformation =
+                            if (state.isPasswordVisible)
+                                VisualTransformation.None
+                            else PasswordVisualTransformation()
                         )
                     }
                     PrimaryButton(
                         modifier = Modifier.height(42.dp).fillMaxWidth(),
-                        onClick = { backToLogin() },
-                        shape = RoundedCornerShape(6.dp)
+                        onClick = {
+                            onAction(SignupAction.OnRegisterValidate)
+                            onAction(SignupAction.OnRegister)
+                        },
+                        shape = RoundedCornerShape(6.dp),
                     ) {
                         Text(
                             text = stringResource(Res.string.CreateNewAccount),
                             fontFamily = FontFamily(
-                                weight = FontWeight.Medium,
-                                language = coreState.language
+                                weight = FontWeight.Medium, language = coreState.language
                             ),
                             fontSize = 18.sp,
                             color = MaterialTheme.colorScheme.onPrimary,
                         )
                     }
                 }
-                TextButton(
-                    contentPadding = PaddingValues(vertical = 4.dp, horizontal = 8.dp),
-                    onClick = { backToLogin() }
-                ) {
+                TextButton(contentPadding = PaddingValues(vertical = 4.dp, horizontal = 8.dp),
+                    onClick = { backToLogin() }) {
                     Text(
-                        text = stringResource(Res.string.HaveAccount),
-                        fontFamily = FontFamily(
-                            weight = FontWeight.Medium,
-                            language = coreState.language
-                        ),
-                        fontSize = 14.sp,
-                        color = MaterialTheme.colorScheme.primary
+                        text = stringResource(Res.string.HaveAccount), fontFamily = FontFamily(
+                            weight = FontWeight.Medium, language = coreState.language
+                        ), fontSize = 14.sp, color = MaterialTheme.colorScheme.primary
                     )
                 }
             }

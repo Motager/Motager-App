@@ -15,7 +15,7 @@ import platform.Foundation.NSUserDomainMask
 
 @OptIn(ExperimentalForeignApi::class)
 @Suppress("EXPECT_ACTUAL_CLASSIFIERS_ARE_IN_BETA_WARNING")
-actual class SettingsDataStore : ApplicationSettings {
+actual class SettingsDataStore : SettingsHandler {
     private var settingsDataStore: DataStore<Preferences> =
         PreferenceDataStoreFactory.createWithPath(
             produceFile = {

@@ -1,3 +1,3 @@
-package org.ninjaneers.testktor.domain
+package org.ninjaneers.motager.core.domain
 
-sealed interface Error
+interface Error

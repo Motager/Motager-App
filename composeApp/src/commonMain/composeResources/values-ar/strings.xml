@@ -58,6 +58,12 @@
     <string name="Logout">تسجيل خروج</string>
     <string name="OrderNumber">رقم الطلب</string>
     <string name="Search">إبحث بأي صفة ...</string>
+    <string name="Email_Is_Empty">البريد الإلكتروني لا يمكن أن يكون فارغا</string>
+    <string name="Invalid_Email">غير صالح، يجب أن يحتوي البريد الإلكتروني على '@' والمجال</string>
+    <string name="Password_Is_Empty">لا يمكن أن تكون كلمة المرور فارغة</string>
+    <string name="Password_Is_Short">لا يمكن أن تكون كلمة المرور أقل من 8 أحرف</string>
+    <string name="Confirmed_Password_Mismatch">تأكيد كلمة المرور غير متطابق مع كلمة المرور</string>
+    <string name="Name_Is_Empty">الاسم لا يمكن أن يكون فارغا</string>
 
 
 </resources>

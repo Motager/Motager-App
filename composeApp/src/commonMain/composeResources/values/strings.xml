@@ -58,6 +58,12 @@
     <string name="Logout">Logout</string>
     <string name="OrderNumber">Order Number</string>
     <string name="Search">Search by any key ...</string>
+    <string name="Email_Is_Empty">Email Can't be empty</string>
+    <string name="Invalid_Email">Invalid,Email should contain '@' and domain</string>
+    <string name="Password_Is_Empty">Password Can't be empty</string>
+    <string name="Password_Is_Short">Password Can't be less than 8 characters</string>
+    <string name="Confirmed_Password_Mismatch">Confirmed password mismatch with password</string>
+    <string name="Name_Is_Empty">Name Can't be empty</string>
 
 
 </resources>

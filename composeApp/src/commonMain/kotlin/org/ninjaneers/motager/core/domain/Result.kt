@@ -1,4 +1,4 @@
-package org.ninjaneers.testktor.domain
+package org.ninjaneers.motager.core.domain
 
 typealias RootError = Error
 typealias EmptyResult<E> = Result<Unit, E>
