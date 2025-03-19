@@ -2,10 +2,11 @@
 <resources>
     <string name="Login_Signup">Login / Signup</string>
     <string name="Brief">Motager | Where Your Store Comes to Life</string>
-    <string name="Title">Build, Launch, and Grow Your Dream Store with </string>
+    <string name="Title">Your Dream Store with Motager</string>
     <string name="Motager">Motager</string>
     <string name="SubTitle">Motager empowers you with everything you need to bring your store to life. From beautiful, customizable designs to powerful tools that fuel growth, take your business to the next level.</string>
     <string name="FreeTrial">Start Your Free Trial</string>
+    <string name="ViewDemo">View Demo Store</string>
     <string name="Login">Login</string>
     <string name="LoginDetails">Enter your details to login to your account.</string>
     <string name="Email">Email</string>

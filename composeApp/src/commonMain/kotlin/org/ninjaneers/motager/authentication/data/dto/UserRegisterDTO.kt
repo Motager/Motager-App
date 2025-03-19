@@ -5,7 +5,7 @@ import kotlinx.serialization.Serializable
 
 
 @Serializable
-data class RegisterUserDTO(
+data class UserRegisterDTO(
     @SerialName("firstName")
     val firstName: String? = null,
     @SerialName("lastName")

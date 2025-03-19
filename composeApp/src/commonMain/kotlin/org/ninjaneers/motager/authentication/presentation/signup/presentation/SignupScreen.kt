@@ -608,8 +608,8 @@ private fun SignupScreenContent(
                                 IconButton(
                                     onClick = {
                                         onAction(
-                                            SignupAction.OnPasswordVisibilityToggle(
-                                                state.isPasswordVisible
+                                            SignupAction.OnPasswordConfirmationVisibilityToggle(
+                                                state.isPasswordConfirmationVisible
                                             )
                                         )
                                     }
@@ -617,15 +617,15 @@ private fun SignupScreenContent(
                                     Icon(
                                         painter = painterResource(
                                             visibilityIcon(
-                                                state.isPasswordVisible
+                                                state.isPasswordConfirmationVisible
                                             )
                                         ),
-                                        contentDescription = "show/hide password"
+                                        contentDescription = "show/hide Confirmation password"
                                     )
                                 }
                             },
                             visualTransformation =
-                            if (state.isPasswordVisible)
+                            if (state.isPasswordConfirmationVisible)
                                 VisualTransformation.None
                             else PasswordVisualTransformation()
                         )

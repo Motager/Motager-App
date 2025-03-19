@@ -43,7 +43,7 @@ fun NavigationGraph(
                     theme = coreState.theme,
                     language = coreState.language,
                     navigate = {
-                        navController.navigate(Route.AuthenticationGraph) {
+                        navController.navigate(Route.MainScreen) {
                             popUpTo<Route.Splash> {
                                 inclusive = true
                             }
@@ -52,9 +52,11 @@ fun NavigationGraph(
             }
 
             composable<Route.MainScreen> {
-                MainScreen(navigator = navigator)
+                MainScreen(
+                    coreState = coreState,
+                    navigator = navigator
+                )
             }
-
 
             navigation<Route.AuthenticationGraph>(
                 startDestination = Route.Login,

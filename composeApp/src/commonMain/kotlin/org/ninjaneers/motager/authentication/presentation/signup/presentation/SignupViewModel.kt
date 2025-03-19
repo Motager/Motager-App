@@ -30,9 +30,10 @@ class SignupViewModel(
             is SignupAction.OnThemeMenuToggle -> onThemeMenuToggle(action.isExpanded)
             is SignupAction.OnLocaleMenuToggle -> onLocaleMenuToggle(action.isExpanded)
             is SignupAction.OnPasswordConfirmationVisibilityToggle -> onPasswordConfirmationVisibilityToggle(
-                action.rememberMe
+                action.isPasswordVisible
             )
 
+            is SignupAction.OnPasswordVisibilityToggle -> onPasswordVisibilityToggle(action.isPasswordVisible)
             is SignupAction.OnEmailValidate -> onEmailValidate(action.email)
             is SignupAction.OnFirstNameValidate -> onFirstNameValidate(action.firstName)
             is SignupAction.OnSecondNameValidate -> onSecondNameValidate(action.secondName)
@@ -74,10 +75,18 @@ class SignupViewModel(
         }
     }
 
-    private fun onPasswordConfirmationVisibilityToggle(rememberMe: Boolean) {
+    private fun onPasswordVisibilityToggle(passwordVisible: Boolean) {
         _state.update {
             it.copy(
-                isPasswordConfirmationVisible = rememberMe
+                isPasswordVisible = !passwordVisible
+            )
+        }
+    }
+
+    private fun onPasswordConfirmationVisibilityToggle(isPasswordVisible: Boolean) {
+        _state.update {
+            it.copy(
+                isPasswordConfirmationVisible = !isPasswordVisible
             )
         }
     }

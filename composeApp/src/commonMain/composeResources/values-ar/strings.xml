@@ -2,10 +2,11 @@
 <resources>
     <string name="Login_Signup">تسجيل/إنشاء حساب</string>
     <string name="Brief">مُتَاجِر | حيث تأتي بمتجرك إلي الحياة</string>
-    <string name="Title">أنشئ، أطلق، كَبَّر متجر أحلامك مع منصة</string>
+    <string name="Title">متجر أحلامك مع منصة</string>
     <string name="Motager">مُتَـــاجِر</string>
     <string name="SubTitle">يوفر لك مُتَاجِر كل ما تحتاجه لجعل متجرك ينبض بالحياة. من تصاميم جميلة وقابلة للتخصيص إلى أدوات قوية تدعم النمو وزيادة المبيعات، ارتقِ بعملك إلى المستوى التالي.</string>
     <string name="FreeTrial">ابدأ تجربتك المجانية</string>
+    <string name="ViewDemo">عرض متجر تجريبي</string>
     <string name="Login">تسجيل الدخول</string>
     <string name="LoginDetails">أدخل بياناتك لتسجيل الدخول إلى حسابك.</string>
     <string name="Email">البريد الإلكتروني</string>
