@@ -6,8 +6,7 @@ import org.ninjaneers.motager.authentication.domain.User
 fun RegisterResponseDTO.toUser(): User {
     return User(
         id = user.id,
-        firstName = user.firstName,
-        lastName = user.lastName,
+        name = user.firstName + " " + user.lastName,
         email = user.email
     )
 }
