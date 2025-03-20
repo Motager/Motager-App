@@ -6,10 +6,10 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class LoginResponseDTO(
-    @SerialName("stores_id")
-    val storesId: List<Int>,
     @SerialName("token")
     val token: String,
     @SerialName("user_id")
-    val userId: Int
+    val userId: Int,
+    @SerialName("stores_id")
+    val storesId: List<Int>
 )

@@ -1,6 +1,5 @@
 package org.ninjaneers.motager.authentication.domain
 
-import org.ninjaneers.motager.authentication.data.dto.RegisterResponseDTO
 import org.ninjaneers.motager.core.domain.RemoteError
 import org.ninjaneers.motager.core.domain.Result
 
@@ -17,7 +16,4 @@ interface AuthenticationRepository {
         password: String
     ): Result<User, RemoteError>
 
-    suspend fun getUserById(
-        userId: Int
-    ): Result<RegisterResponseDTO, RemoteError>
 }

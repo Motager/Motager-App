@@ -3,6 +3,8 @@ package org.ninjaneers.motager.authentication.data.remote
 import io.ktor.client.HttpClient
 import io.ktor.client.request.post
 import io.ktor.client.request.setBody
+import org.ninjaneers.motager.authentication.data.dto.LoginResponseDTO
+import org.ninjaneers.motager.authentication.data.dto.LoginUserDTO
 import org.ninjaneers.motager.authentication.data.dto.RegisterResponseDTO
 import org.ninjaneers.motager.authentication.data.dto.UserRegisterDTO
 import org.ninjaneers.motager.core.data.network.safeCall
@@ -12,6 +14,7 @@ import org.ninjaneers.motager.core.domain.Result
 class AuthenticationServiceImpl(
     private val client: HttpClient
 ) : AuthenticationService {
+
     override suspend fun register(
         firstName: String,
         secondName: String,
@@ -34,8 +37,16 @@ class AuthenticationServiceImpl(
     override suspend fun login(
         email: String,
         password: String
-    ): Result<RegisterResponseDTO, RemoteError> {
-        TODO("Not yet implemented")
+    ): Result<LoginResponseDTO, RemoteError> {
+        val loginUser = LoginUserDTO(
+            email = email,
+            password = password
+        )
+        return safeCall {
+            client.post("http://10.0.2.2:8080/login") {
+                setBody(loginUser)
+            }
+        }
     }
 
     override suspend fun getUserById(userId: Int): Result<RegisterResponseDTO, RemoteError> {

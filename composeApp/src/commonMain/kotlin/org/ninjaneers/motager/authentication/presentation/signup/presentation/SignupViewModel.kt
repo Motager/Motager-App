@@ -32,7 +32,6 @@ class SignupViewModel(
             is SignupAction.OnPasswordConfirmationVisibilityToggle -> onPasswordConfirmationVisibilityToggle(
                 action.isPasswordVisible
             )
-
             is SignupAction.OnPasswordVisibilityToggle -> onPasswordVisibilityToggle(action.isPasswordVisible)
             is SignupAction.OnEmailValidate -> onEmailValidate(action.email)
             is SignupAction.OnFirstNameValidate -> onFirstNameValidate(action.firstName)
