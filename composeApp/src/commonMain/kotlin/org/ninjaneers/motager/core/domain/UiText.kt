@@ -1,4 +1,4 @@
-package org.ninjaneers.testktor.presentation
+package org.ninjaneers.motager.core.domain
 
 import androidx.compose.runtime.Composable
 import org.jetbrains.compose.resources.StringResource

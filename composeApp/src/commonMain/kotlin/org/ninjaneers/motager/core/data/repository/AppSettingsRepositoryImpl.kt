@@ -1,10 +1,10 @@
 package org.ninjaneers.motager.core.data.repository
 
-import org.ninjaneers.motager.core.data.local.ApplicationSettings
+import org.ninjaneers.motager.core.data.local.SettingsHandler
 import org.ninjaneers.motager.core.domain.AppSettingsRepository
 
 class AppSettingsRepositoryImpl(
-    private val settingsSource: ApplicationSettings
+    private val settingsSource: SettingsHandler
 ) : AppSettingsRepository {
     override suspend fun getTheme(): String {
         return settingsSource.getAppTheme()

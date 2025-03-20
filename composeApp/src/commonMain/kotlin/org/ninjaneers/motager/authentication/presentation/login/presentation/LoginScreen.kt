@@ -446,7 +446,9 @@ private fun LoginScreenContent(
                                 imeAction = ImeAction.Next
                             ),
                             keyboardActions = KeyboardActions(
-                                onNext = { focusRequestManager.moveFocus(FocusDirection.Down) }
+                                onNext = {
+                                    focusRequestManager.moveFocus(FocusDirection.Down)
+                                }
                             )
                         )
                     }
@@ -565,7 +567,7 @@ private fun LoginScreenContent(
 }
 
 @Composable
-private fun visibilityIcon(
+fun visibilityIcon(
     isPasswordVisible: Boolean
 ): DrawableResource {
     return if (isPasswordVisible)
