@@ -75,6 +75,7 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.ninjaneers.motager.core.domain.Language
 import org.ninjaneers.motager.core.domain.Theme
 import org.ninjaneers.motager.core.presentation.CoreAction
+import org.ninjaneers.motager.core.presentation.CoreState
 import org.ninjaneers.motager.core.presentation.components.PrimaryButton
 import org.ninjaneers.motager.core.presentation.components.PrimaryIconButton
 import org.ninjaneers.motager.core.presentation.components.PrimaryTextField
@@ -84,8 +85,7 @@ import org.ninjaneers.motager.core.presentation.theme.Logo
 @Composable
 fun LoginScreen(
     state: LoginScreenState,
-    theme: Theme,
-    language: Language,
+    coreState: CoreState,
     onAction: (LoginAction) -> Unit,
     coreAction: (CoreAction) -> Unit,
     goToSignup: () -> Unit,
@@ -93,8 +93,7 @@ fun LoginScreen(
 ) {
     LoginScreenContent(
         state = state,
-        theme = theme,
-        language = language,
+        coreState = coreState,
         onAction = onAction,
         coreAction = coreAction,
         goToSignup = goToSignup,
@@ -106,8 +105,7 @@ fun LoginScreen(
 @Preview
 private fun LoginScreenContent(
     state: LoginScreenState,
-    theme: Theme,
-    language: Language,
+    coreState: CoreState,
     onAction: (LoginAction) -> Unit,
     coreAction: (CoreAction) -> Unit,
     goToSignup: () -> Unit,
@@ -115,7 +113,6 @@ private fun LoginScreenContent(
 ) {
     val coroutineScope = rememberCoroutineScope()
     val focusRequestManager = LocalFocusManager.current
-
     Scaffold { innerPadding ->
         Box(
             modifier = Modifier
@@ -179,7 +176,7 @@ private fun LoginScreenContent(
                                             state.isThemeMenuExpanded
                                         )
                                     )
-                                    coreAction(CoreAction.ChangeTheme(Theme.Light))
+                                    coreAction(CoreAction.OnThemeChange(Theme.Light))
                                 }
                             },
                             text = {
@@ -189,7 +186,7 @@ private fun LoginScreenContent(
                                     color = MaterialTheme.colorScheme.inverseOnSurface,
                                     fontFamily = FontFamily(
                                         weight = FontWeight.Normal,
-                                        language = language
+                                        language = coreState.language
                                     ),
                                     textAlign = TextAlign.Center
                                 )
@@ -213,7 +210,7 @@ private fun LoginScreenContent(
                                             state.isThemeMenuExpanded
                                         )
                                     )
-                                    coreAction(CoreAction.ChangeTheme(Theme.Dark))
+                                    coreAction(CoreAction.OnThemeChange(Theme.Dark))
                                 }
                             },
                             text = {
@@ -223,7 +220,7 @@ private fun LoginScreenContent(
                                     color = MaterialTheme.colorScheme.inverseOnSurface,
                                     fontFamily = FontFamily(
                                         weight = FontWeight.Normal,
-                                        language = language
+                                        language = coreState.language
                                     ),
                                     textAlign = TextAlign.Center
                                 )
@@ -247,7 +244,7 @@ private fun LoginScreenContent(
                                             state.isThemeMenuExpanded
                                         )
                                     )
-                                    coreAction(CoreAction.ChangeTheme(Theme.System))
+                                    coreAction(CoreAction.OnThemeChange(Theme.System))
                                 }
                             },
                             text = {
@@ -257,7 +254,7 @@ private fun LoginScreenContent(
                                     color = MaterialTheme.colorScheme.inverseOnSurface,
                                     fontFamily = FontFamily(
                                         weight = FontWeight.Normal,
-                                        language = language
+                                        language = coreState.language
                                     ),
                                     textAlign = TextAlign.Center
                                 )
@@ -316,7 +313,7 @@ private fun LoginScreenContent(
                                             state.isLocaleMenuExpanded
                                         )
                                     )
-                                    coreAction(CoreAction.ChangeLanguage(Language.Arabic))
+                                    coreAction(CoreAction.OnLanguageChange(Language.Arabic))
                                 }
                             },
                             text = {
@@ -326,7 +323,7 @@ private fun LoginScreenContent(
                                     color = MaterialTheme.colorScheme.inverseOnSurface,
                                     fontFamily = FontFamily(
                                         weight = FontWeight.Normal,
-                                        language = language
+                                        language = coreState.language
                                     ),
                                     textAlign = TextAlign.Center
                                 )
@@ -350,7 +347,7 @@ private fun LoginScreenContent(
                                             state.isLocaleMenuExpanded
                                         )
                                     )
-                                    coreAction(CoreAction.ChangeLanguage(Language.English))
+                                    coreAction(CoreAction.OnLanguageChange(Language.English))
                                 }
                             },
                             text = {
@@ -360,7 +357,7 @@ private fun LoginScreenContent(
                                     color = MaterialTheme.colorScheme.inverseOnSurface,
                                     fontFamily = FontFamily(
                                         weight = FontWeight.Normal,
-                                        language = language
+                                        language = coreState.language
                                     ),
                                     textAlign = TextAlign.Center
                                 )
@@ -387,7 +384,7 @@ private fun LoginScreenContent(
                         .padding(bottom = 20.dp)
                         .width(160.dp)
                         .height(40.dp),
-                    painter = Logo(language = language, theme = theme),
+                    painter = Logo(language = coreState.language, theme = coreState.theme),
                     contentDescription = "Motager Logo"
                 )
                 Column(
@@ -405,7 +402,7 @@ private fun LoginScreenContent(
                         text = stringResource(Res.string.Login),
                         fontFamily = FontFamily(
                             weight = FontWeight.SemiBold,
-                            language = language
+                            language = coreState.language
                         ),
                         color = MaterialTheme.colorScheme.onSurface,
                         fontSize = 24.sp,
@@ -416,7 +413,7 @@ private fun LoginScreenContent(
                         text = stringResource(Res.string.LoginDetails),
                         fontFamily = FontFamily(
                             weight = FontWeight.Normal,
-                            language = language
+                            language = coreState.language
                         ),
                         color = MaterialTheme.colorScheme.onTertiary,
                         fontSize = 16.sp,
@@ -431,7 +428,7 @@ private fun LoginScreenContent(
                             text = stringResource(Res.string.Email),
                             fontFamily = FontFamily(
                                 weight = FontWeight.Bold,
-                                language = language
+                                language = coreState.language
                             ),
                             color = MaterialTheme.colorScheme.onSurface,
                             fontSize = 16.sp,
@@ -461,7 +458,7 @@ private fun LoginScreenContent(
                             text = stringResource(Res.string.Password),
                             fontFamily = FontFamily(
                                 weight = FontWeight.Bold,
-                                language = language
+                                language = coreState.language
                             ),
                             color = MaterialTheme.colorScheme.onSurface,
                             fontSize = 16.sp,
@@ -526,20 +523,29 @@ private fun LoginScreenContent(
                                 fontSize = 16.sp,
                                 fontFamily = FontFamily(
                                     weight = FontWeight(700),
-                                    language = language
+                                    language = coreState.language
                                 )
                             )
                         }
                         PrimaryButton(
                             modifier = Modifier.height(42.dp).fillMaxWidth(),
-                            onClick = { goToDashboard() },
+                            onClick = {
+                                onAction(LoginAction.OnLogin(
+                                    updateUser = {
+                                        coreAction(CoreAction.OnUserChange(it))
+                                    },
+                                    navigate = {
+                                        goToDashboard()
+                                    }
+                                ))
+                            },
                             shape = RoundedCornerShape(6.dp)
                         ) {
                             Text(
                                 text = stringResource(Res.string.Login),
                                 fontFamily = FontFamily(
                                     weight = FontWeight.Medium,
-                                    language = language
+                                    language = coreState.language
                                 ),
                                 fontSize = 18.sp,
                                 color = MaterialTheme.colorScheme.onPrimary,
@@ -555,7 +561,7 @@ private fun LoginScreenContent(
                         stringResource(Res.string.NoAccount),
                         fontFamily = FontFamily(
                             weight = FontWeight.Medium,
-                            language = language
+                            language = coreState.language
                         ),
                         fontSize = 14.sp,
                         color = MaterialTheme.colorScheme.primary

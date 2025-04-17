@@ -2,6 +2,7 @@ package org.ninjaneers.motager.authentication.data.remote
 
 import org.ninjaneers.motager.authentication.data.dto.LoginResponseDTO
 import org.ninjaneers.motager.authentication.data.dto.RegisterResponseDTO
+import org.ninjaneers.motager.authentication.data.dto.UserDTO
 import org.ninjaneers.motager.core.domain.RemoteError
 import org.ninjaneers.motager.core.domain.Result
 
@@ -20,5 +21,5 @@ interface AuthenticationService {
 
     suspend fun getUserById(
         userId: Int
-    ): Result<RegisterResponseDTO, RemoteError>
+    ): Result<UserDTO, RemoteError>
 }

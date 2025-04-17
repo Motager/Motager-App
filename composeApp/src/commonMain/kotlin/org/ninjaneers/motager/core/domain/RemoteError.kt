@@ -6,5 +6,6 @@ enum class RemoteError : Error {
     NO_INTERNET,
     SERVER,
     SERIALIZATION,
+    UNAUTHORIZED,
     UNKNOWN
 }

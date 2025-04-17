@@ -1,10 +1,12 @@
 package org.ninjaneers.motager.authentication.presentation.signup.presentation
 
+import org.ninjaneers.motager.authentication.domain.User
 import org.ninjaneers.motager.core.domain.UiText
 
 data class SignupScreenState(
-    val isLoading: Boolean = false,
-    val isError: Boolean = false,
+    val user: User? = null,
+    val isLoading: Boolean = true,
+    val error: UiText? = null,
     val firstName: String = "",
     val secondName: String = "",
     val email: String = "",

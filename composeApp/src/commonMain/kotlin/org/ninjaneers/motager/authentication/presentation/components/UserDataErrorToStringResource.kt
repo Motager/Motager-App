@@ -1,4 +1,4 @@
-package org.ninjaneers.motager.authentication.presentation.signup.presentation
+package org.ninjaneers.motager.authentication.presentation.components
 
 import motager.composeapp.generated.resources.Confirmed_Password_Mismatch
 import motager.composeapp.generated.resources.Email_Is_Empty
@@ -7,7 +7,7 @@ import motager.composeapp.generated.resources.Name_Is_Empty
 import motager.composeapp.generated.resources.Password_Is_Empty
 import motager.composeapp.generated.resources.Password_Is_Short
 import motager.composeapp.generated.resources.Res
-import org.ninjaneers.motager.authentication.presentation.signup.domain.UserDataValidator
+import org.ninjaneers.motager.authentication.domain.UserDataValidator
 import org.ninjaneers.motager.core.domain.UiText
 
 fun UserDataValidator.UserDataError.toUiText(): UiText {

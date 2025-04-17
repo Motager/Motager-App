@@ -7,6 +7,7 @@ import io.ktor.client.network.sockets.SocketTimeoutException
 import io.ktor.client.statement.HttpResponse
 import io.ktor.util.network.UnresolvedAddressException
 import kotlinx.coroutines.ensureActive
+import okio.IOException
 import org.ninjaneers.motager.core.domain.RemoteError
 import org.ninjaneers.motager.core.domain.Result
 import kotlin.coroutines.coroutineContext
@@ -18,6 +19,8 @@ suspend inline fun <reified T> safeCall(
         execute()
     } catch (e: SocketTimeoutException) {
         return Result.Error(RemoteError.REQUEST_TIMEOUT)
+    } catch (e: IOException) {
+        return Result.Error(RemoteError.NO_INTERNET)
     } catch (e: UnresolvedAddressException) {
         return Result.Error(RemoteError.NO_INTERNET)
     } catch (e: Exception) {
@@ -42,6 +45,7 @@ suspend inline fun <reified T> responseToResult(
 
         408 -> Result.Error(RemoteError.REQUEST_TIMEOUT)
         429 -> Result.Error(RemoteError.TOO_MANY_REQUESTS)
+        401 -> Result.Error(RemoteError.UNAUTHORIZED)
         in 500..599 -> Result.Error(RemoteError.SERVER)
         else -> Result.Error(RemoteError.UNKNOWN)
     }

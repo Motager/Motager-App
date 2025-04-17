@@ -1,4 +1,4 @@
-package org.ninjaneers.motager.authentication.presentation.signup.domain
+package org.ninjaneers.motager.authentication.domain
 
 import org.ninjaneers.motager.core.domain.Error
 import org.ninjaneers.motager.core.domain.Result

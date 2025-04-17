@@ -71,6 +71,7 @@ import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.ninjaneers.motager.authentication.presentation.login.presentation.visibilityIcon
 import org.ninjaneers.motager.core.domain.Language
+import org.ninjaneers.motager.core.presentation.CoreAction
 import org.ninjaneers.motager.core.presentation.CoreState
 import org.ninjaneers.motager.core.presentation.components.PrimaryButton
 import org.ninjaneers.motager.core.presentation.components.PrimaryIconButton
@@ -83,10 +84,17 @@ fun SignupScreen(
     state: SignupScreenState,
     coreState: CoreState,
     onAction: (SignupAction) -> Unit,
-    backToLogin: () -> Unit
+    coreAction: (CoreAction) -> Unit,
+    backToLogin: () -> Unit,
+    goToDashBoard: () -> Unit,
 ) {
     SignupScreenContent(
-        state = state, coreState = coreState, onAction = onAction, backToLogin = backToLogin
+        state = state,
+        coreState = coreState,
+        onAction = onAction,
+        coreAction = coreAction,
+        backToLogin = backToLogin,
+        goToDashBoard = goToDashBoard
     )
 }
 
@@ -95,7 +103,9 @@ private fun SignupScreenContent(
     state: SignupScreenState,
     coreState: CoreState,
     onAction: (SignupAction) -> Unit,
-    backToLogin: () -> Unit
+    coreAction: (CoreAction) -> Unit,
+    backToLogin: () -> Unit,
+    goToDashBoard: () -> Unit
 ) {
     val focusRequestManager = LocalFocusManager.current
     Scaffold { innerPadding ->
@@ -375,7 +385,6 @@ private fun SignupScreenContent(
                                 value = state.firstName,
                                 onValueChange = {
                                     onAction(SignupAction.OnFirstNameChange(it))
-                                    onAction(SignupAction.OnFirstNameValidate(it))
                                 },
                                 singleLine = true,
                                 isError = state.firstNameError != null,
@@ -400,7 +409,6 @@ private fun SignupScreenContent(
                                 ),
                                 keyboardActions = KeyboardActions(onNext = {
                                     focusRequestManager.moveFocus(FocusDirection.Next)
-                                    onAction(SignupAction.OnFirstNameValidate(state.firstName))
                                 })
                             )
                         }
@@ -422,7 +430,6 @@ private fun SignupScreenContent(
                                 value = state.secondName,
                                 onValueChange = {
                                     onAction(SignupAction.OnSecondNameChange(it))
-                                    onAction(SignupAction.OnSecondNameValidate(it))
                                 },
                                 singleLine = true,
                                 isError = state.secondNameError != null,
@@ -447,7 +454,6 @@ private fun SignupScreenContent(
                                 ),
                                 keyboardActions = KeyboardActions(onNext = {
                                     focusRequestManager.moveFocus(FocusDirection.Down)
-                                    onAction(SignupAction.OnSecondNameValidate(state.secondName))
                                 })
                             )
                         }
@@ -467,7 +473,6 @@ private fun SignupScreenContent(
                             value = state.email,
                             onValueChange = {
                                 onAction(SignupAction.OnEmailChange(it))
-                                onAction(SignupAction.OnEmailValidate(it))
                             },
                             isError = state.emailError != null,
                             supportingText = {
@@ -491,7 +496,6 @@ private fun SignupScreenContent(
                             ),
                             keyboardActions = KeyboardActions(onNext = {
                                 focusRequestManager.moveFocus(FocusDirection.Down)
-                                onAction(SignupAction.OnEmailValidate(state.email))
                             })
                         )
                     }
@@ -510,7 +514,6 @@ private fun SignupScreenContent(
                             value = state.password,
                             onValueChange = {
                                 onAction(SignupAction.OnPasswordChange(it))
-                                onAction(SignupAction.OnPasswordValidate(it))
                             },
                             singleLine = true,
                             isError = state.passwordError != null,
@@ -536,7 +539,6 @@ private fun SignupScreenContent(
                             keyboardActions = KeyboardActions(
                                 onNext = {
                                     focusRequestManager.moveFocus(FocusDirection.Down)
-                                    onAction(SignupAction.OnPasswordValidate(state.password))
                                 },
                             ),
                             trailingIcon = {
@@ -634,7 +636,16 @@ private fun SignupScreenContent(
                         modifier = Modifier.height(42.dp).fillMaxWidth(),
                         onClick = {
                             onAction(SignupAction.OnRegisterValidate)
-                            onAction(SignupAction.OnRegister)
+                            onAction(
+                                SignupAction.OnRegister(
+                                    updateUser = {
+                                        coreAction(CoreAction.OnUserChange(it))
+                                    },
+                                    navigate = {
+                                        goToDashBoard()
+                                    }
+                                )
+                            )
                         },
                         shape = RoundedCornerShape(6.dp),
                     ) {
