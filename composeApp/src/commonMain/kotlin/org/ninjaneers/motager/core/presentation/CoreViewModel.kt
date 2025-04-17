@@ -11,6 +11,7 @@ import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import org.ninjaneers.motager.authentication.domain.User
 import org.ninjaneers.motager.core.domain.AppSettingsRepository
 import org.ninjaneers.motager.core.domain.Language
 import org.ninjaneers.motager.core.domain.Localization
@@ -51,8 +52,17 @@ class CoreViewModel(
 
     fun onAction(action: CoreAction) {
         when (action) {
-            is CoreAction.ChangeLanguage -> changeLanguage(action.language)
-            is CoreAction.ChangeTheme -> changeTheme(action.theme)
+            is CoreAction.OnLanguageChange -> changeLanguage(action.language)
+            is CoreAction.OnThemeChange -> changeTheme(action.theme)
+            is CoreAction.OnUserChange -> onUserChange(action.user)
+        }
+    }
+
+    private fun onUserChange(user: User?) {
+        _state.update {
+            it.copy(
+                user = user
+            )
         }
     }
 

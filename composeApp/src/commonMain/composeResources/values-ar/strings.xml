@@ -65,6 +65,12 @@
     <string name="Password_Is_Short">لا يمكن أن تكون كلمة المرور أقل من 8 أحرف</string>
     <string name="Confirmed_Password_Mismatch">تأكيد كلمة المرور غير متطابق مع كلمة المرور</string>
     <string name="Name_Is_Empty">الاسم لا يمكن أن يكون فارغا</string>
+    <string name="Error_request_timeout">انتهت مهلة الطلب</string>
+    <string name="Error_too_many_requests">يبدو أن حصتك قد تجاوزت الحد</string>
+    <string name="Error_no_internet">يرجى التحقق من اتصالك بالإنترنت</string>
+    <string name="Error_serialization">لم نتمكن من تحليل البيانات.</string>
+    <string name="Error_unknown">عفواً، حدث خطأ ما</string>
+    <string name="Error_unauthorized">البريد الإلكتروني أو كلمة المرور غير صحيحة. حاول أخرى.</string>
 
 
 </resources>

@@ -254,7 +254,7 @@ fun NavDrawer(
                                                 )
                                             )
                                         }
-                                        coreAction(CoreAction.ChangeTheme(Theme.Light))
+                                        coreAction(CoreAction.OnThemeChange(Theme.Light))
                                     },
                                     text = {
                                         Text(
@@ -288,7 +288,7 @@ fun NavDrawer(
                                                 )
                                             )
                                         }
-                                        coreAction(CoreAction.ChangeTheme(Theme.Dark))
+                                        coreAction(CoreAction.OnThemeChange(Theme.Dark))
                                     },
                                     text = {
                                         Text(
@@ -322,7 +322,7 @@ fun NavDrawer(
                                                 )
                                             )
                                         }
-                                        coreAction(CoreAction.ChangeTheme(Theme.System))
+                                        coreAction(CoreAction.OnThemeChange(Theme.System))
                                     },
                                     text = {
                                         Text(
@@ -395,7 +395,7 @@ fun NavDrawer(
                                                 )
                                             )
                                         }
-                                        coreAction(CoreAction.ChangeLanguage(Language.Arabic))
+                                        coreAction(CoreAction.OnLanguageChange(Language.Arabic))
                                     },
                                     text = {
                                         Text(
@@ -429,7 +429,7 @@ fun NavDrawer(
                                                 )
                                             )
                                         }
-                                        coreAction(CoreAction.ChangeLanguage(Language.English))
+                                        coreAction(CoreAction.OnLanguageChange(Language.English))
                                     },
                                     text = {
                                         Text(

@@ -6,26 +6,10 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class UserDTO(
-    @SerialName("address")
-    val address: String?,
-    @SerialName("createAt")
-    val createAt: String,
-    @SerialName("email")
-    val email: String,
-    @SerialName("firstName")
-    val firstName: String,
-    @SerialName("id")
-    val id: Int,
-    @SerialName("isActive")
-    val isActive: Boolean,
-    @SerialName("is_banned")
-    val isBanned: Boolean,
-    @SerialName("lastName")
-    val lastName: String,
-    @SerialName("phoneNumber")
-    val phoneNumber: String?,
-    @SerialName("stores_id")
-    val storesId: List<Int>,
-    @SerialName("updateAt")
-    val updateAt: String?
+    @SerialName("data")
+    val data: UserDataDTO?,
+    @SerialName("message")
+    val message: String?,
+    @SerialName("status")
+    val status: Boolean?
 )

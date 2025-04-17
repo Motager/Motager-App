@@ -2,20 +2,21 @@ package org.ninjaneers.motager.authentication.presentation.signup.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.IO
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import org.ninjaneers.motager.authentication.domain.AuthenticationRepository
-import org.ninjaneers.motager.authentication.presentation.signup.domain.UserDataValidator
+import org.ninjaneers.motager.authentication.domain.AuthenticationUseCase
+import org.ninjaneers.motager.authentication.domain.User
+import org.ninjaneers.motager.authentication.domain.UserDataValidator
+import org.ninjaneers.motager.authentication.presentation.components.toUiText
 import org.ninjaneers.motager.core.domain.onError
 import org.ninjaneers.motager.core.domain.onSuccess
+import org.ninjaneers.motager.core.presentation.toUiText
 
 class SignupViewModel(
     private val userValidator: UserDataValidator,
-    private val authenticationRepository: AuthenticationRepository
+    private val authenticationUseCase: AuthenticationUseCase
 ) : ViewModel() {
     private val _state = MutableStateFlow(SignupScreenState())
     val state = _state.asStateFlow()
@@ -32,28 +33,45 @@ class SignupViewModel(
             is SignupAction.OnPasswordConfirmationVisibilityToggle -> onPasswordConfirmationVisibilityToggle(
                 action.isPasswordVisible
             )
-
             is SignupAction.OnPasswordVisibilityToggle -> onPasswordVisibilityToggle(action.isPasswordVisible)
-            is SignupAction.OnEmailValidate -> onEmailValidate(action.email)
-            is SignupAction.OnFirstNameValidate -> onFirstNameValidate(action.firstName)
-            is SignupAction.OnSecondNameValidate -> onSecondNameValidate(action.secondName)
-            is SignupAction.OnPasswordValidate -> onPasswordValidate(action.password)
-            is SignupAction.OnConfirmPasswordValidate -> onConfirmPasswordValidate(
-                action.password, action.confirmedPassword
-            )
-
             is SignupAction.OnRegisterValidate -> onRegisterValidate()
-            is SignupAction.OnRegister -> onRegister()
+            is SignupAction.OnRegister -> onRegister(
+                updateUser = action.updateUser,
+                navigate = action.navigate
+            )
         }
     }
 
-    private fun onRegister() {
-        viewModelScope.launch(Dispatchers.IO) {
+    private fun onRegister(
+        updateUser: (User?) -> Unit,
+        navigate: () -> Unit
+    ) {
+        viewModelScope.launch {
             _state.value.apply {
                 if (isRegisterValid) {
-                    authenticationRepository.register(firstName, secondName, email, password)
-                        .onSuccess {}
-                        .onError {}
+                    authenticationUseCase.register(firstName, secondName, email, password)
+                        .onSuccess { user ->
+                            _state.update {
+                                it.copy(
+                                    isLoading = false,
+                                    error = null,
+                                    user = user
+                                )
+                            }
+                            updateUser(_state.value.user)
+                            navigate()
+                        }
+                        .onError { error ->
+                            _state.update {
+                                it.copy(
+                                    isLoading = false,
+                                    user = null,
+                                    error = error.toUiText()
+                                )
+                            }
+                            updateUser(null)
+
+                        }
                 }
             }
         }
@@ -113,6 +131,7 @@ class SignupViewModel(
                 firstName = firstName
             )
         }
+        onFirstNameValidate(firstName)
     }
 
     private fun onSecondNameChange(secondName: String) {
@@ -121,6 +140,7 @@ class SignupViewModel(
                 secondName = secondName
             )
         }
+        onSecondNameValidate(secondName)
     }
 
     private fun onEmailChange(email: String) {
@@ -129,6 +149,7 @@ class SignupViewModel(
                 email = email
             )
         }
+        onEmailValidate(email)
     }
 
     private fun onPasswordChange(password: String) {
@@ -137,6 +158,7 @@ class SignupViewModel(
                 password = password
             )
         }
+        onPasswordValidate(password)
     }
 
     private fun onPasswordConfirmationChange(passwordConfirmation: String) {
@@ -145,6 +167,7 @@ class SignupViewModel(
                 passwordConfirmation = passwordConfirmation
             )
         }
+        onConfirmPasswordValidate(_state.value.password, passwordConfirmation)
     }
 
     private fun onEmailValidate(email: String) {

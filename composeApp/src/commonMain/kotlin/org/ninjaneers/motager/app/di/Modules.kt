@@ -10,9 +10,9 @@ import org.koin.dsl.module
 import org.ninjaneers.motager.authentication.data.remote.AuthenticationService
 import org.ninjaneers.motager.authentication.data.remote.AuthenticationServiceImpl
 import org.ninjaneers.motager.authentication.data.repository.AuthenticationRepositoryImpl
-import org.ninjaneers.motager.authentication.domain.AuthenticationRepository
+import org.ninjaneers.motager.authentication.domain.AuthenticationUseCase
+import org.ninjaneers.motager.authentication.domain.UserDataValidator
 import org.ninjaneers.motager.authentication.presentation.login.presentation.LoginViewModel
-import org.ninjaneers.motager.authentication.presentation.signup.domain.UserDataValidator
 import org.ninjaneers.motager.authentication.presentation.signup.presentation.SignupViewModel
 import org.ninjaneers.motager.core.data.network.HttpClientFactory
 import org.ninjaneers.motager.core.data.repository.AppSettingsRepositoryImpl
@@ -34,7 +34,7 @@ import org.ninjaneers.motager.dashboard.presentation.settings.presentations.Sett
 expect val platformModule: Module
 
 val sharedModule = module {
-//    ViewModles
+//    ViewModels
     viewModelOf(::CoreViewModel)
     viewModelOf(::LoginViewModel)
     viewModelOf(::SignupViewModel)
@@ -60,7 +60,7 @@ val sharedModule = module {
         AuthenticationRepositoryImpl(
             authenticationService = get()
         )
-    }.bind<AuthenticationRepository>()
+    }.bind<AuthenticationUseCase>()
 
 //  network
     single<HttpClient> {
