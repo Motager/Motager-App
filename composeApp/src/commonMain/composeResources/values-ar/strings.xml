@@ -71,6 +71,13 @@
     <string name="Error_serialization">لم نتمكن من تحليل البيانات.</string>
     <string name="Error_unknown">عفواً، حدث خطأ ما</string>
     <string name="Error_unauthorized">البريد الإلكتروني أو كلمة المرور غير صحيحة. حاول أخرى.</string>
+    <string name="Hi">مرحباً</string>
+    <string name="Is_Accessible">هل هو متاح؟</string>
+    <string name="Is_Styled">هل هو مٌصَمَم ؟</string>
+    <string name="Is_Animated">هل هو متحرك؟</string>
+    <string name="Accessible">نعم، يتوافق مع نمط تصميم WAI-ARIA.</string>
+    <string name="Styled">نعم. يأتي بتصميمات افتراضية تتناسب مع جماليات المكونات الأخرى.</string>
+    <string name="Animated">نعم. إنه متحرك افتراضيًا، ولكن يمكنك تعطيله إذا أردت.</string>
 
 
 </resources>

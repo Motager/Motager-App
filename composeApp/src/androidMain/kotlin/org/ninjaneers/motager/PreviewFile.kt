@@ -10,7 +10,7 @@ import org.ninjaneers.motager.core.presentation.theme.MotagerTheme
 fun Preview() {
     val navController = rememberNavController()
     MotagerTheme(darkTheme = true) {
-//        HomeScreen(Navigator(navController))
+
     }
 }
 
