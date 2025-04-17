@@ -16,9 +16,12 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import org.koin.compose.viewmodel.koinViewModel
 import org.ninjaneers.motager.app.navigation.Navigator
 import org.ninjaneers.motager.core.presentation.CoreAction
 import org.ninjaneers.motager.core.presentation.CoreState
@@ -31,53 +34,53 @@ import org.ninjaneers.motager.dashboard.presentation.components.TopBar
 import org.ninjaneers.motager.dashboard.presentation.customers.presentation.CustomersScreen
 import org.ninjaneers.motager.dashboard.presentation.discounts.presentation.DiscountsScreen
 import org.ninjaneers.motager.dashboard.presentation.home.presentation.HomeScreen
+import org.ninjaneers.motager.dashboard.presentation.home.presentation.HomeViewModel
 import org.ninjaneers.motager.dashboard.presentation.orders.presentation.OrdersScreen
 import org.ninjaneers.motager.dashboard.presentation.products.presentation.ProductsScreen
 import org.ninjaneers.motager.dashboard.presentation.settings.presentations.SettingsScreen
 
 @Composable
 fun DashboardScreen(
-    state: DashboardState,
+    dashboardState: DashboardState,
     coreState: CoreState,
-    onAction: suspend (DashboardAction) -> Unit,
+    dashboardAction: suspend (DashboardAction) -> Unit,
     coreAction: (CoreAction) -> Unit,
     navigator: Navigator
 ) {
     DashboardScreenContent(
-        state = state,
+        dashboardState = dashboardState,
         coreState = coreState,
-        onAction = onAction,
+        dashboardAction = dashboardAction,
         coreAction = coreAction,
         navigator = navigator,
-
         )
 }
 
 @Composable
 private fun DashboardScreenContent(
-    state: DashboardState,
+    dashboardState: DashboardState,
     coreState: CoreState,
-    onAction: suspend (DashboardAction) -> Unit,
+    dashboardAction: suspend (DashboardAction) -> Unit,
     coreAction: (CoreAction) -> Unit,
     navigator: Navigator
 ) {
     ModalNavigationDrawer(
         drawerContent = {
             NavDrawer(
-                state = state,
-                onAction = onAction,
+                state = dashboardState,
+                onAction = dashboardAction,
                 coreAction = coreAction,
-                items = state.navigationItems,
+                items = dashboardState.navigationItems,
                 language = coreState.language
             )
         },
-        drawerState = state.drawerState,
+        drawerState = dashboardState.drawerState,
         scrimColor = MaterialTheme.colorScheme.background.copy(alpha = 0.5f)
     ) {
         Scaffold(
             topBar = {
                 TopBar(
-                    openNavDrawer = onAction,
+                    openNavDrawer = dashboardAction,
                     coreState = coreState
                 )
             }
@@ -92,7 +95,7 @@ private fun DashboardScreenContent(
                 verticalArrangement = Arrangement.spacedBy(10.dp)
             ) {
                 AnimatedContent(
-                    targetState = state.content,
+                    targetState = dashboardState.content,
                     transitionSpec = {
                         slideInVertically(
                             animationSpec = spring(
@@ -102,67 +105,70 @@ private fun DashboardScreenContent(
                         ).togetherWith(fadeOut(animationSpec = tween(10)))
                     }
                 ) {
-                    when (state.content) {
-                        is DashboardContent.Home -> HomeScreen(
-                            dashboardState = state,
-                            coreState = coreState,
-                            dashboardAction = onAction,
-                            coreAction = coreAction
-                        )
+                    when (dashboardState.content) {
+                        is DashboardContent.Home -> {
+                            val viewModel = koinViewModel<HomeViewModel>()
+                            val state by viewModel.state.collectAsStateWithLifecycle()
+                            HomeScreen(
+                                state = state,
+                                coreState = coreState,
+                                onAction = viewModel::onAction,
+                            )
+                        }
 
                         is DashboardContent.Orders -> OrdersScreen(
-                            dashboardState = state,
+                            dashboardState = dashboardState,
                             coreState = coreState,
-                            dashboardAction = onAction,
+                            dashboardAction = dashboardAction,
                             coreAction = coreAction
                         )
 
                         is DashboardContent.Products -> ProductsScreen(
-                            dashboardState = state,
+                            dashboardState = dashboardState,
                             coreState = coreState,
-                            dashboardAction = onAction,
+                            dashboardAction = dashboardAction,
                             coreAction = coreAction
                         )
 
                         is DashboardContent.Collections -> CollectionsScreen(
-                            dashboardState = state,
+                            dashboardState = dashboardState,
                             coreState = coreState,
-                            dashboardAction = onAction,
+                            dashboardAction = dashboardAction,
                             coreAction = coreAction
                         )
 
                         is DashboardContent.Categories -> CategoriesScreen(
-                            dashboardState = state,
+                            dashboardState = dashboardState,
                             coreState = coreState,
-                            dashboardAction = onAction,
+                            dashboardAction = dashboardAction,
                             coreAction = coreAction
                         )
 
                         is DashboardContent.Customers -> CustomersScreen(
-                            dashboardState = state,
+                            dashboardState = dashboardState,
                             coreState = coreState,
-                            dashboardAction = onAction,
+                            dashboardAction = dashboardAction,
                             coreAction = coreAction
                         )
 
                         is DashboardContent.Analytics -> AnalyticsScreen(
-                            dashboardState = state,
+                            dashboardState = dashboardState,
                             coreState = coreState,
-                            dashboardAction = onAction,
+                            dashboardAction = dashboardAction,
                             coreAction = coreAction
                         )
 
                         is DashboardContent.Discounts -> DiscountsScreen(
-                            dashboardState = state,
+                            dashboardState = dashboardState,
                             coreState = coreState,
-                            dashboardAction = onAction,
+                            dashboardAction = dashboardAction,
                             coreAction = coreAction
                         )
 
                         is DashboardContent.Settings -> SettingsScreen(
-                            dashboardState = state,
+                            dashboardState = dashboardState,
                             coreState = coreState,
-                            dashboardAction = onAction,
+                            dashboardAction = dashboardAction,
                             coreAction = coreAction
                         )
                     }

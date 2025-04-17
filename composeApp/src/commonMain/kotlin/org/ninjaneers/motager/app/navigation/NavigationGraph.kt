@@ -93,9 +93,9 @@ fun NavigationGraph(
                     val viewModel = koinViewModel<DashboardViewModel>()
                     val state by viewModel.state.collectAsStateWithLifecycle()
                     DashboardScreen(
-                        state = state,
+                        dashboardState = state,
                         coreState = coreState,
-                        onAction = viewModel::onAction,
+                        dashboardAction = viewModel::onAction,
                         coreAction = coreAction,
                         navigator = navigator
                     )

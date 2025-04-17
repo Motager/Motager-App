@@ -71,6 +71,13 @@
     <string name="Error_serialization">Couldn't parse data</string>
     <string name="Error_unknown">Oops, something went wrong</string>
     <string name="Error_unauthorized">Email or password is incorrect, try again.</string>
+    <string name="Hi">Hi</string>
+    <string name="Is_Accessible">Is it accessible ?</string>
+    <string name="Is_Styled">Is it styled ?</string>
+    <string name="Is_Animated">Is it animated ?</string>
+    <string name="Accessible">Yes. It adheres to the WAI-ARIA design pattern.</string>
+    <string name="Styled">Yes. It comes with default styles that matches the other components' aesthetic.</string>
+    <string name="Animated">Yes. It's animated by default, but you can disable it if you prefer.</string>
 
 
 </resources>

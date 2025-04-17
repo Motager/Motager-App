@@ -472,7 +472,16 @@ private fun LoginScreenContent(
                                 imeAction = ImeAction.Done
                             ),
                             keyboardActions = KeyboardActions(
-                                onDone = { goToDashboard() }
+                                onDone = {
+                                    onAction(LoginAction.OnLogin(
+                                        updateUser = {
+                                            coreAction(CoreAction.OnUserChange(it))
+                                        },
+                                        navigate = {
+                                            goToDashboard()
+                                        }
+                                    ))
+                                }
                             ),
                             trailingIcon = {
                                 IconButton(
