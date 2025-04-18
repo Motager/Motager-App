@@ -13,32 +13,20 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
-import org.ninjaneers.motager.core.presentation.CoreAction
 import org.ninjaneers.motager.core.presentation.CoreState
-import org.ninjaneers.motager.dashboard.presentation.DashboardAction
-import org.ninjaneers.motager.dashboard.presentation.DashboardState
 
 @Composable
 fun DiscountsScreen(
-    dashboardState: DashboardState,
     coreState: CoreState,
-    dashboardAction: suspend (DashboardAction) -> Unit,
-    coreAction: (CoreAction) -> Unit
 ) {
     DiscountsScreenContent(
-        dashboardState = dashboardState,
-        dashboardAction = dashboardAction,
         coreState = coreState,
-        coreAction = coreAction
     )
 }
 
 @Composable
 private fun DiscountsScreenContent(
-    dashboardState: DashboardState,
     coreState: CoreState,
-    dashboardAction: suspend (DashboardAction) -> Unit,
-    coreAction: (CoreAction) -> Unit
 ) {
     Column(
         modifier = Modifier

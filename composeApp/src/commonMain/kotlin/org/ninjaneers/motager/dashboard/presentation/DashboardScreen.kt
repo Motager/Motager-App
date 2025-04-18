@@ -28,15 +28,20 @@ import org.ninjaneers.motager.core.presentation.CoreState
 import org.ninjaneers.motager.dashboard.domain.DashboardContent
 import org.ninjaneers.motager.dashboard.presentation.analytics.presentation.AnalyticsScreen
 import org.ninjaneers.motager.dashboard.presentation.categories.presentation.CategoriesScreen
+import org.ninjaneers.motager.dashboard.presentation.categories.presentation.CategoriesViewModel
 import org.ninjaneers.motager.dashboard.presentation.collections.presentation.CollectionsScreen
+import org.ninjaneers.motager.dashboard.presentation.collections.presentation.CollectionsViewModel
 import org.ninjaneers.motager.dashboard.presentation.components.NavDrawer
 import org.ninjaneers.motager.dashboard.presentation.components.TopBar
 import org.ninjaneers.motager.dashboard.presentation.customers.presentation.CustomersScreen
+import org.ninjaneers.motager.dashboard.presentation.customers.presentation.CustomersViewModel
 import org.ninjaneers.motager.dashboard.presentation.discounts.presentation.DiscountsScreen
 import org.ninjaneers.motager.dashboard.presentation.home.presentation.HomeScreen
 import org.ninjaneers.motager.dashboard.presentation.home.presentation.HomeViewModel
 import org.ninjaneers.motager.dashboard.presentation.orders.presentation.OrdersScreen
+import org.ninjaneers.motager.dashboard.presentation.orders.presentation.OrdersViewModel
 import org.ninjaneers.motager.dashboard.presentation.products.presentation.ProductsScreen
+import org.ninjaneers.motager.dashboard.presentation.products.presentation.ProductsViewModel
 import org.ninjaneers.motager.dashboard.presentation.settings.presentations.SettingsScreen
 
 @Composable
@@ -116,61 +121,74 @@ private fun DashboardScreenContent(
                             )
                         }
 
-                        is DashboardContent.Orders -> OrdersScreen(
-                            dashboardState = dashboardState,
-                            coreState = coreState,
-                            dashboardAction = dashboardAction,
-                            coreAction = coreAction
-                        )
+                        is DashboardContent.Orders -> {
+                            val viewModel = koinViewModel<OrdersViewModel>()
+                            val state by viewModel.state.collectAsStateWithLifecycle()
+                            OrdersScreen(
+                                state = state,
+                                coreState = coreState,
+                                onAction = viewModel::onAction
+                            )
+                        }
 
-                        is DashboardContent.Products -> ProductsScreen(
-                            dashboardState = dashboardState,
-                            coreState = coreState,
-                            dashboardAction = dashboardAction,
-                            coreAction = coreAction
-                        )
+                        is DashboardContent.Products -> {
+                            val viewModel = koinViewModel<ProductsViewModel>()
+                            val state by viewModel.state.collectAsStateWithLifecycle()
+                            ProductsScreen(
+                                state = state,
+                                coreState = coreState,
+                                onAction = viewModel::onAction,
+                            )
+                        }
 
-                        is DashboardContent.Collections -> CollectionsScreen(
-                            dashboardState = dashboardState,
-                            coreState = coreState,
-                            dashboardAction = dashboardAction,
-                            coreAction = coreAction
-                        )
+                        is DashboardContent.Collections -> {
+                            val viewModel = koinViewModel<CollectionsViewModel>()
+                            val state by viewModel.state.collectAsStateWithLifecycle()
+                            CollectionsScreen(
+                                state = state,
+                                coreState = coreState,
+                                onAction = viewModel::onAction,
+                            )
+                        }
 
-                        is DashboardContent.Categories -> CategoriesScreen(
-                            dashboardState = dashboardState,
-                            coreState = coreState,
-                            dashboardAction = dashboardAction,
-                            coreAction = coreAction
-                        )
+                        is DashboardContent.Categories -> {
+                            val viewModel = koinViewModel<CategoriesViewModel>()
+                            val state by viewModel.state.collectAsStateWithLifecycle()
+                            CategoriesScreen(
+                                state = state,
+                                coreState = coreState,
+                                onAction = viewModel::onAction,
+                            )
+                        }
 
-                        is DashboardContent.Customers -> CustomersScreen(
-                            dashboardState = dashboardState,
-                            coreState = coreState,
-                            dashboardAction = dashboardAction,
-                            coreAction = coreAction
-                        )
+                        is DashboardContent.Customers -> {
+                            val viewModel = koinViewModel<CustomersViewModel>()
+                            val state by viewModel.state.collectAsStateWithLifecycle()
+                            CustomersScreen(
+                                state = state,
+                                coreState = coreState,
+                                onAction = viewModel::onAction,
+                            )
+                        }
 
-                        is DashboardContent.Analytics -> AnalyticsScreen(
-                            dashboardState = dashboardState,
-                            coreState = coreState,
-                            dashboardAction = dashboardAction,
-                            coreAction = coreAction
-                        )
+                        is DashboardContent.Analytics -> {
 
-                        is DashboardContent.Discounts -> DiscountsScreen(
-                            dashboardState = dashboardState,
-                            coreState = coreState,
-                            dashboardAction = dashboardAction,
-                            coreAction = coreAction
-                        )
+                            AnalyticsScreen(
+                                coreState = coreState,
+                            )
+                        }
 
-                        is DashboardContent.Settings -> SettingsScreen(
-                            dashboardState = dashboardState,
-                            coreState = coreState,
-                            dashboardAction = dashboardAction,
-                            coreAction = coreAction
-                        )
+                        is DashboardContent.Discounts -> {
+                            DiscountsScreen(
+                                coreState = coreState,
+                            )
+                        }
+
+                        is DashboardContent.Settings -> {
+                            SettingsScreen(
+                                coreState = coreState,
+                            )
+                        }
                     }
                 }
             }
