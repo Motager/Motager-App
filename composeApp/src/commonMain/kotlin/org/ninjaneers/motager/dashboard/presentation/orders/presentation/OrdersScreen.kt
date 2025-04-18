@@ -20,7 +20,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -29,7 +28,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import motager.composeapp.generated.resources.Create
 import motager.composeapp.generated.resources.Orders
 import motager.composeapp.generated.resources.Res
@@ -39,15 +37,11 @@ import motager.composeapp.generated.resources.hellipsis
 import motager.composeapp.generated.resources.switch
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
-import org.koin.compose.viewmodel.koinViewModel
-import org.ninjaneers.motager.core.presentation.CoreAction
 import org.ninjaneers.motager.core.presentation.CoreState
 import org.ninjaneers.motager.core.presentation.components.PrimaryButton
 import org.ninjaneers.motager.core.presentation.components.PrimaryIconButton
 import org.ninjaneers.motager.core.presentation.components.PrimaryTextField
 import org.ninjaneers.motager.core.presentation.theme.FontFamily
-import org.ninjaneers.motager.dashboard.presentation.DashboardAction
-import org.ninjaneers.motager.dashboard.presentation.DashboardState
 import org.ninjaneers.motager.dashboard.presentation.components.Pagination
 import org.ninjaneers.motager.dashboard.presentation.components.Table
 import org.ninjaneers.motager.dashboard.presentation.components.TableActionCell
@@ -58,29 +52,22 @@ import org.ninjaneers.motager.dashboard.presentation.components.TableStatusCell
 
 @Composable
 fun OrdersScreen(
-    dashboardState: DashboardState,
+    state: OrdersScreenState,
     coreState: CoreState,
-    dashboardAction: suspend (DashboardAction) -> Unit,
-    coreAction: (CoreAction) -> Unit
+    onAction: (OrdersAction) -> Unit,
 ) {
-    val viewModel = koinViewModel<OrdersViewModel>()
-    val state by viewModel.state.collectAsStateWithLifecycle()
     OrdersScreenContent(
         state = state,
-        dashboardState = dashboardState,
         coreState = coreState,
-        dashboardAction = dashboardAction,
-        coreAction = coreAction
+        onAction = onAction,
     )
 }
 
 @Composable
 private fun OrdersScreenContent(
     state: OrdersScreenState,
-    dashboardState: DashboardState,
     coreState: CoreState,
-    dashboardAction: suspend (DashboardAction) -> Unit,
-    coreAction: (CoreAction) -> Unit
+    onAction: (OrdersAction) -> Unit
 ) {
     Column(
         modifier = Modifier

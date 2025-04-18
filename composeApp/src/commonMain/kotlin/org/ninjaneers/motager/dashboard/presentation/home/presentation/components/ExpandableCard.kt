@@ -42,7 +42,7 @@ fun ExpandableCard(
     isExpanded: Boolean,
 ) {
     val animateRotation by animateFloatAsState(
-        targetValue = if (isExpanded) 0f else 180f,
+        targetValue = if (isExpanded) 180f else 0f,
     )
     Card(
         modifier = Modifier
@@ -60,11 +60,10 @@ fun ExpandableCard(
         ),
         colors = CardDefaults.cardColors(
             containerColor = Color.Transparent,
-            contentColor = MaterialTheme.colorScheme.background,
         ),
     ) {
         Column(
-            modifier = Modifier.padding(vertical = 4.dp),
+            modifier = Modifier.padding(6.dp),
             horizontalAlignment = Alignment.Start,
             verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
@@ -77,7 +76,7 @@ fun ExpandableCard(
                     text = stringResource(title),
                     fontSize = 16.sp,
                     fontFamily = FontFamily(
-                        weight = FontWeight.Medium,
+                        weight = FontWeight.SemiBold,
                         language = coreState.language,
                     ),
                     color = MaterialTheme.colorScheme.onBackground,

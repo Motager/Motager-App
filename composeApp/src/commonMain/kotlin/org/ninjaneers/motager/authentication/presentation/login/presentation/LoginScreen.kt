@@ -24,8 +24,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Switch
-import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -78,6 +76,7 @@ import org.ninjaneers.motager.core.presentation.CoreAction
 import org.ninjaneers.motager.core.presentation.CoreState
 import org.ninjaneers.motager.core.presentation.components.PrimaryButton
 import org.ninjaneers.motager.core.presentation.components.PrimaryIconButton
+import org.ninjaneers.motager.core.presentation.components.PrimarySwitch
 import org.ninjaneers.motager.core.presentation.components.PrimaryTextField
 import org.ninjaneers.motager.core.presentation.theme.FontFamily
 import org.ninjaneers.motager.core.presentation.theme.Logo
@@ -515,16 +514,10 @@ private fun LoginScreenContent(
                             verticalAlignment = Alignment.CenterVertically,
                             modifier = Modifier.fillMaxWidth()
                         ) {
-                            Switch(
+                            PrimarySwitch(
                                 modifier = Modifier.padding(end = 12.dp),
                                 checked = state.rememberMe,
                                 onCheckedChange = { onAction(LoginAction.OnRememberMeToggle(state.rememberMe)) },
-                                colors = SwitchDefaults.colors(
-                                    checkedThumbColor = MaterialTheme.colorScheme.background,
-                                    uncheckedThumbColor = MaterialTheme.colorScheme.background,
-                                    uncheckedTrackColor = MaterialTheme.colorScheme.surfaceVariant,
-                                    checkedTrackColor = MaterialTheme.colorScheme.primary,
-                                )
                             )
                             Text(
                                 text = stringResource(Res.string.RememberLogin),
