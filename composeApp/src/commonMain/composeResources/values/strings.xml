@@ -67,7 +67,7 @@
     <string name="Name_Is_Empty">Name Can't be empty</string>
     <string name="Error_request_timeout">The request timed out</string>
     <string name="Error_too_many_requests">Your quota seems to be exceeded</string>
-    <string name="Error_no_internet">No internet connection ,check your connection and try again</string>
+    <string name="Error_no_internet">No internet,check your connection and try again</string>
     <string name="Error_serialization">Couldn't parse data</string>
     <string name="Error_unknown">Oops, something went wrong</string>
     <string name="Error_unauthorized">Email or password is incorrect, try again.</string>

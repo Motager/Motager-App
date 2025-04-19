@@ -42,7 +42,6 @@ suspend inline fun <reified T> responseToResult(
                 Result.Error(RemoteError.SERIALIZATION)
             }
         }
-
         408 -> Result.Error(RemoteError.REQUEST_TIMEOUT)
         429 -> Result.Error(RemoteError.TOO_MANY_REQUESTS)
         401 -> Result.Error(RemoteError.UNAUTHORIZED)

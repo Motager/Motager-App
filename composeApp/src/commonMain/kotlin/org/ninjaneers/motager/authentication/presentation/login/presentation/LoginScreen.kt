@@ -13,20 +13,28 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Snackbar
+import androidx.compose.material3.SnackbarDuration
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -66,6 +74,7 @@ import motager.composeapp.generated.resources.languages
 import motager.composeapp.generated.resources.moon
 import motager.composeapp.generated.resources.sun
 import motager.composeapp.generated.resources.system
+import motager.composeapp.generated.resources.wrong_circle
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
@@ -112,7 +121,57 @@ private fun LoginScreenContent(
 ) {
     val coroutineScope = rememberCoroutineScope()
     val focusRequestManager = LocalFocusManager.current
-    Scaffold { innerPadding ->
+    val snackBarHostState = remember { SnackbarHostState() }
+    val errorMessage = state.error?.asString()
+    LaunchedEffect(state.error) {
+        if (state.error != null) {
+            coroutineScope.launch {
+                snackBarHostState.showSnackbar(
+                    message = errorMessage!!,
+                    duration = SnackbarDuration.Short
+                )
+            }
+        }
+
+    }
+    Scaffold(
+        snackbarHost = {
+            SnackbarHost(
+                hostState = snackBarHostState,
+                modifier = Modifier.padding(horizontal = 8.dp),
+                snackbar = {
+                    Snackbar(
+                        modifier = Modifier.padding(8.dp),
+                        containerColor = MaterialTheme.colorScheme.background,
+                    ) {
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.spacedBy(6.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Icon(
+                                painter = painterResource(Res.drawable.wrong_circle),
+                                contentDescription = "error",
+                                tint = MaterialTheme.colorScheme.error
+                            )
+                            state.error?.let {
+                                Text(
+                                    text = it.asString(),
+                                    fontFamily = FontFamily(
+                                        weight = FontWeight.Normal,
+                                        language = coreState.language
+                                    ),
+                                    color = MaterialTheme.colorScheme.error.copy(alpha = 0.7f),
+                                    fontSize = 14.sp,
+                                    textAlign = TextAlign.Start
+                                )
+                            }
+                        }
+                    }
+                }
+            )
+        }
+    ) { innerPadding ->
         Box(
             modifier = Modifier
                 .fillMaxSize()
@@ -462,10 +521,12 @@ private fun LoginScreenContent(
                             color = MaterialTheme.colorScheme.onSurface,
                             fontSize = 16.sp,
                         )
+
                         PrimaryTextField(
                             value = state.password,
                             onValueChange = { onAction(LoginAction.OnPasswordChange(it)) },
                             modifier = Modifier.height(40.dp).fillMaxWidth(),
+                            singleLine = true,
                             keyboardOptions = KeyboardOptions(
                                 keyboardType = KeyboardType.Password,
                                 imeAction = ImeAction.Done
@@ -543,15 +604,22 @@ private fun LoginScreenContent(
                             },
                             shape = RoundedCornerShape(6.dp)
                         ) {
-                            Text(
-                                text = stringResource(Res.string.Login),
-                                fontFamily = FontFamily(
-                                    weight = FontWeight.Medium,
-                                    language = coreState.language
-                                ),
-                                fontSize = 18.sp,
-                                color = MaterialTheme.colorScheme.onPrimary,
-                            )
+                            if (state.isLoading) {
+                                CircularProgressIndicator(
+                                    modifier = Modifier.size(24.dp),
+                                    color = MaterialTheme.colorScheme.onPrimary
+                                )
+                            } else {
+                                Text(
+                                    text = stringResource(Res.string.Login),
+                                    fontFamily = FontFamily(
+                                        weight = FontWeight.Medium,
+                                        language = coreState.language
+                                    ),
+                                    fontSize = 18.sp,
+                                    color = MaterialTheme.colorScheme.onPrimary,
+                                )
+                            }
                         }
                     }
                 }

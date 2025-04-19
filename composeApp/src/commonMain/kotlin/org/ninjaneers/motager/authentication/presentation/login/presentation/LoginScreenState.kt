@@ -4,7 +4,7 @@ import org.ninjaneers.motager.authentication.domain.User
 import org.ninjaneers.motager.core.domain.UiText
 
 data class LoginScreenState(
-    val isLoading: Boolean = true,
+    val isLoading: Boolean = false,
     val error: UiText? = null,
     val email: String = "",
     val password: String = "",
