@@ -35,6 +35,12 @@ class LoginViewModel(
 
     private fun onLogin(updateUser: (User?) -> Unit, navigate: () -> Unit) {
         viewModelScope.launch {
+            _state.update {
+                it.copy(
+                    isLoading = true,
+                    error = null
+                )
+            }
             authenticationUseCase.login(
                 email = _state.value.email,
                 password = _state.value.password
