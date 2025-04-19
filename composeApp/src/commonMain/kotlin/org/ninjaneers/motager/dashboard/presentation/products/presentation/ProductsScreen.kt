@@ -20,6 +20,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -28,6 +29,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import kotlinx.coroutines.launch
 import motager.composeapp.generated.resources.Add
 import motager.composeapp.generated.resources.Products
 import motager.composeapp.generated.resources.Res
@@ -42,6 +44,8 @@ import org.ninjaneers.motager.core.presentation.components.PrimaryButton
 import org.ninjaneers.motager.core.presentation.components.PrimaryIconButton
 import org.ninjaneers.motager.core.presentation.components.PrimaryTextField
 import org.ninjaneers.motager.core.presentation.theme.FontFamily
+import org.ninjaneers.motager.dashboard.domain.DashboardContent
+import org.ninjaneers.motager.dashboard.presentation.DashboardAction
 import org.ninjaneers.motager.dashboard.presentation.components.Pagination
 import org.ninjaneers.motager.dashboard.presentation.components.Table
 import org.ninjaneers.motager.dashboard.presentation.components.TableActionCell
@@ -55,12 +59,14 @@ fun ProductsScreen(
     state: ProductsScreenState,
     coreState: CoreState,
     onAction: (ProductsAction) -> Unit,
+    dashboardAction: suspend (DashboardAction) -> Unit
 ) {
 
     ProductsScreenContent(
         state = state,
         coreState = coreState,
-        onAction = onAction
+        onAction = onAction,
+        dashboardAction = dashboardAction
     )
 }
 
@@ -68,8 +74,10 @@ fun ProductsScreen(
 private fun ProductsScreenContent(
     state: ProductsScreenState,
     coreState: CoreState,
-    onAction: (ProductsAction) -> Unit
+    onAction: (ProductsAction) -> Unit,
+    dashboardAction: suspend (DashboardAction) -> Unit
 ) {
+    val coroutineScope = rememberCoroutineScope()
     Column(
         modifier = Modifier
             .clip(RoundedCornerShape(6.dp))
@@ -119,7 +127,15 @@ private fun ProductsScreenContent(
                         modifier = Modifier
                             .height(42.dp)
                             .wrapContentWidth(),
-                        onClick = {},
+                        onClick = {
+                            coroutineScope.launch {
+                                dashboardAction(
+                                    DashboardAction.OnContentChange(
+                                        content = DashboardContent.AddProduct
+                                    )
+                                )
+                            }
+                        },
                         contentPadding = PaddingValues(
                             horizontal = 16.dp,
                             vertical = 8.dp

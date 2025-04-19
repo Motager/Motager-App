@@ -3,17 +3,45 @@ package org.ninjaneers.motager.dashboard.presentation.products.presentation
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
+import org.jetbrains.compose.resources.StringResource
 
 class AddProductViewModel : ViewModel() {
 
-    private var hasLoadedInitialData = false
 
     private val _state = MutableStateFlow(AddProductState())
     val state = _state.asStateFlow()
 
     fun onAction(action: AddProductAction) {
         when (action) {
-            else -> TODO("Handle actions")
+            is AddProductAction.OnStepChange -> onStepChange(action.currentStep)
+            AddProductAction.OnCategoryMenuToggle -> onCategoryMenuToggle()
+            is AddProductAction.OnProductCategoryChange -> onProductCategoryChange(action.productCategory)
+        }
+    }
+
+    private fun onProductCategoryChange(productCategory: StringResource) {
+        _state.update {
+            it.copy(
+                productCategory = productCategory,
+                isCategoryExpanded = false
+            )
+        }
+    }
+
+    private fun onCategoryMenuToggle() {
+        _state.update {
+            it.copy(
+                isCategoryExpanded = !it.isCategoryExpanded
+            )
+        }
+    }
+
+    private fun onStepChange(currentStep: Int) {
+        _state.update {
+            it.copy(
+                currentStep = currentStep
+            )
         }
     }
 

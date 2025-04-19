@@ -9,6 +9,8 @@ sealed interface DashboardContent {
 
     data object Products : DashboardContent
 
+    data object AddProduct : DashboardContent
+
     data object Collections : DashboardContent
 
     data object Categories : DashboardContent

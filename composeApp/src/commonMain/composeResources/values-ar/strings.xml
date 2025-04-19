@@ -89,6 +89,12 @@
     <string name="Images">الصور</string>
     <string name="Add_images">أضف صور</string>
     <string name="Starting_price">السعر المبدئي</string>
+    <string name="No_Images">لم تتم إضافة أي صور بعد</string>
+    <string name="Product_with_options">هذا المنتج له خيارات متعددة، مثل أحجام أو ألوان مختلفة</string>
+    <string name="Electronics">الإلكترونيات</string>
+    <string name="Smart_phones">الهواتف الذكية</string>
+    <string name="Accessories">الإكسسوارات</string>
+    <string name="Previous">السابق</string>
 
 
 </resources>

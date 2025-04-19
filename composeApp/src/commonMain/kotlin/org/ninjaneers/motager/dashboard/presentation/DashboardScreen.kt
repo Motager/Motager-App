@@ -22,7 +22,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import org.koin.compose.viewmodel.koinViewModel
-import org.ninjaneers.motager.app.navigation.Navigator
 import org.ninjaneers.motager.core.presentation.CoreAction
 import org.ninjaneers.motager.core.presentation.CoreState
 import org.ninjaneers.motager.dashboard.domain.DashboardContent
@@ -40,6 +39,8 @@ import org.ninjaneers.motager.dashboard.presentation.home.presentation.HomeScree
 import org.ninjaneers.motager.dashboard.presentation.home.presentation.HomeViewModel
 import org.ninjaneers.motager.dashboard.presentation.orders.presentation.OrdersScreen
 import org.ninjaneers.motager.dashboard.presentation.orders.presentation.OrdersViewModel
+import org.ninjaneers.motager.dashboard.presentation.products.presentation.AddProductScreen
+import org.ninjaneers.motager.dashboard.presentation.products.presentation.AddProductViewModel
 import org.ninjaneers.motager.dashboard.presentation.products.presentation.ProductsScreen
 import org.ninjaneers.motager.dashboard.presentation.products.presentation.ProductsViewModel
 import org.ninjaneers.motager.dashboard.presentation.settings.presentations.SettingsScreen
@@ -50,15 +51,13 @@ fun DashboardScreen(
     coreState: CoreState,
     dashboardAction: suspend (DashboardAction) -> Unit,
     coreAction: (CoreAction) -> Unit,
-    navigator: Navigator
 ) {
     DashboardScreenContent(
         dashboardState = dashboardState,
         coreState = coreState,
         dashboardAction = dashboardAction,
         coreAction = coreAction,
-        navigator = navigator,
-        )
+    )
 }
 
 @Composable
@@ -67,7 +66,6 @@ private fun DashboardScreenContent(
     coreState: CoreState,
     dashboardAction: suspend (DashboardAction) -> Unit,
     coreAction: (CoreAction) -> Unit,
-    navigator: Navigator
 ) {
     ModalNavigationDrawer(
         drawerContent = {
@@ -138,6 +136,7 @@ private fun DashboardScreenContent(
                                 state = state,
                                 coreState = coreState,
                                 onAction = viewModel::onAction,
+                                dashboardAction = dashboardAction
                             )
                         }
 
@@ -187,6 +186,17 @@ private fun DashboardScreenContent(
                         is DashboardContent.Settings -> {
                             SettingsScreen(
                                 coreState = coreState,
+                            )
+                        }
+
+                        DashboardContent.AddProduct -> {
+                            val viewModel = koinViewModel<AddProductViewModel>()
+                            val state by viewModel.state.collectAsStateWithLifecycle()
+                            AddProductScreen(
+                                state = state,
+                                coreState = coreState,
+                                onAction = viewModel::onAction,
+                                dashboardAction = dashboardAction,
                             )
                         }
                     }
