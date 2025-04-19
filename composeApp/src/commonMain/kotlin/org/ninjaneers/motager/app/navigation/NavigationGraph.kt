@@ -32,7 +32,7 @@ fun NavigationGraph(
     val navigator = remember { Navigator(navController) }
     NavHost(navController = navController, startDestination = Route.MotagerGraph) {
 
-        navigation<Route.MotagerGraph>(startDestination = Route.Splash) {
+        navigation<Route.MotagerGraph>(startDestination = Route.DashboardGraph) {
 
             composable<Route.Splash>(
                 exitTransition = {

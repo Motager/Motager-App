@@ -17,7 +17,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentWidth
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
@@ -81,7 +83,10 @@ private fun MainScreenContent(
                 language = coreState.language,
                 theme = coreState.theme
             )
-            Box(modifier = Modifier.weight(1f), contentAlignment = Alignment.Center) {
+            Box(
+                modifier = Modifier.weight(1f).verticalScroll(rememberScrollState()),
+                contentAlignment = Alignment.Center
+            ) {
                 PulseAnimation()
                 Column(
                     modifier = Modifier
@@ -101,7 +106,8 @@ private fun MainScreenContent(
                             fontFamily = org.ninjaneers.motager.core.presentation.theme.FontFamily(
                                 weight = FontWeight.Normal,
                                 language = Language.English
-                            )
+                            ),
+                            textAlign = TextAlign.Center
                         )
                         Text(
                             text = "Build",

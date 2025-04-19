@@ -34,7 +34,6 @@ fun PulseAnimation(
             CircleData(210.dp, 0.2f, 0.15f, 180, false),
             CircleData(280.dp, 0.25f, 0.12f, 240, false),
             CircleData(350.dp, 0.3f, 0.09f, 300, false),
-            CircleData(420.dp, 0.35f, 0.06f, 360, false),
         )
 
         circleData.forEach { data ->
@@ -43,7 +42,6 @@ fun PulseAnimation(
                 baseOpacity = data.opacity,
                 borderOpacity = data.borderOpacity,
                 delayMillis = data.delayMillis,
-                isDashed = data.isDashed,
                 primaryColor = MaterialTheme.colorScheme.primary
             )
         }
@@ -67,7 +65,6 @@ private fun PulseCircleWithDelay(
     baseOpacity: Float,
     borderOpacity: Float,
     delayMillis: Int,
-    isDashed: Boolean,
     primaryColor: Color
 ) {
     val infiniteTransition = rememberInfiniteTransition()

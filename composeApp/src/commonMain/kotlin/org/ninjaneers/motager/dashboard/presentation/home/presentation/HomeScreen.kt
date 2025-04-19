@@ -30,10 +30,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import motager.composeapp.generated.resources.Hi
 import motager.composeapp.generated.resources.Res
 import motager.composeapp.generated.resources.dark_home_background
 import motager.composeapp.generated.resources.light_home_background
 import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.stringResource
 import org.ninjaneers.motager.core.domain.Language
 import org.ninjaneers.motager.core.domain.Theme
 import org.ninjaneers.motager.core.presentation.CoreState
@@ -112,7 +114,7 @@ private fun HomeScreenContent(
                         ) {
                             Row {
                                 Text(
-                                    text = "Hi,",
+                                    text = stringResource(Res.string.Hi) + ",",
                                     fontSize = 36.sp,
                                     fontFamily = FontFamily(
                                         weight = FontWeight.Normal,
@@ -122,7 +124,7 @@ private fun HomeScreenContent(
                                 )
                                 coreState.user?.name.let {
                                     Text(
-                                        text = " $it",
+                                        text = "$it",
                                         fontSize = 36.sp,
                                         fontFamily = FontFamily(
                                             weight = FontWeight.Bold,
