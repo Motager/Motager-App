@@ -7,7 +7,7 @@ import motager.composeapp.generated.resources.Is_Animated
 import motager.composeapp.generated.resources.Is_Styled
 import motager.composeapp.generated.resources.Res
 import motager.composeapp.generated.resources.Styled
-import org.jetbrains.compose.resources.StringResource
+import org.ninjaneers.motager.dashboard.presentation.home.domain.HomeCard
 
 data class HomeScreenState(
     val cards: List<HomeCard> = listOf(
@@ -24,10 +24,4 @@ data class HomeScreenState(
             body = Res.string.Animated,
         ),
     )
-)
-
-data class HomeCard(
-    val title: StringResource,
-    val body: StringResource,
-    val isExpanded: Boolean = false,
 )

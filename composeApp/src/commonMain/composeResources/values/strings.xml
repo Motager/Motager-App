@@ -89,6 +89,12 @@
     <string name="Images">Images</string>
     <string name="Add_images">Add Images</string>
     <string name="Starting_price">Starting price</string>
+    <string name="No_Images">No images added yet</string>
+    <string name="Product_with_options">This product has multiple options, like different sizes or colors</string>
+    <string name="Electronics">Electronics</string>
+    <string name="Smart_phones">Smart phones</string>
+    <string name="Accessories">Accessories</string>
+    <string name="Previous">Previous</string>
 
 
 </resources>

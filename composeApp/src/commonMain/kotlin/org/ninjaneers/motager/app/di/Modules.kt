@@ -28,6 +28,7 @@ import org.ninjaneers.motager.dashboard.presentation.customers.presentation.Cust
 import org.ninjaneers.motager.dashboard.presentation.discounts.presentation.DiscountsViewModel
 import org.ninjaneers.motager.dashboard.presentation.home.presentation.HomeViewModel
 import org.ninjaneers.motager.dashboard.presentation.orders.presentation.OrdersViewModel
+import org.ninjaneers.motager.dashboard.presentation.products.presentation.AddProductViewModel
 import org.ninjaneers.motager.dashboard.presentation.products.presentation.ProductsViewModel
 import org.ninjaneers.motager.dashboard.presentation.settings.presentations.SettingsViewModel
 
@@ -48,6 +49,7 @@ val sharedModule = module {
     viewModelOf(::AnalyticsViewModel)
     viewModelOf(::DiscountsViewModel)
     viewModelOf(::SettingsViewModel)
+    viewModelOf(::AddProductViewModel)
 
 //    Repositories
     singleOf(::AppSettingsRepositoryImpl).bind<AppSettingsRepository>()

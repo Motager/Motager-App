@@ -97,7 +97,6 @@ fun NavigationGraph(
                         coreState = coreState,
                         dashboardAction = viewModel::onAction,
                         coreAction = coreAction,
-                        navigator = navigator
                     )
                 }
             }

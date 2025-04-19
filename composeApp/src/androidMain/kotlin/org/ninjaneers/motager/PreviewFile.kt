@@ -15,6 +15,7 @@ fun Preview() {
             state = AddProductState(),
             onAction = {},
             coreState = CoreState(),
+            dashboardAction = {}
         )
     }
 }
