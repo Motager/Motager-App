@@ -18,6 +18,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -44,7 +45,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.launch
 import motager.composeapp.generated.resources.Add_images
-import motager.composeapp.generated.resources.Basic_info
 import motager.composeapp.generated.resources.Basic_information
 import motager.composeapp.generated.resources.Category
 import motager.composeapp.generated.resources.Description
@@ -120,7 +120,7 @@ private fun AddProductScreenContent(
             horizontalArrangement = Arrangement.SpaceBetween,
             userScrollEnabled = false
         ) {
-            items(count = 3) { index ->
+            itemsIndexed(state.steps) { index, title ->
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.spacedBy(8.dp),
@@ -144,7 +144,7 @@ private fun AddProductScreenContent(
                         )
                     }
                     Text(
-                        text = stringResource(Res.string.Basic_info),
+                        text = stringResource(title),
                         fontSize = 14.sp,
                     )
                 }
