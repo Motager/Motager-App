@@ -338,7 +338,7 @@ private fun SignupScreenContent(
                 Column(
                     modifier = Modifier.clip(RoundedCornerShape(6.dp)).fillMaxWidth()
                         .background(MaterialTheme.colorScheme.secondary.copy(alpha = 0.6f))
-                        .border(width = 1.dp, color = MaterialTheme.colorScheme.outline)
+                        .border(width = 1.dp, color = MaterialTheme.colorScheme.outline, shape = RoundedCornerShape(6.dp))
                         .padding(24.dp), horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Text(

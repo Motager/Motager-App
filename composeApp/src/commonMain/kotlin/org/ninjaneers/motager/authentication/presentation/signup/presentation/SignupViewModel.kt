@@ -126,48 +126,48 @@ class SignupViewModel(
     }
 
     private fun onFirstNameChange(firstName: String) {
+        onFirstNameValidate(firstName)
         _state.update {
             it.copy(
                 firstName = firstName
             )
         }
-        onFirstNameValidate(firstName)
     }
 
     private fun onSecondNameChange(secondName: String) {
+        onSecondNameValidate(secondName)
         _state.update {
             it.copy(
                 secondName = secondName
             )
         }
-        onSecondNameValidate(secondName)
     }
 
     private fun onEmailChange(email: String) {
+        onEmailValidate(email)
         _state.update {
             it.copy(
                 email = email
             )
         }
-        onEmailValidate(email)
     }
 
     private fun onPasswordChange(password: String) {
+        onPasswordValidate(password)
         _state.update {
             it.copy(
                 password = password
             )
         }
-        onPasswordValidate(password)
     }
 
     private fun onPasswordConfirmationChange(passwordConfirmation: String) {
+        onConfirmPasswordValidate(_state.value.password, passwordConfirmation)
         _state.update {
             it.copy(
                 passwordConfirmation = passwordConfirmation
             )
         }
-        onConfirmPasswordValidate(_state.value.password, passwordConfirmation)
     }
 
     private fun onEmailValidate(email: String) {

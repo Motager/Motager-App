@@ -78,7 +78,7 @@
     <string name="Accessible">نعم، يتوافق مع نمط تصميم WAI-ARIA.</string>
     <string name="Styled">نعم. يأتي بتصميمات افتراضية تتناسب مع جماليات المكونات الأخرى.</string>
     <string name="Animated">نعم. إنه متحرك افتراضيًا، ولكن يمكنك تعطيله إذا أردت.</string>
-    <string name="Basic_info">معلومات اساسية</string>
+    <string name="Basic_info">معلومات</string>
     <string name="Basic_information">معلومات اساسية</string>
     <string name="SKUs">SKUs</string>
     <string name="Review">مراجعة</string>
@@ -95,6 +95,16 @@
     <string name="Smart_phones">الهواتف الذكية</string>
     <string name="Accessories">الإكسسوارات</string>
     <string name="Previous">السابق</string>
+    <string name="SKU_Management">SKU إدارة</string>
+    <string name="Stock">المخزون</string>
+    <string name="Compare_at_price">مقارنة بالسعر</string>
+    <string name="Cost_per_item">السعر للوحده</string>
+    <string name="Profit">الربح</string>
+    <string name="Margin">الحد النهائي</string>
+    <string name="Review_product">مراجعة المنتج</string>
+
+
+
 
 
 </resources>

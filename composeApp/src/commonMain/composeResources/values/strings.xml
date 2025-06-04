@@ -95,6 +95,13 @@
     <string name="Smart_phones">Smart phones</string>
     <string name="Accessories">Accessories</string>
     <string name="Previous">Previous</string>
+    <string name="SKU_Management">SKU Management</string>
+    <string name="Stock">Stock</string>
+    <string name="Compare_at_price">Compare At Price</string>
+    <string name="Cost_per_item">Cost per item</string>
+    <string name="Profit">Profit</string>
+    <string name="Margin">Margin</string>
+    <string name="Review_product">Review Product</string>
 
 
 </resources>
