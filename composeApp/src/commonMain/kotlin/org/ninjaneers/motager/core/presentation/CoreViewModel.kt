@@ -7,6 +7,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
@@ -22,13 +23,11 @@ class CoreViewModel(
     private val localization: Localization
 ) : ViewModel() {
     private val _state = MutableStateFlow(CoreState())
-    val state = _state.onStart {
+    val state = _state.asStateFlow()
+
+    init {
         fetchAppSettings()
-    }.stateIn(
-        scope = viewModelScope,
-        started = SharingStarted.WhileSubscribed(5000L),
-        initialValue = _state.value
-    )
+    }
 
     private fun fetchAppSettings() {
         viewModelScope.launch(Dispatchers.IO) {

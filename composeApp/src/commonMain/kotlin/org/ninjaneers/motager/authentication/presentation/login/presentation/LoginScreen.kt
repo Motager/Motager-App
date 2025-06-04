@@ -450,7 +450,7 @@ private fun LoginScreenContent(
                         .clip(RoundedCornerShape(6.dp))
                         .fillMaxWidth()
                         .background(color = MaterialTheme.colorScheme.secondary.copy(.6f))
-                        .border(width = 1.dp, color = MaterialTheme.colorScheme.outline)
+                        .border(width = 1.dp, color = MaterialTheme.colorScheme.outline, shape = RoundedCornerShape(6.dp))
                         .padding(24.dp),
                     horizontalAlignment = Alignment.CenterHorizontally,
                 )

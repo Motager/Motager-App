@@ -1,0 +1,188 @@
+package org.ninjaneers.motager.dashboard.presentation.products.presentation.components
+
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import motager.composeapp.generated.resources.Compare_at_price
+import motager.composeapp.generated.resources.Margin
+import motager.composeapp.generated.resources.Price
+import motager.composeapp.generated.resources.Profit
+import motager.composeapp.generated.resources.Res
+import motager.composeapp.generated.resources.SKU_Management
+import motager.composeapp.generated.resources.Stock
+import motager.composeapp.generated.resources.bot
+import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.stringResource
+import org.ninjaneers.motager.core.presentation.CoreState
+import org.ninjaneers.motager.core.presentation.components.PrimaryTextField
+import org.ninjaneers.motager.core.presentation.theme.FontFamily
+import org.ninjaneers.motager.dashboard.presentation.DashboardAction
+import org.ninjaneers.motager.dashboard.presentation.products.presentation.AddProductAction
+import org.ninjaneers.motager.dashboard.presentation.products.presentation.AddProductState
+
+@Composable
+fun Step2(
+    state: AddProductState,
+    coreState: CoreState,
+    onAction: (AddProductAction) -> Unit,
+) {
+    Column(
+        verticalArrangement = Arrangement.spacedBy(24.dp),
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            Text(
+                text = stringResource(Res.string.SKU_Management),
+                fontSize = 24.sp,
+                fontFamily = FontFamily(
+                    weight = FontWeight.Bold,
+                    language = coreState.language
+                ),
+                color = MaterialTheme.colorScheme.onSurface
+            )
+            Button(
+                modifier = Modifier.size(40.dp),
+                onClick = {},
+                shape = RoundedCornerShape(6.dp),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.2f),
+                    contentColor = MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.8f)
+                ),
+                contentPadding = PaddingValues(0.dp)
+            ) {
+                Icon(
+                    painter = painterResource(Res.drawable.bot),
+                    contentDescription = "Ai Assistant",
+                    tint = MaterialTheme.colorScheme.primary
+                )
+            }
+        }
+        Column(
+            modifier = Modifier
+                .fillMaxWidth(),
+            horizontalAlignment = Alignment.Start,
+            verticalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            Text(
+                text = stringResource(Res.string.Stock),
+                fontSize = 14.sp,
+                fontFamily = FontFamily(
+                    weight = FontWeight.Medium,
+                    language = coreState.language
+                ),
+                color = MaterialTheme.colorScheme.onSurface
+            )
+            PrimaryTextField(
+                modifier = Modifier.fillMaxWidth(),
+                value = "",
+                onValueChange = {},
+            )
+        }
+        Column(
+            modifier = Modifier
+                .fillMaxWidth(),
+            horizontalAlignment = Alignment.Start,
+            verticalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            Text(
+                text = stringResource(Res.string.Price),
+                fontSize = 14.sp,
+                fontFamily = FontFamily(
+                    weight = FontWeight.Medium,
+                    language = coreState.language
+                ),
+                color = MaterialTheme.colorScheme.onSurface
+            )
+            PrimaryTextField(
+                modifier = Modifier.fillMaxWidth(),
+                value = "",
+                onValueChange = {},
+            )
+        }
+        Column(
+            modifier = Modifier
+                .fillMaxWidth(),
+            horizontalAlignment = Alignment.Start,
+            verticalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            Text(
+                text = stringResource(Res.string.Compare_at_price),
+                fontSize = 14.sp,
+                fontFamily = FontFamily(
+                    weight = FontWeight.Medium,
+                    language = coreState.language
+                ),
+                color = MaterialTheme.colorScheme.onSurface
+            )
+            PrimaryTextField(
+                modifier = Modifier
+                    .fillMaxWidth(),
+                value = "",
+                onValueChange = {},
+            )
+        }
+        Column(
+            modifier = Modifier
+                .fillMaxWidth(),
+            horizontalAlignment = Alignment.Start,
+            verticalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            Text(
+                text = stringResource(Res.string.Profit),
+                fontSize = 14.sp,
+                fontFamily = FontFamily(
+                    weight = FontWeight.Medium,
+                    language = coreState.language
+                ),
+                color = MaterialTheme.colorScheme.onSurface
+            )
+            PrimaryTextField(
+                modifier = Modifier
+                    .fillMaxWidth(),
+                value = "",
+                onValueChange = {},
+            )
+        }
+        Column(
+            modifier = Modifier
+                .fillMaxWidth(),
+            horizontalAlignment = Alignment.Start,
+            verticalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            Text(
+                text = stringResource(Res.string.Margin),
+                fontSize = 14.sp,
+                fontFamily = FontFamily(
+                    weight = FontWeight.Medium,
+                    language = coreState.language
+                ),
+                color = MaterialTheme.colorScheme.onSurface
+            )
+            PrimaryTextField(
+                modifier = Modifier
+                    .fillMaxWidth(),
+                value = "",
+                onValueChange = {},
+            )
+        }
+    }
+}
