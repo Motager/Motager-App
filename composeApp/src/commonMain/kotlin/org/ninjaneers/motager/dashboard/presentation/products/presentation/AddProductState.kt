@@ -26,4 +26,6 @@ data class AddProductState(
         Res.string.Accessories
     ),
     val isCategoryExpanded: Boolean = false,
+    val isAIDialogShown: Boolean = false,
+    val isImagesDialogShown: Boolean = false,
 )

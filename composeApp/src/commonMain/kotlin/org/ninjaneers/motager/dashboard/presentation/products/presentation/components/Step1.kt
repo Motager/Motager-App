@@ -1,12 +1,12 @@
 package org.ninjaneers.motager.dashboard.presentation.products.presentation.components
 
 import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -14,7 +14,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -26,17 +25,19 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
-import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import kotlinx.coroutines.launch
+import com.composables.icons.lucide.Bot
+import com.composables.icons.lucide.ChevronDown
+import com.composables.icons.lucide.Image
+import com.composables.icons.lucide.ImagePlus
+import com.composables.icons.lucide.Lucide
 import motager.composeapp.generated.resources.Add_images
 import motager.composeapp.generated.resources.Basic_information
 import motager.composeapp.generated.resources.Category
@@ -44,30 +45,18 @@ import motager.composeapp.generated.resources.Description
 import motager.composeapp.generated.resources.Draft
 import motager.composeapp.generated.resources.Enter_description
 import motager.composeapp.generated.resources.Images
-import motager.composeapp.generated.resources.Next
 import motager.composeapp.generated.resources.No_Images
-import motager.composeapp.generated.resources.Previous
 import motager.composeapp.generated.resources.Product_name
 import motager.composeapp.generated.resources.Product_with_options
 import motager.composeapp.generated.resources.Published
 import motager.composeapp.generated.resources.Res
 import motager.composeapp.generated.resources.Starting_price
-import motager.composeapp.generated.resources.bot
-import motager.composeapp.generated.resources.chevron_down
-import motager.composeapp.generated.resources.chevronleft
-import motager.composeapp.generated.resources.chevronright
-import motager.composeapp.generated.resources.image
-import motager.composeapp.generated.resources.image_plus
-import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.ninjaneers.motager.core.presentation.CoreState
-import org.ninjaneers.motager.core.presentation.components.PrimaryButton
 import org.ninjaneers.motager.core.presentation.components.PrimarySwitch
 import org.ninjaneers.motager.core.presentation.components.PrimaryTextField
 import org.ninjaneers.motager.core.presentation.components.SecondaryButton
 import org.ninjaneers.motager.core.presentation.theme.FontFamily
-import org.ninjaneers.motager.dashboard.domain.DashboardContent
-import org.ninjaneers.motager.dashboard.presentation.DashboardAction
 import org.ninjaneers.motager.dashboard.presentation.products.presentation.AddProductAction
 import org.ninjaneers.motager.dashboard.presentation.products.presentation.AddProductState
 
@@ -80,6 +69,15 @@ fun Step1(
     val animateRotation by animateFloatAsState(
         targetValue = if (state.isCategoryExpanded) 180f else 0f,
     )
+    if (state.isAIDialogShown)
+        AIDialog(
+            onDismiss = { onAction(AddProductAction.OnAIDialogToggleVisibility) },
+            openImagesDialog = { onAction(AddProductAction.OnImagesDialogToggleVisibility) }
+        )
+    if (state.isImagesDialogShown)
+        ImagesDialog(
+            onDismiss = { onAction(AddProductAction.OnImagesDialogToggleVisibility) }
+        )
     Column(
         verticalArrangement = Arrangement.spacedBy(24.dp),
     ) {
@@ -100,7 +98,7 @@ fun Step1(
             )
             Button(
                 modifier = Modifier.size(40.dp),
-                onClick = {},
+                onClick = { onAction(AddProductAction.OnAIDialogToggleVisibility) },
                 shape = RoundedCornerShape(6.dp),
                 colors = ButtonDefaults.buttonColors(
                     containerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.2f),
@@ -109,7 +107,7 @@ fun Step1(
                 contentPadding = PaddingValues(0.dp)
             ) {
                 Icon(
-                    painter = painterResource(Res.drawable.bot),
+                    imageVector = Lucide.Bot,
                     contentDescription = "Ai Assistant",
                     tint = MaterialTheme.colorScheme.primary
                 )
@@ -242,7 +240,7 @@ fun Step1(
                 ) {
                     Icon(
                         modifier = Modifier.padding(bottom = 8.dp),
-                        painter = painterResource(Res.drawable.image),
+                        imageVector = Lucide.Image,
                         contentDescription = "Image",
                         tint = MaterialTheme.colorScheme.onTertiary
                     )
@@ -258,7 +256,9 @@ fun Step1(
                 }
             }
             SecondaryButton(
-                onClick = {}
+                onClick = {
+                    onAction(AddProductAction.OnImagesDialogToggleVisibility)
+                },
             ) {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
@@ -267,7 +267,7 @@ fun Step1(
                 ) {
                     Icon(
                         modifier = Modifier.padding(end = 8.dp),
-                        painter = painterResource(Res.drawable.image_plus),
+                        imageVector = Lucide.ImagePlus,
                         contentDescription = "Add Image",
                         tint = MaterialTheme.colorScheme.onSurface
                     )
@@ -301,29 +301,47 @@ fun Step1(
             Box(
                 modifier = Modifier.fillMaxWidth()
             ) {
-                PrimaryTextField(
+                Button(
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .onFocusChanged { focusState ->
-                            if (focusState.isFocused) {
-                                onAction(AddProductAction.OnCategoryMenuToggle)
-                            } else
-                                onAction(AddProductAction.OnCategoryMenuToggle)
-                        },
-                    value = if (state.productCategory != null) stringResource(state.productCategory) else "",
-                    readOnly = true,
-                    onValueChange = {},
-                    trailingIcon = {
+                        .fillMaxWidth(),
+                    onClick = {
+                        onAction(AddProductAction.OnCategoryMenuToggle)
+                    },
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = MaterialTheme.colorScheme.background,
+                        contentColor = MaterialTheme.colorScheme.onTertiary
+                    ),
+                    shape = RoundedCornerShape(8.dp),
+                    contentPadding = PaddingValues(horizontal = 10.dp),
+                    border = BorderStroke(
+                        width = 0.8f.dp,
+                        color = MaterialTheme.colorScheme.outline
+                    )
+                ) {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.SpaceBetween
+                    ) {
+                        Text(
+                            text = stringResource(state.productCategory ?: Res.string.Category),
+                            fontSize = 16.sp,
+                            fontFamily = FontFamily(
+                                weight = FontWeight.Normal,
+                                language = coreState.language
+                            ),
+                            color = if (state.productCategory != null) MaterialTheme.colorScheme.onBackground else MaterialTheme.colorScheme.surfaceVariant
+                        )
                         Icon(
-                            modifier = Modifier
-                                .rotate(animateRotation),
-                            painter = painterResource(Res.drawable.chevron_down),
-                            contentDescription = "Explore categories"
+                            modifier = Modifier.size(16.dp).rotate(animateRotation),
+                            imageVector = Lucide.ChevronDown,
+                            contentDescription = "Explore categories",
+                            tint = MaterialTheme.colorScheme.onSurface
                         )
                     }
-                )
+                }
                 DropdownMenu(
-                    modifier = Modifier.width(IntrinsicSize.Max).height(150.dp)
+                    modifier = Modifier.fillMaxWidth(0.72f).height(150.dp)
                         .clip(RoundedCornerShape(12.dp))
                         .border(width = 0.8f.dp, color = MaterialTheme.colorScheme.outline)
                         .background(MaterialTheme.colorScheme.background),
@@ -331,7 +349,7 @@ fun Step1(
                     onDismissRequest = {
                         onAction(AddProductAction.OnCategoryMenuToggle)
                     },
-                    offset = DpOffset(x = 0.dp, y = (10).dp)
+                    offset = DpOffset(x = 1.dp, y = 1.dp)
                 ) {
                     repeat(state.categories.size) { index ->
                         DropdownMenuItem(

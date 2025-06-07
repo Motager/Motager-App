@@ -26,6 +26,9 @@ ktor = "3.0.1"
 datastore = "1.1.2"
 kermitLogger = "2.0.4"
 kottie = "2.0.1"
+calf = "0.8.0"
+calf-coil = "0.5.1"
+lucide-icons = "1.0.0"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
@@ -84,6 +87,13 @@ datastore-preferences = { module = "androidx.datastore:datastore-preferences", v
 
 #Kottie animation
 kottie = { module = "io.github.ismai117:kottie", version.ref = "kottie" }
+
+#Calf File Picker
+calf = { module = "com.mohamedrejeb.calf:calf-file-picker", version.ref = "calf" }
+calf-coil = { module = "com.mohamedrejeb.calf:calf-file-picker-coil", version.ref = "calf-coil" }
+
+#Lucide Icons
+lucide-icons = { module = "com.composables:icons-lucide", version.ref = "lucide-icons" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

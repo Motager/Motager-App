@@ -7,13 +7,6 @@ import org.koin.core.module.dsl.singleOf
 import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.bind
 import org.koin.dsl.module
-import org.ninjaneers.motager.authentication.data.remote.AuthenticationService
-import org.ninjaneers.motager.authentication.data.remote.AuthenticationServiceImpl
-import org.ninjaneers.motager.authentication.data.repository.AuthenticationRepositoryImpl
-import org.ninjaneers.motager.authentication.domain.AuthenticationUseCase
-import org.ninjaneers.motager.authentication.domain.UserDataValidator
-import org.ninjaneers.motager.authentication.presentation.login.presentation.LoginViewModel
-import org.ninjaneers.motager.authentication.presentation.signup.presentation.SignupViewModel
 import org.ninjaneers.motager.core.data.network.HttpClientFactory
 import org.ninjaneers.motager.core.data.repository.AppSettingsRepositoryImpl
 import org.ninjaneers.motager.core.data.repository.SessionRepositoryImpl
@@ -31,6 +24,12 @@ import org.ninjaneers.motager.dashboard.presentation.orders.presentation.OrdersV
 import org.ninjaneers.motager.dashboard.presentation.products.presentation.AddProductViewModel
 import org.ninjaneers.motager.dashboard.presentation.products.presentation.ProductsViewModel
 import org.ninjaneers.motager.dashboard.presentation.settings.presentations.SettingsViewModel
+import org.ninjaneers.motager.login.data.remote.AuthenticationService
+import org.ninjaneers.motager.login.data.remote.AuthenticationServiceImpl
+import org.ninjaneers.motager.login.data.repository.AuthenticationRepositoryImpl
+import org.ninjaneers.motager.login.domain.AuthenticationUseCase
+import org.ninjaneers.motager.login.domain.UserDataValidator
+import org.ninjaneers.motager.login.presentation.LoginViewModel
 
 expect val platformModule: Module
 
@@ -38,7 +37,6 @@ val sharedModule = module {
 //    ViewModels
     viewModelOf(::CoreViewModel)
     viewModelOf(::LoginViewModel)
-    viewModelOf(::SignupViewModel)
     viewModelOf(::DashboardViewModel)
     viewModelOf(::HomeViewModel)
     viewModelOf(::OrdersViewModel)

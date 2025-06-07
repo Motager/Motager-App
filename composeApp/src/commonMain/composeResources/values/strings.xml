@@ -62,9 +62,6 @@
     <string name="Email_Is_Empty">Email Can't be empty</string>
     <string name="Invalid_Email">Invalid,Email should contain '@' and domain</string>
     <string name="Password_Is_Empty">Password Can't be empty</string>
-    <string name="Password_Is_Short">Password Can't be less than 8 characters</string>
-    <string name="Confirmed_Password_Mismatch">Confirmed password mismatch with password</string>
-    <string name="Name_Is_Empty">Name Can't be empty</string>
     <string name="Error_request_timeout">The request timed out</string>
     <string name="Error_too_many_requests">Your quota seems to be exceeded</string>
     <string name="Error_no_internet">No internet,check your connection and try again</string>
@@ -102,6 +99,16 @@
     <string name="Profit">Profit</string>
     <string name="Margin">Margin</string>
     <string name="Review_product">Review Product</string>
+    <string name="AI_information">AI Basic Information</string>
+    <string name="AI_description">Upload product images to get AI-generated product name and description.</string>
+    <string name="Brand_name">Brand Name</string>
+    <string name="Apple">Apple</string>
+    <string name="Product_images">Product Images</string>
+    <string name="Click_to_add_images">Click to add images</string>
+    <string name="Choose_images">Choose one or more images where the product is visible to generate the product name, and description.</string>
+    <string name="Generate_product_info">Generate Product info</string>
+    <string name="Supported_formats">Supported formats: JPEG,PNG</string>
+    <string name="Cancel">Cancel</string>
 
 
 </resources>

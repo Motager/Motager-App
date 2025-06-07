@@ -17,6 +17,24 @@ class AddProductViewModel : ViewModel() {
             is AddProductAction.OnStepChange -> onStepChange(action.currentStep)
             AddProductAction.OnCategoryMenuToggle -> onCategoryMenuToggle()
             is AddProductAction.OnProductCategoryChange -> onProductCategoryChange(action.productCategory)
+            AddProductAction.OnAIDialogToggleVisibility -> onAIDialogToggleVisibility()
+            AddProductAction.OnImagesDialogToggleVisibility -> onImagesDialogToggleVisibility()
+        }
+    }
+
+    private fun onAIDialogToggleVisibility() {
+        _state.update {
+            it.copy(
+                isAIDialogShown = !it.isAIDialogShown
+            )
+        }
+    }
+
+    private fun onImagesDialogToggleVisibility() {
+        _state.update {
+            it.copy(
+                isImagesDialogShown = !it.isImagesDialogShown
+            )
         }
     }
 

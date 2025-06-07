@@ -6,17 +6,14 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.onStart
-import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import org.ninjaneers.motager.authentication.domain.User
 import org.ninjaneers.motager.core.domain.AppSettingsRepository
 import org.ninjaneers.motager.core.domain.Language
 import org.ninjaneers.motager.core.domain.Localization
 import org.ninjaneers.motager.core.domain.Theme
+import org.ninjaneers.motager.login.domain.User
 
 class CoreViewModel(
     private val settingsRepository: AppSettingsRepository,

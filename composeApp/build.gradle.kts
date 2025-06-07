@@ -54,6 +54,9 @@ kotlin {
             implementation(libs.bundles.coil)
             implementation(libs.kermit.logger)
             implementation(libs.kottie)
+            implementation(libs.calf)
+            implementation(libs.calf.coil)
+            implementation(libs.lucide.icons)
 
             api(libs.koin.core)
             api(libs.datastore)
@@ -67,7 +70,7 @@ kotlin {
 
 android {
     namespace = "org.ninjaneers.motager"
-    compileSdk = libs.versions.android.compileSdk.get().toInt()
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "org.ninjaneers.motager"
