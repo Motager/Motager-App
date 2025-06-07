@@ -18,6 +18,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.composables.icons.lucide.Bot
+import com.composables.icons.lucide.Lucide
 import motager.composeapp.generated.resources.Compare_at_price
 import motager.composeapp.generated.resources.Margin
 import motager.composeapp.generated.resources.Price
@@ -25,13 +27,10 @@ import motager.composeapp.generated.resources.Profit
 import motager.composeapp.generated.resources.Res
 import motager.composeapp.generated.resources.SKU_Management
 import motager.composeapp.generated.resources.Stock
-import motager.composeapp.generated.resources.bot
-import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.ninjaneers.motager.core.presentation.CoreState
 import org.ninjaneers.motager.core.presentation.components.PrimaryTextField
 import org.ninjaneers.motager.core.presentation.theme.FontFamily
-import org.ninjaneers.motager.dashboard.presentation.DashboardAction
 import org.ninjaneers.motager.dashboard.presentation.products.presentation.AddProductAction
 import org.ninjaneers.motager.dashboard.presentation.products.presentation.AddProductState
 
@@ -41,6 +40,15 @@ fun Step2(
     coreState: CoreState,
     onAction: (AddProductAction) -> Unit,
 ) {
+    if (state.isAIDialogShown)
+        AIDialog(
+            onDismiss = { onAction(AddProductAction.OnAIDialogToggleVisibility) },
+            openImagesDialog = { onAction(AddProductAction.OnImagesDialogToggleVisibility) }
+        )
+    if (state.isImagesDialogShown)
+        ImagesDialog(
+            onDismiss = { onAction(AddProductAction.OnImagesDialogToggleVisibility) }
+        )
     Column(
         verticalArrangement = Arrangement.spacedBy(24.dp),
     ) {
@@ -61,7 +69,7 @@ fun Step2(
             )
             Button(
                 modifier = Modifier.size(40.dp),
-                onClick = {},
+                onClick = { onAction(AddProductAction.OnAIDialogToggleVisibility) },
                 shape = RoundedCornerShape(6.dp),
                 colors = ButtonDefaults.buttonColors(
                     containerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.2f),
@@ -70,7 +78,7 @@ fun Step2(
                 contentPadding = PaddingValues(0.dp)
             ) {
                 Icon(
-                    painter = painterResource(Res.drawable.bot),
+                    imageVector = Lucide.Bot,
                     contentDescription = "Ai Assistant",
                     tint = MaterialTheme.colorScheme.primary
                 )

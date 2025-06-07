@@ -38,6 +38,7 @@ fun SecondaryButton(
         contentPadding = contentPadding,
         colors = ButtonDefaults.buttonColors(
             containerColor = MaterialTheme.colorScheme.background,
+            contentColor = MaterialTheme.colorScheme.onTertiary
         ),
     ) {
         Box(

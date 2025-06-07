@@ -12,15 +12,13 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
 import org.koin.compose.viewmodel.koinViewModel
-import org.ninjaneers.motager.authentication.presentation.login.presentation.LoginScreen
-import org.ninjaneers.motager.authentication.presentation.login.presentation.LoginViewModel
-import org.ninjaneers.motager.authentication.presentation.signup.presentation.SignupScreen
-import org.ninjaneers.motager.authentication.presentation.signup.presentation.SignupViewModel
 import org.ninjaneers.motager.core.presentation.CoreAction
 import org.ninjaneers.motager.core.presentation.CoreState
 import org.ninjaneers.motager.core.presentation.SplashScreen
 import org.ninjaneers.motager.dashboard.presentation.DashboardScreen
 import org.ninjaneers.motager.dashboard.presentation.DashboardViewModel
+import org.ninjaneers.motager.login.presentation.LoginScreen
+import org.ninjaneers.motager.login.presentation.LoginViewModel
 import org.ninjaneers.motager.mainscreen.MainScreen
 
 @Composable
@@ -70,20 +68,7 @@ fun NavigationGraph(
                         coreState = coreState,
                         onAction = viewModel::onAction,
                         coreAction = coreAction,
-                        goToSignup = { navController.navigate(Route.Signup) },
                         goToDashboard = { navController.navigate(Route.DashboardGraph) },
-                    )
-                }
-                composable<Route.Signup> {
-                    val viewModel = koinViewModel<SignupViewModel>()
-                    val state by viewModel.state.collectAsStateWithLifecycle()
-                    SignupScreen(
-                        state = state,
-                        coreState = coreState,
-                        onAction = viewModel::onAction,
-                        coreAction = coreAction,
-                        backToLogin = { navController.navigate(Route.Login) },
-                        goToDashBoard = { navController.navigate(Route.DashboardGraph) },
                     )
                 }
             }

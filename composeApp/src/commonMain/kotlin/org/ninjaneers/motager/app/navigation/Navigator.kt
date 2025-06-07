@@ -9,8 +9,6 @@ class Navigator(private val navController: NavController) {
 
             Route.Login -> navController.navigate(Route.Login)
 
-            Route.Signup -> navController.navigate(Route.Signup)
-
             Route.AuthenticationGraph -> {
                 navController.navigate(Route.AuthenticationGraph)
             }

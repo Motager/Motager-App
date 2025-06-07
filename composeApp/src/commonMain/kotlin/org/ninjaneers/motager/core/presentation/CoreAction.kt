@@ -1,8 +1,8 @@
 package org.ninjaneers.motager.core.presentation
 
-import org.ninjaneers.motager.authentication.domain.User
 import org.ninjaneers.motager.core.domain.Language
 import org.ninjaneers.motager.core.domain.Theme
+import org.ninjaneers.motager.login.domain.User
 
 sealed interface CoreAction {
     data class OnThemeChange(val theme: Theme) : CoreAction
