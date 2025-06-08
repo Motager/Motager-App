@@ -14,6 +14,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyHorizontalGrid
+import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -76,7 +79,9 @@ fun Step1(
         )
     if (state.isImagesDialogShown)
         ImagesDialog(
-            onDismiss = { onAction(AddProductAction.OnImagesDialogToggleVisibility) }
+            images = state.productImages,
+            onDismiss = { onAction(AddProductAction.OnImagesDialogToggleVisibility) },
+            storeImage = { onAction(AddProductAction.OnProductImageStore(it)) }
         )
     Column(
         verticalArrangement = Arrangement.spacedBy(24.dp),
@@ -223,7 +228,7 @@ fun Step1(
                 modifier = Modifier
                     .padding(bottom = 8.dp)
                     .fillMaxWidth()
-                    .height(180.dp)
+                    .height(220.dp)
                     .clip(RoundedCornerShape(8.dp))
                     .border(
                         width = 0.8f.dp,
@@ -238,21 +243,40 @@ fun Step1(
                     verticalArrangement = Arrangement.Center,
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    Icon(
-                        modifier = Modifier.padding(bottom = 8.dp),
-                        imageVector = Lucide.Image,
-                        contentDescription = "Image",
-                        tint = MaterialTheme.colorScheme.onTertiary
-                    )
-                    Text(
-                        text = stringResource(Res.string.No_Images),
-                        fontSize = 14.sp,
-                        fontFamily = FontFamily(
-                            weight = FontWeight.Normal,
-                            language = coreState.language
-                        ),
-                        color = MaterialTheme.colorScheme.onSurface
-                    )
+                    if (state.productImages.isEmpty()) {
+                        Icon(
+                            modifier = Modifier.padding(bottom = 8.dp),
+                            imageVector = Lucide.Image,
+                            contentDescription = "Image",
+                            tint = MaterialTheme.colorScheme.onTertiary
+                        )
+                        Text(
+                            text = stringResource(Res.string.No_Images),
+                            fontSize = 14.sp,
+                            fontFamily = FontFamily(
+                                weight = FontWeight.Normal,
+                                language = coreState.language
+                            ),
+                            color = MaterialTheme.colorScheme.onSurface
+                        )
+                    } else {
+                        LazyHorizontalGrid(
+                            modifier = Modifier.fillMaxSize(),
+                            rows = GridCells.Fixed(count = 2),
+                            verticalArrangement = Arrangement.spacedBy(8.dp),
+                            horizontalArrangement = Arrangement.spacedBy(8.dp),
+                            contentPadding = PaddingValues(8.dp)
+                        ) {
+                            itemsIndexed(state.productImages) { index, image ->
+                                ProductImage(
+                                    image = image,
+                                    onImageDelete = {
+
+                                    }
+                                )
+                            }
+                        }
+                    }
                 }
             }
             SecondaryButton(

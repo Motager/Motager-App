@@ -18,6 +18,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -27,6 +28,12 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import com.composables.icons.lucide.CloudUpload
 import com.composables.icons.lucide.Lucide
+import com.mohamedrejeb.calf.core.LocalPlatformContext
+import com.mohamedrejeb.calf.io.readByteArray
+import com.mohamedrejeb.calf.picker.FilePickerFileType
+import com.mohamedrejeb.calf.picker.FilePickerSelectionMode
+import com.mohamedrejeb.calf.picker.rememberFilePickerLauncher
+import kotlinx.coroutines.launch
 import motager.composeapp.generated.resources.Add_images
 import motager.composeapp.generated.resources.Cancel
 import motager.composeapp.generated.resources.Click_to_add_images
@@ -39,8 +46,26 @@ import org.ninjaneers.motager.core.presentation.theme.FontFamily
 
 @Composable
 fun ImagesDialog(
+    images: List<ByteArray>,
     onDismiss: () -> Unit,
+    storeImage: (ByteArray) -> Unit
 ) {
+    val context = LocalPlatformContext.current
+    val scope = rememberCoroutineScope()
+    val pickerLauncher = rememberFilePickerLauncher(
+        type = FilePickerFileType.Image,
+        selectionMode = FilePickerSelectionMode.Multiple,
+        onResult = { images ->
+            images.forEach { image ->
+                scope.launch {
+                    val byteArray = image.readByteArray(context)
+                    storeImage(byteArray)
+                }
+            }
+            onDismiss()
+        }
+    )
+
     Dialog(onDismissRequest = {
         onDismiss()
     }) {
@@ -110,7 +135,9 @@ fun ImagesDialog(
                             color = MaterialTheme.colorScheme.onTertiary
                         )
                         Button(
-                            onClick = {},
+                            onClick = {
+                                pickerLauncher.launch()
+                            },
                             shape = RoundedCornerShape(6.dp),
                             colors = ButtonDefaults.buttonColors(
                                 containerColor = MaterialTheme.colorScheme.surfaceContainerHigh,
@@ -126,6 +153,7 @@ fun ImagesDialog(
                                 color = Color.White
                             )
                         }
+
                     }
                     Row(
                         modifier = Modifier

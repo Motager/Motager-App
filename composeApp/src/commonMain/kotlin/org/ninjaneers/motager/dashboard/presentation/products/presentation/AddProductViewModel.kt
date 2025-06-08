@@ -7,8 +7,6 @@ import kotlinx.coroutines.flow.update
 import org.jetbrains.compose.resources.StringResource
 
 class AddProductViewModel : ViewModel() {
-
-
     private val _state = MutableStateFlow(AddProductState())
     val state = _state.asStateFlow()
 
@@ -19,7 +17,12 @@ class AddProductViewModel : ViewModel() {
             is AddProductAction.OnProductCategoryChange -> onProductCategoryChange(action.productCategory)
             AddProductAction.OnAIDialogToggleVisibility -> onAIDialogToggleVisibility()
             AddProductAction.OnImagesDialogToggleVisibility -> onImagesDialogToggleVisibility()
+            is AddProductAction.OnProductImageStore -> onProductImageStore(action.image)
         }
+    }
+
+    private fun onProductImageStore(image: ByteArray) {
+        _state.value.productImages.add(image)
     }
 
     private fun onAIDialogToggleVisibility() {
