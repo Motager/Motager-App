@@ -31,7 +31,7 @@ fun ProductImage(
     Card(
         modifier = Modifier.height(200.dp).aspectRatio(1f),
         colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.onBackground
+            containerColor = MaterialTheme.colorScheme.background
         ),
         shape = RoundedCornerShape(6.dp)
     ) {
@@ -46,7 +46,7 @@ fun ProductImage(
                 contentScale = ContentScale.Crop
             )
             IconButton(
-                modifier = Modifier.padding(6.dp).size(20.dp),
+                modifier = Modifier.padding(2.dp).size(20.dp),
                 onClick = {
                     onImageDelete()
                 },
@@ -59,7 +59,7 @@ fun ProductImage(
                     modifier = Modifier.size(16.dp),
                     imageVector = Lucide.X,
                     contentDescription = "Delete Image",
-                    tint = MaterialTheme.colorScheme.error,
+                    tint = Color.Red,
                 )
             }
         }

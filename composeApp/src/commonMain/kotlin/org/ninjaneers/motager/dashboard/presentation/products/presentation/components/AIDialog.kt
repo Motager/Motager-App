@@ -47,6 +47,7 @@ import org.ninjaneers.motager.core.presentation.theme.FontFamily
 @Composable
 fun AIDialog(
     onDismiss: () -> Unit,
+    language: Language,
     openImagesDialog: () -> Unit
 ) {
     Dialog(
@@ -81,7 +82,7 @@ fun AIDialog(
                         color = MaterialTheme.colorScheme.onBackground,
                         fontSize = 18.sp,
                         fontFamily = FontFamily(
-                            language = Language.English,
+                            language = language,
                             weight = FontWeight.SemiBold
                         )
                     )
@@ -90,7 +91,7 @@ fun AIDialog(
                         color = MaterialTheme.colorScheme.onTertiary,
                         fontSize = 14.sp,
                         fontFamily = FontFamily(
-                            language = Language.English,
+                            language = language,
                             weight = FontWeight.Normal
                         ),
                         lineHeight = 16.sp,
@@ -107,7 +108,7 @@ fun AIDialog(
                             fontSize = 14.sp,
                             color = MaterialTheme.colorScheme.onBackground,
                             fontFamily = FontFamily(
-                                language = Language.English,
+                                language = language,
                                 weight = FontWeight.Medium
                             ),
                         )
@@ -131,7 +132,7 @@ fun AIDialog(
                             fontSize = 14.sp,
                             color = MaterialTheme.colorScheme.onBackground,
                             fontFamily = FontFamily(
-                                language = Language.English,
+                                language = language,
                                 weight = FontWeight.Medium
                             ),
                         )
@@ -170,7 +171,7 @@ fun AIDialog(
                                     text = stringResource(Res.string.Click_to_add_images),
                                     fontSize = 16.sp,
                                     fontFamily = FontFamily(
-                                        language = Language.English,
+                                        language = language,
                                         weight = FontWeight.Normal
                                     ),
                                     color = MaterialTheme.colorScheme.onTertiary
@@ -182,7 +183,7 @@ fun AIDialog(
                             text = stringResource(Res.string.Choose_images),
                             fontSize = 14.sp,
                             fontFamily = FontFamily(
-                                language = Language.English,
+                                language = language,
                                 weight = FontWeight.Normal
                             ),
                             lineHeight = 16.sp,
@@ -200,7 +201,7 @@ fun AIDialog(
                                 Text(
                                     text = stringResource(Res.string.Generate_product_info),
                                     fontFamily = FontFamily(
-                                        language = Language.English,
+                                        language = language,
                                         weight = FontWeight.Normal
                                     ),
                                     color = MaterialTheme.colorScheme.onPrimary

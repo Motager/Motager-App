@@ -74,12 +74,13 @@ fun Step1(
     )
     if (state.isAIDialogShown)
         AIDialog(
+            language = coreState.language,
             onDismiss = { onAction(AddProductAction.OnAIDialogToggleVisibility) },
             openImagesDialog = { onAction(AddProductAction.OnImagesDialogToggleVisibility) }
         )
     if (state.isImagesDialogShown)
         ImagesDialog(
-            images = state.productImages,
+            language = coreState.language,
             onDismiss = { onAction(AddProductAction.OnImagesDialogToggleVisibility) },
             storeImage = { onAction(AddProductAction.OnProductImageStore(it)) }
         )
