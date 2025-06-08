@@ -8,4 +8,5 @@ sealed interface AddProductAction {
     data class OnProductCategoryChange(val productCategory: StringResource) : AddProductAction
     data object OnAIDialogToggleVisibility : AddProductAction
     data object OnImagesDialogToggleVisibility : AddProductAction
+    data class OnProductImageStore(val image: ByteArray) : AddProductAction
 }

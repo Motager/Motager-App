@@ -28,4 +28,5 @@ data class AddProductState(
     val isCategoryExpanded: Boolean = false,
     val isAIDialogShown: Boolean = false,
     val isImagesDialogShown: Boolean = false,
+    val productImages: MutableList<ByteArray> = mutableListOf(),
 )

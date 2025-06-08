@@ -47,7 +47,9 @@ fun Step2(
         )
     if (state.isImagesDialogShown)
         ImagesDialog(
-            onDismiss = { onAction(AddProductAction.OnImagesDialogToggleVisibility) }
+            images = state.productImages,
+            onDismiss = { onAction(AddProductAction.OnImagesDialogToggleVisibility) },
+            storeImage = { onAction(AddProductAction.OnProductImageStore(it)) }
         )
     Column(
         verticalArrangement = Arrangement.spacedBy(24.dp),
