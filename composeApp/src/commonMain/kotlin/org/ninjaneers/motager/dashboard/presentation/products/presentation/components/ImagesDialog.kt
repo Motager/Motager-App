@@ -46,9 +46,10 @@ import org.ninjaneers.motager.core.presentation.theme.FontFamily
 
 @Composable
 fun ImagesDialog(
-    images: List<ByteArray>,
+    language: Language,
     onDismiss: () -> Unit,
-    storeImage: (ByteArray) -> Unit
+    storeImage: (ByteArray) -> Unit,
+    uploadImages: () -> Unit
 ) {
     val context = LocalPlatformContext.current
     val scope = rememberCoroutineScope()
@@ -58,8 +59,8 @@ fun ImagesDialog(
         onResult = { images ->
             images.forEach { image ->
                 scope.launch {
-                    val byteArray = image.readByteArray(context)
-                    storeImage(byteArray)
+                    storeImage(image.readByteArray(context))
+                    uploadImages()
                 }
             }
             onDismiss()
@@ -93,7 +94,7 @@ fun ImagesDialog(
                         color = MaterialTheme.colorScheme.onBackground,
                         fontSize = 18.sp,
                         fontFamily = FontFamily(
-                            language = Language.English,
+                            language = language,
                             weight = FontWeight.SemiBold
                         )
                     )
@@ -119,7 +120,7 @@ fun ImagesDialog(
                             text = stringResource(Res.string.Click_to_add_images),
                             fontSize = 18.sp,
                             fontFamily = FontFamily(
-                                language = Language.English,
+                                language = language,
                                 weight = FontWeight.SemiBold
                             ),
                             color = MaterialTheme.colorScheme.onBackground
@@ -129,7 +130,7 @@ fun ImagesDialog(
                             text = stringResource(Res.string.Supported_formats),
                             fontSize = 14.sp,
                             fontFamily = FontFamily(
-                                language = Language.English,
+                                language = language,
                                 weight = FontWeight.Normal
                             ),
                             color = MaterialTheme.colorScheme.onTertiary
@@ -147,7 +148,7 @@ fun ImagesDialog(
                                 text = stringResource(Res.string.Add_images),
                                 fontSize = 16.sp,
                                 fontFamily = FontFamily(
-                                    language = Language.English,
+                                    language = language,
                                     weight = FontWeight.Medium
                                 ),
                                 color = Color.White
@@ -169,7 +170,7 @@ fun ImagesDialog(
                                 text = stringResource(Res.string.Cancel),
                                 fontSize = 14.sp,
                                 fontFamily = FontFamily(
-                                    language = Language.English,
+                                    language = language,
                                     weight = FontWeight.Medium
                                 ),
                                 color = MaterialTheme.colorScheme.onBackground

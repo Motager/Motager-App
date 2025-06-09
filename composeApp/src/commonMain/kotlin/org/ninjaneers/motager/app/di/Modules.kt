@@ -21,6 +21,10 @@ import org.ninjaneers.motager.dashboard.presentation.customers.presentation.Cust
 import org.ninjaneers.motager.dashboard.presentation.discounts.presentation.DiscountsViewModel
 import org.ninjaneers.motager.dashboard.presentation.home.presentation.HomeViewModel
 import org.ninjaneers.motager.dashboard.presentation.orders.presentation.OrdersViewModel
+import org.ninjaneers.motager.dashboard.presentation.products.data.remote.ProductService
+import org.ninjaneers.motager.dashboard.presentation.products.data.remote.ProductServiceImpl
+import org.ninjaneers.motager.dashboard.presentation.products.data.repository.ProductRepositoryImpl
+import org.ninjaneers.motager.dashboard.presentation.products.domain.ProductRepository
 import org.ninjaneers.motager.dashboard.presentation.products.presentation.AddProductViewModel
 import org.ninjaneers.motager.dashboard.presentation.products.presentation.ProductsViewModel
 import org.ninjaneers.motager.dashboard.presentation.settings.presentations.SettingsViewModel
@@ -56,11 +60,18 @@ val sharedModule = module {
             sessionHandler = get()
         )
     }.bind<SessionRepository>()
+
     single<AuthenticationRepositoryImpl> {
         AuthenticationRepositoryImpl(
             authenticationService = get()
         )
     }.bind<AuthenticationUseCase>()
+
+    single<ProductRepositoryImpl> {
+        ProductRepositoryImpl(
+            productService = get()
+        )
+    }.bind<ProductRepository>()
 
 //  network
     single<HttpClient> {
@@ -74,6 +85,12 @@ val sharedModule = module {
             client = get()
         )
     }.bind<AuthenticationService>()
+
+    single<ProductServiceImpl> {
+        ProductServiceImpl(
+            client = get()
+        )
+    }.bind<ProductService>()
 
 
     singleOf(::UserDataValidator)

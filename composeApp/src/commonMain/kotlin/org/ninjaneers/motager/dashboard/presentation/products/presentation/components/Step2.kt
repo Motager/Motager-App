@@ -42,14 +42,17 @@ fun Step2(
 ) {
     if (state.isAIDialogShown)
         AIDialog(
+            language = coreState.language,
             onDismiss = { onAction(AddProductAction.OnAIDialogToggleVisibility) },
             openImagesDialog = { onAction(AddProductAction.OnImagesDialogToggleVisibility) }
         )
     if (state.isImagesDialogShown)
         ImagesDialog(
-            images = state.productImages,
+            language = coreState.language,
             onDismiss = { onAction(AddProductAction.OnImagesDialogToggleVisibility) },
-            storeImage = { onAction(AddProductAction.OnProductImageStore(it)) }
+            storeImage = { onAction(AddProductAction.OnProductImageStore(it)) },
+            uploadImages = { onAction(AddProductAction.OnProductImagesUpload) }
+
         )
     Column(
         verticalArrangement = Arrangement.spacedBy(24.dp),
