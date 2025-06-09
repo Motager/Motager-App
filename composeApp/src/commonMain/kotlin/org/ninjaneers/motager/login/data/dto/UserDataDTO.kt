@@ -24,8 +24,8 @@ data class UserDataDTO(
     val lastName: String?,
     @SerialName("phoneNumber")
     val phoneNumber: String?,
-    @SerialName("stores_id")
-    val stores: List<Int?>?,
+    @SerialName("stores")
+    val stores: List<StoreDTO?>?,
     @SerialName("updateAt")
     val updateAt: String?
 )

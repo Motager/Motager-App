@@ -16,6 +16,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -67,14 +68,17 @@ private fun DashboardScreenContent(
     dashboardAction: suspend (DashboardAction) -> Unit,
     coreAction: (CoreAction) -> Unit,
 ) {
+    LaunchedEffect(Unit) {
+        coreAction(CoreAction.OnStoreChange(coreState.user?.stores?.first()!!))
+    }
     ModalNavigationDrawer(
         drawerContent = {
             NavDrawer(
                 state = dashboardState,
+                coreState = coreState,
                 onAction = dashboardAction,
                 coreAction = coreAction,
                 items = dashboardState.navigationItems,
-                language = coreState.language
             )
         },
         drawerState = dashboardState.drawerState,

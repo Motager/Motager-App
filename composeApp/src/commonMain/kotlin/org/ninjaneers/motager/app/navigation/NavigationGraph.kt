@@ -5,7 +5,6 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -27,10 +26,9 @@ fun NavigationGraph(
     coreAction: (CoreAction) -> Unit
 ) {
     val navController = rememberNavController()
-    val navigator = remember { Navigator(navController) }
     NavHost(navController = navController, startDestination = Route.MotagerGraph) {
 
-        navigation<Route.MotagerGraph>(startDestination = Route.DashboardGraph) {
+        navigation<Route.MotagerGraph>(startDestination = Route.Splash) {
 
             composable<Route.Splash>(
                 exitTransition = {
@@ -52,7 +50,9 @@ fun NavigationGraph(
             composable<Route.MainScreen> {
                 MainScreen(
                     coreState = coreState,
-                    navigator = navigator
+                    navigateToLogin = {
+                        navController.navigate(Route.AuthenticationGraph)
+                    }
                 )
             }
 

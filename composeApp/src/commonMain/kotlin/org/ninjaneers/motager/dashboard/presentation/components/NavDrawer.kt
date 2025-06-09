@@ -1,7 +1,6 @@
 package org.ninjaneers.motager.dashboard.presentation.components
 
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -13,6 +12,7 @@ import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBars
@@ -24,8 +24,10 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.MenuDefaults
 import androidx.compose.material3.ModalDrawerSheet
 import androidx.compose.material3.NavigationDrawerItem
 import androidx.compose.material3.NavigationDrawerItemDefaults
@@ -42,6 +44,9 @@ import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
+import com.composables.icons.lucide.Check
+import com.composables.icons.lucide.ChevronsUpDown
+import com.composables.icons.lucide.Lucide
 import kotlinx.coroutines.launch
 import motager.composeapp.generated.resources.Arabic
 import motager.composeapp.generated.resources.Dark
@@ -49,6 +54,7 @@ import motager.composeapp.generated.resources.DashboardLinks
 import motager.composeapp.generated.resources.English
 import motager.composeapp.generated.resources.Light
 import motager.composeapp.generated.resources.Res
+import motager.composeapp.generated.resources.Stores
 import motager.composeapp.generated.resources.Support
 import motager.composeapp.generated.resources.System
 import motager.composeapp.generated.resources.ar
@@ -59,12 +65,12 @@ import motager.composeapp.generated.resources.moon
 import motager.composeapp.generated.resources.store
 import motager.composeapp.generated.resources.sun
 import motager.composeapp.generated.resources.system
-import motager.composeapp.generated.resources.up_down_chevron
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.ninjaneers.motager.core.domain.Language
 import org.ninjaneers.motager.core.domain.Theme
 import org.ninjaneers.motager.core.presentation.CoreAction
+import org.ninjaneers.motager.core.presentation.CoreState
 import org.ninjaneers.motager.core.presentation.components.PrimaryIconButton
 import org.ninjaneers.motager.core.presentation.components.SecondaryButton
 import org.ninjaneers.motager.core.presentation.theme.FontFamily
@@ -72,15 +78,15 @@ import org.ninjaneers.motager.dashboard.domain.NavDrawerItem
 import org.ninjaneers.motager.dashboard.presentation.DashboardAction
 import org.ninjaneers.motager.dashboard.presentation.DashboardState
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun NavDrawer(
     state: DashboardState,
+    coreState: CoreState,
     onAction: suspend (DashboardAction) -> Unit,
     coreAction: (CoreAction) -> Unit,
-    items: List<NavDrawerItem>,
-    language: Language,
+    items: List<NavDrawerItem>
 ) {
+
     val coroutineScope = rememberCoroutineScope()
     ModalDrawerSheet(
         modifier = Modifier
@@ -100,41 +106,130 @@ fun NavDrawer(
             verticalArrangement = Arrangement.SpaceBetween
         ) {
             stickyHeader {
-                SecondaryButton(
-                    modifier = Modifier.height(42.dp),
-                    onClick = {},
-                    border = BorderStroke(width = 1f.dp, color = MaterialTheme.colorScheme.primary)
+                Box(
+                    modifier = Modifier.fillMaxWidth().padding(top = 6.dp, bottom = 12.dp)
                 ) {
-                    Row(
-                        modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp, horizontal = 16.dp),
-                        horizontalArrangement = Arrangement.SpaceBetween,
-                        verticalAlignment = Alignment.CenterVertically
+                    SecondaryButton(
+                        modifier = Modifier.fillMaxWidth().height(50.dp),
+                        onClick = {
+                            coroutineScope.launch {
+                                onAction(DashboardAction.OnStoresMenuToggle)
+                            }
+                        },
+                        border = BorderStroke(
+                            width = 1.5f.dp,
+                            color = if (state.isStoresMenuExpanded) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outline
+                        )
                     ) {
                         Row(
-                            horizontalArrangement = Arrangement.spacedBy(8.dp),
+                            modifier = Modifier.fillMaxWidth()
+                                .padding(vertical = 8.dp, horizontal = 16.dp),
+                            horizontalArrangement = Arrangement.SpaceBetween,
                             verticalAlignment = Alignment.CenterVertically
                         ) {
+                            Row(
+                                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                Icon(
+                                    modifier = Modifier.size(16.dp),
+                                    painter = painterResource(Res.drawable.store),
+                                    contentDescription = "Store",
+                                    tint = MaterialTheme.colorScheme.onBackground
+                                )
+                                Text(
+                                    text = coreState.store.name,
+                                    fontSize = 18.sp,
+                                    fontFamily = FontFamily(
+                                        weight = FontWeight.Medium,
+                                        language = Language.English
+                                    ),
+                                    color = MaterialTheme.colorScheme.onBackground
+                                )
+                            }
                             Icon(
-                                modifier = Modifier.size(16.dp),
-                                painter = painterResource(Res.drawable.store),
-                                contentDescription = "Store",
-                                tint = MaterialTheme.colorScheme.onBackground
-                            )
-                            Text(
-                                text = "Store Name",
-                                fontSize = 18.sp,
-                                fontFamily = FontFamily(
-                                    weight = FontWeight.Medium,
-                                    language = Language.English
-                                ),
-                                color = MaterialTheme.colorScheme.onBackground
+                                imageVector = Lucide.ChevronsUpDown,
+                                contentDescription = "Expand",
+                                tint = MaterialTheme.colorScheme.onTertiary
                             )
                         }
-                        Icon(
-                            painter = painterResource(Res.drawable.up_down_chevron),
-                            contentDescription = "expand",
-                            tint = MaterialTheme.colorScheme.onTertiary
+                    }
+                    DropdownMenu(
+                        modifier = Modifier.heightIn(max = 180.dp).fillMaxWidth(0.64f),
+                        expanded = state.isStoresMenuExpanded,
+                        onDismissRequest = {
+                            coroutineScope.launch {
+                                onAction(DashboardAction.OnStoresMenuToggle)
+                            }
+                        },
+                        shape = RoundedCornerShape(6.dp),
+                        offset = DpOffset(x = 0f.dp, y = 6f.dp),
+                        containerColor = MaterialTheme.colorScheme.inverseSurface
+                    ) {
+                        DropdownMenuItem(
+                            enabled = false,
+                            onClick = {},
+                            colors = MenuDefaults.itemColors(
+                                disabledTextColor = MaterialTheme.colorScheme.inverseOnSurface
+                            ),
+                            text = {
+                                Column(
+                                    modifier = Modifier.fillMaxWidth(),
+                                    horizontalAlignment = Alignment.Start,
+                                    verticalArrangement = Arrangement.spacedBy(6.dp)
+                                ) {
+                                    Text(
+                                        text = stringResource(Res.string.Stores),
+                                        fontSize = 18.sp,
+                                        color = MaterialTheme.colorScheme.inverseOnSurface,
+                                        fontFamily = FontFamily(
+                                            language = coreState.language,
+                                            weight = FontWeight.SemiBold
+                                        )
+                                    )
+                                    HorizontalDivider(
+                                        modifier = Modifier
+                                            .fillMaxWidth()
+                                            .height(1.dp)
+                                            .background(MaterialTheme.colorScheme.outline)
+                                            .clip(RoundedCornerShape(50.dp))
+                                    )
+                                }
+                            }
                         )
+                        coreState.user!!.stores.forEach { store ->
+                            DropdownMenuItem(
+                                onClick = {
+                                    coroutineScope.launch {
+                                        coreAction(CoreAction.OnStoreChange(store!!))
+                                        onAction(DashboardAction.OnStoresMenuToggle)
+                                    }
+                                },
+                                text = {
+                                    store?.name.let { name ->
+                                        Text(
+                                            text = name!!,
+                                            fontSize = 16.sp,
+                                            color = MaterialTheme.colorScheme.inverseOnSurface,
+                                            fontFamily = FontFamily(
+                                                language = coreState.language,
+                                                weight = FontWeight.SemiBold
+                                            )
+                                        )
+                                    }
+                                },
+                                trailingIcon = {
+                                    if (store!!.name == coreState.store.name) {
+                                        Icon(
+                                            modifier = Modifier.size(16.dp),
+                                            imageVector = Lucide.Check,
+                                            contentDescription = "Selected Store",
+                                            tint = MaterialTheme.colorScheme.inverseOnSurface
+                                        )
+                                    }
+                                }
+                            )
+                        }
                     }
                 }
             }
@@ -148,7 +243,7 @@ fun NavDrawer(
                     color = MaterialTheme.colorScheme.onTertiary,
                     fontFamily = FontFamily(
                         weight = FontWeight.Normal,
-                        language = language
+                        language = coreState.language
                     )
                 )
             }
@@ -173,7 +268,7 @@ fun NavDrawer(
                             fontSize = 18.sp,
                             fontFamily = FontFamily(
                                 weight = if (index == state.selectedIndex) FontWeight.SemiBold else FontWeight.Medium,
-                                language = language
+                                language = coreState.language
                             )
                         )
                     },
@@ -211,7 +306,7 @@ fun NavDrawer(
                             fontSize = 20.sp,
                             fontFamily = FontFamily(
                                 weight = FontWeight.SemiBold,
-                                language = language
+                                language = coreState.language
                             ),
                             color = MaterialTheme.colorScheme.onBackground,
                             textAlign = TextAlign.Center
@@ -227,7 +322,7 @@ fun NavDrawer(
                             fontSize = 18.sp,
                             fontFamily = FontFamily(
                                 weight = FontWeight.Normal,
-                                language = language
+                                language = coreState.language
                             ),
                             color = MaterialTheme.colorScheme.onTertiary,
                             textAlign = TextAlign.Center
@@ -263,7 +358,7 @@ fun NavDrawer(
                                 containerColor = MaterialTheme.colorScheme.background,
                                 contentColor = MaterialTheme.colorScheme.surfaceContainerLowest
                             ),
-                            language = Language.English
+                            language = coreState.language
                         )
                         DropdownMenu(
                             expanded = state.isThemeMenuExpanded,
@@ -304,7 +399,7 @@ fun NavDrawer(
                                         color = MaterialTheme.colorScheme.inverseOnSurface,
                                         fontFamily = FontFamily(
                                             weight = FontWeight.Normal,
-                                            language = language
+                                            language = coreState.language
                                         ),
                                         textAlign = TextAlign.Center
                                     )
@@ -338,7 +433,7 @@ fun NavDrawer(
                                         color = MaterialTheme.colorScheme.inverseOnSurface,
                                         fontFamily = FontFamily(
                                             weight = FontWeight.Normal,
-                                            language = language
+                                            language = coreState.language
                                         ),
                                         textAlign = TextAlign.Center
                                     )
@@ -372,7 +467,7 @@ fun NavDrawer(
                                         color = MaterialTheme.colorScheme.inverseOnSurface,
                                         fontFamily = FontFamily(
                                             weight = FontWeight.Normal,
-                                            language = language
+                                            language = coreState.language
                                         ),
                                         textAlign = TextAlign.Center
                                     )
@@ -404,7 +499,7 @@ fun NavDrawer(
                                 containerColor = MaterialTheme.colorScheme.background,
                                 contentColor = MaterialTheme.colorScheme.surfaceContainerLowest
                             ),
-                            language = Language.English
+                            language = coreState.language
                         )
                         DropdownMenu(
                             expanded = state.isLocaleMenuExpanded,
@@ -445,7 +540,7 @@ fun NavDrawer(
                                         color = MaterialTheme.colorScheme.inverseOnSurface,
                                         fontFamily = FontFamily(
                                             weight = FontWeight.Normal,
-                                            language = language
+                                            language = coreState.language
                                         ),
                                         textAlign = TextAlign.Center
                                     )
@@ -479,7 +574,7 @@ fun NavDrawer(
                                         color = MaterialTheme.colorScheme.inverseOnSurface,
                                         fontFamily = FontFamily(
                                             weight = FontWeight.Normal,
-                                            language = language
+                                            language = coreState.language
                                         ),
                                         textAlign = TextAlign.Center
                                     )
@@ -522,7 +617,7 @@ fun NavDrawer(
                                 fontSize = 18.sp,
                                 fontFamily = FontFamily(
                                     weight = FontWeight.Medium,
-                                    language = language
+                                    language = coreState.language
                                 ),
                             )
                         }
