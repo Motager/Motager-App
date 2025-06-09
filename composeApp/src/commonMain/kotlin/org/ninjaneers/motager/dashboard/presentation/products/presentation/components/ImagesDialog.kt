@@ -48,7 +48,8 @@ import org.ninjaneers.motager.core.presentation.theme.FontFamily
 fun ImagesDialog(
     language: Language,
     onDismiss: () -> Unit,
-    storeImage: (ByteArray) -> Unit
+    storeImage: (ByteArray) -> Unit,
+    uploadImages: () -> Unit
 ) {
     val context = LocalPlatformContext.current
     val scope = rememberCoroutineScope()
@@ -58,8 +59,8 @@ fun ImagesDialog(
         onResult = { images ->
             images.forEach { image ->
                 scope.launch {
-                    val byteArray = image.readByteArray(context)
-                    storeImage(byteArray)
+                    storeImage(image.readByteArray(context))
+                    uploadImages()
                 }
             }
             onDismiss()

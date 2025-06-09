@@ -20,7 +20,7 @@ class ProductServiceImpl(
     ): Result<String, RemoteError> {
         return safeCall<String> {
             client.submitFormWithBinaryData(
-                url = "https://rfehfdthjyysdkpzspzl.supabase.co/storage/v1/object/product-images/$path",
+                url = "https://rfehfdthjyysdkpzspzl.supabase.co/storage/v1/object/product-images/upload/$path",
                 formData = formData {
                     append(
                         key = "file",
@@ -33,10 +33,6 @@ class ProductServiceImpl(
             ) {
                 method = HttpMethod.Post
                 headers {
-                    append(
-                        "apikey",
-                        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJmZWhmZHRoanl5c2RrcHpzcHpsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDkzODY5MzUsImV4cCI6MjA2NDk2MjkzNX0.GxNfNj4uitJU3-UxhZH2LfIguRb5OCe6F0Y6Oall4oQ"
-                    )
                     append(
                         HttpHeaders.Authorization,
                         "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJmZWhmZHRoanl5c2RrcHpzcHpsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDkzODY5MzUsImV4cCI6MjA2NDk2MjkzNX0.GxNfNj4uitJU3-UxhZH2LfIguRb5OCe6F0Y6Oall4oQ"

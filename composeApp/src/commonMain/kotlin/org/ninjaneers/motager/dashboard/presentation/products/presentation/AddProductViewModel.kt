@@ -1,12 +1,19 @@
 package org.ninjaneers.motager.dashboard.presentation.products.presentation
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.IO
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.StringResource
+import org.ninjaneers.motager.dashboard.presentation.products.domain.ProductRepository
 
-class AddProductViewModel : ViewModel() {
+class AddProductViewModel(
+    private val repo: ProductRepository
+) : ViewModel() {
     private val _state = MutableStateFlow(AddProductState())
     val state = _state.asStateFlow()
 
@@ -18,6 +25,16 @@ class AddProductViewModel : ViewModel() {
             AddProductAction.OnAIDialogToggleVisibility -> onAIDialogToggleVisibility()
             AddProductAction.OnImagesDialogToggleVisibility -> onImagesDialogToggleVisibility()
             is AddProductAction.OnProductImageStore -> onProductImageStore(action.image)
+            AddProductAction.OnProductImagesUpload -> onProductImagesUpload()
+        }
+    }
+
+    private fun onProductImagesUpload() {
+        viewModelScope.launch(Dispatchers.IO) {
+            repo.uploadProductImage(
+                image = _state.value.productImages[0],
+                path = "image_1.jpg"
+            )
         }
     }
 

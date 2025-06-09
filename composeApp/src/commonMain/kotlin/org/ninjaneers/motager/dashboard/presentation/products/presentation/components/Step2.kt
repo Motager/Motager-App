@@ -50,7 +50,9 @@ fun Step2(
         ImagesDialog(
             language = coreState.language,
             onDismiss = { onAction(AddProductAction.OnImagesDialogToggleVisibility) },
-            storeImage = { onAction(AddProductAction.OnProductImageStore(it)) }
+            storeImage = { onAction(AddProductAction.OnProductImageStore(it)) },
+            uploadImages = { onAction(AddProductAction.OnProductImagesUpload) }
+
         )
     Column(
         verticalArrangement = Arrangement.spacedBy(24.dp),
