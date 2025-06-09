@@ -13,6 +13,7 @@ import org.ninjaneers.motager.core.domain.AppSettingsRepository
 import org.ninjaneers.motager.core.domain.Language
 import org.ninjaneers.motager.core.domain.Localization
 import org.ninjaneers.motager.core.domain.Theme
+import org.ninjaneers.motager.login.domain.Store
 import org.ninjaneers.motager.login.domain.User
 
 class CoreViewModel(
@@ -51,6 +52,15 @@ class CoreViewModel(
             is CoreAction.OnLanguageChange -> changeLanguage(action.language)
             is CoreAction.OnThemeChange -> changeTheme(action.theme)
             is CoreAction.OnUserChange -> onUserChange(action.user)
+            is CoreAction.OnStoreChange -> onStoreChange(action.store)
+        }
+    }
+
+    private fun onStoreChange(store: Store) {
+        _state.update {
+            it.copy(
+                store = store
+            )
         }
     }
 

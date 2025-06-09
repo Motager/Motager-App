@@ -76,5 +76,6 @@ data class DashboardState(
     val content: DashboardContent = DashboardContent.Home,
     val isThemeMenuExpanded: Boolean = false,
     val isLocaleMenuExpanded: Boolean = false,
+    val isStoresMenuExpanded: Boolean = false,
     val selectedIndex: Int = 0
 )

@@ -46,8 +46,6 @@ import motager.composeapp.generated.resources.men2
 import motager.composeapp.generated.resources.women2
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
-import org.ninjaneers.motager.app.navigation.Navigator
-import org.ninjaneers.motager.app.navigation.Route
 import org.ninjaneers.motager.core.domain.Language
 import org.ninjaneers.motager.core.presentation.CoreState
 import org.ninjaneers.motager.core.presentation.components.PrimaryButton
@@ -56,18 +54,18 @@ import org.ninjaneers.motager.mainscreen.components.MainNavBar
 @Composable
 fun MainScreen(
     coreState: CoreState,
-    navigator: Navigator
+    navigateToLogin: () -> Unit
 ) {
     MainScreenContent(
         coreState = coreState,
-        navigator = navigator
+        navigateToLogin = navigateToLogin
     )
 }
 
 @Composable
 private fun MainScreenContent(
     coreState: CoreState,
-    navigator: Navigator
+    navigateToLogin: () -> Unit
 ) {
     Scaffold { innerPadding ->
         Column(
@@ -150,7 +148,7 @@ private fun MainScreenContent(
                                     .height(42.dp)
                                     .wrapContentWidth(),
                                 onClick = {
-                                    navigator.navigate(Route.AuthenticationGraph)
+                                    navigateToLogin()
                                 },
                                 contentPadding = PaddingValues(
                                     horizontal = 16.dp,

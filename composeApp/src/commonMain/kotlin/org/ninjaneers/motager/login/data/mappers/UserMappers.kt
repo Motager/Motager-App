@@ -7,19 +7,25 @@ import org.ninjaneers.motager.login.domain.User
 fun LoginResponseDTO.toUser(): User {
     return User(
         id = this.userId!!,
-        name = this.name!!,
-        email = this.email!!,
-        stores = this.stores ?: emptyList(),
+        stores = this.stores?.map { dto ->
+            dto?.toStore()
+        } ?: emptyList(),
+        name = this.name ?: "",
+        email = this.email ?: "",
+        expiresIn = this.expiresIn ?: 0,
     )
 }
 
 fun UserDTO.toUser(): User {
     return User(
         id = this.data!!.id!!,
-        stores = this.data.stores ?: emptyList(),
-        name = "${this.data.firstName} ${this.data.lastName}",
-        email = this.data.email!!,
-        isActive = this.data.isActive ?: false,
+        stores = this.data.stores?.map { dto ->
+            dto?.toStore()
+        } ?: emptyList(),
+        name = this.data.firstName + this.data.lastName,
+        email = this.data.email ?: "",
         isBanned = this.data.isBanned ?: false,
+        phoneNumber = this.data.phoneNumber?.toString() ?: "",
+        address = this.data.address ?: "",
     )
 }

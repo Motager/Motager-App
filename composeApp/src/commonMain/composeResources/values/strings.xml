@@ -109,6 +109,7 @@
     <string name="Generate_product_info">Generate Product info</string>
     <string name="Supported_formats">Supported formats: JPEG,PNG</string>
     <string name="Cancel">Cancel</string>
+    <string name="Stores">Stores</string>
 
 
 </resources>

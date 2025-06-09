@@ -109,6 +109,7 @@
     <string name="Generate_product_info">إنشاء معلومات المنتج</string>
     <string name="Supported_formats">الملفات المدعومة: JPG,PNG</string>
     <string name="Cancel">إلغاء</string>
+    <string name="Stores">المتاجر</string>
 
 
 </resources>
