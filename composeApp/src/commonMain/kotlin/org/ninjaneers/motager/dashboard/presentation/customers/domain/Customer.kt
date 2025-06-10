@@ -1,8 +1,8 @@
 package org.ninjaneers.motager.dashboard.presentation.customers.domain
 
 data class Customer(
-    val name: String,
+    val id: Int,
     val email: String,
-    val amountPaid: Int,
-    val status: String
+    val totalPayment: Int,
+    val ordersCount: Int
 )

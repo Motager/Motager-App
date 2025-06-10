@@ -25,6 +25,10 @@ import org.ninjaneers.motager.dashboard.presentation.collections.data.remote.Col
 import org.ninjaneers.motager.dashboard.presentation.collections.data.repository.CollectionRepositoryImpl
 import org.ninjaneers.motager.dashboard.presentation.collections.domain.CollectionRepository
 import org.ninjaneers.motager.dashboard.presentation.collections.presentation.CollectionsViewModel
+import org.ninjaneers.motager.dashboard.presentation.customers.data.remote.CustomersService
+import org.ninjaneers.motager.dashboard.presentation.customers.data.remote.CustomersServiceImpl
+import org.ninjaneers.motager.dashboard.presentation.customers.data.repository.CustomerRepositoryImpl
+import org.ninjaneers.motager.dashboard.presentation.customers.domain.CustomerRepository
 import org.ninjaneers.motager.dashboard.presentation.customers.presentation.CustomersViewModel
 import org.ninjaneers.motager.dashboard.presentation.discounts.presentation.DiscountsViewModel
 import org.ninjaneers.motager.dashboard.presentation.home.presentation.HomeViewModel
@@ -93,6 +97,12 @@ val sharedModule = module {
         )
     }.bind<CategoriesRepository>()
 
+    single<CustomerRepositoryImpl> {
+        CustomerRepositoryImpl(
+            service = get()
+        )
+    }.bind<CustomerRepository>()
+
 //  network
     single<HttpClient> {
         HttpClientFactory(
@@ -123,6 +133,12 @@ val sharedModule = module {
             client = get()
         )
     }.bind<CategoriesService>()
+
+    single<CustomersServiceImpl> {
+        CustomersServiceImpl(
+            client = get()
+        )
+    }.bind<CustomersService>()
 
     singleOf(::UserDataValidator)
 
