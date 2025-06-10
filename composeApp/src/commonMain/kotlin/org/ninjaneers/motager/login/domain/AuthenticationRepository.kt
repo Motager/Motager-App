@@ -3,7 +3,7 @@ package org.ninjaneers.motager.login.domain
 import org.ninjaneers.motager.core.domain.RemoteError
 import org.ninjaneers.motager.core.domain.Result
 
-interface AuthenticationUseCase {
+interface AuthenticationRepository {
 
     suspend fun login(
         email: String,
@@ -11,5 +11,4 @@ interface AuthenticationUseCase {
     ): Result<User, RemoteError>
 
     suspend fun getUserById(id: Int): Result<User, RemoteError>
-
 }

@@ -37,7 +37,6 @@ import org.ninjaneers.motager.dashboard.presentation.DashboardAction
 fun TopBar(
     coreState: CoreState,
     openNavDrawer: suspend (DashboardAction) -> Unit,
-    avatar: String = "https://motager.vercel.app/images/male.png"
 ) {
     val coroutineScope = rememberCoroutineScope()
     Row(
@@ -95,9 +94,8 @@ fun TopBar(
             AsyncImage(
                 modifier = Modifier
                     .clip(RoundedCornerShape(100.dp))
-                    .background(MaterialTheme.colorScheme.primary)
                     .size(40.dp),
-                model = avatar,
+                model = coreState.user?.avatar,
                 contentDescription = "Logo"
             )
         }

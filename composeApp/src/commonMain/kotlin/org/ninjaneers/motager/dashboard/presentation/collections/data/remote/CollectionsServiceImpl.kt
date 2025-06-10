@@ -6,6 +6,7 @@ import io.ktor.client.request.post
 import io.ktor.client.request.setBody
 import io.ktor.http.URLProtocol
 import io.ktor.http.path
+import org.ninjaneers.motager.core.data.network.MOTAGER_SERVICES_HOST
 import org.ninjaneers.motager.core.data.network.safeCall
 import org.ninjaneers.motager.core.domain.RemoteError
 import org.ninjaneers.motager.core.domain.Result
@@ -37,7 +38,7 @@ class CollectionsServiceImpl(
             client.get {
                 url {
                     protocol = URLProtocol.HTTP
-                    host = "10.0.2.2:8080"
+                    host = MOTAGER_SERVICES_HOST
                     path("stores/$storeID/collections/$collectionID")
                 }
             }

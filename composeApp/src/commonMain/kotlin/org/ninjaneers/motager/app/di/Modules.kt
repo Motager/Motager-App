@@ -39,7 +39,7 @@ import org.ninjaneers.motager.dashboard.presentation.settings.presentations.Sett
 import org.ninjaneers.motager.login.data.remote.AuthenticationService
 import org.ninjaneers.motager.login.data.remote.AuthenticationServiceImpl
 import org.ninjaneers.motager.login.data.repository.AuthenticationRepositoryImpl
-import org.ninjaneers.motager.login.domain.AuthenticationUseCase
+import org.ninjaneers.motager.login.domain.AuthenticationRepository
 import org.ninjaneers.motager.login.domain.UserDataValidator
 import org.ninjaneers.motager.login.presentation.LoginViewModel
 
@@ -71,9 +71,9 @@ val sharedModule = module {
 
     single<AuthenticationRepositoryImpl> {
         AuthenticationRepositoryImpl(
-            authenticationService = get()
+            service = get()
         )
-    }.bind<AuthenticationUseCase>()
+    }.bind<AuthenticationRepository>()
 
     single<ProductRepositoryImpl> {
         ProductRepositoryImpl(
