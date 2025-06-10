@@ -7,5 +7,6 @@ fun CollectionDTO.toCollection(): Collection {
     return Collection(
         id = this.id ?: 0,
         name = this.name ?: "",
+        description = this.description ?: ""
     )
 }
