@@ -41,7 +41,7 @@ class CollectionsViewModel(
                     _state.update {
                         it.copy(
                             isLoading = false,
-                            collectionsList = collections,
+                            collections = collections,
                             isError = null
                         )
                     }
@@ -50,7 +50,8 @@ class CollectionsViewModel(
                     _state.update {
                         it.copy(
                             isLoading = false,
-                            isError = error.toUiText()
+                            isError = error.toUiText(),
+                            collections = emptyList()
                         )
                     }
                 }

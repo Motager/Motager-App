@@ -14,7 +14,7 @@ data class CollectionsState(
     val isError: UiText? = null,
     val searchQuery: String = "",
     val searchLimit: Int = 10,
-    val collectionsList: List<Collection> = emptyList(),
+    val collections: List<Collection> = emptyList(),
     val tableHeaders: List<StringResource> = listOf(
         Res.string.Name,
         Res.string.Description,
