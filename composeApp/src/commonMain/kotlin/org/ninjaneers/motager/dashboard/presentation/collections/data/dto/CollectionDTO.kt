@@ -8,6 +8,8 @@ import kotlinx.serialization.Serializable
 data class CollectionDTO(
     @SerialName("id")
     val id: Int?,
+    @SerialName("store_id")
+    val storeID: Int?,
     @SerialName("name")
     val name: String?,
     @SerialName("description")

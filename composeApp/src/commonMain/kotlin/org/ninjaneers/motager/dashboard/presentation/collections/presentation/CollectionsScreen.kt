@@ -243,7 +243,7 @@ private fun CollectionsScreenContent(
                                 )
                         ) {
                             Table(
-                                items = state.collectionsList,
+                                items = state.collections,
                                 header = {
                                     TableHeader(state.tableHeaders)
                                 },
@@ -258,7 +258,7 @@ private fun CollectionsScreenContent(
                         }
                         Pagination(
                             language = coreState.language,
-                            resultsCount = state.collectionsList.size
+                            resultsCount = state.collections.size
                         )
                     }
                 }

@@ -41,7 +41,7 @@ fun TableCell(
             ),
             fontSize = 16.sp,
             color = MaterialTheme.colorScheme.onBackground,
-            maxLines = 2,
+            maxLines = 3,
             overflow = TextOverflow.Ellipsis,
             textAlign = TextAlign.Center
         )

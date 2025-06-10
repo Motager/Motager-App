@@ -1,5 +1,6 @@
 package org.ninjaneers.motager.dashboard.presentation.categories.presentation
 
+import androidx.compose.animation.AnimatedContent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -15,11 +16,13 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -70,6 +73,9 @@ private fun CategoriesScreenContent(
     coreState: CoreState,
     onAction: (CategoriesAction) -> Unit
 ) {
+    LaunchedEffect(Unit) {
+        onAction(CategoriesAction.OnCategoriesGet(coreState.store.id))
+    }
     Column(
         modifier = Modifier
             .clip(RoundedCornerShape(6.dp))
@@ -155,94 +161,130 @@ private fun CategoriesScreenContent(
                 thickness = 2.dp,
                 color = MaterialTheme.colorScheme.outline,
             )
-            Row(
-                modifier = Modifier
-                    .height(40.dp)
-                    .fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(8.dp)
-            ) {
-                PrimaryTextField(
-                    value = "",
-                    onValueChange = {},
-                    modifier = Modifier
-                        .fillMaxHeight()
-                        .weight(1f),
-                    placeholder = {
-                        Text(
-                            modifier = Modifier.padding(horizontal = 2.dp),
-                            text = stringResource(Res.string.Search),
-                            fontFamily = FontFamily(
-                                weight = FontWeight.Normal,
-                                language = coreState.language
-                            ),
-                            color = MaterialTheme.colorScheme.surfaceVariant,
-                            textAlign = TextAlign.Start,
-                            fontSize = 14.sp
-                        )
-                    }
-                )
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(4.dp)
-                ) {
-                    PrimaryTextField(
-                        value = "",
-                        onValueChange = {},
-                        modifier = Modifier.size(40.dp),
-                        placeholder = {
-                            Text(
-                                text = "10",
-                                fontFamily = FontFamily(
-                                    weight = FontWeight.Normal,
+            AnimatedContent(
+                targetState = state.isLoading
+            ) { isLoading ->
+                when (isLoading) {
+                    (false && state.isError == null) -> {
+                        Row(
+                            modifier = Modifier
+                                .height(40.dp)
+                                .fillMaxWidth(),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.spacedBy(8.dp)
+                        ) {
+                            PrimaryTextField(
+                                value = "",
+                                onValueChange = {},
+                                modifier = Modifier
+                                    .fillMaxHeight()
+                                    .weight(1f),
+                                placeholder = {
+                                    Text(
+                                        modifier = Modifier.padding(horizontal = 2.dp),
+                                        text = stringResource(Res.string.Search),
+                                        fontFamily = FontFamily(
+                                            weight = FontWeight.Normal,
+                                            language = coreState.language
+                                        ),
+                                        color = MaterialTheme.colorScheme.surfaceVariant,
+                                        textAlign = TextAlign.Start,
+                                        fontSize = 14.sp
+                                    )
+                                }
+                            )
+                            Row(
+                                verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.spacedBy(4.dp)
+                            ) {
+                                PrimaryTextField(
+                                    value = "",
+                                    onValueChange = {},
+                                    modifier = Modifier.size(40.dp),
+                                    placeholder = {
+                                        Text(
+                                            text = "10",
+                                            fontFamily = FontFamily(
+                                                weight = FontWeight.Normal,
+                                                language = coreState.language
+                                            ),
+                                            color = MaterialTheme.colorScheme.surfaceVariant,
+                                            textAlign = TextAlign.Start,
+                                            fontSize = 14.sp
+                                        )
+                                    }
+                                )
+                                PrimaryIconButton(
+                                    onClick = {},
+                                    painter = painterResource(Res.drawable.switch),
+                                    iconTint = MaterialTheme.colorScheme.onBackground,
+                                    colors = ButtonDefaults.buttonColors(
+                                        containerColor = MaterialTheme.colorScheme.background,
+                                        contentColor = MaterialTheme.colorScheme.surfaceContainerLowest
+                                    ),
                                     language = coreState.language
-                                ),
-                                color = MaterialTheme.colorScheme.surfaceVariant,
-                                textAlign = TextAlign.Start,
-                                fontSize = 14.sp
+                                )
+                            }
+                        }
+                        Column(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .weight(1f),
+                            horizontalAlignment = Alignment.CenterHorizontally,
+                            verticalArrangement = Arrangement.SpaceBetween
+                        ) {
+                            Column(
+                                modifier = Modifier
+                                    .clip(RoundedCornerShape(6.dp))
+                                    .weight(1f)
+                                    .border(
+                                        width = 1.5f.dp,
+                                        color = MaterialTheme.colorScheme.outline,
+                                        shape = RoundedCornerShape(6.dp)
+                                    )
+                            ) {
+                                Table(
+                                    items = state.categories,
+                                    header = {
+                                        TableHeader(state.tableHeaders)
+                                    },
+                                )
+                                { category ->
+                                    TableRow {
+                                        TableCell(category.name)
+                                        TableCell(category.description)
+                                        TableActionCell()
+                                    }
+                                }
+                            }
+                            Pagination(
+                                language = coreState.language,
+                                resultsCount = state.categories.size
                             )
                         }
-                    )
-                    PrimaryIconButton(
-                        onClick = {},
-                        painter = painterResource(Res.drawable.switch),
-                        iconTint = MaterialTheme.colorScheme.onBackground,
-                        colors = ButtonDefaults.buttonColors(
-                            containerColor = MaterialTheme.colorScheme.background,
-                            contentColor = MaterialTheme.colorScheme.surfaceContainerLowest
-                        ),
-                        language = coreState.language
-                    )
-                }
-            }
-            Column(
-                modifier = Modifier
-                    .clip(RoundedCornerShape(6.dp))
-                    .weight(1f)
-                    .border(
-                        width = 1.5f.dp,
-                        color = MaterialTheme.colorScheme.outline,
-                        shape = RoundedCornerShape(6.dp)
-                    )
-            ) {
-                Table(
-                    items = state.categoryList,
-                    header = {
-                        TableHeader(state.tapleHeaders)
-                    },
-                )
-                { category ->
-                    TableRow {
-                        TableCell(category.name)
-                        TableCell(category.description)
-                        TableActionCell()
+                    }
+
+                    true -> {
+                        Column(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .wrapContentWidth()
+                                .padding(16.dp),
+                            verticalArrangement = Arrangement.Center,
+                            horizontalAlignment = Alignment.CenterHorizontally
+                        ) {
+                            CircularProgressIndicator(
+                                modifier = Modifier.size(60.dp),
+                                trackColor = MaterialTheme.colorScheme.primary
+                            )
+                        }
+                    }
+
+                    else -> {
+
                     }
                 }
             }
-            Pagination(
-                language = coreState.language,
-                resultsCount = state.categoriesCount
-            )
         }
     }
 }
