@@ -43,7 +43,7 @@
     <string name="Price">السعر</string>
     <string name="Category">الفئة</string>
     <string name="Description">الوصف</string>
-    <string name="AmountPaid">المبلغ المدفوع</string>
+    <string name="TotalSpent">المبلغ المدفوع</string>
     <string name="Create">إنشاء</string>
     <string name="Add">إضافة</string>
     <string name="Results">النتائج:</string>

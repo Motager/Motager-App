@@ -43,7 +43,7 @@
     <string name="Price">Price</string>
     <string name="Category">Category</string>
     <string name="Description">Description</string>
-    <string name="AmountPaid">Amount Paid</string>
+    <string name="TotalSpent">Total Pent</string>
     <string name="Create">Create</string>
     <string name="Add">Add</string>
     <string name="Results">Results:</string>
