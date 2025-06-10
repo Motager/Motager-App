@@ -5,6 +5,7 @@ data class User(
     val stores: List<Store?> = emptyList(),
     val name: String = "",
     val email: String = "",
+    val avatar: ByteArray = ByteArray(0),
     val expiresIn: Int = 0,
     val isBanned: Boolean = false,
     val phoneNumber: String = "",

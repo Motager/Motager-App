@@ -15,4 +15,9 @@ interface AuthenticationService {
     suspend fun getUserById(
         userId: Int
     ): Result<UserDTO, RemoteError>
+
+    suspend fun getUserAvatar(
+        userName: String
+    ): Result<ByteArray, RemoteError>
+
 }

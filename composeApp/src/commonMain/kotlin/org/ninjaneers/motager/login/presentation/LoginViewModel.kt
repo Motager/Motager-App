@@ -9,11 +9,11 @@ import kotlinx.coroutines.launch
 import org.ninjaneers.motager.core.domain.onError
 import org.ninjaneers.motager.core.domain.onSuccess
 import org.ninjaneers.motager.core.presentation.toUiText
-import org.ninjaneers.motager.login.domain.AuthenticationUseCase
+import org.ninjaneers.motager.login.domain.AuthenticationRepository
 import org.ninjaneers.motager.login.domain.User
 
 class LoginViewModel(
-    private val authenticationUseCase: AuthenticationUseCase
+    private val authenticationUseCase: AuthenticationRepository
 ) : ViewModel() {
     private val _state = MutableStateFlow(LoginScreenState())
     val state = _state.asStateFlow()
