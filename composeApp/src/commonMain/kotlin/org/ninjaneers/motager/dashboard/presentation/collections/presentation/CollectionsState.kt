@@ -1,6 +1,7 @@
 package org.ninjaneers.motager.dashboard.presentation.collections.presentation
 
 import motager.composeapp.generated.resources.Actions
+import motager.composeapp.generated.resources.Description
 import motager.composeapp.generated.resources.Name
 import motager.composeapp.generated.resources.Products
 import motager.composeapp.generated.resources.Res
@@ -16,7 +17,8 @@ data class CollectionsState(
     val collectionsList: List<Collection> = emptyList(),
     val tableHeaders: List<StringResource> = listOf(
         Res.string.Name,
+        Res.string.Description,
         Res.string.Products,
-        Res.string.Actions
+        Res.string.Actions,
     )
 )

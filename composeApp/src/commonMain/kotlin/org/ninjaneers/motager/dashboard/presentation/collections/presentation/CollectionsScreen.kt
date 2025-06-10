@@ -250,6 +250,7 @@ private fun CollectionsScreenContent(
                             ) { collection ->
                                 TableRow {
                                     TableCell(collection.name)
+                                    TableCell(collection.description)
                                     TableCell(collection.productsNumber.toString())
                                     TableActionCell()
                                 }
