@@ -41,4 +41,16 @@ actual class SessionDataStore : SessionHandler {
             it[ACCESS_TOKEN_KEY] = token
         }
     }
+
+    override suspend fun getRefreshToken(): String? {
+        return sessionDataStore.data.map { data ->
+            data[REFRESH_TOKEN_KEY]
+        }.first()
+    }
+
+    override suspend fun updateRefreshToken(token: String) {
+        sessionDataStore.edit { data ->
+            data[REFRESH_TOKEN_KEY] = token
+        }
+    }
 }

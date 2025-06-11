@@ -75,7 +75,8 @@ val sharedModule = module {
 
     single<AuthenticationRepositoryImpl> {
         AuthenticationRepositoryImpl(
-            service = get()
+            service = get(),
+            sessionHandler = get()
         )
     }.bind<AuthenticationRepository>()
 

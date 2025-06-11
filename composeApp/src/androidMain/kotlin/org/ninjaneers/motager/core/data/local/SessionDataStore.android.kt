@@ -29,4 +29,16 @@ actual class SessionDataStore(context: Context) : SessionHandler {
         }
     }
 
+    override suspend fun getRefreshToken(): String? {
+        return sessionDataStore.data.map { data ->
+            data[REFRESH_TOKEN_KEY]
+        }.first()
+    }
+
+    override suspend fun updateRefreshToken(token: String) {
+        sessionDataStore.edit { data ->
+            data[REFRESH_TOKEN_KEY] = token
+        }
+    }
+
 }
