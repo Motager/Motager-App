@@ -12,8 +12,6 @@ data class LoginResponseDTO(
     val email: String?,
     @SerialName("expires_in")
     val expiresIn: Int?,
-    @SerialName("image")
-    val image: String?,
     @SerialName("name")
     val name: String?,
     @SerialName("refresh_token")

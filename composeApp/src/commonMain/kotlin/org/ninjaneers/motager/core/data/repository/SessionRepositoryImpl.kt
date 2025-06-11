@@ -26,4 +26,18 @@ class SessionRepositoryImpl(
             sessionHandler.updateAccessToken(token)
         }
     }
+
+    override fun getRefreshToken(): String? {
+        var token: String? = null
+        coroutineScope.launch(Dispatchers.IO) {
+            token = sessionHandler.getRefreshToken()
+        }
+        return token
+    }
+
+    override fun updateRefreshToken(token: String) {
+        coroutineScope.launch {
+            sessionHandler.updateRefreshToken(token)
+        }
+    }
 }
