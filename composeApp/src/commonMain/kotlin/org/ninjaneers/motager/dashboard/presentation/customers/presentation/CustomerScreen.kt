@@ -163,42 +163,26 @@ private fun CustomerScreenContent(
             ) { isLoading ->
                 when (isLoading) {
                     (false && state.isError == null) -> {
-                        Row(
-                            modifier = Modifier
-                                .height(40.dp)
-                                .fillMaxWidth(),
-                            verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.spacedBy(8.dp)
+                        Column(
+                            modifier = Modifier.fillMaxWidth(),
+                            verticalArrangement = Arrangement.spacedBy(8.dp),
+                            horizontalAlignment = Alignment.CenterHorizontally
                         ) {
-                            PrimaryTextField(
-                                value = "",
-                                onValueChange = {},
-                                modifier = Modifier.fillMaxWidth()
-                                    .weight(1F),
-                                placeholder = {
-                                    Text(
-                                        text = stringResource(Res.string.Search),
-                                        fontFamily = FontFamily(
-                                            weight = FontWeight.Normal,
-                                            language = coreState.language
-                                        ),
-                                        color = MaterialTheme.colorScheme.surfaceVariant,
-                                        textAlign = TextAlign.Start,
-                                        fontSize = 14.sp
-                                    )
-                                }
-                            )
                             Row(
+                                modifier = Modifier
+                                    .height(40.dp)
+                                    .fillMaxWidth(),
                                 verticalAlignment = Alignment.CenterVertically,
-                                horizontalArrangement = Arrangement.spacedBy(4.dp)
+                                horizontalArrangement = Arrangement.spacedBy(8.dp)
                             ) {
                                 PrimaryTextField(
                                     value = "",
                                     onValueChange = {},
-                                    modifier = Modifier.size(40.dp),
+                                    modifier = Modifier.fillMaxWidth()
+                                        .weight(1F),
                                     placeholder = {
                                         Text(
-                                            text = "10",
+                                            text = stringResource(Res.string.Search),
                                             fontFamily = FontFamily(
                                                 weight = FontWeight.Normal,
                                                 language = coreState.language
@@ -209,58 +193,79 @@ private fun CustomerScreenContent(
                                         )
                                     }
                                 )
-                                PrimaryIconButton(
-                                    onClick = {},
-                                    painter = painterResource(Res.drawable.switch),
-                                    iconTint = MaterialTheme.colorScheme.onBackground,
-                                    colors = ButtonDefaults.buttonColors(
-                                        containerColor = MaterialTheme.colorScheme.background,
-                                        contentColor = MaterialTheme.colorScheme.surfaceContainerLowest
-                                    ),
-                                    language = coreState.language
-                                )
-                            }
-                        }
-                        Column(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .weight(1f),
-                            horizontalAlignment = Alignment.CenterHorizontally,
-                            verticalArrangement = Arrangement.SpaceBetween
-                        ) {
-                            Column(
-                                modifier = Modifier
-                                    .clip(RoundedCornerShape(6.dp))
-                                    .weight(1f)
-                                    .border(
-                                        width = 1.5f.dp,
-                                        color = MaterialTheme.colorScheme.outline,
-                                        shape = RoundedCornerShape(6.dp)
+                                Row(
+                                    verticalAlignment = Alignment.CenterVertically,
+                                    horizontalArrangement = Arrangement.spacedBy(4.dp)
+                                ) {
+                                    PrimaryTextField(
+                                        value = "",
+                                        onValueChange = {},
+                                        modifier = Modifier.size(40.dp),
+                                        placeholder = {
+                                            Text(
+                                                text = "10",
+                                                fontFamily = FontFamily(
+                                                    weight = FontWeight.Normal,
+                                                    language = coreState.language
+                                                ),
+                                                color = MaterialTheme.colorScheme.surfaceVariant,
+                                                textAlign = TextAlign.Start,
+                                                fontSize = 14.sp
+                                            )
+                                        }
                                     )
-                            ) {
-                                Table(
-                                    items = state.customers,
-                                    header = {
-                                        TableHeader(
-                                            headers = state.tableHeaders
-                                        )
-                                    }
-                                )
-                                { customer ->
-                                    TableRow {
-                                        TableCell(customer.email)
-                                        TableCell(customer.totalPayment.toString())
-                                        TableActionCell()
-                                    }
+                                    PrimaryIconButton(
+                                        onClick = {},
+                                        painter = painterResource(Res.drawable.switch),
+                                        iconTint = MaterialTheme.colorScheme.onBackground,
+                                        colors = ButtonDefaults.buttonColors(
+                                            containerColor = MaterialTheme.colorScheme.background,
+                                            contentColor = MaterialTheme.colorScheme.surfaceContainerLowest
+                                        ),
+                                        language = coreState.language
+                                    )
                                 }
                             }
-                            Pagination(
-                                language = coreState.language,
-                                resultsCount = state.customersCount
-                            )
+                            Column(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .weight(1f),
+                                horizontalAlignment = Alignment.CenterHorizontally,
+                                verticalArrangement = Arrangement.SpaceBetween
+                            ) {
+                                Column(
+                                    modifier = Modifier
+                                        .clip(RoundedCornerShape(6.dp))
+                                        .weight(1f)
+                                        .border(
+                                            width = 1.5f.dp,
+                                            color = MaterialTheme.colorScheme.outline,
+                                            shape = RoundedCornerShape(6.dp)
+                                        )
+                                ) {
+                                    Table(
+                                        items = state.customers,
+                                        header = {
+                                            TableHeader(
+                                                headers = state.tableHeaders
+                                            )
+                                        }
+                                    )
+                                    { customer ->
+                                        TableRow {
+                                            TableCell(customer.email)
+                                            TableCell(customer.totalPayment.toString())
+                                            TableActionCell()
+                                        }
+                                    }
+                                }
+                                Pagination(
+                                    language = coreState.language,
+                                    resultsCount = state.customersCount
+                                )
+                            }
                         }
                     }
-
                     true -> {
                         Column(
                             modifier = Modifier
@@ -276,7 +281,6 @@ private fun CustomerScreenContent(
                             )
                         }
                     }
-
                     else -> {}
                 }
             }

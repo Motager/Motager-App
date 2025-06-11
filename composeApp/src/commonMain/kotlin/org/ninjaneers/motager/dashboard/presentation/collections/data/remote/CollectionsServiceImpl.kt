@@ -25,7 +25,11 @@ class CollectionsServiceImpl(
                 url {
                     protocol = URLProtocol.HTTP
                     host = "10.0.2.2:8080"
-                    path("stores/$storeID/collections")
+                    path(
+                        "stores",
+                        storeID.toString(),
+                        "collections"
+                    )
                 }
             }
         }
@@ -40,7 +44,12 @@ class CollectionsServiceImpl(
                 url {
                     protocol = URLProtocol.HTTP
                     host = MOTAGER_SERVICES_HOST
-                    path("stores/$storeID/collections/$collectionID")
+                    path(
+                        "stores",
+                        storeID.toString(),
+                        "collections",
+                        collectionID.toString()
+                    )
                 }
             }
         }
@@ -60,7 +69,11 @@ class CollectionsServiceImpl(
                 url {
                     protocol = URLProtocol.HTTP
                     host = "10.0.2.2:8080"
-                    path("stores/$storeID/collections")
+                    path(
+                        "stores",
+                        storeID.toString(),
+                        "collections"
+                    )
                 }
                 setBody(collection)
             }

@@ -32,6 +32,10 @@ import org.ninjaneers.motager.dashboard.presentation.customers.domain.CustomerRe
 import org.ninjaneers.motager.dashboard.presentation.customers.presentation.CustomersViewModel
 import org.ninjaneers.motager.dashboard.presentation.discounts.presentation.DiscountsViewModel
 import org.ninjaneers.motager.dashboard.presentation.home.presentation.HomeViewModel
+import org.ninjaneers.motager.dashboard.presentation.orders.data.remote.OrdersService
+import org.ninjaneers.motager.dashboard.presentation.orders.data.remote.OrdersServiceImpl
+import org.ninjaneers.motager.dashboard.presentation.orders.data.repository.OrdersRepositoryImpl
+import org.ninjaneers.motager.dashboard.presentation.orders.domain.OrdersRepository
 import org.ninjaneers.motager.dashboard.presentation.orders.presentation.OrdersViewModel
 import org.ninjaneers.motager.dashboard.presentation.products.data.remote.ProductService
 import org.ninjaneers.motager.dashboard.presentation.products.data.remote.ProductServiceImpl
@@ -104,6 +108,12 @@ val sharedModule = module {
         )
     }.bind<CustomerRepository>()
 
+    single<OrdersRepositoryImpl> {
+        OrdersRepositoryImpl(
+            service = get()
+        )
+    }.bind<OrdersRepository>()
+
 //  network
     single<HttpClient> {
         HttpClientFactory(
@@ -140,6 +150,12 @@ val sharedModule = module {
             client = get()
         )
     }.bind<CustomersService>()
+
+    single<OrdersServiceImpl> {
+        OrdersServiceImpl(
+            client = get()
+        )
+    }.bind<OrdersService>()
 
     singleOf(::UserDataValidator)
 

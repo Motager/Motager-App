@@ -24,7 +24,11 @@ class CustomersServiceImpl(
                 url {
                     protocol = URLProtocol.HTTP
                     host = MOTAGER_SERVICES_HOST
-                    path("stores", "$storeID", "customers")
+                    path(
+                        "stores",
+                        storeID.toString(),
+                        "customers"
+                    )
                 }
             }
         }
@@ -40,7 +44,11 @@ class CustomersServiceImpl(
                 url {
                     protocol = URLProtocol.HTTP
                     host = MOTAGER_SERVICES_HOST
-                    path("stores", "$storeID", "customers")
+                    path(
+                        "stores",
+                        storeID.toString(),
+                        "customers"
+                    )
                 }
                 setBody(customer)
             }
@@ -53,7 +61,12 @@ class CustomersServiceImpl(
                 url {
                     protocol = URLProtocol.HTTP
                     host = MOTAGER_SERVICES_HOST
-                    path("stores", "$storeID", "customers", "$customerID")
+                    path(
+                        "stores",
+                        storeID.toString(),
+                        "customers",
+                        customerID.toString()
+                    )
                 }
             }
         }
