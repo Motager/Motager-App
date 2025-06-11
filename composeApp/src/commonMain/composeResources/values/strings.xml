@@ -110,6 +110,13 @@
     <string name="Supported_formats">Supported formats: JPEG,PNG</string>
     <string name="Cancel">Cancel</string>
     <string name="Stores">Stores</string>
+    <string name="Not_Found">Not Found</string>
+    <string name="Customer_Email">Customer Email</string>
+    <string name="Customer_Name">Customer Name</string>
+    <string name="Total_Price">Total Price</string>
+    <string name="Payment_Method">Payment Method</string>
+    <string name="Shipping_Method">Shipping Method</string>
+    <string name="City">City</string>
 
 
 </resources>

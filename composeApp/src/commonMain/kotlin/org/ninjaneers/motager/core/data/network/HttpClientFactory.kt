@@ -51,14 +51,7 @@ class HttpClientFactory(
                             refreshToken = sessionRepository.getRefreshToken()
                         )
                     }
-                    refreshTokens {
-                        BearerTokens(
-                            accessToken = sessionRepository.getAccessToken() ?: "",
-                            refreshToken = sessionRepository.getRefreshToken()
-                        )
-                    }
                 }
-
 
             }
             defaultRequest {
