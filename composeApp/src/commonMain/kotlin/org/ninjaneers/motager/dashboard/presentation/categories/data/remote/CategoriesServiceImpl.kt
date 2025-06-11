@@ -10,14 +10,15 @@ import org.ninjaneers.motager.core.data.network.MOTAGER_SERVICES_HOST
 import org.ninjaneers.motager.core.data.network.safeCall
 import org.ninjaneers.motager.core.domain.RemoteError
 import org.ninjaneers.motager.core.domain.Result
+import org.ninjaneers.motager.dashboard.presentation.categories.data.dto.CategoriesResponseDTO
 import org.ninjaneers.motager.dashboard.presentation.categories.data.dto.CategoryDTO
 import org.ninjaneers.motager.dashboard.presentation.categories.data.dto.CategoryPostDTO
 
 class CategoriesServiceImpl(
     private val client: HttpClient
 ) : CategoriesService {
-    override suspend fun getCategories(storeID: Int): Result<List<CategoryDTO>, RemoteError> {
-        return safeCall<List<CategoryDTO>> {
+    override suspend fun getCategories(storeID: Int): Result<CategoriesResponseDTO, RemoteError> {
+        return safeCall<CategoriesResponseDTO> {
             client.get {
                 url {
                     protocol = URLProtocol.HTTP

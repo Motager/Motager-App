@@ -12,10 +12,10 @@ class CategoriesRepositoryImpl(
     private val service: CategoriesService
 ) : CategoriesRepository {
     override suspend fun getCategories(storeID: Int): Result<List<Category>, RemoteError> {
-        return service.getCategories(storeID).map { category ->
-            category.map { DTO ->
+        return service.getCategories(storeID).map { response ->
+            response.categories?.map { DTO ->
                 DTO.toCategory()
-            }
+            } ?: emptyList()
         }
     }
 
