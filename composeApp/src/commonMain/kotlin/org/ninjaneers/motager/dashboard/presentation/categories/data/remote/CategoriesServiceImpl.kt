@@ -23,7 +23,11 @@ class CategoriesServiceImpl(
                 url {
                     protocol = URLProtocol.HTTP
                     host = "10.0.2.2:8080"
-                    path("stores/$storeID/categories")
+                    path(
+                        "stores",
+                        storeID.toString(),
+                        "categories"
+                    )
                 }
             }
         }
@@ -38,7 +42,12 @@ class CategoriesServiceImpl(
                 url {
                     protocol = URLProtocol.HTTP
                     host = "10.0.2.2:8080"
-                    path("stores/$storeID/categories/$categoryId")
+                    path(
+                        "stores",
+                        storeID.toString(),
+                        "categories",
+                        categoryId.toString()
+                    )
                 }
             }
         }
@@ -58,7 +67,11 @@ class CategoriesServiceImpl(
                 url {
                     protocol = URLProtocol.HTTP
                     host = MOTAGER_SERVICES_HOST
-                    path("stores/$storeID/categories")
+                    path(
+                        "stores",
+                        storeID.toString(),
+                        "categories"
+                    )
                 }
                 setBody(category)
             }

@@ -25,7 +25,7 @@ class AuthenticationRepositoryImpl(
                 avatar = it
             }
             sessionHandler.updateAccessToken(DTO.accessToken!!)
-            sessionHandler.updateAccessToken(DTO.refreshToken!!)
+            sessionHandler.updateRefreshToken(DTO.refreshToken!!)
             DTO.toUser(avatar)
         }
     }
