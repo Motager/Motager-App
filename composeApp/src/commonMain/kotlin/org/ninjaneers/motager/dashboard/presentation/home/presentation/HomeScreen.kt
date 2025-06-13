@@ -131,7 +131,7 @@ private fun HomeScreenContent(
                                             language = coreState.language
                                         ),
                                         color = MaterialTheme.colorScheme.onBackground,
-                                        maxLines = 2,
+                                        maxLines = 1,
                                         overflow = TextOverflow.Ellipsis
                                     )
                                 }

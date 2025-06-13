@@ -11,6 +11,6 @@ fun ProductDTO.toProduct(): Product {
         image = this.mainImageUrl ?: "",
         price = this.startPrice ?: 0.0,
         isPublished = this.published ?: false,
-        category = this.category.slug ?: ""
+        category = this.category.slug?.replaceFirstChar { it.uppercase() } ?: ""
     )
 }

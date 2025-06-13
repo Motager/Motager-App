@@ -87,7 +87,8 @@ private fun DashboardScreenContent(
         Scaffold(
             topBar = {
                 TopBar(
-                    openNavDrawer = dashboardAction,
+                    onAction = dashboardAction,
+                    dashboardState = dashboardState,
                     coreState = coreState
                 )
             }

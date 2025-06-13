@@ -9,4 +9,5 @@ sealed interface DashboardAction {
     data class OnThemeMenuToggle(val isExpanded: Boolean) : DashboardAction
     data class OnLocaleMenuToggle(val isExpanded: Boolean) : DashboardAction
     data object OnStoresMenuToggle : DashboardAction
+    data object OnProfileMenuToggle : DashboardAction
 }

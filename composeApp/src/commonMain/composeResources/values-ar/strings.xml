@@ -119,6 +119,9 @@
     <string name="City">المدينة</string>
     <string name="Add_Variant">إضافة تصنيف متغيّر</string>
     <string name="Variant">تصنيف</string>
+    <string name="User">المستخدم</string>
+    <string name="Profile">الملف الشخصي</string>
+    <string name="Help">مساعدة</string>
 
 
 </resources>

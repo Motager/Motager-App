@@ -119,6 +119,9 @@
     <string name="City">City</string>
     <string name="Add_Variant">Add Variant Type</string>
     <string name="Variant">Variant</string>
+    <string name="User">User</string>
+    <string name="Profile">Profile</string>
+    <string name="Help">Help</string>
 
 
 </resources>
