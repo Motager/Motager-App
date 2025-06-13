@@ -60,8 +60,8 @@ import org.ninjaneers.motager.core.presentation.components.PrimarySwitch
 import org.ninjaneers.motager.core.presentation.components.PrimaryTextField
 import org.ninjaneers.motager.core.presentation.components.SecondaryButton
 import org.ninjaneers.motager.core.presentation.theme.FontFamily
-import org.ninjaneers.motager.dashboard.presentation.products.presentation.AddProductAction
-import org.ninjaneers.motager.dashboard.presentation.products.presentation.AddProductState
+import org.ninjaneers.motager.dashboard.presentation.products.presentation.addproduct.AddProductAction
+import org.ninjaneers.motager.dashboard.presentation.products.presentation.addproduct.AddProductState
 
 @Composable
 fun Step1(
