@@ -12,19 +12,24 @@ import org.ninjaneers.motager.core.domain.RemoteError
 import org.ninjaneers.motager.core.domain.Result
 import org.ninjaneers.motager.dashboard.presentation.collections.data.dto.CollectionDTO
 import org.ninjaneers.motager.dashboard.presentation.collections.data.dto.CollectionPostDTO
+import org.ninjaneers.motager.dashboard.presentation.collections.data.dto.CollectionsResponseDTO
 
 class CollectionsServiceImpl(
     private val client: HttpClient
 ) : CollectionsService {
     override suspend fun getCollections(
         storeID: Int
-    ): Result<List<CollectionDTO>, RemoteError> {
-        return safeCall<List<CollectionDTO>> {
+    ): Result<CollectionsResponseDTO, RemoteError> {
+        return safeCall<CollectionsResponseDTO> {
             client.get {
                 url {
                     protocol = URLProtocol.HTTP
                     host = "10.0.2.2:8080"
-                    path("stores/$storeID/collections")
+                    path(
+                        "stores",
+                        storeID.toString(),
+                        "collections"
+                    )
                 }
             }
         }
@@ -39,7 +44,12 @@ class CollectionsServiceImpl(
                 url {
                     protocol = URLProtocol.HTTP
                     host = MOTAGER_SERVICES_HOST
-                    path("stores/$storeID/collections/$collectionID")
+                    path(
+                        "stores",
+                        storeID.toString(),
+                        "collections",
+                        collectionID.toString()
+                    )
                 }
             }
         }
@@ -59,7 +69,11 @@ class CollectionsServiceImpl(
                 url {
                     protocol = URLProtocol.HTTP
                     host = "10.0.2.2:8080"
-                    path("stores/$storeID/collections")
+                    path(
+                        "stores",
+                        storeID.toString(),
+                        "collections"
+                    )
                 }
                 setBody(collection)
             }

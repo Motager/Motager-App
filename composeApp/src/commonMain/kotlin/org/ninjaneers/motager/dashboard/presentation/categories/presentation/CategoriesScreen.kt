@@ -166,44 +166,28 @@ private fun CategoriesScreenContent(
             ) { isLoading ->
                 when (isLoading) {
                     (false && state.isError == null) -> {
-                        Row(
-                            modifier = Modifier
-                                .height(40.dp)
-                                .fillMaxWidth(),
-                            verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.spacedBy(8.dp)
+                        Column(
+                            modifier = Modifier.fillMaxWidth(),
+                            verticalArrangement = Arrangement.spacedBy(8.dp),
+                            horizontalAlignment = Alignment.CenterHorizontally
                         ) {
-                            PrimaryTextField(
-                                value = "",
-                                onValueChange = {},
-                                modifier = Modifier
-                                    .fillMaxHeight()
-                                    .weight(1f),
-                                placeholder = {
-                                    Text(
-                                        modifier = Modifier.padding(horizontal = 2.dp),
-                                        text = stringResource(Res.string.Search),
-                                        fontFamily = FontFamily(
-                                            weight = FontWeight.Normal,
-                                            language = coreState.language
-                                        ),
-                                        color = MaterialTheme.colorScheme.surfaceVariant,
-                                        textAlign = TextAlign.Start,
-                                        fontSize = 14.sp
-                                    )
-                                }
-                            )
                             Row(
+                                modifier = Modifier
+                                    .height(40.dp)
+                                    .fillMaxWidth(),
                                 verticalAlignment = Alignment.CenterVertically,
-                                horizontalArrangement = Arrangement.spacedBy(4.dp)
+                                horizontalArrangement = Arrangement.spacedBy(8.dp)
                             ) {
                                 PrimaryTextField(
                                     value = "",
                                     onValueChange = {},
-                                    modifier = Modifier.size(40.dp),
+                                    modifier = Modifier
+                                        .fillMaxHeight()
+                                        .weight(1f),
                                     placeholder = {
                                         Text(
-                                            text = "10",
+                                            modifier = Modifier.padding(horizontal = 2.dp),
+                                            text = stringResource(Res.string.Search),
                                             fontFamily = FontFamily(
                                                 weight = FontWeight.Normal,
                                                 language = coreState.language
@@ -214,56 +198,77 @@ private fun CategoriesScreenContent(
                                         )
                                     }
                                 )
-                                PrimaryIconButton(
-                                    onClick = {},
-                                    painter = painterResource(Res.drawable.switch),
-                                    iconTint = MaterialTheme.colorScheme.onBackground,
-                                    colors = ButtonDefaults.buttonColors(
-                                        containerColor = MaterialTheme.colorScheme.background,
-                                        contentColor = MaterialTheme.colorScheme.surfaceContainerLowest
-                                    ),
-                                    language = coreState.language
-                                )
-                            }
-                        }
-                        Column(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .weight(1f),
-                            horizontalAlignment = Alignment.CenterHorizontally,
-                            verticalArrangement = Arrangement.SpaceBetween
-                        ) {
-                            Column(
-                                modifier = Modifier
-                                    .clip(RoundedCornerShape(6.dp))
-                                    .weight(1f)
-                                    .border(
-                                        width = 1.5f.dp,
-                                        color = MaterialTheme.colorScheme.outline,
-                                        shape = RoundedCornerShape(6.dp)
+                                Row(
+                                    verticalAlignment = Alignment.CenterVertically,
+                                    horizontalArrangement = Arrangement.spacedBy(4.dp)
+                                ) {
+                                    PrimaryTextField(
+                                        value = "",
+                                        onValueChange = {},
+                                        modifier = Modifier.size(40.dp),
+                                        placeholder = {
+                                            Text(
+                                                text = "10",
+                                                fontFamily = FontFamily(
+                                                    weight = FontWeight.Normal,
+                                                    language = coreState.language
+                                                ),
+                                                color = MaterialTheme.colorScheme.surfaceVariant,
+                                                textAlign = TextAlign.Start,
+                                                fontSize = 14.sp
+                                            )
+                                        }
                                     )
-                            ) {
-                                Table(
-                                    items = state.categories,
-                                    header = {
-                                        TableHeader(state.tableHeaders)
-                                    },
-                                )
-                                { category ->
-                                    TableRow {
-                                        TableCell(category.name)
-                                        TableCell(category.description)
-                                        TableActionCell()
-                                    }
+                                    PrimaryIconButton(
+                                        onClick = {},
+                                        painter = painterResource(Res.drawable.switch),
+                                        iconTint = MaterialTheme.colorScheme.onBackground,
+                                        colors = ButtonDefaults.buttonColors(
+                                            containerColor = MaterialTheme.colorScheme.background,
+                                            contentColor = MaterialTheme.colorScheme.surfaceContainerLowest
+                                        ),
+                                        language = coreState.language
+                                    )
                                 }
                             }
-                            Pagination(
-                                language = coreState.language,
-                                resultsCount = state.categories.size
-                            )
+                            Column(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .weight(1f),
+                                horizontalAlignment = Alignment.CenterHorizontally,
+                                verticalArrangement = Arrangement.SpaceBetween
+                            ) {
+                                Column(
+                                    modifier = Modifier
+                                        .clip(RoundedCornerShape(6.dp))
+                                        .weight(1f)
+                                        .border(
+                                            width = 1.5f.dp,
+                                            color = MaterialTheme.colorScheme.outline,
+                                            shape = RoundedCornerShape(6.dp)
+                                        )
+                                ) {
+                                    Table(
+                                        items = state.categories,
+                                        header = {
+                                            TableHeader(state.tableHeaders)
+                                        },
+                                    )
+                                    { category ->
+                                        TableRow {
+                                            TableCell(category.name)
+                                            TableCell(category.description)
+                                            TableActionCell()
+                                        }
+                                    }
+                                }
+                                Pagination(
+                                    language = coreState.language,
+                                    resultsCount = state.categories.size
+                                )
+                            }
                         }
                     }
-
                     true -> {
                         Column(
                             modifier = Modifier
@@ -279,9 +284,7 @@ private fun CategoriesScreenContent(
                             )
                         }
                     }
-
                     else -> {
-
                     }
                 }
             }

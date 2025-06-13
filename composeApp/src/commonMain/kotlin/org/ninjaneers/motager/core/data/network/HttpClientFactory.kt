@@ -14,11 +14,9 @@ import io.ktor.client.plugins.logging.Logging
 import io.ktor.http.ContentType
 import io.ktor.http.contentType
 import io.ktor.serialization.kotlinx.json.json
-import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.serialization.json.Json
 import org.ninjaneers.motager.core.domain.SessionRepository
 
-@OptIn(DelicateCoroutinesApi::class)
 class HttpClientFactory(
     private val engine: HttpClientEngine,
     private val sessionRepository: SessionRepository
@@ -50,7 +48,7 @@ class HttpClientFactory(
                     loadTokens {
                         BearerTokens(
                             accessToken = sessionRepository.getAccessToken() ?: "",
-                            refreshToken = null
+                            refreshToken = sessionRepository.getRefreshToken()
                         )
                     }
                 }

@@ -1,29 +1,24 @@
 package org.ninjaneers.motager.core.data.repository
 
-import kotlinx.coroutines.DelicateCoroutinesApi
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.IO
-import kotlinx.coroutines.launch
 import org.ninjaneers.motager.core.data.local.SessionHandler
 import org.ninjaneers.motager.core.domain.SessionRepository
 
-@OptIn(DelicateCoroutinesApi::class)
 class SessionRepositoryImpl(
     private val sessionHandler: SessionHandler
 ) : SessionRepository {
-    val coroutineScope = GlobalScope
-    override fun getAccessToken(): String? {
-        var token: String? = null
-        coroutineScope.launch(Dispatchers.IO) {
-            token = sessionHandler.getAccessToken()
-        }
-        return token
+    override suspend fun getAccessToken(): String? {
+        return sessionHandler.getAccessToken()
     }
 
-    override fun updateAccessToken(token: String) {
-        coroutineScope.launch {
-            sessionHandler.updateAccessToken(token)
-        }
+    override suspend fun updateAccessToken(token: String) {
+        sessionHandler.updateAccessToken(token)
+    }
+
+    override suspend fun getRefreshToken(): String? {
+        return sessionHandler.getRefreshToken()
+    }
+
+    override suspend fun updateRefreshToken(token: String) {
+        sessionHandler.updateRefreshToken(token)
     }
 }

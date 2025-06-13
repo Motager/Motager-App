@@ -13,5 +13,5 @@ data class CustomerDTO(
     @SerialName("number_of_orders")
     val numberOfOrders: Int?,
     @SerialName("total_spent")
-    val totalSpent: Int?
+    val totalSpent: Double?
 )

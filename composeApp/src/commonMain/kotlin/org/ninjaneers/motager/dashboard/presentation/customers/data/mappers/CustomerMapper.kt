@@ -7,7 +7,7 @@ fun CustomerDTO.toCustomer(): Customer {
     return Customer(
         id = this.customId ?: 0,
         email = this.customerEmail ?: "",
-        totalPayment = this.totalSpent ?: 0,
+        totalPayment = this.totalSpent ?: 0.0,
         ordersCount = this.numberOfOrders ?: 0
     )
 }

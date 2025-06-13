@@ -13,10 +13,10 @@ class CollectionRepositoryImpl(
     private val service: CollectionsService,
 ) : CollectionRepository {
     override suspend fun getAllCollectionsInStore(storeID: Int): Result<List<Collection>, RemoteError> {
-        return service.getCollections(storeID).map { collections ->
-            collections.map { DTO ->
+        return service.getCollections(storeID).map { response ->
+            response.collections?.map { DTO ->
                 DTO.toCollection()
-            }
+            } ?: emptyList()
         }
     }
     override suspend fun getCollectionById(

@@ -110,6 +110,13 @@
     <string name="Supported_formats">الملفات المدعومة: JPG,PNG</string>
     <string name="Cancel">إلغاء</string>
     <string name="Stores">المتاجر</string>
+    <string name="Not_Found">غير موجود</string>
+    <string name="Customer_Email">بريد العميل</string>
+    <string name="Customer_Name">إسم العميل</string>
+    <string name="Total_Price">إجمالي السعر</string>
+    <string name="Payment_Method">وسيلة الدفع</string>
+    <string name="Shipping_Method">وسيلة الشحن</string>
+    <string name="City">المدينة</string>
     <string name="Add_Variant">إضافة تصنيف متغيّر</string>
     <string name="Variant">تصنيف</string>
 
