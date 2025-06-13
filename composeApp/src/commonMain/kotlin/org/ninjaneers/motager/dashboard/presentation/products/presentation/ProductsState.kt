@@ -1,6 +1,7 @@
 package org.ninjaneers.motager.dashboard.presentation.products.presentation
 
 import motager.composeapp.generated.resources.Actions
+import motager.composeapp.generated.resources.Category
 import motager.composeapp.generated.resources.Description
 import motager.composeapp.generated.resources.Image
 import motager.composeapp.generated.resources.Name
@@ -20,6 +21,7 @@ data class ProductsState(
         Res.string.Image,
         Res.string.Name,
         Res.string.Description,
+        Res.string.Category,
         Res.string.Price,
         Res.string.Actions
     ),

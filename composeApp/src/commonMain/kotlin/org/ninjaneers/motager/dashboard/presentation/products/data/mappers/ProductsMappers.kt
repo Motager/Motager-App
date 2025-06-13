@@ -10,6 +10,7 @@ fun ProductDTO.toProduct(): Product {
         description = this.description ?: "",
         image = this.mainImageUrl ?: "",
         price = this.startPrice ?: 0.0,
-        isPublished = this.published ?: false
+        isPublished = this.published ?: false,
+        category = this.category.slug ?: ""
     )
 }

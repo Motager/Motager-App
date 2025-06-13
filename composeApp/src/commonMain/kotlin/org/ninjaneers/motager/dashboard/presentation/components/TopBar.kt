@@ -2,6 +2,7 @@ package org.ninjaneers.motager.dashboard.presentation.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
@@ -93,7 +94,13 @@ fun TopBar(
             )
             AsyncImage(
                 modifier = Modifier
-                    .clip(RoundedCornerShape(100.dp))
+                    .clip(RoundedCornerShape(50.dp))
+                    .background(MaterialTheme.colorScheme.background)
+                    .border(
+                        width = 0.8f.dp,
+                        color = MaterialTheme.colorScheme.outline,
+                        shape = RoundedCornerShape(50.dp)
+                    )
                     .size(40.dp),
                 model = coreState.user?.avatar,
                 contentDescription = "Logo"

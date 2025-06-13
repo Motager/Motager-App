@@ -5,8 +5,9 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class ProductResponseDTO(
-    @SerialName("products")
-    val products: List<ProductDTO>?,
-
-    )
+data class ProductCategoryDTO(
+    @SerialName("id")
+    val id: Int?,
+    @SerialName("slug")
+    val slug: String?
+)

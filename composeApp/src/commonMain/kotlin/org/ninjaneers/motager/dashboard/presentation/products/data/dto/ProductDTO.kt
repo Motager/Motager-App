@@ -17,5 +17,7 @@ data class ProductDTO(
     @SerialName("published")
     val published: Boolean?,
     @SerialName("startPrice")
-    val startPrice: Double?
+    val startPrice: Double?,
+    @SerialName("category")
+    val category: ProductCategoryDTO
 )

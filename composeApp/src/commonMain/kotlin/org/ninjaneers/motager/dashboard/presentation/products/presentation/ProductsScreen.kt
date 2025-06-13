@@ -273,6 +273,7 @@ private fun ProductsScreenContent(
                                             TableImageCell(product.image)
                                             TableCell(product.name)
                                             TableCell(product.description)
+                                            TableCell(product.category)
                                             TableCell(product.price.toString())
                                             TableActionCell()
                                         }
