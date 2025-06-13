@@ -25,6 +25,15 @@ class DashboardViewModel : ViewModel() {
             is DashboardAction.OnLocaleMenuToggle -> toggleLocaleMenu(action.isExpanded)
             is DashboardAction.OnThemeMenuToggle -> toggleThemeMenu(action.isExpanded)
             DashboardAction.OnStoresMenuToggle -> onStoresMenuToggle()
+            DashboardAction.OnProfileMenuToggle -> onProfileMenuToggle()
+        }
+    }
+
+    private fun onProfileMenuToggle() {
+        _state.update {
+            it.copy(
+                isProfileMenuExpanded = !it.isProfileMenuExpanded
+            )
         }
     }
 

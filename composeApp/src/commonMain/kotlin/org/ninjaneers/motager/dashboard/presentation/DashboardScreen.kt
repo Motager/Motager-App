@@ -40,10 +40,10 @@ import org.ninjaneers.motager.dashboard.presentation.home.presentation.HomeScree
 import org.ninjaneers.motager.dashboard.presentation.home.presentation.HomeViewModel
 import org.ninjaneers.motager.dashboard.presentation.orders.presentation.OrdersScreen
 import org.ninjaneers.motager.dashboard.presentation.orders.presentation.OrdersViewModel
-import org.ninjaneers.motager.dashboard.presentation.products.presentation.AddProductScreen
-import org.ninjaneers.motager.dashboard.presentation.products.presentation.AddProductViewModel
 import org.ninjaneers.motager.dashboard.presentation.products.presentation.ProductsScreen
 import org.ninjaneers.motager.dashboard.presentation.products.presentation.ProductsViewModel
+import org.ninjaneers.motager.dashboard.presentation.products.presentation.addproduct.AddProductScreen
+import org.ninjaneers.motager.dashboard.presentation.products.presentation.addproduct.AddProductViewModel
 import org.ninjaneers.motager.dashboard.presentation.settings.presentations.SettingsScreen
 
 @Composable
@@ -87,7 +87,8 @@ private fun DashboardScreenContent(
         Scaffold(
             topBar = {
                 TopBar(
-                    openNavDrawer = dashboardAction,
+                    onAction = dashboardAction,
+                    dashboardState = dashboardState,
                     coreState = coreState
                 )
             }

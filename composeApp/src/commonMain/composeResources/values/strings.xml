@@ -119,6 +119,9 @@
     <string name="City">City</string>
     <string name="Add_Variant">Add Variant Type</string>
     <string name="Variant">Variant</string>
+    <string name="User">User</string>
+    <string name="Profile">Profile</string>
+    <string name="Help">Help</string>
     <string name="Add_Variant_button">Add Variant</string>
     <string name="Variant_example">e.g.,Color,Size,Material</string>
     <string name="Submit_product">Submit Product</string>

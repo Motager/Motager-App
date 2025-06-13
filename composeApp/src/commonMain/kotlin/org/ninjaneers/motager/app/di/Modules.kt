@@ -37,12 +37,12 @@ import org.ninjaneers.motager.dashboard.presentation.orders.data.remote.OrdersSe
 import org.ninjaneers.motager.dashboard.presentation.orders.data.repository.OrdersRepositoryImpl
 import org.ninjaneers.motager.dashboard.presentation.orders.domain.OrdersRepository
 import org.ninjaneers.motager.dashboard.presentation.orders.presentation.OrdersViewModel
-import org.ninjaneers.motager.dashboard.presentation.products.data.remote.ProductService
 import org.ninjaneers.motager.dashboard.presentation.products.data.remote.ProductServiceImpl
-import org.ninjaneers.motager.dashboard.presentation.products.data.repository.ProductRepositoryImpl
-import org.ninjaneers.motager.dashboard.presentation.products.domain.ProductRepository
-import org.ninjaneers.motager.dashboard.presentation.products.presentation.AddProductViewModel
+import org.ninjaneers.motager.dashboard.presentation.products.data.remote.ProductsService
+import org.ninjaneers.motager.dashboard.presentation.products.data.repository.ProductsRepositoryImpl
+import org.ninjaneers.motager.dashboard.presentation.products.domain.ProductsRepository
 import org.ninjaneers.motager.dashboard.presentation.products.presentation.ProductsViewModel
+import org.ninjaneers.motager.dashboard.presentation.products.presentation.addproduct.AddProductViewModel
 import org.ninjaneers.motager.dashboard.presentation.settings.presentations.SettingsViewModel
 import org.ninjaneers.motager.login.data.remote.AuthenticationService
 import org.ninjaneers.motager.login.data.remote.AuthenticationServiceImpl
@@ -84,11 +84,11 @@ val sharedModule = module {
         )
     }.bind<AuthenticationRepository>()
 
-    single<ProductRepositoryImpl> {
-        ProductRepositoryImpl(
-            productService = get()
+    single<ProductsRepositoryImpl> {
+        ProductsRepositoryImpl(
+            service = get()
         )
-    }.bind<ProductRepository>()
+    }.bind<ProductsRepository>()
 
     single<CollectionRepositoryImpl> {
         CollectionRepositoryImpl(
@@ -131,7 +131,7 @@ val sharedModule = module {
         ProductServiceImpl(
             client = get()
         )
-    }.bind<ProductService>()
+    }.bind<ProductsService>()
 
     single<CollectionsServiceImpl> {
         CollectionsServiceImpl(

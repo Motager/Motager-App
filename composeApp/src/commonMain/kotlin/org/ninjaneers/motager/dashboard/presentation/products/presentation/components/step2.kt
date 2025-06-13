@@ -36,28 +36,14 @@ import org.ninjaneers.motager.core.presentation.CoreState
 import org.ninjaneers.motager.core.presentation.components.PrimaryButton
 import org.ninjaneers.motager.core.presentation.components.PrimaryTextField
 import org.ninjaneers.motager.core.presentation.theme.FontFamily
-import org.ninjaneers.motager.dashboard.presentation.products.presentation.AddProductAction
-import org.ninjaneers.motager.dashboard.presentation.products.presentation.AddProductState
+import org.ninjaneers.motager.dashboard.presentation.products.presentation.addproduct.AddProductAction
+import org.ninjaneers.motager.dashboard.presentation.products.presentation.addproduct.AddProductState
 @Composable
 fun Step2(
     state: AddProductState,
     coreState: CoreState,
     onAction: (AddProductAction) -> Unit,
 ) {
-    if (state.isAIDialogShown)
-        AIDialog(
-            language = coreState.language,
-            onDismiss = { onAction(AddProductAction.OnAIDialogToggleVisibility) },
-            openImagesDialog = { onAction(AddProductAction.OnImagesDialogToggleVisibility) }
-        )
-    if (state.isImagesDialogShown)
-        ImagesDialog(
-            language = coreState.language,
-            onDismiss = { onAction(AddProductAction.OnImagesDialogToggleVisibility) },
-            storeImage = { onAction(AddProductAction.OnProductImageStore(it)) },
-            uploadImages = { onAction(AddProductAction.OnProductImagesUpload) }
-
-        )
     Column(
         verticalArrangement = Arrangement.spacedBy(24.dp),
     ){

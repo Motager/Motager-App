@@ -344,6 +344,7 @@ fun NavDrawer(
                 ) {
                     Box {
                         PrimaryIconButton(
+                            expanded = state.isThemeMenuExpanded,
                             onClick = {
                                 coroutineScope.launch {
                                     onAction(
@@ -485,6 +486,7 @@ fun NavDrawer(
                     }
                     Box {
                         PrimaryIconButton(
+                            expanded = state.isLocaleMenuExpanded,
                             onClick = {
                                 coroutineScope.launch {
                                     onAction(

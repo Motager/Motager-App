@@ -21,6 +21,7 @@ import org.ninjaneers.motager.core.domain.Language
 
 @Composable
 fun PrimaryIconButton(
+    expanded: Boolean = false,
     onClick: () -> Unit,
     painter: Painter,
     language: Language,
@@ -30,7 +31,10 @@ fun PrimaryIconButton(
     enabled: Boolean = true,
     shape: Shape = RoundedCornerShape(6.dp),
     elevation: ButtonElevation? = ButtonDefaults.buttonElevation(),
-    border: BorderStroke = BorderStroke(width = 0.8.dp, color = MaterialTheme.colorScheme.outline),
+    border: BorderStroke = BorderStroke(
+        width = if (expanded) 1.6f.dp else 0.8.dp,
+        color = if (expanded) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outline
+    ),
 ) {
     Button(
         modifier = modifier,

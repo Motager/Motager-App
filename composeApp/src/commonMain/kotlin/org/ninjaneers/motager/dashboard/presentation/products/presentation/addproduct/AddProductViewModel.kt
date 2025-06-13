@@ -1,4 +1,4 @@
-package org.ninjaneers.motager.dashboard.presentation.products.presentation
+package org.ninjaneers.motager.dashboard.presentation.products.presentation.addproduct
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -9,10 +9,10 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.StringResource
-import org.ninjaneers.motager.dashboard.presentation.products.domain.ProductRepository
+import org.ninjaneers.motager.dashboard.presentation.products.domain.ProductsRepository
 
 class AddProductViewModel(
-    private val repo: ProductRepository
+    private val repository: ProductsRepository
 ) : ViewModel() {
     private val _state = MutableStateFlow(AddProductState())
     val state = _state.asStateFlow()
@@ -32,7 +32,7 @@ class AddProductViewModel(
 
     private fun onProductImagesUpload() {
         viewModelScope.launch(Dispatchers.IO) {
-            repo.uploadProductImage(
+            repository.uploadProductImage(
                 image = _state.value.productImages[0],
                 path = "image_1.jpg"
             )

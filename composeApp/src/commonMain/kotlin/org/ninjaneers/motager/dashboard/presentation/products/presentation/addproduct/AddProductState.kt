@@ -1,4 +1,4 @@
-package org.ninjaneers.motager.dashboard.presentation.products.presentation
+package org.ninjaneers.motager.dashboard.presentation.products.presentation.addproduct
 
 import motager.composeapp.generated.resources.Accessories
 import motager.composeapp.generated.resources.Basic_info
@@ -12,7 +12,7 @@ import org.jetbrains.compose.resources.StringResource
 
 data class AddProductState(
     val currentStep: Int = 1,
-val productName: String = "",
+    val productName: String = "",
     val productDescription: String = "",
     val productPrice: String = "",
     val productCategory: StringResource? = null,
@@ -26,18 +26,19 @@ val productName: String = "",
     val isImagesDialogShown: Boolean = false,
     val productImages: MutableList<ByteArray> = mutableListOf(),
     val isVariantSwitchOn: Boolean = false,
-){
+) {
     val steps: List<StringResource>
-    get() = if (isVariantSwitchOn)
-        listOf(
-            Res.string.Basic_info,
-            Res.string.Variant,
-            Res.string.SKUs,
-            Res.string.Review
-        )
-    else
-        listOf(
-            Res.string.Basic_info,
-            Res.string.SKUs,
-            Res.string.Review
-        )}
+        get() = if (isVariantSwitchOn)
+            listOf(
+                Res.string.Basic_info,
+                Res.string.Variant,
+                Res.string.SKUs,
+                Res.string.Review
+            )
+        else
+            listOf(
+                Res.string.Basic_info,
+                Res.string.SKUs,
+                Res.string.Review
+            )
+}

@@ -1,4 +1,4 @@
-package org.ninjaneers.motager.dashboard.presentation.products.presentation
+package org.ninjaneers.motager.dashboard.presentation.products.presentation.addproduct
 
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.foundation.Image
