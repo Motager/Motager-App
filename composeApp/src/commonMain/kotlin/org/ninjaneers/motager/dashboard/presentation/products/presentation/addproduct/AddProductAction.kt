@@ -1,4 +1,4 @@
-package org.ninjaneers.motager.dashboard.presentation.products.presentation
+package org.ninjaneers.motager.dashboard.presentation.products.presentation.addproduct
 
 import org.jetbrains.compose.resources.StringResource
 
