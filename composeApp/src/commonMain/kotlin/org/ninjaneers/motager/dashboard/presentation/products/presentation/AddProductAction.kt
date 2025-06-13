@@ -10,4 +10,6 @@ sealed interface AddProductAction {
     data object OnImagesDialogToggleVisibility : AddProductAction
     data class OnProductImageStore(val image: ByteArray) : AddProductAction
     data object OnProductImagesUpload : AddProductAction
+    data class OnVariantSwitchChange(val isOn: Boolean) : AddProductAction
+
 }

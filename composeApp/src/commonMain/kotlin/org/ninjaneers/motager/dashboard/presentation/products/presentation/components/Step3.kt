@@ -33,9 +33,8 @@ import org.ninjaneers.motager.core.presentation.components.PrimaryTextField
 import org.ninjaneers.motager.core.presentation.theme.FontFamily
 import org.ninjaneers.motager.dashboard.presentation.products.presentation.AddProductAction
 import org.ninjaneers.motager.dashboard.presentation.products.presentation.AddProductState
-
 @Composable
-fun Step2(
+fun Step3(
     state: AddProductState,
     coreState: CoreState,
     onAction: (AddProductAction) -> Unit,

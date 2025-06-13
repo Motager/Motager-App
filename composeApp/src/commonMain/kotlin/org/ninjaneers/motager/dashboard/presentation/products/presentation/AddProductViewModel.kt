@@ -26,6 +26,7 @@ class AddProductViewModel(
             AddProductAction.OnImagesDialogToggleVisibility -> onImagesDialogToggleVisibility()
             is AddProductAction.OnProductImageStore -> onProductImageStore(action.image)
             AddProductAction.OnProductImagesUpload -> onProductImagesUpload()
+            is AddProductAction.OnVariantSwitchChange -> onVariantSwitchChange(action.isOn)
         }
     }
 
@@ -82,5 +83,13 @@ class AddProductViewModel(
             )
         }
     }
+    private fun onVariantSwitchChange(isOn: Boolean) {
+        _state.update {
+            it.copy(
+                isVariantSwitchOn = isOn
+            )
+        }
+    }
+
 
 }

@@ -110,6 +110,8 @@
     <string name="Supported_formats">الملفات المدعومة: JPG,PNG</string>
     <string name="Cancel">إلغاء</string>
     <string name="Stores">المتاجر</string>
+    <string name="Add_Variant">إضافة تصنيف متغيّر</string>
+    <string name="Variant">تصنيف</string>
 
 
 </resources>

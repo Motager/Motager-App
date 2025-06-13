@@ -445,9 +445,12 @@ fun Step1(
             horizontalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             PrimarySwitch(
-                checked = false,
-                onCheckedChange = {},
+                checked = state.isVariantSwitchOn,
+                onCheckedChange = { isChecked ->
+                    onAction(AddProductAction.OnVariantSwitchChange(isChecked))
+                }
             )
+
             Text(
                 text = stringResource(Res.string.Product_with_options),
                 fontSize = 14.sp,

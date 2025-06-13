@@ -110,6 +110,8 @@
     <string name="Supported_formats">Supported formats: JPEG,PNG</string>
     <string name="Cancel">Cancel</string>
     <string name="Stores">Stores</string>
+    <string name="Add_Variant">Add Variant Type</string>
+    <string name="Variant">Variant</string>
 
 
 </resources>

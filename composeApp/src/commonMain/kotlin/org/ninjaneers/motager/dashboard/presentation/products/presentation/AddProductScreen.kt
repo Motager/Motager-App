@@ -49,6 +49,7 @@ import org.ninjaneers.motager.dashboard.domain.DashboardContent
 import org.ninjaneers.motager.dashboard.presentation.DashboardAction
 import org.ninjaneers.motager.dashboard.presentation.products.presentation.components.Step1
 import org.ninjaneers.motager.dashboard.presentation.products.presentation.components.Step2
+import org.ninjaneers.motager.dashboard.presentation.products.presentation.components.Step3
 
 @Composable
 fun AddProductScreen(
@@ -175,17 +176,32 @@ private fun AddProductScreenContent(
                             onAction = onAction,
                         )
 
-                        2 -> Step2(
-                            state = state,
-                            coreState = coreState,
-                            onAction = onAction,
-                        )
-//                    3 -> Step3(
-//                        state = state,
-//                        coreState = coreState,
-//                        onAction = onAction,
-//                        dashboardAction = dashboardAction
-//                    )
+                        2 -> {
+                            if (state.isVariantSwitchOn) {
+                                Step2(
+                                    state = state,
+                                    coreState = coreState,
+                                    onAction = onAction,
+                                )
+                            } else {
+                                Step3( // SKUs
+                                    state = state,
+                                    coreState = coreState,
+                                    onAction = onAction,
+                                )
+                            }
+                        }
+
+                        3 -> {
+                            if (state.isVariantSwitchOn) {
+                                Step3( // SKUs
+                                    state = state,
+                                    coreState = coreState,
+                                    onAction = onAction,
+                                )
+                            }
+                        }
+
                         else -> {}
                     }
                 }
@@ -240,8 +256,11 @@ private fun AddProductScreenContent(
                     }
                     PrimaryButton(
                         onClick = {
-                            if (state.currentStep != state.steps.size - 1)
-                                onAction(AddProductAction.OnStepChange(state.currentStep + 1))
+                            val currentStep = state.currentStep
+                            val totalSteps = state.steps.size
+                            if (currentStep < totalSteps) {
+                                onAction(AddProductAction.OnStepChange(currentStep + 1))
+                            }
                         },
                         shape = RoundedCornerShape(6.dp)
                     ) {

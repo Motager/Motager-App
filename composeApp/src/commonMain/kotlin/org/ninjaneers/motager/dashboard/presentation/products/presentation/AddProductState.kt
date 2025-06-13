@@ -7,16 +7,12 @@ import motager.composeapp.generated.resources.Res
 import motager.composeapp.generated.resources.Review
 import motager.composeapp.generated.resources.SKUs
 import motager.composeapp.generated.resources.Smart_phones
+import motager.composeapp.generated.resources.Variant
 import org.jetbrains.compose.resources.StringResource
 
 data class AddProductState(
     val currentStep: Int = 1,
-    val steps: List<StringResource> = listOf(
-        Res.string.Basic_info,
-        Res.string.SKUs,
-        Res.string.Review,
-    ),
-    val productName: String = "",
+val productName: String = "",
     val productDescription: String = "",
     val productPrice: String = "",
     val productCategory: StringResource? = null,
@@ -29,4 +25,19 @@ data class AddProductState(
     val isAIDialogShown: Boolean = false,
     val isImagesDialogShown: Boolean = false,
     val productImages: MutableList<ByteArray> = mutableListOf(),
-)
+    val isVariantSwitchOn: Boolean = false,
+){
+    val steps: List<StringResource>
+    get() = if (isVariantSwitchOn)
+        listOf(
+            Res.string.Basic_info,
+            Res.string.Variant,
+            Res.string.SKUs,
+            Res.string.Review
+        )
+    else
+        listOf(
+            Res.string.Basic_info,
+            Res.string.SKUs,
+            Res.string.Review
+        )}
