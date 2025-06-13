@@ -119,6 +119,12 @@
     <string name="City">City</string>
     <string name="Add_Variant">Add Variant Type</string>
     <string name="Variant">Variant</string>
+    <string name="Add_Variant_button">Add Variant</string>
+    <string name="Variant_example">e.g.,Color,Size,Material</string>
+    <string name="Submit_product">Submit Product</string>
+    <string name="No_variants">No variants added yet</string>
+    <string name="review_cheking">Please review all the information above before submitting your product. Once submitted, you can still edit the product from your dashboard.</string>
+
 
 
 </resources>

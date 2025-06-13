@@ -119,6 +119,12 @@
     <string name="City">المدينة</string>
     <string name="Add_Variant">إضافة تصنيف متغيّر</string>
     <string name="Variant">تصنيف</string>
+    <string name="Add_Variant_button">إضافة تصنيف</string>
+    <string name="Variant_example">مثال: اللون، المقاس، الخامة.</string>
+    <string name="Submit_product">اعتماد المنتج</string>
+    <string name="No_variants">لم يتم إضافة أي متغيرات بعد</string>
+    <string name="review_cheking"> من فضلك راجع جميع المعلومات بالأعلى قبل إرسال منتجك.
+بمجرد الإرسال، لا يزال بإمكانك تعديل المنتج من خلال لوحة التحكم الخاصة بك. </string>
 
 
 </resources>

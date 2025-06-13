@@ -20,14 +20,17 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.composables.icons.lucide.Bot
 import com.composables.icons.lucide.Lucide
 import motager.composeapp.generated.resources.Add_Variant
+import motager.composeapp.generated.resources.Add_Variant_button
+import motager.composeapp.generated.resources.No_variants
 import motager.composeapp.generated.resources.Res
+import motager.composeapp.generated.resources.Variant_example
 import org.jetbrains.compose.resources.stringResource
 import org.ninjaneers.motager.core.presentation.CoreState
 import org.ninjaneers.motager.core.presentation.components.PrimaryButton
@@ -56,8 +59,6 @@ fun Step2(
 
         )
     Column(
-        modifier = Modifier
-            .background(MaterialTheme.colorScheme.background),
         verticalArrangement = Arrangement.spacedBy(24.dp),
     ){
         Row( modifier = Modifier
@@ -111,7 +112,7 @@ fun Step2(
                     onValueChange = {},
                     placeholder = {
                         Text(
-                            text = "e.g.,Color,Size,Material",
+                            text = stringResource(Res.string.Variant_example),
                             style = MaterialTheme.typography.bodyMedium,
                             color = MaterialTheme.colorScheme.surfaceVariant
                         )
@@ -121,21 +122,40 @@ fun Step2(
                     onClick = {},
                     shape = RoundedCornerShape(6.dp),
                     ) {
-                    Text("Add Variant", color = Color.White)
+                    Text(
+                        text = stringResource(Res.string.Add_Variant_button),
+                        fontSize = 14.sp,
+                        fontFamily = FontFamily(
+                            weight = FontWeight.Medium,
+                            language = coreState.language
+                        ),
+                        color = MaterialTheme.colorScheme.onPrimary
+                    )
                 }
             }
             Spacer(modifier = Modifier.height(24.dp))
+
             Box(
                 modifier = Modifier
+                    .padding(bottom = 8.dp)
                     .fillMaxWidth()
-                    .height(150.dp)
-                    .border(1.dp, Color.LightGray, RoundedCornerShape(8.dp))
-                    .padding(16.dp),
+                    .height(220.dp)
+                    .clip(RoundedCornerShape(8.dp))
+                    .border(
+                        width = 0.8f.dp,
+                        shape = RoundedCornerShape(8.dp),
+                        color = (MaterialTheme.colorScheme.outline)
+                    )
+                    .background(MaterialTheme.colorScheme.background),
                 contentAlignment = Alignment.Center
             ) {
                 Text(
-                    text = "No variants added yet",
-                    style = MaterialTheme.typography.bodyMedium,
+                    text = stringResource(Res.string.No_variants),
+                    fontSize = 16.sp,
+                    fontFamily = FontFamily(
+                        weight = FontWeight.Normal,
+                        language = coreState.language
+                    ),
                     color = MaterialTheme.colorScheme.surfaceVariant
                 )
             }

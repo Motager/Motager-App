@@ -36,6 +36,7 @@ import kotlinx.coroutines.launch
 import motager.composeapp.generated.resources.Next
 import motager.composeapp.generated.resources.Previous
 import motager.composeapp.generated.resources.Res
+import motager.composeapp.generated.resources.Submit_product
 import motager.composeapp.generated.resources.auth
 import motager.composeapp.generated.resources.chevronleft
 import motager.composeapp.generated.resources.chevronright
@@ -50,6 +51,7 @@ import org.ninjaneers.motager.dashboard.presentation.DashboardAction
 import org.ninjaneers.motager.dashboard.presentation.products.presentation.components.Step1
 import org.ninjaneers.motager.dashboard.presentation.products.presentation.components.Step2
 import org.ninjaneers.motager.dashboard.presentation.products.presentation.components.Step3
+import org.ninjaneers.motager.dashboard.presentation.products.presentation.components.Step4
 
 @Composable
 fun AddProductScreen(
@@ -65,7 +67,6 @@ fun AddProductScreen(
         dashboardAction = dashboardAction
     )
 }
-
 @Composable
 private fun AddProductScreenContent(
     state: AddProductState,
@@ -191,10 +192,24 @@ private fun AddProductScreenContent(
                                 )
                             }
                         }
-
                         3 -> {
                             if (state.isVariantSwitchOn) {
-                                Step3( // SKUs
+                                Step3(
+                                    state = state,
+                                    coreState = coreState,
+                                    onAction = onAction,
+                                )
+                            } else {
+                                Step4( // SKUs
+                                    state = state,
+                                    coreState = coreState,
+                                    onAction = onAction,
+                                )
+                            }
+                        }
+                        4 -> {
+                            if (state.isVariantSwitchOn) {
+                                Step4( // SKUs
                                     state = state,
                                     coreState = coreState,
                                     onAction = onAction,
@@ -254,12 +269,15 @@ private fun AddProductScreenContent(
                             )
                         }
                     }
+                    val isLastStep = if (state.isVariantSwitchOn) {
+                        state.currentStep == 4
+                    } else {
+                        state.currentStep == 3
+                    }
                     PrimaryButton(
                         onClick = {
-                            val currentStep = state.currentStep
-                            val totalSteps = state.steps.size
-                            if (currentStep < totalSteps) {
-                                onAction(AddProductAction.OnStepChange(currentStep + 1))
+                            if (isLastStep) {} else {
+                                onAction(AddProductAction.OnStepChange(state.currentStep + 1))
                             }
                         },
                         shape = RoundedCornerShape(6.dp)
@@ -269,7 +287,10 @@ private fun AddProductScreenContent(
                             horizontalArrangement = Arrangement.spacedBy(8.dp)
                         ) {
                             Text(
-                                text = stringResource(Res.string.Next),
+                                text = if (isLastStep)
+                                    stringResource(Res.string.Submit_product)
+                                else
+                                    stringResource(Res.string.Next),
                                 fontSize = 14.sp,
                                 fontFamily = FontFamily(
                                     weight = FontWeight.Medium,
@@ -279,11 +300,12 @@ private fun AddProductScreenContent(
                             )
                             Icon(
                                 painter = painterResource(Res.drawable.chevronright),
-                                contentDescription = "Next",
+                                contentDescription = if (isLastStep) "Submit" else "Next",
                                 tint = MaterialTheme.colorScheme.onPrimary
                             )
                         }
                     }
+
                 }
             }
         }
