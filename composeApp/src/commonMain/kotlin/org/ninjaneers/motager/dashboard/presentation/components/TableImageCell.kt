@@ -16,6 +16,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
+import motager.composeapp.generated.resources.Res
+import motager.composeapp.generated.resources.product_placeholder
+import org.jetbrains.compose.resources.painterResource
 
 @Composable
 fun TableImageCell(
@@ -41,7 +44,8 @@ fun TableImageCell(
                 ),
             model = image,
             contentDescription = null,
-            contentScale = ContentScale.Crop
+            contentScale = ContentScale.Crop,
+            error = painterResource(Res.drawable.product_placeholder)
         )
     }
 }
