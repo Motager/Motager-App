@@ -7,3 +7,7 @@ actual val MOTAGER_SERVICES_HOST: String
 
 actual val AVATAR_HOST: String
     get() = BuildConfig.AVATAR_HOST
+actual val SUPABASE_URL: String
+    get() = BuildConfig.SUPABASE_URL
+actual val SUPABASE_KEY: String
+    get() = BuildConfig.SUPABASE_KEY

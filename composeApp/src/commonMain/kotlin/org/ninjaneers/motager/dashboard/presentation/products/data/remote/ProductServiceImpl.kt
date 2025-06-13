@@ -2,15 +2,16 @@ package org.ninjaneers.motager.dashboard.presentation.products.data.remote
 
 import io.ktor.client.HttpClient
 import io.ktor.client.request.forms.formData
-import io.ktor.client.request.forms.submitFormWithBinaryData
 import io.ktor.client.request.get
+import io.ktor.client.request.put
 import io.ktor.http.Headers
 import io.ktor.http.HttpHeaders
-import io.ktor.http.HttpMethod
 import io.ktor.http.URLProtocol
 import io.ktor.http.headers
 import io.ktor.http.path
 import org.ninjaneers.motager.core.data.network.MOTAGER_SERVICES_HOST
+import org.ninjaneers.motager.core.data.network.SUPABASE_KEY
+import org.ninjaneers.motager.core.data.network.SUPABASE_URL
 import org.ninjaneers.motager.core.data.network.safeCall
 import org.ninjaneers.motager.core.domain.RemoteError
 import org.ninjaneers.motager.core.domain.Result
@@ -24,9 +25,20 @@ class ProductServiceImpl(
         path: String
     ): Result<String, RemoteError> {
         return safeCall<String> {
-            client.submitFormWithBinaryData(
-                url = "https://rfehfdthjyysdkpzspzl.supabase.co/storage/v1/object/product-images/upload/$path",
-                formData = formData {
+            client.put {
+                url {
+                    protocol = URLProtocol.HTTPS
+                    host = SUPABASE_URL
+                    path(
+                        "storage",
+                        "v1",
+                        "object",
+                        "product-images",
+                        path
+                    )
+
+                }
+                formData {
                     append(
                         key = "file",
                         value = image,
@@ -35,12 +47,10 @@ class ProductServiceImpl(
                         }
                     )
                 }
-            ) {
-                method = HttpMethod.Post
                 headers {
                     append(
                         HttpHeaders.Authorization,
-                        "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJmZWhmZHRoanl5c2RrcHpzcHpsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDkzODY5MzUsImV4cCI6MjA2NDk2MjkzNX0.GxNfNj4uitJU3-UxhZH2LfIguRb5OCe6F0Y6Oall4oQ"
+                        "Bearer $SUPABASE_KEY"
                     )
                 }
             }

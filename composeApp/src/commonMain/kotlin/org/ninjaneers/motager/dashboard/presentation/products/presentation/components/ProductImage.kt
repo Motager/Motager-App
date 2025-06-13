@@ -31,7 +31,7 @@ fun ProductImage(
     Card(
         modifier = Modifier.height(200.dp).aspectRatio(1f),
         colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.background
+            containerColor = MaterialTheme.colorScheme.secondary
         ),
         shape = RoundedCornerShape(6.dp)
     ) {

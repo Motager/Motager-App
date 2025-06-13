@@ -25,13 +25,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.composables.icons.lucide.Bot
 import com.composables.icons.lucide.Lucide
-
 import motager.composeapp.generated.resources.Basic_information
 import motager.composeapp.generated.resources.Category
 import motager.composeapp.generated.resources.Description
@@ -43,12 +41,11 @@ import motager.composeapp.generated.resources.Starting_price
 import motager.composeapp.generated.resources.Status
 import motager.composeapp.generated.resources.review_cheking
 import org.jetbrains.compose.resources.stringResource
-
 import org.ninjaneers.motager.core.presentation.CoreState
-
 import org.ninjaneers.motager.core.presentation.theme.FontFamily
-import org.ninjaneers.motager.dashboard.presentation.products.presentation.AddProductAction
-import org.ninjaneers.motager.dashboard.presentation.products.presentation.AddProductState
+import org.ninjaneers.motager.dashboard.presentation.products.presentation.addproduct.AddProductAction
+import org.ninjaneers.motager.dashboard.presentation.products.presentation.addproduct.AddProductState
+
 @Composable
 fun Step4(
     state: AddProductState,

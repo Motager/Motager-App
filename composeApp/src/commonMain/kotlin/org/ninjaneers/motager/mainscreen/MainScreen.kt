@@ -35,6 +35,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import motager.composeapp.generated.resources.Brief
+import motager.composeapp.generated.resources.Build
 import motager.composeapp.generated.resources.FreeTrial
 import motager.composeapp.generated.resources.Res
 import motager.composeapp.generated.resources.SubTitle
@@ -46,7 +47,6 @@ import motager.composeapp.generated.resources.men2
 import motager.composeapp.generated.resources.women2
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
-import org.ninjaneers.motager.core.domain.Language
 import org.ninjaneers.motager.core.presentation.CoreState
 import org.ninjaneers.motager.core.presentation.components.PrimaryButton
 import org.ninjaneers.motager.mainscreen.components.MainNavBar
@@ -103,17 +103,17 @@ private fun MainScreenContent(
                             fontSize = 18.sp,
                             fontFamily = org.ninjaneers.motager.core.presentation.theme.FontFamily(
                                 weight = FontWeight.Normal,
-                                language = Language.English
+                                language = coreState.language
                             ),
                             textAlign = TextAlign.Center
                         )
                         Text(
-                            text = "Build",
+                            text = stringResource(Res.string.Build),
                             color = MaterialTheme.colorScheme.primary,
                             fontSize = 48.sp,
                             fontFamily = org.ninjaneers.motager.core.presentation.theme.FontFamily(
-                                weight = FontWeight.Medium,
-                                language = Language.English
+                                weight = FontWeight.Bold,
+                                language = coreState.language
                             )
                         )
                         Text(
@@ -124,7 +124,7 @@ private fun MainScreenContent(
                             color = MaterialTheme.colorScheme.onBackground,
                             fontFamily = org.ninjaneers.motager.core.presentation.theme.FontFamily(
                                 weight = FontWeight.Medium,
-                                language = Language.English
+                                language = coreState.language
                             ),
                             lineHeight = 48.sp,
                             letterSpacing = (-2).sp
@@ -135,7 +135,7 @@ private fun MainScreenContent(
                             color = MaterialTheme.colorScheme.onTertiary,
                             fontFamily = org.ninjaneers.motager.core.presentation.theme.FontFamily(
                                 weight = FontWeight.Normal,
-                                language = Language.English
+                                language = coreState.language
                             ),
                         )
                         Row(
@@ -161,7 +161,7 @@ private fun MainScreenContent(
                                     color = MaterialTheme.colorScheme.onPrimary,
                                     fontFamily = org.ninjaneers.motager.core.presentation.theme.FontFamily(
                                         weight = FontWeight.Medium,
-                                        language = Language.English
+                                        language = coreState.language
                                     )
                                 )
                             }
@@ -188,7 +188,7 @@ private fun MainScreenContent(
                                     color = MaterialTheme.colorScheme.onSecondary,
                                     fontFamily = org.ninjaneers.motager.core.presentation.theme.FontFamily(
                                         weight = FontWeight.Medium,
-                                        language = Language.English
+                                        language = coreState.language
                                     )
                                 )
                             }
