@@ -12,5 +12,6 @@ data class LoginScreenState(
     val rememberMe: Boolean = false,
     val isPasswordVisible: Boolean = false,
     val isThemeMenuExpanded: Boolean = false,
-    val isLocaleMenuExpanded: Boolean = false
+    val isLocaleMenuExpanded: Boolean = false,
+    val isStoreDialogVisible: Boolean = false
 )

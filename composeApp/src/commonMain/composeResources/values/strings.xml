@@ -128,5 +128,7 @@
     <string name="No_variants">No variants added yet</string>
     <string name="review_cheking">Please review all the information above before submitting your product. Once submitted, you can still edit the product from your dashboard.</string>
     <string name="Build">Build</string>
+    <string name="Create_Store">Create Store</string>
+    <string name="Correct_Credentials">Your credentials are correct , and this email already exist you just need to create store on website to access your dashboard</string>
 
 </resources>
