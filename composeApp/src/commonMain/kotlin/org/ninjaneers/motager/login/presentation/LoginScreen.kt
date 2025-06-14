@@ -86,6 +86,7 @@ import org.ninjaneers.motager.core.presentation.components.PrimarySwitch
 import org.ninjaneers.motager.core.presentation.components.PrimaryTextField
 import org.ninjaneers.motager.core.presentation.theme.FontFamily
 import org.ninjaneers.motager.core.presentation.theme.Logo
+import org.ninjaneers.motager.login.presentation.components.CreateStoreDialog
 
 @Composable
 fun LoginScreen(
@@ -165,6 +166,13 @@ private fun LoginScreenContent(
             )
         }
     ) { innerPadding ->
+        if (state.isStoreDialogVisible) {
+            CreateStoreDialog(
+                coreState = coreState,
+                redirectToSite = { onAction(LoginAction.OnRedirectToSite) },
+                onDismiss = { onAction(LoginAction.OnStoreDialogToggleVisibility) }
+            )
+        }
         Box(
             modifier = Modifier
                 .fillMaxSize()
@@ -443,7 +451,11 @@ private fun LoginScreenContent(
                         .clip(RoundedCornerShape(6.dp))
                         .fillMaxWidth()
                         .background(color = MaterialTheme.colorScheme.secondary.copy(.6f))
-                        .border(width = 1.dp, color = MaterialTheme.colorScheme.outline, shape = RoundedCornerShape(6.dp))
+                        .border(
+                            width = 1.dp,
+                            color = MaterialTheme.colorScheme.outline,
+                            shape = RoundedCornerShape(6.dp)
+                        )
                         .padding(24.dp),
                     horizontalAlignment = Alignment.CenterHorizontally,
                 )
@@ -528,13 +540,13 @@ private fun LoginScreenContent(
                                 onDone = {
                                     onAction(
                                         LoginAction.OnLogin(
-                                        updateUser = {
-                                            coreAction(CoreAction.OnUserChange(it))
-                                        },
-                                        navigate = {
-                                            goToDashboard()
-                                        }
-                                    ))
+                                            updateUser = {
+                                                coreAction(CoreAction.OnUserChange(it))
+                                            },
+                                            navigate = {
+                                                goToDashboard()
+                                            }
+                                        ))
                                 }
                             ),
                             trailingIcon = {
@@ -558,9 +570,9 @@ private fun LoginScreenContent(
                                 }
                             },
                             visualTransformation =
-                            if (state.isPasswordVisible)
-                                VisualTransformation.None
-                            else PasswordVisualTransformation()
+                                if (state.isPasswordVisible)
+                                    VisualTransformation.None
+                                else PasswordVisualTransformation()
                         )
                     }
                     Column(verticalArrangement = Arrangement.spacedBy(20.dp)) {
@@ -589,13 +601,13 @@ private fun LoginScreenContent(
                             onClick = {
                                 onAction(
                                     LoginAction.OnLogin(
-                                    updateUser = {
-                                        coreAction(CoreAction.OnUserChange(it))
-                                    },
-                                    navigate = {
-                                        goToDashboard()
-                                    }
-                                ))
+                                        updateUser = {
+                                            coreAction(CoreAction.OnUserChange(it))
+                                        },
+                                        navigate = {
+                                            goToDashboard()
+                                        }
+                                    ))
                             },
                             shape = RoundedCornerShape(6.dp)
                         ) {

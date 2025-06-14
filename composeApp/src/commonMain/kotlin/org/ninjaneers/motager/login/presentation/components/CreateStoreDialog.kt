@@ -32,9 +32,11 @@ import org.ninjaneers.motager.core.presentation.theme.FontFamily
 fun CreateStoreDialog(
     coreState: CoreState,
     redirectToSite: () -> Unit,
+    onDismiss: () -> Unit
 ) {
     Dialog(
         onDismissRequest = {
+            onDismiss()
         },
         properties = DialogProperties(usePlatformDefaultWidth = false)
     ) {

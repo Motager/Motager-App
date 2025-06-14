@@ -10,4 +10,6 @@ interface LoginAction {
     data class OnThemeMenuToggle(val isExpanded: Boolean) : LoginAction
     data class OnLocaleMenuToggle(val isExpanded: Boolean) : LoginAction
     data class OnLogin(val updateUser: (User?) -> Unit, val navigate: () -> Unit) : LoginAction
+    data object OnRedirectToSite : LoginAction
+    data object OnStoreDialogToggleVisibility : LoginAction
 }

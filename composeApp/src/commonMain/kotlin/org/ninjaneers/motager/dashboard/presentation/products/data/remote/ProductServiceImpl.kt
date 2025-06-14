@@ -10,8 +10,7 @@ import io.ktor.http.URLProtocol
 import io.ktor.http.headers
 import io.ktor.http.path
 import org.ninjaneers.motager.core.data.network.MOTAGER_SERVICES_HOST
-import org.ninjaneers.motager.core.data.network.SUPABASE_KEY
-import org.ninjaneers.motager.core.data.network.SUPABASE_URL
+
 import org.ninjaneers.motager.core.data.network.safeCall
 import org.ninjaneers.motager.core.domain.RemoteError
 import org.ninjaneers.motager.core.domain.Result
@@ -28,7 +27,7 @@ class ProductServiceImpl(
             client.put {
                 url {
                     protocol = URLProtocol.HTTPS
-                    host = SUPABASE_URL
+                    host = ""
                     path(
                         "storage",
                         "v1",
@@ -50,7 +49,7 @@ class ProductServiceImpl(
                 headers {
                     append(
                         HttpHeaders.Authorization,
-                        "Bearer $SUPABASE_KEY"
+                        "Bearer "
                     )
                 }
             }
