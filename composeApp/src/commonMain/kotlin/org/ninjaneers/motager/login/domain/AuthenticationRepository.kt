@@ -10,7 +10,4 @@ interface AuthenticationRepository {
         password: String
     ): Result<User, RemoteError>
 
-    suspend fun getUserById(id: Int): Result<User, RemoteError>
-    suspend fun getUserAvatar(name: String): Result<ByteArray, RemoteError>
-
 }

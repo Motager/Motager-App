@@ -8,6 +8,8 @@ import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.bind
 import org.koin.dsl.module
 import org.ninjaneers.motager.core.data.network.HttpClientFactory
+import org.ninjaneers.motager.core.data.remote.UserService
+import org.ninjaneers.motager.core.data.remote.UserServiceImpl
 import org.ninjaneers.motager.core.data.repository.AppSettingsRepositoryImpl
 import org.ninjaneers.motager.core.data.repository.SessionRepositoryImpl
 import org.ninjaneers.motager.core.domain.AppSettingsRepository
@@ -115,6 +117,12 @@ val sharedModule = module {
     }.bind<OrdersRepository>()
 
 //  network
+    single<UserServiceImpl> {
+        UserServiceImpl(
+            client = get()
+        )
+    }.bind<UserService>()
+
     single<HttpClient> {
         HttpClientFactory(
             engine = get(),
