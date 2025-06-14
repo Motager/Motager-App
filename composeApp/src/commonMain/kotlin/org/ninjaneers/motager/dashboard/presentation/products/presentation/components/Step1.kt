@@ -18,6 +18,8 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyHorizontalGrid
 import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.DropdownMenu
@@ -32,7 +34,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
+import androidx.compose.ui.focus.FocusDirection
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -72,6 +78,7 @@ fun Step1(
     val animateRotation by animateFloatAsState(
         targetValue = if (state.isCategoryExpanded) 180f else 0f,
     )
+    val focusRequestManager = LocalFocusManager.current
     if (state.isAIDialogShown)
         AIDialog(
             language = coreState.language,
@@ -127,12 +134,14 @@ fun Step1(
             horizontalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             PrimarySwitch(
-                checked = false,
-                onCheckedChange = {},
+                checked = state.isPublished,
+                onCheckedChange = {
+                    onAction(AddProductAction.OnProductPublishToggle)
+                },
             )
             Text(
                 text = stringResource(
-                    if (true)
+                    if (state.isPublished)
                         Res.string.Published
                     else
                         Res.string.Draft
@@ -162,8 +171,10 @@ fun Step1(
             )
             PrimaryTextField(
                 modifier = Modifier.fillMaxWidth(),
-                value = "",
-                onValueChange = {},
+                value = state.productName,
+                onValueChange = {
+                    onAction(AddProductAction.OnProductNameChange(it))
+                },
                 placeholder = {
                     Text(
                         text = stringResource(Res.string.Product_name),
@@ -174,7 +185,16 @@ fun Step1(
                         ),
                         color = MaterialTheme.colorScheme.surfaceVariant
                     )
-                }
+                },
+                keyboardOptions = KeyboardOptions(
+                    keyboardType = KeyboardType.Text,
+                    imeAction = ImeAction.Next
+                ),
+                keyboardActions = KeyboardActions(
+                    onNext = {
+                        focusRequestManager.moveFocus(FocusDirection.Down)
+                    }
+                )
             )
         }
         Column(
@@ -196,8 +216,10 @@ fun Step1(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(100.dp),
-                value = "",
-                onValueChange = {},
+                value = state.description,
+                onValueChange = {
+                    onAction(AddProductAction.OnProductDescriptionChange(it))
+                },
                 placeholder = {
                     Text(
                         text = stringResource(Res.string.Enter_description),
@@ -208,7 +230,16 @@ fun Step1(
                         ),
                         color = MaterialTheme.colorScheme.surfaceVariant
                     )
-                }
+                },
+                keyboardOptions = KeyboardOptions(
+                    keyboardType = KeyboardType.Text,
+                    imeAction = ImeAction.Next
+                ),
+                keyboardActions = KeyboardActions(
+                    onNext = {
+                        focusRequestManager.moveFocus(FocusDirection.Down)
+                    }
+                )
             )
         }
         Column(
@@ -350,13 +381,13 @@ fun Step1(
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
                         Text(
-                            text = stringResource(state.productCategory ?: Res.string.Category),
+                            text = state.category.ifEmpty { stringResource(Res.string.Category) },
                             fontSize = 16.sp,
                             fontFamily = FontFamily(
                                 weight = FontWeight.Normal,
                                 language = coreState.language
                             ),
-                            color = if (state.productCategory != null) MaterialTheme.colorScheme.onBackground else MaterialTheme.colorScheme.surfaceVariant
+                            color = MaterialTheme.colorScheme.onBackground
                         )
                         Icon(
                             modifier = Modifier.size(16.dp).rotate(animateRotation),
@@ -381,7 +412,7 @@ fun Step1(
                         DropdownMenuItem(
                             text = {
                                 Text(
-                                    text = stringResource(state.categories[index]),
+                                    text = state.categories[index].name,
                                     fontSize = 14.sp,
                                     fontFamily = FontFamily(
                                         weight = FontWeight.Normal,
@@ -391,7 +422,7 @@ fun Step1(
                                 )
                             },
                             onClick = {
-                                onAction(AddProductAction.OnProductCategoryChange(state.categories[index]))
+                                onAction(AddProductAction.OnProductCategoryChange(state.categories[index].name))
                             }
                         )
                     }
@@ -416,8 +447,10 @@ fun Step1(
             PrimaryTextField(
                 modifier = Modifier
                     .fillMaxWidth(),
-                value = "",
-                onValueChange = {},
+                value = state.startPrice,
+                onValueChange = {
+                    onAction(AddProductAction.OnStartPriceChange(it))
+                },
                 placeholder = {
                     Text(
                         text = stringResource(Res.string.Starting_price),
@@ -428,7 +461,11 @@ fun Step1(
                         ),
                         color = MaterialTheme.colorScheme.surfaceVariant
                     )
-                }
+                },
+                keyboardOptions = KeyboardOptions(
+                    keyboardType = KeyboardType.Number,
+                    imeAction = ImeAction.Done
+                )
             )
         }
         HorizontalDivider(
@@ -445,12 +482,11 @@ fun Step1(
             horizontalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             PrimarySwitch(
-                checked = state.isVariantSwitchOn,
-                onCheckedChange = { isChecked ->
-                    onAction(AddProductAction.OnVariantSwitchChange(isChecked))
+                checked = state.hasVariants,
+                onCheckedChange = {
+                    onAction(AddProductAction.OnVariantSwitchToggle)
                 }
             )
-
             Text(
                 text = stringResource(Res.string.Product_with_options),
                 fontSize = 14.sp,

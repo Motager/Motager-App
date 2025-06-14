@@ -40,7 +40,7 @@
     <string name="Actions">Actions</string>
     <string name="Image">Image</string>
     <string name="Name">Name</string>
-    <string name="Price">Price</string>
+    <string name="Price">Price($)</string>
     <string name="Category">Category</string>
     <string name="Description">Description</string>
     <string name="TotalSpent">Total Pent</string>
@@ -94,10 +94,10 @@
     <string name="Previous">Previous</string>
     <string name="SKU_Management">SKU Management</string>
     <string name="Stock">Stock</string>
-    <string name="Compare_at_price">Compare At Price</string>
-    <string name="Cost_per_item">Cost per item</string>
-    <string name="Profit">Profit</string>
-    <string name="Margin">Margin</string>
+    <string name="Compare_at_price">Compare At Price($)</string>
+    <string name="Cost_per_item">Cost per item($)</string>
+    <string name="Profit">Profit($)</string>
+    <string name="Margin">Margin(%)</string>
     <string name="Review_product">Review Product</string>
     <string name="AI_information">AI Basic Information</string>
     <string name="AI_description">Upload product images to get AI-generated product name and description.</string>

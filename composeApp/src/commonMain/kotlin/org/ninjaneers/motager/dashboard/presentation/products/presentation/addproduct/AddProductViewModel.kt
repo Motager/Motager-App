@@ -8,11 +8,14 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import org.jetbrains.compose.resources.StringResource
+import org.ninjaneers.motager.core.domain.onSuccess
+import org.ninjaneers.motager.dashboard.presentation.categories.domain.CategoriesRepository
+import org.ninjaneers.motager.dashboard.presentation.categories.domain.Category
 import org.ninjaneers.motager.dashboard.presentation.products.domain.ProductsRepository
 
 class AddProductViewModel(
-    private val repository: ProductsRepository
+    private val repository: ProductsRepository,
+    private val categoriesRepository: CategoriesRepository
 ) : ViewModel() {
     private val _state = MutableStateFlow(AddProductState())
     val state = _state.asStateFlow()
@@ -26,7 +29,120 @@ class AddProductViewModel(
             AddProductAction.OnImagesDialogToggleVisibility -> onImagesDialogToggleVisibility()
             is AddProductAction.OnProductImageStore -> onProductImageStore(action.image)
             AddProductAction.OnProductImagesUpload -> onProductImagesUpload()
-            is AddProductAction.OnVariantSwitchChange -> onVariantSwitchChange(action.isOn)
+            AddProductAction.OnVariantSwitchToggle -> onVariantSwitchChange()
+            is AddProductAction.OnProductDescriptionChange -> onProductDescriptionChange(action.description)
+            is AddProductAction.OnProductNameChange -> onProductNameChange(action.name)
+            is AddProductAction.OnStartPriceChange -> onStartPriceChange(action.price)
+            AddProductAction.OnProductPublishToggle -> onProductPublishToggle()
+            is AddProductAction.OnComparePriceChange -> onComparePriceChange(action.price)
+            is AddProductAction.OnMarginChange -> onMarginChange(action.margin)
+            is AddProductAction.OnCostPerItemChange -> onCostPerItemChange(action.cost)
+            is AddProductAction.OnProductPriceChange -> onProductPriceChange(action.price)
+            is AddProductAction.OnProductStockChange -> onProductStockChange(action.stock)
+            is AddProductAction.OnProfitChange -> onProfitChange(action.profit)
+            is AddProductAction.OnAvailableCategoriesChange -> onAvailableCategoriesChange(action.categories)
+            is AddProductAction.OnStoreCategoriesGet -> onStoreCategoriesGet(action.storeID)
+        }
+    }
+
+    private fun onStoreCategoriesGet(storeID: Int) {
+        viewModelScope.launch {
+            categoriesRepository.getCategories(storeID)
+                .onSuccess { categories ->
+                    _state.update {
+                        it.copy(
+                            categories = categories
+                        )
+                    }
+                }
+        }
+    }
+
+    private fun onAvailableCategoriesChange(categories: List<Category>) {
+        _state.update {
+            it.copy(
+                categories = categories
+            )
+        }
+    }
+
+    private fun onProductStockChange(stock: String) {
+        _state.update {
+            it.copy(
+                stock = stock
+            )
+        }
+    }
+
+    private fun onProfitChange(profit: String) {
+        _state.update {
+            it.copy(
+                profit = profit
+            )
+        }
+    }
+
+    private fun onProductPriceChange(price: String) {
+        _state.update {
+            it.copy(
+                price = price
+            )
+        }
+    }
+
+    private fun onComparePriceChange(price: String) {
+        _state.update {
+            it.copy(
+                comparePrice = price
+            )
+        }
+    }
+
+    private fun onMarginChange(margin: String) {
+        _state.update {
+            it.copy(
+                margin = margin
+            )
+        }
+    }
+
+    private fun onCostPerItemChange(cost: String) {
+        _state.update {
+            it.copy(
+                costPerItem = cost
+            )
+        }
+    }
+
+    private fun onProductPublishToggle() {
+        _state.update {
+            it.copy(
+                isPublished = !it.isPublished
+            )
+        }
+    }
+
+    private fun onStartPriceChange(price: String) {
+        _state.update {
+            it.copy(
+                startPrice = price
+            )
+        }
+    }
+
+    private fun onProductNameChange(name: String) {
+        _state.update {
+            it.copy(
+                productName = name
+            )
+        }
+    }
+
+    private fun onProductDescriptionChange(description: String) {
+        _state.update {
+            it.copy(
+                description = description
+            )
         }
     }
 
@@ -59,10 +175,10 @@ class AddProductViewModel(
         }
     }
 
-    private fun onProductCategoryChange(productCategory: StringResource) {
+    private fun onProductCategoryChange(productCategory: String) {
         _state.update {
             it.copy(
-                productCategory = productCategory,
+                category = productCategory,
                 isCategoryExpanded = false
             )
         }
@@ -83,10 +199,11 @@ class AddProductViewModel(
             )
         }
     }
-    private fun onVariantSwitchChange(isOn: Boolean) {
+
+    private fun onVariantSwitchChange() {
         _state.update {
             it.copy(
-                isVariantSwitchOn = isOn
+                hasVariants = !it.hasVariants
             )
         }
     }

@@ -2,10 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-    <key>SUPABSE_HOST</key>
-    <string>rfehfdthjyysdkpzspzl.supabase.co</string>
-    <key>SUPABASE_KEY</key>
-    <string>eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJmZWhmZHRoanl5c2RrcHpzcHpsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDkzODY5MzUsImV4cCI6MjA2NDk2MjkzNX0.GxNfNj4uitJU3-UxhZH2LfIguRb5OCe6F0Y6Oall4oQ</string>
+    <key>MOTAGER_HOST</key>
+    <string>https://motager-v2.vercel.app/en</string>
     <key>MOTAGER_HOST</key>
     <string>10.0.2.2:8080</string>
     <key>AVATAR_HOST</key>

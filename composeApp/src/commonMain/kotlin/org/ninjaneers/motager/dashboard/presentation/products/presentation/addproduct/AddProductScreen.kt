@@ -24,6 +24,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -32,16 +33,18 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.composables.icons.lucide.ChevronLeft
+import com.composables.icons.lucide.ChevronRight
+import com.composables.icons.lucide.Lucide
 import kotlinx.coroutines.launch
 import motager.composeapp.generated.resources.Next
 import motager.composeapp.generated.resources.Previous
 import motager.composeapp.generated.resources.Res
 import motager.composeapp.generated.resources.Submit_product
 import motager.composeapp.generated.resources.auth
-import motager.composeapp.generated.resources.chevronleft
-import motager.composeapp.generated.resources.chevronright
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
+import org.ninjaneers.motager.core.domain.Language
 import org.ninjaneers.motager.core.presentation.CoreState
 import org.ninjaneers.motager.core.presentation.components.PrimaryButton
 import org.ninjaneers.motager.core.presentation.components.SecondaryButton
@@ -75,6 +78,9 @@ private fun AddProductScreenContent(
     dashboardAction: suspend (DashboardAction) -> Unit
 ) {
     val coroutineScope = rememberCoroutineScope()
+    LaunchedEffect(Unit) {
+        onAction(AddProductAction.OnStoreCategoriesGet(coreState.store.id))
+    }
     Column(
         modifier = Modifier
             .clip(RoundedCornerShape(6.dp))
@@ -178,7 +184,7 @@ private fun AddProductScreenContent(
                         )
 
                         2 -> {
-                            if (state.isVariantSwitchOn) {
+                            if (state.hasVariants) {
                                 Step2(
                                     state = state,
                                     coreState = coreState,
@@ -193,7 +199,7 @@ private fun AddProductScreenContent(
                             }
                         }
                         3 -> {
-                            if (state.isVariantSwitchOn) {
+                            if (state.hasVariants) {
                                 Step3(
                                     state = state,
                                     coreState = coreState,
@@ -208,7 +214,7 @@ private fun AddProductScreenContent(
                             }
                         }
                         4 -> {
-                            if (state.isVariantSwitchOn) {
+                            if (state.hasVariants) {
                                 Step4( // SKUs
                                     state = state,
                                     coreState = coreState,
@@ -254,7 +260,7 @@ private fun AddProductScreenContent(
                         ) {
                             Icon(
                                 modifier = Modifier.padding(end = 8.dp),
-                                painter = painterResource(Res.drawable.chevronleft),
+                                imageVector = if (coreState.language == Language.English) Lucide.ChevronLeft else Lucide.ChevronRight,
                                 contentDescription = "Previous",
                                 tint = MaterialTheme.colorScheme.onSurface
                             )
@@ -269,14 +275,14 @@ private fun AddProductScreenContent(
                             )
                         }
                     }
-                    val isLastStep = if (state.isVariantSwitchOn) {
+                    val isLastStep = if (state.hasVariants) {
                         state.currentStep == 4
                     } else {
                         state.currentStep == 3
                     }
                     PrimaryButton(
                         onClick = {
-                            if (isLastStep) {} else {
+                            if (!isLastStep) {
                                 onAction(AddProductAction.OnStepChange(state.currentStep + 1))
                             }
                         },
@@ -299,13 +305,12 @@ private fun AddProductScreenContent(
                                 color = MaterialTheme.colorScheme.onPrimary
                             )
                             Icon(
-                                painter = painterResource(Res.drawable.chevronright),
+                                imageVector = if (coreState.language == Language.English) Lucide.ChevronRight else Lucide.ChevronLeft,
                                 contentDescription = if (isLastStep) "Submit" else "Next",
                                 tint = MaterialTheme.colorScheme.onPrimary
                             )
                         }
                     }
-
                 }
             }
         }

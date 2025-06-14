@@ -40,7 +40,7 @@
     <string name="Actions">الإجراءات</string>
     <string name="Image">الصورة</string>
     <string name="Name">الإسم</string>
-    <string name="Price">السعر</string>
+    <string name="Price">السعر($)</string>
     <string name="Category">الفئة</string>
     <string name="Description">الوصف</string>
     <string name="TotalSpent">المبلغ المدفوع</string>
@@ -94,10 +94,10 @@
     <string name="Previous">السابق</string>
     <string name="SKU_Management">SKU إدارة</string>
     <string name="Stock">المخزون</string>
-    <string name="Compare_at_price">مقارنة بالسعر</string>
-    <string name="Cost_per_item">السعر للوحده</string>
-    <string name="Profit">الربح</string>
-    <string name="Margin">الحد النهائي</string>
+    <string name="Compare_at_price">مقارنة بالسعر($)</string>
+    <string name="Cost_per_item">السعر للوحده($)</string>
+    <string name="Profit">الربح($)</string>
+    <string name="Margin">الحد النهائي(%)</string>
     <string name="Review_product">مراجعة المنتج</string>
     <string name="AI_information">معلومات أساسية عن الذكاء الاصطناعي</string>
     <string name="AI_description">قم بتحميل صور المنتج للحصول على اسم المنتج والوصف الذي تم إنشاؤه بواسطة الذكاء الاصطناعي.</string>
