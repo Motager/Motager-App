@@ -53,4 +53,27 @@ actual class SessionDataStore : SessionHandler {
             data[REFRESH_TOKEN_KEY] = token
         }
     }
+    override suspend fun updateUserId(id: Int) {
+        sessionDataStore.edit { data ->
+            data[USER_ID_KEY] = id
+        }
+    }
+
+    override suspend fun getUserId(): Int? {
+        return sessionDataStore.data.map { data ->
+            data[USER_ID_KEY]
+        }.first()
+    }
+
+    override suspend fun updateAppState(isFirst: Boolean) {
+        sessionDataStore.edit { data ->
+            data[APP_STATE_KEY] = isFirst
+        }
+    }
+
+    override suspend fun getAppState(): Boolean? {
+        return sessionDataStore.data.map { data ->
+            data[APP_STATE_KEY]
+        }.first()
+    }
 }
