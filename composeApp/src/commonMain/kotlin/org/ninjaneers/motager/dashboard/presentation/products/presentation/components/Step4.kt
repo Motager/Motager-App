@@ -1,6 +1,7 @@
 package org.ninjaneers.motager.dashboard.presentation.products.presentation.components
 
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -33,6 +34,7 @@ import com.composables.icons.lucide.Lucide
 import motager.composeapp.generated.resources.Basic_information
 import motager.composeapp.generated.resources.Category
 import motager.composeapp.generated.resources.Description
+import motager.composeapp.generated.resources.Draft
 import motager.composeapp.generated.resources.Product_name
 import motager.composeapp.generated.resources.Published
 import motager.composeapp.generated.resources.Res
@@ -65,7 +67,10 @@ fun Step4(
             Text(
                 text = stringResource(Res.string.Review_product),
                 fontSize = 24.sp,
-                fontFamily = FontFamily(weight = FontWeight.Bold, language = coreState.language),
+                fontFamily = FontFamily(
+                    weight = FontWeight.Bold,
+                    language = coreState.language
+                ),
                 color = MaterialTheme.colorScheme.onSurface
             )
             Button(
@@ -121,7 +126,7 @@ fun Step4(
                                 text = stringResource(Res.string.Basic_information),
                                 fontSize = 14.sp,
                                 fontFamily = FontFamily(
-                                    weight = FontWeight.Medium,
+                                    weight = FontWeight.SemiBold,
                                     language = coreState.language
                                 ),
                                 color = MaterialTheme.colorScheme.onSurface
@@ -141,22 +146,22 @@ fun Step4(
                         ) {
                             Product_info(
                                 info = stringResource(Res.string.Product_name),
-                                value = "Sample Product",
+                                value = state.productName,
                                 coreState = coreState
                             )
                             Product_info(
                                 info = stringResource(Res.string.Category),
-                                value = "123",
+                                value = state.category,
                                 coreState = coreState
                             )
                             Product_info(
                                 info = stringResource(Res.string.Description),
-                                value = "great product",
+                                value = state.description,
                                 coreState = coreState
                             )
                             Product_info(
                                 info = stringResource(Res.string.Starting_price),
-                                value = "$99.99",
+                                value = state.startPrice,
                                 coreState = coreState
                             )
 
@@ -170,26 +175,19 @@ fun Step4(
                                         language = coreState.language
                                     )
                                 )
-                                Button(
-                                    onClick = { },
-                                    shape = RoundedCornerShape(16.dp),
-                                    colors = ButtonDefaults.buttonColors(
-                                        containerColor = MaterialTheme.colorScheme.primary,
-                                        contentColor = MaterialTheme.colorScheme.onPrimary
+                                Text(
+                                    modifier = Modifier.clip(RoundedCornerShape(50.dp))
+                                        .background(if (state.isPublished) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onError)
+                                        .padding(horizontal = 12.dp, vertical = 6.dp),
+                                    text = if (state.isPublished) stringResource(Res.string.Published) else stringResource(
+                                        Res.string.Draft
                                     ),
-                                    contentPadding = PaddingValues(
-                                        horizontal = 12.dp,
-                                        vertical = 6.dp
-                                    )
-                                ) {
-                                    Text(
-                                        text = stringResource(Res.string.Published),
-                                        fontFamily = FontFamily(
-                                            weight = FontWeight.Medium,
-                                            language = coreState.language
-                                        )
-                                    )
-                                }
+                                    fontFamily = FontFamily(
+                                        weight = FontWeight.Medium,
+                                        language = coreState.language
+                                    ),
+                                    color = if (state.isPublished) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.error
+                                )
                             }
                         }
                     }
@@ -218,13 +216,13 @@ fun Step4(
     }
 
 }
+
 @Composable
 fun Product_info(
     info: String,
     value: String,
     coreState: CoreState
-)
-{
+) {
     Column {
         Text(
             text = info,
