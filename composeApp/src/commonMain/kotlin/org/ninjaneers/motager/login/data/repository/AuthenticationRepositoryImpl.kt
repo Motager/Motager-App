@@ -19,22 +19,15 @@ class AuthenticationRepositoryImpl(
             email = email,
             password = password
         ).map { DTO ->
-            sessionHandler.updateAccessToken(DTO.accessToken!!)
-            sessionHandler.updateRefreshToken(DTO.refreshToken!!)
+            if (DTO.stores!!.isNotEmpty()) {
+                sessionHandler.updateAccessToken(DTO.accessToken ?: "")
+                sessionHandler.updateRefreshToken(DTO.refreshToken ?: "")
+            } else {
+                sessionHandler.updateAccessToken("")
+                sessionHandler.updateRefreshToken("")
+            }
             DTO.toUser()
         }
     }
-
-    override suspend fun getUserById(id: Int): Result<User, RemoteError> {
-        return service.getUserById(id)
-            .map { DTO ->
-                DTO.toUser()
-            }
-    }
-
-    override suspend fun getUserAvatar(name: String): Result<ByteArray, RemoteError> {
-        return service.getUserAvatar(name)
-    }
-
 
 }

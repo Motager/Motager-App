@@ -1,57 +1,56 @@
 package org.ninjaneers.motager.dashboard.presentation.products.data.remote
 
 import io.ktor.client.HttpClient
+import io.ktor.client.request.forms.FormPart
+import io.ktor.client.request.forms.MultiPartFormDataContent
 import io.ktor.client.request.forms.formData
 import io.ktor.client.request.get
-import io.ktor.client.request.put
+import io.ktor.client.request.post
+import io.ktor.client.request.setBody
 import io.ktor.http.Headers
 import io.ktor.http.HttpHeaders
 import io.ktor.http.URLProtocol
-import io.ktor.http.headers
 import io.ktor.http.path
+import io.ktor.utils.io.core.buildPacket
+import io.ktor.utils.io.core.writeFully
 import org.ninjaneers.motager.core.data.network.MOTAGER_SERVICES_HOST
-
 import org.ninjaneers.motager.core.data.network.safeCall
 import org.ninjaneers.motager.core.domain.RemoteError
 import org.ninjaneers.motager.core.domain.Result
 import org.ninjaneers.motager.dashboard.presentation.products.data.dto.ProductResponseDTO
 
 class ProductServiceImpl(
-    private val client: HttpClient
+    private val client: HttpClient,
 ) : ProductsService {
     override suspend fun uploadProductImage(
         image: ByteArray,
-        path: String
+        path: String,
     ): Result<String, RemoteError> {
         return safeCall<String> {
-            client.put {
+            client.post {
                 url {
-                    protocol = URLProtocol.HTTPS
-                    host = ""
+                    protocol = URLProtocol.HTTP
+                    host = MOTAGER_SERVICES_HOST
                     path(
-                        "storage",
-                        "v1",
-                        "object",
-                        "product-images",
-                        path
+                        "upload",
+                        "file"
                     )
-
                 }
-                formData {
-                    append(
-                        key = "file",
-                        value = image,
-                        headers = Headers.build {
-                            append(HttpHeaders.ContentType, "image/jpeg")
+                setBody(
+                    MultiPartFormDataContent(
+                        formData {
+                            append(FormPart("file", image))
+                            appendInput(
+                                key = "file",
+                                headers = Headers.build {
+                                    append(HttpHeaders.ContentDisposition, "filename=image.jpg")
+                                }
+                            ) {
+                                buildPacket { writeFully(image) }
+                            }
                         }
                     )
-                }
-                headers {
-                    append(
-                        HttpHeaders.Authorization,
-                        "Bearer "
-                    )
-                }
+                )
             }
         }
     }
