@@ -90,6 +90,7 @@ fun CreateStoreDialog(
                     ) {
                         Text(
                             text = stringResource(Res.string.Create_Store),
+                            fontSize = 18.sp,
                             fontFamily = FontFamily(
                                 language = coreState.language,
                                 weight = FontWeight.Normal

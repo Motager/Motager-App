@@ -62,12 +62,14 @@ class LoginViewModel(
                 password = _state.value.password
             ).onSuccess { user ->
                 if (user.stores.isNotEmpty()) {
-                    _state.update {
-                        it.copy(
-                            isLoading = false,
-                            error = null,
-                            user = user,
-                        )
+                    authenticationUseCase.getUserAvatar(user.name).onSuccess { avatar ->
+                        _state.update {
+                            it.copy(
+                                isLoading = false,
+                                error = null,
+                                user = user.copy(avatar = avatar),
+                            )
+                        }
                     }
                     updateUser(_state.value.user)
                     navigate()
