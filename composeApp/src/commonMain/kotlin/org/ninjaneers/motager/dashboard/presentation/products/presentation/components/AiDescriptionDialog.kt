@@ -21,6 +21,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -57,15 +58,14 @@ import org.ninjaneers.motager.core.domain.Language
 import org.ninjaneers.motager.core.presentation.components.PrimaryButton
 import org.ninjaneers.motager.core.presentation.components.PrimaryTextField
 import org.ninjaneers.motager.core.presentation.theme.FontFamily
+import org.ninjaneers.motager.dashboard.presentation.products.presentation.addproduct.AddProductAction
 import org.ninjaneers.motager.dashboard.presentation.products.presentation.addproduct.AddProductState
 
 @Composable
 fun AiDescriptionDialog(
     state: AddProductState,
-    onDismiss: () -> Unit,
     language: Language,
-    storeImage: (ByteArray) -> Unit,
-    onImageDelete: (Int) -> Unit,
+    onAction: (AddProductAction) -> Unit,
 ) {
     val context = LocalPlatformContext.current
     val scope = rememberCoroutineScope()
@@ -75,14 +75,14 @@ fun AiDescriptionDialog(
         onResult = { images ->
             images.forEach { image ->
                 scope.launch {
-                    storeImage(image.readByteArray(context))
+                    onAction(AddProductAction.OnAiImageStore(image.readByteArray(context)))
                 }
             }
         }
     )
     Dialog(
         onDismissRequest = {
-            onDismiss()
+            onAction(AddProductAction.OnAIDialogToggleVisibility)
         },
         properties = DialogProperties(usePlatformDefaultWidth = false)
     ) {
@@ -146,8 +146,10 @@ fun AiDescriptionDialog(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .height(42.dp),
-                            value = "",
-                            onValueChange = {},
+                            value = state.brandName,
+                            onValueChange = {
+                                onAction(AddProductAction.OnBrandNameChange(it))
+                            },
                             placeholder = {
                                 Text(
                                     text = stringResource(Res.string.Apple),
@@ -236,7 +238,7 @@ fun AiDescriptionDialog(
                                             modifier = Modifier.animateItem(),
                                             image = image,
                                             onImageDelete = {
-                                                onImageDelete(index)
+                                                onAction(AddProductAction.OnAiImageDelete(index))
                                             }
                                         )
                                     }
@@ -264,18 +266,34 @@ fun AiDescriptionDialog(
                     ) {
                         PrimaryButton(
                             modifier = Modifier.height(40.dp),
-                            onClick = {},
+                            onClick = {
+                                onAction(
+                                    AddProductAction.OnProductGenerateDescription(
+                                        state.brandName,
+                                        state.aiImagesUrls
+                                    )
+                                )
+                                if (state.isGenerateDescriptionLoading)
+                                    onAction(AddProductAction.OnAIDialogToggleVisibility)
+                            },
                             shape = RoundedCornerShape(6.dp),
-                            enabled = state.aiImages.isEmpty()
+                            enabled = state.aiImages.isNotEmpty() && state.brandName.isNotEmpty()
                         ) {
-                            Text(
-                                text = stringResource(Res.string.Generate_product_info),
-                                fontFamily = FontFamily(
-                                    language = language,
-                                    weight = FontWeight.Normal
-                                ),
-                                color = MaterialTheme.colorScheme.onPrimary
-                            )
+                            if (!state.isGenerateDescriptionLoading) {
+                                Text(
+                                    text = stringResource(Res.string.Generate_product_info),
+                                    fontFamily = FontFamily(
+                                        language = language,
+                                        weight = FontWeight.Normal
+                                    ),
+                                    color = MaterialTheme.colorScheme.onPrimary
+                                )
+                            } else {
+                                CircularProgressIndicator(
+                                    modifier = Modifier.size(24.dp),
+                                    color = MaterialTheme.colorScheme.onPrimary
+                                )
+                            }
                         }
                     }
                 }

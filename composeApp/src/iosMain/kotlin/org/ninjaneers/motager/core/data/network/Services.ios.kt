@@ -8,3 +8,5 @@ actual val AVATAR_HOST: String
     get() = NSBundle.mainBundle.objectForInfoDictionaryKey("AVATAR_HOST").toString()
 actual val MOTAGER_SITE: String
     get() = NSBundle.mainBundle.objectForInfoDictionaryKey("MOTAGER_SITE").toString()
+actual val AI_HOST: String
+    get() = NSBundle.mainBundle.objectForInfoDictionaryKey("AI_HOST").toString()

@@ -48,20 +48,6 @@ fun Step3(
     onAction: (AddProductAction) -> Unit,
 ) {
     val focusRequestManager = LocalFocusManager.current
-    if (state.isAIDialogShown)
-        AiDescriptionDialog(
-            language = coreState.language,
-            onDismiss = { onAction(AddProductAction.OnAIDialogToggleVisibility) },
-            state = state,
-            storeImage = { onAction(AddProductAction.OnAiImageStore(it)) },
-            onImageDelete = { onAction(AddProductAction.OnAiImageDelete(it)) },
-        )
-    if (state.isImagesDialogShown)
-        ImagesDialog(
-            language = coreState.language,
-            onDismiss = { onAction(AddProductAction.OnImagesDialogToggleVisibility) },
-            storeImage = { onAction(AddProductAction.OnProductImageStore(it)) },
-        )
     Column(
         verticalArrangement = Arrangement.spacedBy(24.dp),
     ) {

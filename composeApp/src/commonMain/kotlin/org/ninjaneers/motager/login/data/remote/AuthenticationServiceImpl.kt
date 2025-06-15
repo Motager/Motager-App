@@ -57,7 +57,7 @@ class AuthenticationServiceImpl(
                 url {
                     protocol = URLProtocol.HTTPS
                     host = AVATAR_HOST
-                    path("username")
+                    path("public", "boy")
                     parameters.append("username", name)
                 }
             }

@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -83,9 +84,7 @@ fun Step1(
         AiDescriptionDialog(
             state = state,
             language = coreState.language,
-            storeImage = { onAction(AddProductAction.OnAiImageStore(it)) },
-            onDismiss = { onAction(AddProductAction.OnAIDialogToggleVisibility) },
-            onImageDelete = { onAction(AddProductAction.OnAiImageDelete(it)) },
+            onAction = onAction
         )
     if (state.isImagesDialogShown)
         ImagesDialog(
@@ -216,7 +215,7 @@ fun Step1(
             PrimaryTextField(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(100.dp),
+                    .heightIn(min = 100.dp),
                 value = state.description,
                 onValueChange = {
                     onAction(AddProductAction.OnProductDescriptionChange(it))

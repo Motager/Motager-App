@@ -8,6 +8,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import org.ninjaneers.motager.core.domain.onError
 import org.ninjaneers.motager.core.domain.onSuccess
 import org.ninjaneers.motager.dashboard.presentation.categories.domain.CategoriesRepository
 import org.ninjaneers.motager.dashboard.presentation.categories.domain.Category
@@ -44,6 +45,48 @@ class AddProductViewModel(
             is AddProductAction.OnAiImageStore -> onAiImageStore(action.image)
             is AddProductAction.OnAiImageDelete -> onAiImageDelete(action.index)
             is AddProductAction.OnProductImageDelete -> onProductImageDelete(action.index)
+            is AddProductAction.OnBrandNameChange -> onBrandNameChange(action.name)
+            is AddProductAction.OnProductGenerateDescription -> onProductGenerateDescription(
+                action.name,
+                action.images
+            )
+        }
+    }
+
+    private fun onProductGenerateDescription(name: String, images: List<String>) {
+        viewModelScope.launch {
+            _state.update {
+                it.copy(
+                    isGenerateDescriptionLoading = true
+                )
+            }
+            onAiImagesUpload()
+            repository.generateDescription(name, images)
+                .onSuccess { data ->
+                    _state.update {
+                        it.copy(
+                            isGenerateDescriptionLoading = false,
+                            description = data.description,
+                            productName = data.productName
+                        )
+                    }
+                }
+                .onError {
+                    _state.update {
+                        it.copy(
+                            isGenerateDescriptionLoading = false
+                        )
+                    }
+                }
+        }
+    }
+
+
+    private fun onBrandNameChange(name: String) {
+        _state.update {
+            it.copy(
+                brandName = name
+            )
         }
     }
 
@@ -54,6 +97,7 @@ class AddProductViewModel(
             )
         }
     }
+
     private fun onProductImageDelete(index: Int) {
         _state.update {
             it.copy(
@@ -187,18 +231,16 @@ class AddProductViewModel(
         }
     }
 
-    private fun onAiImagesUpload() {
+    private suspend fun onAiImagesUpload() {
         _state.value.aiImages.forEachIndexed { index, image ->
-            viewModelScope.launch(Dispatchers.IO) {
-                repository.uploadProductImage(
-                    image = image,
-                    path = "image_$index.jpg"
-                ).onSuccess { url ->
-                    _state.update {
-                        it.copy(
-                            aiImagesUrls = it.aiImagesUrls.apply { add(url) }
-                        )
-                    }
+            repository.uploadProductImage(
+                image = image,
+                path = "image_$index.jpg"
+            ).onSuccess { url ->
+                _state.update {
+                    it.copy(
+                        aiImagesUrls = it.aiImagesUrls.apply { add(url) }
+                    )
                 }
             }
         }

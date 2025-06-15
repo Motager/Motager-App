@@ -9,10 +9,12 @@ import org.jetbrains.compose.resources.StringResource
 import org.ninjaneers.motager.dashboard.presentation.categories.domain.Category
 
 data class AddProductState(
+    val isGenerateDescriptionLoading: Boolean = false,
     val currentStep: Int = 1,
     val productName: String = "",
     val description: String = "",
     val startPrice: String = "",
+    val brandName: String = "",
     val category: String = "",
     val categories: List<Category> = emptyList(),
     val isCategoryExpanded: Boolean = false,

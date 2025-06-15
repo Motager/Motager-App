@@ -25,4 +25,7 @@ sealed interface AddProductAction {
     data class OnProfitChange(val profit: String) : AddProductAction
     data class OnMarginChange(val margin: String) : AddProductAction
     data class OnStoreCategoriesGet(val storeID: Int) : AddProductAction
+    data class OnBrandNameChange(val name: String) : AddProductAction
+    data class OnProductGenerateDescription(val name: String, val images: List<String>) :
+        AddProductAction
 }
