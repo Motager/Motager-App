@@ -43,6 +43,28 @@ class AddProductViewModel(
             is AddProductAction.OnAvailableCategoriesChange -> onAvailableCategoriesChange(action.categories)
             is AddProductAction.OnStoreCategoriesGet -> onStoreCategoriesGet(action.storeID)
             is AddProductAction.OnAiImageStore -> {}
+            is AddProductAction.OnAiImageDelete -> onAiImageDelete(action.index)
+            is AddProductAction.OnProductImageDelete -> onProductImageDelete(action.index)
+        }
+    }
+
+    private fun onProductImageDelete(index: Int) {
+        _state.update {
+            it.copy(
+                productImages = it.productImages.toMutableList().apply { removeAt(index) },
+                productImagesUrls = it.productImagesUrls.toMutableList().apply { removeAt(index) }
+            )
+        }
+        Logger.i(tag = "ImagesDelete", messageString = _state.value.productImagesUrls.toString())
+
+    }
+
+    private fun onAiImageDelete(index: Int) {
+        _state.update {
+            it.copy(
+                aiImages = it.aiImages.apply { removeAt(index) },
+                aiImagesUrls = it.aiImagesUrls.apply { removeAt(index) }
+            )
         }
     }
 
@@ -153,14 +175,21 @@ class AddProductViewModel(
                 image = image,
                 path = "image_1.jpg"
             ).onSuccess { url ->
-                _state.value.productImagesUrls.add(url)
+                _state.update {
+                    it.copy(
+                        productImagesUrls = it.productImagesUrls.apply { add(url) }
+                    )
+                }
             }
-            Logger.i(tag = "ImagesUrls", messageString = _state.value.productImagesUrls.toString())
         }
     }
 
     private fun onProductImageStore(image: ByteArray) {
-        _state.value.productImages.add(image)
+        _state.update {
+            it.copy(
+                productImages = it.productImages.toMutableList().apply { add(image) }
+            )
+        }
         onProductImageUpload(image)
     }
 

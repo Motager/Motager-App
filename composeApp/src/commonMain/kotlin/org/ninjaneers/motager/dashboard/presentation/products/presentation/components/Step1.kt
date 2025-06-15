@@ -301,9 +301,10 @@ fun Step1(
                         ) {
                             itemsIndexed(state.productImages) { index, image ->
                                 ProductImage(
+                                    modifier = Modifier.animateItem(),
                                     image = image,
                                     onImageDelete = {
-
+                                        onAction(AddProductAction.OnProductImageDelete(index))
                                     }
                                 )
                             }

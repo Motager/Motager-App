@@ -25,11 +25,12 @@ import com.composables.icons.lucide.X
 
 @Composable
 fun ProductImage(
+    modifier: Modifier = Modifier,
     image: ByteArray,
-    onImageDelete: () -> Unit
+    onImageDelete: () -> Unit,
 ) {
     Card(
-        modifier = Modifier.height(200.dp).aspectRatio(1f),
+        modifier = modifier.height(200.dp).aspectRatio(1f),
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.secondary
         ),
