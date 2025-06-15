@@ -2,6 +2,7 @@ package org.ninjaneers.motager.dashboard.presentation.products.presentation.addp
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import co.touchlab.kermit.Logger
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -15,7 +16,7 @@ import org.ninjaneers.motager.dashboard.presentation.products.domain.ProductsRep
 
 class AddProductViewModel(
     private val repository: ProductsRepository,
-    private val categoriesRepository: CategoriesRepository
+    private val categoriesRepository: CategoriesRepository,
 ) : ViewModel() {
     private val _state = MutableStateFlow(AddProductState())
     val state = _state.asStateFlow()
@@ -28,7 +29,6 @@ class AddProductViewModel(
             AddProductAction.OnAIDialogToggleVisibility -> onAIDialogToggleVisibility()
             AddProductAction.OnImagesDialogToggleVisibility -> onImagesDialogToggleVisibility()
             is AddProductAction.OnProductImageStore -> onProductImageStore(action.image)
-            AddProductAction.OnProductImagesUpload -> onProductImagesUpload()
             AddProductAction.OnVariantSwitchToggle -> onVariantSwitchChange()
             is AddProductAction.OnProductDescriptionChange -> onProductDescriptionChange(action.description)
             is AddProductAction.OnProductNameChange -> onProductNameChange(action.name)
@@ -42,6 +42,7 @@ class AddProductViewModel(
             is AddProductAction.OnProfitChange -> onProfitChange(action.profit)
             is AddProductAction.OnAvailableCategoriesChange -> onAvailableCategoriesChange(action.categories)
             is AddProductAction.OnStoreCategoriesGet -> onStoreCategoriesGet(action.storeID)
+            is AddProductAction.OnAiImageStore -> {}
         }
     }
 
@@ -146,17 +147,21 @@ class AddProductViewModel(
         }
     }
 
-    private fun onProductImagesUpload() {
+    private fun onProductImageUpload(image: ByteArray) {
         viewModelScope.launch(Dispatchers.IO) {
             repository.uploadProductImage(
-                image = _state.value.productImages[0],
+                image = image,
                 path = "image_1.jpg"
-            )
+            ).onSuccess { url ->
+                _state.value.productImagesUrls.add(url)
+            }
+            Logger.i(tag = "ImagesUrls", messageString = _state.value.productImagesUrls.toString())
         }
     }
 
     private fun onProductImageStore(image: ByteArray) {
         _state.value.productImages.add(image)
+        onProductImageUpload(image)
     }
 
     private fun onAIDialogToggleVisibility() {

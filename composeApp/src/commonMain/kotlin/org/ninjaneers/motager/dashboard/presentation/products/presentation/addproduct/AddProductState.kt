@@ -19,6 +19,9 @@ data class AddProductState(
     val isAIDialogShown: Boolean = false,
     val isImagesDialogShown: Boolean = false,
     val productImages: MutableList<ByteArray> = mutableListOf(),
+    val productImagesUrls: MutableList<String> = mutableListOf(),
+    val aiImages: MutableList<ByteArray> = mutableListOf(),
+    val aiImagesUrls: MutableList<String> = mutableListOf(),
     val hasVariants: Boolean = false,
     val steps: List<StringResource> = if (hasVariants)
         listOf(

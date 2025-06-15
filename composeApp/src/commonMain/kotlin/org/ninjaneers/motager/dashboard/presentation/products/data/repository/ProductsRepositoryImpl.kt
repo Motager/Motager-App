@@ -24,7 +24,9 @@ class ProductsRepositoryImpl(
         image: ByteArray,
         path: String
     ): Result<String, RemoteError> {
-        return service.uploadProductImage(image, path = path)
+        return service.uploadProductImage(image, path = path).map { DTO ->
+            DTO.data ?: ""
+        }
     }
 
 }

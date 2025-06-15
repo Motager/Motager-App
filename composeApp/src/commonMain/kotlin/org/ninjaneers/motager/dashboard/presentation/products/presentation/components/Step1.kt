@@ -90,7 +90,6 @@ fun Step1(
             language = coreState.language,
             onDismiss = { onAction(AddProductAction.OnImagesDialogToggleVisibility) },
             storeImage = { onAction(AddProductAction.OnProductImageStore(it)) },
-            uploadImages = { onAction(AddProductAction.OnProductImagesUpload) }
         )
     Column(
         verticalArrangement = Arrangement.spacedBy(24.dp),

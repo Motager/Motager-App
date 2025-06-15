@@ -18,6 +18,7 @@ import org.ninjaneers.motager.core.data.network.safeCall
 import org.ninjaneers.motager.core.domain.RemoteError
 import org.ninjaneers.motager.core.domain.Result
 import org.ninjaneers.motager.dashboard.presentation.products.data.dto.ProductResponseDTO
+import org.ninjaneers.motager.dashboard.presentation.products.data.dto.UploadImageResponseDTO
 
 class ProductServiceImpl(
     private val client: HttpClient,
@@ -25,8 +26,8 @@ class ProductServiceImpl(
     override suspend fun uploadProductImage(
         image: ByteArray,
         path: String,
-    ): Result<String, RemoteError> {
-        return safeCall<String> {
+    ): Result<UploadImageResponseDTO, RemoteError> {
+        return safeCall<UploadImageResponseDTO> {
             client.post {
                 url {
                     protocol = URLProtocol.HTTP

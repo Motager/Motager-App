@@ -4,9 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -23,6 +21,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
@@ -35,13 +34,12 @@ import com.mohamedrejeb.calf.picker.FilePickerSelectionMode
 import com.mohamedrejeb.calf.picker.rememberFilePickerLauncher
 import kotlinx.coroutines.launch
 import motager.composeapp.generated.resources.Add_images
-import motager.composeapp.generated.resources.Cancel
 import motager.composeapp.generated.resources.Click_to_add_images
+import motager.composeapp.generated.resources.Main_image
 import motager.composeapp.generated.resources.Res
 import motager.composeapp.generated.resources.Supported_formats
 import org.jetbrains.compose.resources.stringResource
 import org.ninjaneers.motager.core.domain.Language
-import org.ninjaneers.motager.core.presentation.components.SecondaryButton
 import org.ninjaneers.motager.core.presentation.theme.FontFamily
 
 @Composable
@@ -49,7 +47,6 @@ fun ImagesDialog(
     language: Language,
     onDismiss: () -> Unit,
     storeImage: (ByteArray) -> Unit,
-    uploadImages: () -> Unit
 ) {
     val context = LocalPlatformContext.current
     val scope = rememberCoroutineScope()
@@ -60,7 +57,6 @@ fun ImagesDialog(
             images.forEach { image ->
                 scope.launch {
                     storeImage(image.readByteArray(context))
-                    uploadImages()
                 }
             }
             onDismiss()
@@ -126,7 +122,7 @@ fun ImagesDialog(
                             color = MaterialTheme.colorScheme.onBackground
                         )
                         Text(
-                            modifier = Modifier.padding(bottom = 16.dp),
+                            modifier = Modifier.padding(bottom = 6.dp),
                             text = stringResource(Res.string.Supported_formats),
                             fontSize = 14.sp,
                             fontFamily = FontFamily(
@@ -134,6 +130,17 @@ fun ImagesDialog(
                                 weight = FontWeight.Normal
                             ),
                             color = MaterialTheme.colorScheme.onTertiary
+                        )
+                        Text(
+                            modifier = Modifier.padding(bottom = 16.dp),
+                            text = stringResource(Res.string.Main_image),
+                            fontSize = 14.sp,
+                            fontFamily = FontFamily(
+                                language = language,
+                                weight = FontWeight.Normal
+                            ),
+                            color = MaterialTheme.colorScheme.onTertiary,
+                            textAlign = TextAlign.Center
                         )
                         Button(
                             onClick = {
@@ -156,30 +163,8 @@ fun ImagesDialog(
                         }
 
                     }
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth(),
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.Start
-                    ) {
-                        SecondaryButton(
-                            modifier = Modifier.height(40.dp),
-                            onClick = {}
-                        ) {
-                            Text(
-                                text = stringResource(Res.string.Cancel),
-                                fontSize = 14.sp,
-                                fontFamily = FontFamily(
-                                    language = language,
-                                    weight = FontWeight.Medium
-                                ),
-                                color = MaterialTheme.colorScheme.onBackground
-                            )
-                        }
-                    }
                 }
             }
         }
     }
-
 }
