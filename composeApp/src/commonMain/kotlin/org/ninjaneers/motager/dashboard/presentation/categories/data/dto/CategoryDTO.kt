@@ -13,5 +13,7 @@ data class CategoryDTO(
     @SerialName("name")
     val name: String?,
     @SerialName("store_id")
-    val storeID: Int?
+    val storeID: Int?,
+    @SerialName("slug")
+    val slug: String?,
 )

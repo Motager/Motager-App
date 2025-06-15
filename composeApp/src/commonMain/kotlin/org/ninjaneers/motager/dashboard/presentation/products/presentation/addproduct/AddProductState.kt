@@ -11,8 +11,6 @@ import org.ninjaneers.motager.dashboard.presentation.categories.domain.Category
 data class AddProductState(
     val isGenerateDescriptionLoading: Boolean = false,
     val currentStep: Int = 1,
-    val productName: String = "",
-    val description: String = "",
     val startPrice: String = "",
     val brandName: String = "",
     val category: String = "",
@@ -38,7 +36,6 @@ data class AddProductState(
             Res.string.SKUs,
             Res.string.Review
         ),
-    val isPublished: Boolean = false,
     val stock: String = "",
     val price: String = "",
     val profit: String = "",

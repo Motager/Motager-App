@@ -4,5 +4,6 @@ data class Category(
     val id: Int,
     val storeID: Int,
     val name: String,
-    val description: String
+    val description: String,
+    val slug: String,
 )
