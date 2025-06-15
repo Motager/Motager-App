@@ -100,7 +100,7 @@ fun Step3(
             )
             PrimaryTextField(
                 modifier = Modifier.fillMaxWidth(),
-                value = state.stock,
+                value = state.product.stock,
                 onValueChange = {
                     onAction(AddProductAction.OnProductStockChange(it))
                 },
@@ -132,7 +132,7 @@ fun Step3(
             )
             PrimaryTextField(
                 modifier = Modifier.fillMaxWidth(),
-                value = state.price,
+                value = state.product.price,
                 onValueChange = {
                     onAction(AddProductAction.OnProductPriceChange(it))
                 },
@@ -165,7 +165,7 @@ fun Step3(
             PrimaryTextField(
                 modifier = Modifier
                     .fillMaxWidth(),
-                value = state.comparePrice,
+                value = state.product.compareAtPrice,
                 onValueChange = {
                     onAction(AddProductAction.OnComparePriceChange(it))
                 },
@@ -198,7 +198,7 @@ fun Step3(
             PrimaryTextField(
                 modifier = Modifier
                     .fillMaxWidth(),
-                value = state.profit,
+                value = state.product.profit,
                 onValueChange = {
                     onAction(AddProductAction.OnProfitChange(it))
                 },
@@ -231,7 +231,7 @@ fun Step3(
             PrimaryTextField(
                 modifier = Modifier
                     .fillMaxWidth(),
-                value = state.costPerItem,
+                value = state.product.costPerItem,
                 onValueChange = {
                     onAction(AddProductAction.OnCostPerItemChange(it))
                 },
@@ -264,7 +264,7 @@ fun Step3(
             PrimaryTextField(
                 modifier = Modifier
                     .fillMaxWidth(),
-                value = state.margin,
+                value = state.product.margin,
                 onValueChange = {
                     onAction(AddProductAction.OnMarginChange(it))
                 },

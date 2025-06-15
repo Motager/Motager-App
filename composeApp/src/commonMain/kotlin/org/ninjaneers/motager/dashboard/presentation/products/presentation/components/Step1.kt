@@ -134,14 +134,14 @@ fun Step1(
             horizontalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             PrimarySwitch(
-                checked = state.isPublished,
+                checked = state.product.isPublished,
                 onCheckedChange = {
                     onAction(AddProductAction.OnProductPublishToggle)
                 },
             )
             Text(
                 text = stringResource(
-                    if (state.isPublished)
+                    if (state.product.isPublished)
                         Res.string.Published
                     else
                         Res.string.Draft
@@ -171,7 +171,7 @@ fun Step1(
             )
             PrimaryTextField(
                 modifier = Modifier.fillMaxWidth(),
-                value = state.productName,
+                value = state.product.name,
                 onValueChange = {
                     onAction(AddProductAction.OnProductNameChange(it))
                 },
@@ -216,7 +216,7 @@ fun Step1(
                 modifier = Modifier
                     .fillMaxWidth()
                     .heightIn(min = 100.dp),
-                value = state.description,
+                value = state.product.description,
                 onValueChange = {
                     onAction(AddProductAction.OnProductDescriptionChange(it))
                 },
@@ -382,7 +382,7 @@ fun Step1(
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
                         Text(
-                            text = state.category.ifEmpty { stringResource(Res.string.Category) },
+                            text = if (state.product.category.id == 0) stringResource(Res.string.Category) else state.product.category.name,
                             fontSize = 16.sp,
                             fontFamily = FontFamily(
                                 weight = FontWeight.Normal,
@@ -423,7 +423,7 @@ fun Step1(
                                 )
                             },
                             onClick = {
-                                onAction(AddProductAction.OnProductCategoryChange(state.categories[index].name))
+                                onAction(AddProductAction.OnProductCategoryChange(state.categories[index]))
                             }
                         )
                     }
@@ -448,7 +448,7 @@ fun Step1(
             PrimaryTextField(
                 modifier = Modifier
                     .fillMaxWidth(),
-                value = state.startPrice,
+                value = state.product.startPrice,
                 onValueChange = {
                     onAction(AddProductAction.OnStartPriceChange(it))
                 },

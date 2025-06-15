@@ -2,6 +2,7 @@ package org.ninjaneers.motager.dashboard.presentation.products.presentation.addp
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import co.touchlab.kermit.Logger
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -25,7 +26,7 @@ class AddProductViewModel(
         when (action) {
             is AddProductAction.OnStepChange -> onStepChange(action.currentStep)
             AddProductAction.OnCategoryMenuToggle -> onCategoryMenuToggle()
-            is AddProductAction.OnProductCategoryChange -> onProductCategoryChange(action.productCategory)
+            is AddProductAction.OnProductCategoryChange -> onProductCategoryChange(action.category)
             AddProductAction.OnAIDialogToggleVisibility -> onAIDialogToggleVisibility()
             AddProductAction.OnImagesDialogToggleVisibility -> onImagesDialogToggleVisibility()
             is AddProductAction.OnProductImageStore -> onProductImageStore(action.image)
@@ -66,8 +67,10 @@ class AddProductViewModel(
                     _state.update {
                         it.copy(
                             isGenerateDescriptionLoading = false,
-                            description = data.description,
-                            productName = data.productName
+                            product = it.product.copy(
+                                name = data.productName,
+                                description = data.description
+                            ),
                         )
                     }
                 }
@@ -139,7 +142,9 @@ class AddProductViewModel(
     private fun onProductStockChange(stock: String) {
         _state.update {
             it.copy(
-                stock = stock
+                product = it.product.copy(
+                    stock = stock
+                )
             )
         }
     }
@@ -147,7 +152,9 @@ class AddProductViewModel(
     private fun onProfitChange(profit: String) {
         _state.update {
             it.copy(
-                profit = profit
+                product = it.product.copy(
+                    profit = profit
+                )
             )
         }
     }
@@ -155,7 +162,9 @@ class AddProductViewModel(
     private fun onProductPriceChange(price: String) {
         _state.update {
             it.copy(
-                price = price
+                product = it.product.copy(
+                    stock = price
+                )
             )
         }
     }
@@ -163,7 +172,9 @@ class AddProductViewModel(
     private fun onComparePriceChange(price: String) {
         _state.update {
             it.copy(
-                comparePrice = price
+                product = it.product.copy(
+                    compareAtPrice = price
+                )
             )
         }
     }
@@ -171,7 +182,9 @@ class AddProductViewModel(
     private fun onMarginChange(margin: String) {
         _state.update {
             it.copy(
-                margin = margin
+                product = it.product.copy(
+                    margin = margin
+                )
             )
         }
     }
@@ -179,7 +192,9 @@ class AddProductViewModel(
     private fun onCostPerItemChange(cost: String) {
         _state.update {
             it.copy(
-                costPerItem = cost
+                product = it.product.copy(
+                    costPerItem = cost
+                )
             )
         }
     }
@@ -187,7 +202,9 @@ class AddProductViewModel(
     private fun onProductPublishToggle() {
         _state.update {
             it.copy(
-                isPublished = !it.isPublished
+                product = it.product.copy(
+                    isPublished = !it.product.isPublished
+                )
             )
         }
     }
@@ -195,7 +212,9 @@ class AddProductViewModel(
     private fun onStartPriceChange(price: String) {
         _state.update {
             it.copy(
-                startPrice = price
+                product = it.product.copy(
+                    startPrice = price
+                )
             )
         }
     }
@@ -203,7 +222,9 @@ class AddProductViewModel(
     private fun onProductNameChange(name: String) {
         _state.update {
             it.copy(
-                productName = name
+                product = it.product.copy(
+                    name = name
+                )
             )
         }
     }
@@ -211,7 +232,9 @@ class AddProductViewModel(
     private fun onProductDescriptionChange(description: String) {
         _state.update {
             it.copy(
-                description = description
+                product = it.product.copy(
+                    description = description
+                )
             )
         }
     }
@@ -224,10 +247,13 @@ class AddProductViewModel(
             ).onSuccess { url ->
                 _state.update {
                     it.copy(
-                        productImagesUrls = it.productImagesUrls.apply { add(url) }
+                        product = it.product.copy(
+                            imagesUrls = it.product.imagesUrls.toMutableList().apply { add(url) }
+                        )
                     )
                 }
             }
+            Logger.i(tag = "ImagesURL", messageString = _state.value.product.imagesUrls.toString())
         }
     }
 
@@ -271,10 +297,12 @@ class AddProductViewModel(
         }
     }
 
-    private fun onProductCategoryChange(productCategory: String) {
+    private fun onProductCategoryChange(category: Category) {
         _state.update {
             it.copy(
-                category = productCategory,
+                product = it.product.copy(
+                    category = category
+                ),
                 isCategoryExpanded = false
             )
         }
