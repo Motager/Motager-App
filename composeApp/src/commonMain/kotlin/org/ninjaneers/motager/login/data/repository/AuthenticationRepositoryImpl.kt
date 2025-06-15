@@ -29,5 +29,15 @@ class AuthenticationRepositoryImpl(
             DTO.toUser()
         }
     }
+    override suspend fun getUserByID(id: Int): Result<User, RemoteError> {
+        return service.getUserById(id).map { DTO ->
+            DTO.toUser()
+        }
+    }
+
+    override suspend fun getUserAvatar(name: String): Result<ByteArray, RemoteError> {
+        return service.getUserAvatar(name)
+    }
+
 
 }

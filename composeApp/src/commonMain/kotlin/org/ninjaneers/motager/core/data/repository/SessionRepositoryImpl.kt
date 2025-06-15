@@ -38,9 +38,4 @@ class SessionRepositoryImpl(
         return sessionHandler.getAppState()
     }
 
-//    override suspend fun getUserByID(id: Int): Result<User, RemoteError> {
-//        return userService.getUserById(id).map { DTO ->
-//            DTO.toUser()
-//        }
-//    }
 }

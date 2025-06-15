@@ -7,7 +7,6 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import org.ninjaneers.motager.core.data.network.SiteRedirector
-import org.ninjaneers.motager.core.data.remote.UserService
 import org.ninjaneers.motager.core.domain.onError
 import org.ninjaneers.motager.core.domain.onSuccess
 import org.ninjaneers.motager.core.presentation.toUiText
@@ -17,7 +16,6 @@ import org.ninjaneers.motager.login.domain.User
 class LoginViewModel(
     private val authenticationRepository: AuthenticationRepository,
     private val siteRedirector: SiteRedirector,
-    private val userService: UserService
 ) : ViewModel() {
     private val _state = MutableStateFlow(LoginScreenState())
     val state = _state.asStateFlow()
@@ -64,7 +62,7 @@ class LoginViewModel(
                 password = _state.value.password
             ).onSuccess { user ->
                 if (user.stores.isNotEmpty()) {
-                    userService.getUserAvatar(user.name).onSuccess { avatar ->
+                    authenticationRepository.getUserAvatar(user.name).onSuccess { avatar ->
                         _state.update {
                             it.copy(
                                 isLoading = false,
