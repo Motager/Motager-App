@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+    <key>AI_HOST</key>
+    <string>robaa-motagerai.hf.space</string>
     <key>MOTAGER_HOST</key>
     <string>https://motager-v2.vercel.app/en</string>
     <key>MOTAGER_HOST</key>

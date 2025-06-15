@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -80,17 +81,16 @@ fun Step1(
     )
     val focusRequestManager = LocalFocusManager.current
     if (state.isAIDialogShown)
-        AIDialog(
+        AiDescriptionDialog(
+            state = state,
             language = coreState.language,
-            onDismiss = { onAction(AddProductAction.OnAIDialogToggleVisibility) },
-            openImagesDialog = { onAction(AddProductAction.OnImagesDialogToggleVisibility) }
+            onAction = onAction
         )
     if (state.isImagesDialogShown)
         ImagesDialog(
             language = coreState.language,
             onDismiss = { onAction(AddProductAction.OnImagesDialogToggleVisibility) },
             storeImage = { onAction(AddProductAction.OnProductImageStore(it)) },
-            uploadImages = { onAction(AddProductAction.OnProductImagesUpload) }
         )
     Column(
         verticalArrangement = Arrangement.spacedBy(24.dp),
@@ -215,7 +215,7 @@ fun Step1(
             PrimaryTextField(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(100.dp),
+                    .heightIn(min = 100.dp),
                 value = state.description,
                 onValueChange = {
                     onAction(AddProductAction.OnProductDescriptionChange(it))
@@ -302,9 +302,10 @@ fun Step1(
                         ) {
                             itemsIndexed(state.productImages) { index, image ->
                                 ProductImage(
+                                    modifier = Modifier.animateItem(),
                                     image = image,
                                     onImageDelete = {
-
+                                        onAction(AddProductAction.OnProductImageDelete(index))
                                     }
                                 )
                             }

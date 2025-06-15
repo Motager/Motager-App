@@ -3,8 +3,10 @@ package org.ninjaneers.motager.dashboard.presentation.products.data.repository
 import org.ninjaneers.motager.core.domain.RemoteError
 import org.ninjaneers.motager.core.domain.Result
 import org.ninjaneers.motager.core.domain.map
+import org.ninjaneers.motager.dashboard.presentation.products.data.mappers.toGeneratedDescription
 import org.ninjaneers.motager.dashboard.presentation.products.data.mappers.toProduct
 import org.ninjaneers.motager.dashboard.presentation.products.data.remote.ProductsService
+import org.ninjaneers.motager.dashboard.presentation.products.domain.GeneratedDescription
 import org.ninjaneers.motager.dashboard.presentation.products.domain.Product
 import org.ninjaneers.motager.dashboard.presentation.products.domain.ProductsRepository
 
@@ -24,7 +26,18 @@ class ProductsRepositoryImpl(
         image: ByteArray,
         path: String
     ): Result<String, RemoteError> {
-        return service.uploadProductImage(image, path = path)
+        return service.uploadProductImage(image, path = path).map { DTO ->
+            DTO.data ?: ""
+        }
+    }
+
+    override suspend fun generateDescription(
+        name: String,
+        images: List<String>,
+    ): Result<GeneratedDescription, RemoteError> {
+        return service.generateDescription(name, images).map { DTO ->
+            DTO.toGeneratedDescription()
+        }
     }
 
 }

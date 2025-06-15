@@ -8,6 +8,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import org.ninjaneers.motager.core.domain.onError
 import org.ninjaneers.motager.core.domain.onSuccess
 import org.ninjaneers.motager.dashboard.presentation.categories.domain.CategoriesRepository
 import org.ninjaneers.motager.dashboard.presentation.categories.domain.Category
@@ -15,7 +16,7 @@ import org.ninjaneers.motager.dashboard.presentation.products.domain.ProductsRep
 
 class AddProductViewModel(
     private val repository: ProductsRepository,
-    private val categoriesRepository: CategoriesRepository
+    private val categoriesRepository: CategoriesRepository,
 ) : ViewModel() {
     private val _state = MutableStateFlow(AddProductState())
     val state = _state.asStateFlow()
@@ -28,7 +29,6 @@ class AddProductViewModel(
             AddProductAction.OnAIDialogToggleVisibility -> onAIDialogToggleVisibility()
             AddProductAction.OnImagesDialogToggleVisibility -> onImagesDialogToggleVisibility()
             is AddProductAction.OnProductImageStore -> onProductImageStore(action.image)
-            AddProductAction.OnProductImagesUpload -> onProductImagesUpload()
             AddProductAction.OnVariantSwitchToggle -> onVariantSwitchChange()
             is AddProductAction.OnProductDescriptionChange -> onProductDescriptionChange(action.description)
             is AddProductAction.OnProductNameChange -> onProductNameChange(action.name)
@@ -42,6 +42,76 @@ class AddProductViewModel(
             is AddProductAction.OnProfitChange -> onProfitChange(action.profit)
             is AddProductAction.OnAvailableCategoriesChange -> onAvailableCategoriesChange(action.categories)
             is AddProductAction.OnStoreCategoriesGet -> onStoreCategoriesGet(action.storeID)
+            is AddProductAction.OnAiImageStore -> onAiImageStore(action.image)
+            is AddProductAction.OnAiImageDelete -> onAiImageDelete(action.index)
+            is AddProductAction.OnProductImageDelete -> onProductImageDelete(action.index)
+            is AddProductAction.OnBrandNameChange -> onBrandNameChange(action.name)
+            is AddProductAction.OnProductGenerateDescription -> onProductGenerateDescription(
+                action.name,
+                action.images
+            )
+        }
+    }
+
+    private fun onProductGenerateDescription(name: String, images: List<String>) {
+        viewModelScope.launch {
+            _state.update {
+                it.copy(
+                    isGenerateDescriptionLoading = true
+                )
+            }
+            onAiImagesUpload()
+            repository.generateDescription(name, images)
+                .onSuccess { data ->
+                    _state.update {
+                        it.copy(
+                            isGenerateDescriptionLoading = false,
+                            description = data.description,
+                            productName = data.productName
+                        )
+                    }
+                }
+                .onError {
+                    _state.update {
+                        it.copy(
+                            isGenerateDescriptionLoading = false
+                        )
+                    }
+                }
+        }
+    }
+
+
+    private fun onBrandNameChange(name: String) {
+        _state.update {
+            it.copy(
+                brandName = name
+            )
+        }
+    }
+
+    private fun onAiImageStore(image: ByteArray) {
+        _state.update {
+            it.copy(
+                aiImages = it.aiImages.toMutableList().apply { add(image) }
+            )
+        }
+    }
+
+    private fun onProductImageDelete(index: Int) {
+        _state.update {
+            it.copy(
+                productImages = it.productImages.toMutableList().apply { removeAt(index) },
+            )
+        }
+
+    }
+
+    private fun onAiImageDelete(index: Int) {
+        _state.update {
+            it.copy(
+                aiImages = it.aiImages.toMutableList().apply { removeAt(index) },
+            )
         }
     }
 
@@ -146,17 +216,43 @@ class AddProductViewModel(
         }
     }
 
-    private fun onProductImagesUpload() {
+    private fun onProductImageUpload(image: ByteArray) {
         viewModelScope.launch(Dispatchers.IO) {
             repository.uploadProductImage(
-                image = _state.value.productImages[0],
+                image = image,
                 path = "image_1.jpg"
-            )
+            ).onSuccess { url ->
+                _state.update {
+                    it.copy(
+                        productImagesUrls = it.productImagesUrls.apply { add(url) }
+                    )
+                }
+            }
+        }
+    }
+
+    private suspend fun onAiImagesUpload() {
+        _state.value.aiImages.forEachIndexed { index, image ->
+            repository.uploadProductImage(
+                image = image,
+                path = "image_$index.jpg"
+            ).onSuccess { url ->
+                _state.update {
+                    it.copy(
+                        aiImagesUrls = it.aiImagesUrls.apply { add(url) }
+                    )
+                }
+            }
         }
     }
 
     private fun onProductImageStore(image: ByteArray) {
-        _state.value.productImages.add(image)
+        _state.update {
+            it.copy(
+                productImages = it.productImages.toMutableList().apply { add(image) }
+            )
+        }
+        onProductImageUpload(image)
     }
 
     private fun onAIDialogToggleVisibility() {

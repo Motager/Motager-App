@@ -13,11 +13,15 @@ import io.ktor.http.URLProtocol
 import io.ktor.http.path
 import io.ktor.utils.io.core.buildPacket
 import io.ktor.utils.io.core.writeFully
+import org.ninjaneers.motager.core.data.network.AI_HOST
 import org.ninjaneers.motager.core.data.network.MOTAGER_SERVICES_HOST
 import org.ninjaneers.motager.core.data.network.safeCall
 import org.ninjaneers.motager.core.domain.RemoteError
 import org.ninjaneers.motager.core.domain.Result
+import org.ninjaneers.motager.dashboard.presentation.products.data.dto.GenerateDescriptionDTO
+import org.ninjaneers.motager.dashboard.presentation.products.data.dto.GenerateDescriptionPostDTO
 import org.ninjaneers.motager.dashboard.presentation.products.data.dto.ProductResponseDTO
+import org.ninjaneers.motager.dashboard.presentation.products.data.dto.UploadImageResponseDTO
 
 class ProductServiceImpl(
     private val client: HttpClient,
@@ -25,8 +29,8 @@ class ProductServiceImpl(
     override suspend fun uploadProductImage(
         image: ByteArray,
         path: String,
-    ): Result<String, RemoteError> {
-        return safeCall<String> {
+    ): Result<UploadImageResponseDTO, RemoteError> {
+        return safeCall<UploadImageResponseDTO> {
             client.post {
                 url {
                     protocol = URLProtocol.HTTP
@@ -67,6 +71,26 @@ class ProductServiceImpl(
                         "products"
                     )
                 }
+            }
+        }
+    }
+
+    override suspend fun generateDescription(
+        name: String,
+        images: List<String>,
+    ): Result<GenerateDescriptionDTO, RemoteError> {
+        val product = GenerateDescriptionPostDTO(brandName = name, imagePaths = images)
+        return safeCall<GenerateDescriptionDTO> {
+            client.post {
+                url {
+                    protocol = URLProtocol.HTTPS
+                    host = AI_HOST
+                    path(
+                        "AI-product_help",
+                        ""
+                    )
+                }
+                setBody(product)
             }
         }
     }

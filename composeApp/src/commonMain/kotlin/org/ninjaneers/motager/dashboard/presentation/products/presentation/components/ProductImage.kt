@@ -1,5 +1,6 @@
 package org.ninjaneers.motager.dashboard.presentation.products.presentation.components
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
@@ -25,15 +26,17 @@ import com.composables.icons.lucide.X
 
 @Composable
 fun ProductImage(
+    modifier: Modifier = Modifier,
     image: ByteArray,
-    onImageDelete: () -> Unit
+    onImageDelete: () -> Unit,
 ) {
     Card(
-        modifier = Modifier.height(200.dp).aspectRatio(1f),
+        modifier = modifier.height(200.dp).aspectRatio(1f),
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.secondary
         ),
-        shape = RoundedCornerShape(6.dp)
+        shape = RoundedCornerShape(6.dp),
+        border = BorderStroke(width = 1.dp, color = MaterialTheme.colorScheme.outline)
     ) {
         Box(
             modifier = Modifier.fillMaxSize(),

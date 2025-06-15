@@ -130,5 +130,6 @@
     <string name="Build">Build</string>
     <string name="Create_Store">Create Store</string>
     <string name="Correct_Credentials">Your credentials are correct , and this email already exist you just need to create store on website to access your dashboard</string>
+    <string name="Main_image">Choose first image to be the main image for the product</string>
 
 </resources>

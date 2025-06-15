@@ -68,7 +68,13 @@ fun NavigationGraph(
                         coreState = coreState,
                         onAction = viewModel::onAction,
                         coreAction = coreAction,
-                        goToDashboard = { navController.navigate(Route.DashboardGraph) },
+                        goToDashboard = {
+                            navController.navigate(Route.DashboardGraph) {
+                                popUpTo<Route.Splash> {
+                                    inclusive = true
+                                }
+                            }
+                        },
                     )
                 }
             }

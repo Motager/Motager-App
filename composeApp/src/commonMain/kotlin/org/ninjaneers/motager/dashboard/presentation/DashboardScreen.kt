@@ -69,7 +69,7 @@ private fun DashboardScreenContent(
     coreAction: (CoreAction) -> Unit,
 ) {
     LaunchedEffect(Unit) {
-        coreAction(CoreAction.OnStoreChange(coreState.user?.stores?.first()!!))
+        coreAction(CoreAction.OnStoreChange(coreState.user?.stores!!.first()!!))
     }
     ModalNavigationDrawer(
         drawerContent = {

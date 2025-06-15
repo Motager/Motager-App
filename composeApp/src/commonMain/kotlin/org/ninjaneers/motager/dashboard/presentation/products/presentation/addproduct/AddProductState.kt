@@ -9,16 +9,21 @@ import org.jetbrains.compose.resources.StringResource
 import org.ninjaneers.motager.dashboard.presentation.categories.domain.Category
 
 data class AddProductState(
+    val isGenerateDescriptionLoading: Boolean = false,
     val currentStep: Int = 1,
     val productName: String = "",
     val description: String = "",
     val startPrice: String = "",
+    val brandName: String = "",
     val category: String = "",
     val categories: List<Category> = emptyList(),
     val isCategoryExpanded: Boolean = false,
     val isAIDialogShown: Boolean = false,
     val isImagesDialogShown: Boolean = false,
     val productImages: MutableList<ByteArray> = mutableListOf(),
+    val productImagesUrls: MutableList<String> = mutableListOf(),
+    val aiImages: MutableList<ByteArray> = mutableListOf(),
+    val aiImagesUrls: MutableList<String> = mutableListOf(),
     val hasVariants: Boolean = false,
     val steps: List<StringResource> = if (hasVariants)
         listOf(
