@@ -161,7 +161,6 @@ fun ImagesDialog(
                                 color = Color.White
                             )
                         }
-
                     }
                 }
             }

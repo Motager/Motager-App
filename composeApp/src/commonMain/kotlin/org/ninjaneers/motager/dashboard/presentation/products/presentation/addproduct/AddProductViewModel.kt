@@ -2,7 +2,6 @@ package org.ninjaneers.motager.dashboard.presentation.products.presentation.addp
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import co.touchlab.kermit.Logger
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -42,28 +41,32 @@ class AddProductViewModel(
             is AddProductAction.OnProfitChange -> onProfitChange(action.profit)
             is AddProductAction.OnAvailableCategoriesChange -> onAvailableCategoriesChange(action.categories)
             is AddProductAction.OnStoreCategoriesGet -> onStoreCategoriesGet(action.storeID)
-            is AddProductAction.OnAiImageStore -> {}
+            is AddProductAction.OnAiImageStore -> onAiImageStore(action.image)
             is AddProductAction.OnAiImageDelete -> onAiImageDelete(action.index)
             is AddProductAction.OnProductImageDelete -> onProductImageDelete(action.index)
         }
     }
 
+    private fun onAiImageStore(image: ByteArray) {
+        _state.update {
+            it.copy(
+                aiImages = it.aiImages.toMutableList().apply { add(image) }
+            )
+        }
+    }
     private fun onProductImageDelete(index: Int) {
         _state.update {
             it.copy(
                 productImages = it.productImages.toMutableList().apply { removeAt(index) },
-                productImagesUrls = it.productImagesUrls.toMutableList().apply { removeAt(index) }
             )
         }
-        Logger.i(tag = "ImagesDelete", messageString = _state.value.productImagesUrls.toString())
 
     }
 
     private fun onAiImageDelete(index: Int) {
         _state.update {
             it.copy(
-                aiImages = it.aiImages.apply { removeAt(index) },
-                aiImagesUrls = it.aiImagesUrls.apply { removeAt(index) }
+                aiImages = it.aiImages.toMutableList().apply { removeAt(index) },
             )
         }
     }
@@ -179,6 +182,23 @@ class AddProductViewModel(
                     it.copy(
                         productImagesUrls = it.productImagesUrls.apply { add(url) }
                     )
+                }
+            }
+        }
+    }
+
+    private fun onAiImagesUpload() {
+        _state.value.aiImages.forEachIndexed { index, image ->
+            viewModelScope.launch(Dispatchers.IO) {
+                repository.uploadProductImage(
+                    image = image,
+                    path = "image_$index.jpg"
+                ).onSuccess { url ->
+                    _state.update {
+                        it.copy(
+                            aiImagesUrls = it.aiImagesUrls.apply { add(url) }
+                        )
+                    }
                 }
             }
         }

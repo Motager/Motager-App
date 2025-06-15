@@ -49,10 +49,12 @@ fun Step3(
 ) {
     val focusRequestManager = LocalFocusManager.current
     if (state.isAIDialogShown)
-        AIDialog(
+        AiDescriptionDialog(
             language = coreState.language,
             onDismiss = { onAction(AddProductAction.OnAIDialogToggleVisibility) },
-            openImagesDialog = { onAction(AddProductAction.OnImagesDialogToggleVisibility) }
+            state = state,
+            storeImage = { onAction(AddProductAction.OnAiImageStore(it)) },
+            onImageDelete = { onAction(AddProductAction.OnAiImageDelete(it)) },
         )
     if (state.isImagesDialogShown)
         ImagesDialog(
