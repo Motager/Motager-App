@@ -112,6 +112,11 @@ class AddProductViewModel(
                         )
                     }
                 }
+            _state.update {
+                it.copy(
+                    aiImagesUrls = mutableListOf()
+                )
+            }
             onAIDialogToggleVisibility()
         }
     }

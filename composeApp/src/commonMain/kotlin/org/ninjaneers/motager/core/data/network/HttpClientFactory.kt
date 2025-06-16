@@ -39,8 +39,8 @@ class HttpClientFactory(
                 )
             }
             install(HttpTimeout) {
-                socketTimeoutMillis = 20_000L
-                requestTimeoutMillis = 20_000L
+                socketTimeoutMillis = 60_000L
+                requestTimeoutMillis = 60_000L
             }
 
             install(Auth) {
