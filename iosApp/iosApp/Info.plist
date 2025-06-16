@@ -9,7 +9,7 @@
     <key>MOTAGER_HOST</key>
     <string>10.0.2.2:8080</string>
     <key>AVATAR_HOST</key>
-    <string>avatar.iran.liara.run</string>
+    <string>https://api.dicebear.com/7.x/initials/png?seed</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleExecutable</key>

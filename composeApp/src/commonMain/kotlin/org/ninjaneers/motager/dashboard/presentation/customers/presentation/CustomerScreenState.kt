@@ -19,5 +19,8 @@ data class CustomerScreenState(
         Res.string.TotalSpent,
         Res.string.Actions
     ),
-    val customersCount: Int = customers.size
+    val customerEmail: String = "",
+    val isCustomerDialogVisible: Boolean = false,
+    val isAddCustomerLoading: Boolean = false,
+    val isAddCustomerError: UiText? = null,
 )

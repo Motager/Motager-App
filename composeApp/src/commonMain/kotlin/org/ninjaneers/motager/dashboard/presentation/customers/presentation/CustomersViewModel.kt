@@ -12,7 +12,7 @@ import org.ninjaneers.motager.core.presentation.toUiText
 import org.ninjaneers.motager.dashboard.presentation.customers.domain.CustomerRepository
 
 class CustomersViewModel(
-    private val repository: CustomerRepository
+    private val repository: CustomerRepository,
 ) : ViewModel() {
     private val _state = MutableStateFlow(CustomerScreenState())
     val state = _state.asStateFlow()
@@ -22,8 +22,55 @@ class CustomersViewModel(
             is CustomerAction.OnLimitSearch -> onLimitSearch(action.limit)
             is CustomerAction.OnProductSearch -> onProductSearch(action.query)
             is CustomerAction.OnCustomersGet -> onCustomersGet(action.storeID)
+            CustomerAction.OnCustomerDialogToggleVisibility -> onCustomerDialogToggleVisibility()
+            is CustomerAction.OnNewCustomerAdd -> onNewCustomerAdd(action.storeID, action.email)
+            is CustomerAction.OnCustomerEmailChange -> onCustomerEmailChange(action.email)
         }
     }
+
+    private fun onCustomerEmailChange(email: String) {
+        _state.update {
+            it.copy(
+                customerEmail = email
+            )
+        }
+    }
+
+    private fun onNewCustomerAdd(storeID: Int, email: String) {
+        viewModelScope.launch {
+            _state.update {
+                it.copy(
+                    isAddCustomerLoading = true
+                )
+            }
+            repository.createCustomer(storeID, email)
+                .onSuccess { customer ->
+                    _state.update {
+                        it.copy(
+                            isAddCustomerLoading = false,
+                            customers = it.customers.toMutableList().apply { add(customer) }
+                        )
+                    }
+                }
+                .onError { error ->
+                    _state.update {
+                        it.copy(
+                            isAddCustomerError = error.toUiText()
+                        )
+                    }
+                }
+            onCustomerDialogToggleVisibility()
+        }
+    }
+
+    private fun onCustomerDialogToggleVisibility() {
+        _state.update {
+            it.copy(
+                isCustomerDialogVisible = !it.isCustomerDialogVisible
+            )
+        }
+    }
+
 
     private fun onCustomersGet(storeID: Int) {
         viewModelScope.launch {
@@ -56,7 +103,20 @@ class CustomersViewModel(
     }
 
     private fun onProductSearch(query: String) {
-
+        _state.update {
+            it.copy(
+                searchQuery = query,
+                customers = it.customers.apply {
+                    filter { customer ->
+                        customer.email.contains(
+                            query,
+                            ignoreCase = true
+                        ) || customer.totalPayment.toString()
+                            .contains(query) || customer.ordersCount.toString().contains(query)
+                    }
+                }
+            )
+        }
     }
 
     private fun onLimitSearch(limit: Int) {
