@@ -20,7 +20,7 @@ class CustomersViewModel(
     fun onAction(action: CustomerAction) {
         when (action) {
             is CustomerAction.OnLimitSearch -> onLimitSearch(action.limit)
-            is CustomerAction.OnProductSearch -> onProductSearch(action.query)
+            is CustomerAction.OnCustomerSearch -> onCustomerSearch(action.query)
             is CustomerAction.OnCustomersGet -> onCustomersGet(action.storeID)
             CustomerAction.OnCustomerDialogToggleVisibility -> onCustomerDialogToggleVisibility()
             is CustomerAction.OnNewCustomerAdd -> onNewCustomerAdd(action.storeID, action.email)
@@ -48,7 +48,9 @@ class CustomersViewModel(
                     _state.update {
                         it.copy(
                             isAddCustomerLoading = false,
-                            customers = it.customers.toMutableList().apply { add(customer) }
+                            customers = it.customers.toMutableList().apply { add(customer) },
+                            filteredCustomers = it.filteredCustomers.toMutableList()
+                                .apply { add(customer) }
                         )
                     }
                 }
@@ -86,7 +88,8 @@ class CustomersViewModel(
                         it.copy(
                             isLoading = false,
                             isError = null,
-                            customers = customers
+                            customers = customers,
+                            filteredCustomers = customers
                         )
                     }
                 }
@@ -102,19 +105,18 @@ class CustomersViewModel(
         }
     }
 
-    private fun onProductSearch(query: String) {
+    private fun onCustomerSearch(query: String) {
         _state.update {
             it.copy(
                 searchQuery = query,
-                customers = it.customers.apply {
-                    filter { customer ->
+                filteredCustomers = if (query.isEmpty()) it.customers else
+                    it.customers.filter { customer ->
                         customer.email.contains(
                             query,
                             ignoreCase = true
                         ) || customer.totalPayment.toString()
                             .contains(query) || customer.ordersCount.toString().contains(query)
                     }
-                }
             )
         }
     }

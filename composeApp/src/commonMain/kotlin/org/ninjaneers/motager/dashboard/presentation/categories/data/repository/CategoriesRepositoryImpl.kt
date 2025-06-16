@@ -9,7 +9,7 @@ import org.ninjaneers.motager.dashboard.presentation.categories.domain.Categorie
 import org.ninjaneers.motager.dashboard.presentation.categories.domain.Category
 
 class CategoriesRepositoryImpl(
-    private val service: CategoriesService
+    private val service: CategoriesService,
 ) : CategoriesRepository {
     override suspend fun getCategories(storeID: Int): Result<List<Category>, RemoteError> {
         return service.getCategories(storeID).map { response ->
@@ -21,9 +21,19 @@ class CategoriesRepositoryImpl(
 
     override suspend fun getCategoryById(
         storeID: Int,
-        categoryId: Int
+        categoryId: Int,
     ): Result<Category, RemoteError> {
         return service.getCategoryById(storeID, categoryId).map { DTO ->
+            DTO.toCategory()
+        }
+    }
+
+    override suspend fun createCategory(
+        storeID: Int,
+        name: String,
+        description: String,
+    ): Result<Category, RemoteError> {
+        return service.createCategory(storeID, name, description).map { DTO ->
             DTO.toCategory()
         }
     }

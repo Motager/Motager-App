@@ -31,11 +31,12 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.composables.icons.lucide.BookmarkPlus
+import com.composables.icons.lucide.Lucide
 import motager.composeapp.generated.resources.Categories
 import motager.composeapp.generated.resources.Create
 import motager.composeapp.generated.resources.Res
 import motager.composeapp.generated.resources.Search
-import motager.composeapp.generated.resources.boxes
 import motager.composeapp.generated.resources.hellipsis
 import motager.composeapp.generated.resources.switch
 import org.jetbrains.compose.resources.painterResource
@@ -46,6 +47,7 @@ import org.ninjaneers.motager.core.presentation.components.PrimaryIconButton
 import org.ninjaneers.motager.core.presentation.components.PrimaryTextField
 import org.ninjaneers.motager.core.presentation.theme.FontFamily
 import org.ninjaneers.motager.customers.presentation.CategoriesAction
+import org.ninjaneers.motager.dashboard.presentation.categories.presentation.components.CategoryDialog
 import org.ninjaneers.motager.dashboard.presentation.components.Pagination
 import org.ninjaneers.motager.dashboard.presentation.components.Table
 import org.ninjaneers.motager.dashboard.presentation.components.TableActionCell
@@ -59,7 +61,6 @@ fun CategoriesScreen(
     coreState: CoreState,
     onAction: (CategoriesAction) -> Unit,
 ) {
-
     CategoriesScreenContent(
         state = state,
         coreState = coreState,
@@ -75,6 +76,13 @@ private fun CategoriesScreenContent(
 ) {
     LaunchedEffect(Unit) {
         onAction(CategoriesAction.OnCategoriesGet(coreState.store.id))
+    }
+    if (state.isCategoryDialogVisible) {
+        CategoryDialog(
+            coreState = coreState,
+            state = state,
+            onAction = onAction
+        )
     }
     Column(
         modifier = Modifier
@@ -124,7 +132,9 @@ private fun CategoriesScreenContent(
                         language = coreState.language
                     )
                     PrimaryButton(
-                        onClick = {},
+                        onClick = {
+                            onAction(CategoriesAction.OnCategoryDialogToggleVisibility)
+                        },
                         modifier = Modifier.height(42.dp)
                             .wrapContentWidth(),
                         contentPadding = PaddingValues(
@@ -138,7 +148,7 @@ private fun CategoriesScreenContent(
                             horizontalArrangement = Arrangement.spacedBy(8.dp)
                         ) {
                             Icon(
-                                painter = painterResource(Res.drawable.boxes),
+                                imageVector = Lucide.BookmarkPlus,
                                 contentDescription = "more",
                                 tint = MaterialTheme.colorScheme.onPrimary
                             )
@@ -179,8 +189,10 @@ private fun CategoriesScreenContent(
                                 horizontalArrangement = Arrangement.spacedBy(8.dp)
                             ) {
                                 PrimaryTextField(
-                                    value = "",
-                                    onValueChange = {},
+                                    value = state.searchQuery,
+                                    onValueChange = {
+                                        onAction(CategoriesAction.OnCategorySearch(it))
+                                    },
                                     modifier = Modifier
                                         .fillMaxHeight()
                                         .weight(1f),
@@ -249,7 +261,7 @@ private fun CategoriesScreenContent(
                                         )
                                 ) {
                                     Table(
-                                        items = state.categories,
+                                        items = state.filteredCategories,
                                         header = {
                                             TableHeader(state.tableHeaders)
                                         },

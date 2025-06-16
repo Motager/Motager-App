@@ -133,5 +133,7 @@
     <string name="Main_image">Choose first image to be the main image for the product</string>
     <string name="Add_Customer">Add Customer</string>
     <string name="Add_New_Customer">Add new customer to your store</string>
+    <string name="Add_Category">Add Category</string>
+    <string name="Add_New_Category">Add new category to your store</string>
 
 </resources>

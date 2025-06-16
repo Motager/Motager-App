@@ -24,7 +24,7 @@ class CollectionsServiceImpl(
             client.get {
                 url {
                     protocol = URLProtocol.HTTP
-                    host = "10.0.2.2:8080"
+                    host = MOTAGER_SERVICES_HOST
                     path(
                         "stores",
                         storeID.toString(),
@@ -68,7 +68,7 @@ class CollectionsServiceImpl(
             client.post {
                 url {
                     protocol = URLProtocol.HTTP
-                    host = "10.0.2.2:8080"
+                    host = MOTAGER_SERVICES_HOST
                     path(
                         "stores",
                         storeID.toString(),

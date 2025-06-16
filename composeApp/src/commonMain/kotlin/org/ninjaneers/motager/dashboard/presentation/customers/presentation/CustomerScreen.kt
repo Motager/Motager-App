@@ -186,8 +186,10 @@ private fun CustomerScreenContent(
                                 horizontalArrangement = Arrangement.spacedBy(8.dp)
                             ) {
                                 PrimaryTextField(
-                                    value = "",
-                                    onValueChange = {},
+                                    value = state.searchQuery,
+                                    onValueChange = {
+                                        onAction(CustomerAction.OnCustomerSearch(it))
+                                    },
                                     modifier = Modifier.fillMaxWidth()
                                         .weight(1F),
                                     placeholder = {
@@ -254,7 +256,7 @@ private fun CustomerScreenContent(
                                         )
                                 ) {
                                     Table(
-                                        items = state.customers,
+                                        items = state.filteredCustomers,
                                         header = {
                                             TableHeader(
                                                 headers = state.tableHeaders
