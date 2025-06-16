@@ -133,7 +133,7 @@ fun TopBar(
                                 onAction(DashboardAction.OnProfileMenuToggle)
                             }
                         },
-                    model = coreState.user?.avatar,
+                    model = "https://api.dicebear.com/7.x/initials/svg?seed=ahmed+elmalky",
                     contentDescription = "Logo"
                 )
                 DropdownMenu(

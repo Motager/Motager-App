@@ -35,9 +35,6 @@ class AuthenticationRepositoryImpl(
         }
     }
 
-    override suspend fun getUserAvatar(name: String): Result<ByteArray, RemoteError> {
-        return service.getUserAvatar(name)
-    }
 
 
 }

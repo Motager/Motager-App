@@ -399,7 +399,7 @@ fun Step1(
                     }
                 }
                 DropdownMenu(
-                    modifier = Modifier.fillMaxWidth(0.72f).height(150.dp)
+                    modifier = Modifier.fillMaxWidth(0.72f).heightIn(max = 150.dp)
                         .clip(RoundedCornerShape(12.dp))
                         .border(width = 0.8f.dp, color = MaterialTheme.colorScheme.outline)
                         .background(MaterialTheme.colorScheme.background),

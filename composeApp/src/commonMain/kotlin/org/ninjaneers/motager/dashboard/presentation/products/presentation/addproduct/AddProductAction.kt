@@ -28,4 +28,6 @@ sealed interface AddProductAction {
     data class OnBrandNameChange(val name: String) : AddProductAction
     data class OnProductGenerateDescription(val name: String, val images: List<String>) :
         AddProductAction
+    data class OnProductCreate(val storeID: Int) : AddProductAction
+
 }

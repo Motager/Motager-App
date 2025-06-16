@@ -1,6 +1,7 @@
 package org.ninjaneers.motager.dashboard.presentation.products.presentation.addproduct
 
 import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -19,6 +20,7 @@ import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -281,9 +283,12 @@ private fun AddProductScreenContent(
                         state.currentStep == 3
                     }
                     PrimaryButton(
+                        modifier = Modifier.animateContentSize(),
                         onClick = {
                             if (!isLastStep) {
                                 onAction(AddProductAction.OnStepChange(state.currentStep + 1))
+                            } else {
+                                onAction(AddProductAction.OnProductCreate(coreState.store.id))
                             }
                         },
                         shape = RoundedCornerShape(6.dp)
@@ -292,23 +297,30 @@ private fun AddProductScreenContent(
                             verticalAlignment = Alignment.CenterVertically,
                             horizontalArrangement = Arrangement.spacedBy(8.dp)
                         ) {
-                            Text(
-                                text = if (isLastStep)
-                                    stringResource(Res.string.Submit_product)
-                                else
-                                    stringResource(Res.string.Next),
-                                fontSize = 14.sp,
-                                fontFamily = FontFamily(
-                                    weight = FontWeight.Medium,
-                                    language = coreState.language
-                                ),
-                                color = MaterialTheme.colorScheme.onPrimary
-                            )
-                            Icon(
-                                imageVector = if (coreState.language == Language.English) Lucide.ChevronRight else Lucide.ChevronLeft,
-                                contentDescription = if (isLastStep) "Submit" else "Next",
-                                tint = MaterialTheme.colorScheme.onPrimary
-                            )
+                            if (!state.isUploadProductLoading) {
+                                Text(
+                                    text = if (isLastStep)
+                                        stringResource(Res.string.Submit_product)
+                                    else
+                                        stringResource(Res.string.Next),
+                                    fontSize = 14.sp,
+                                    fontFamily = FontFamily(
+                                        weight = FontWeight.Medium,
+                                        language = coreState.language
+                                    ),
+                                    color = MaterialTheme.colorScheme.onPrimary
+                                )
+                                Icon(
+                                    imageVector = if (coreState.language == Language.English) Lucide.ChevronRight else Lucide.ChevronLeft,
+                                    contentDescription = if (isLastStep) "Submit" else "Next",
+                                    tint = MaterialTheme.colorScheme.onPrimary
+                                )
+                            } else {
+                                CircularProgressIndicator(
+                                    modifier = Modifier.size(24.dp),
+                                    color = MaterialTheme.colorScheme.onPrimary
+                                )
+                            }
                         }
                     }
                 }

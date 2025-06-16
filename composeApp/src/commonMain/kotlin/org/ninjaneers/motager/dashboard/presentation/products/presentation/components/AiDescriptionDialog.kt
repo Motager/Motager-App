@@ -1,5 +1,6 @@
 package org.ninjaneers.motager.dashboard.presentation.products.presentation.components
 
+import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -265,16 +266,14 @@ fun AiDescriptionDialog(
                         horizontalArrangement = Arrangement.End
                     ) {
                         PrimaryButton(
-                            modifier = Modifier.height(40.dp),
+                            modifier = Modifier.height(40.dp).animateContentSize(),
                             onClick = {
                                 onAction(
                                     AddProductAction.OnProductGenerateDescription(
                                         state.brandName,
-                                        state.aiImagesUrls
+                                        state.aiImagesUrls,
                                     )
                                 )
-                                if (state.isGenerateDescriptionLoading)
-                                    onAction(AddProductAction.OnAIDialogToggleVisibility)
                             },
                             shape = RoundedCornerShape(6.dp),
                             enabled = state.aiImages.isNotEmpty() && state.brandName.isNotEmpty()

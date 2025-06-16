@@ -6,10 +6,13 @@ import motager.composeapp.generated.resources.Review
 import motager.composeapp.generated.resources.SKUs
 import motager.composeapp.generated.resources.Variant
 import org.jetbrains.compose.resources.StringResource
+import org.ninjaneers.motager.core.domain.UiText
 import org.ninjaneers.motager.dashboard.presentation.categories.domain.Category
 import org.ninjaneers.motager.dashboard.presentation.products.domain.PostProduct
 
 data class AddProductState(
+    val isUploadProductLoading: Boolean = false,
+    val isUploadProductError: UiText? = null,
     val product: PostProduct = PostProduct(),
     val isGenerateDescriptionLoading: Boolean = false,
     val currentStep: Int = 1,

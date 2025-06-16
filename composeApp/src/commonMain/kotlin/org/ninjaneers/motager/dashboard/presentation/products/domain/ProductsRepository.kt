@@ -10,4 +10,5 @@ interface ProductsRepository {
         name: String,
         images: List<String>,
     ): Result<GeneratedDescription, RemoteError>
+    suspend fun createProduct(storeID: Int, product: PostProduct): Result<Product, RemoteError>
 }

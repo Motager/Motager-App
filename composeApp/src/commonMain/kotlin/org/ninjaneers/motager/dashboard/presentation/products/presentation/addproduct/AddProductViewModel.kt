@@ -11,6 +11,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import org.ninjaneers.motager.core.domain.onError
 import org.ninjaneers.motager.core.domain.onSuccess
+import org.ninjaneers.motager.core.presentation.toUiText
 import org.ninjaneers.motager.dashboard.presentation.categories.domain.CategoriesRepository
 import org.ninjaneers.motager.dashboard.presentation.categories.domain.Category
 import org.ninjaneers.motager.dashboard.presentation.products.domain.ProductsRepository
@@ -49,8 +50,38 @@ class AddProductViewModel(
             is AddProductAction.OnBrandNameChange -> onBrandNameChange(action.name)
             is AddProductAction.OnProductGenerateDescription -> onProductGenerateDescription(
                 action.name,
-                action.images
+                action.images,
             )
+
+            is AddProductAction.OnProductCreate -> onProductCreate(action.storeID)
+        }
+    }
+
+    private fun onProductCreate(storeID: Int) {
+        viewModelScope.launch {
+            _state.update {
+                it.copy(
+                    isUploadProductLoading = true,
+                    isUploadProductError = null
+                )
+            }
+            repository.createProduct(storeID, _state.value.product)
+                .onSuccess { product ->
+                    _state.update {
+                        it.copy(
+                            isUploadProductLoading = false,
+                            isUploadProductError = null
+                        )
+                    }
+                }
+                .onError { error ->
+                    _state.update {
+                        it.copy(
+                            isUploadProductLoading = false,
+                            isUploadProductError = error.toUiText()
+                        )
+                    }
+                }
         }
     }
 
@@ -81,6 +112,7 @@ class AddProductViewModel(
                         )
                     }
                 }
+            onAIDialogToggleVisibility()
         }
     }
 
@@ -163,7 +195,7 @@ class AddProductViewModel(
         _state.update {
             it.copy(
                 product = it.product.copy(
-                    stock = price
+                    price = price
                 )
             )
         }

@@ -11,6 +11,5 @@ interface AuthenticationRepository {
     ): Result<User, RemoteError>
 
     suspend fun getUserByID(id: Int): Result<User, RemoteError>
-    suspend fun getUserAvatar(name: String): Result<ByteArray, RemoteError>
 
 }
