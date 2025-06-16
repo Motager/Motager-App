@@ -6,22 +6,22 @@ import motager.composeapp.generated.resources.Review
 import motager.composeapp.generated.resources.SKUs
 import motager.composeapp.generated.resources.Variant
 import org.jetbrains.compose.resources.StringResource
+import org.ninjaneers.motager.core.domain.UiText
 import org.ninjaneers.motager.dashboard.presentation.categories.domain.Category
+import org.ninjaneers.motager.dashboard.presentation.products.domain.PostProduct
 
 data class AddProductState(
+    val isUploadProductLoading: Boolean = false,
+    val isUploadProductError: UiText? = null,
+    val product: PostProduct = PostProduct(),
     val isGenerateDescriptionLoading: Boolean = false,
     val currentStep: Int = 1,
-    val productName: String = "",
-    val description: String = "",
-    val startPrice: String = "",
     val brandName: String = "",
-    val category: String = "",
     val categories: List<Category> = emptyList(),
     val isCategoryExpanded: Boolean = false,
     val isAIDialogShown: Boolean = false,
     val isImagesDialogShown: Boolean = false,
     val productImages: MutableList<ByteArray> = mutableListOf(),
-    val productImagesUrls: MutableList<String> = mutableListOf(),
     val aiImages: MutableList<ByteArray> = mutableListOf(),
     val aiImagesUrls: MutableList<String> = mutableListOf(),
     val hasVariants: Boolean = false,
@@ -38,11 +38,4 @@ data class AddProductState(
             Res.string.SKUs,
             Res.string.Review
         ),
-    val isPublished: Boolean = false,
-    val stock: String = "",
-    val price: String = "",
-    val profit: String = "",
-    val costPerItem: String = "",
-    val comparePrice: String = "",
-    val margin: String = "",
 )

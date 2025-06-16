@@ -6,7 +6,6 @@ import io.ktor.client.request.post
 import io.ktor.client.request.setBody
 import io.ktor.http.URLProtocol
 import io.ktor.http.path
-import org.ninjaneers.motager.core.data.network.AVATAR_HOST
 import org.ninjaneers.motager.core.data.network.MOTAGER_SERVICES_HOST
 import org.ninjaneers.motager.core.data.network.safeCall
 import org.ninjaneers.motager.core.domain.RemoteError
@@ -31,7 +30,7 @@ class AuthenticationServiceImpl(
             client.post {
                 url {
                     protocol = URLProtocol.HTTP
-                    host = "10.0.2.2:8080"
+                    host = MOTAGER_SERVICES_HOST
                     path("login")
                 }
                 setBody(loginUser)
@@ -49,20 +48,6 @@ class AuthenticationServiceImpl(
                 }
             }
         }
-    }
-
-    override suspend fun getUserAvatar(name: String): Result<ByteArray, RemoteError> {
-        return safeCall<ByteArray> {
-            client.get {
-                url {
-                    protocol = URLProtocol.HTTPS
-                    host = AVATAR_HOST
-                    path("public", "boy")
-                    parameters.append("username", name)
-                }
-            }
-        }
-
     }
 
 }

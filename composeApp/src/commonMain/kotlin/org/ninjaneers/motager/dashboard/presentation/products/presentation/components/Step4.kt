@@ -26,7 +26,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.composables.icons.lucide.Bot
@@ -146,22 +148,22 @@ fun Step4(
                         ) {
                             Product_info(
                                 info = stringResource(Res.string.Product_name),
-                                value = state.productName,
+                                value = state.product.name,
                                 coreState = coreState
                             )
                             Product_info(
                                 info = stringResource(Res.string.Category),
-                                value = state.category,
+                                value = state.product.category.name,
                                 coreState = coreState
                             )
                             Product_info(
                                 info = stringResource(Res.string.Description),
-                                value = state.description,
+                                value = state.product.description,
                                 coreState = coreState
                             )
                             Product_info(
                                 info = stringResource(Res.string.Starting_price),
-                                value = state.startPrice,
+                                value = state.product.startPrice,
                                 coreState = coreState
                             )
 
@@ -177,16 +179,16 @@ fun Step4(
                                 )
                                 Text(
                                     modifier = Modifier.clip(RoundedCornerShape(50.dp))
-                                        .background(if (state.isPublished) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onError)
+                                        .background(if (state.product.isPublished) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.error)
                                         .padding(horizontal = 12.dp, vertical = 6.dp),
-                                    text = if (state.isPublished) stringResource(Res.string.Published) else stringResource(
+                                    text = if (state.product.isPublished) stringResource(Res.string.Published) else stringResource(
                                         Res.string.Draft
                                     ),
                                     fontFamily = FontFamily(
                                         weight = FontWeight.Medium,
                                         language = coreState.language
                                     ),
-                                    color = if (state.isPublished) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.error
+                                    color = if (state.product.isPublished) MaterialTheme.colorScheme.onPrimary else Color.White
                                 )
                             }
                         }
@@ -240,7 +242,9 @@ fun Product_info(
                 weight = FontWeight.Medium,
                 language = coreState.language
             ),
-            color = MaterialTheme.colorScheme.onSurface
+            color = MaterialTheme.colorScheme.onSurface,
+            maxLines = 8,
+            overflow = TextOverflow.Ellipsis
         )
     }
 }

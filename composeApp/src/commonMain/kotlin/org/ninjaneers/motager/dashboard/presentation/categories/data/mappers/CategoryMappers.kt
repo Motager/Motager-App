@@ -8,6 +8,7 @@ fun CategoryDTO.toCategory(): Category {
         id = this.id ?: 0,
         storeID = this.storeID ?: 0,
         name = this.name ?: "",
-        description = this.description ?: ""
+        description = this.description ?: "",
+        slug = this.slug ?: ""
     )
 }

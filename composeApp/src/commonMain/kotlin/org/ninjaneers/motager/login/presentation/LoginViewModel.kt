@@ -32,6 +32,7 @@ class LoginViewModel(
                 updateUser = action.updateUser,
                 navigate = action.navigate
             )
+
             LoginAction.OnRedirectToSite -> onSiteRedirect()
             LoginAction.OnStoreDialogToggleVisibility -> onStoreDialogToggleVisibility()
         }
@@ -62,14 +63,12 @@ class LoginViewModel(
                 password = _state.value.password
             ).onSuccess { user ->
                 if (user.stores.isNotEmpty()) {
-//                    authenticationRepository.getUserAvatar(user.name).onSuccess { avatar ->
-                        _state.update {
-                            it.copy(
-                                isLoading = false,
-                                error = null,
-                                user = user,
-                            )
-//                        }
+                    _state.update {
+                        it.copy(
+                            isLoading = false,
+                            error = null,
+                            user = user,
+                        )
                     }
                     updateUser(_state.value.user)
                     navigate()

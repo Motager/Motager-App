@@ -7,6 +7,7 @@ import org.ninjaneers.motager.dashboard.presentation.products.data.mappers.toGen
 import org.ninjaneers.motager.dashboard.presentation.products.data.mappers.toProduct
 import org.ninjaneers.motager.dashboard.presentation.products.data.remote.ProductsService
 import org.ninjaneers.motager.dashboard.presentation.products.domain.GeneratedDescription
+import org.ninjaneers.motager.dashboard.presentation.products.domain.PostProduct
 import org.ninjaneers.motager.dashboard.presentation.products.domain.Product
 import org.ninjaneers.motager.dashboard.presentation.products.domain.ProductsRepository
 
@@ -40,4 +41,12 @@ class ProductsRepositoryImpl(
         }
     }
 
+    override suspend fun createProduct(
+        storeID: Int,
+        product: PostProduct,
+    ): Result<Product, RemoteError> {
+        return service.createProduct(storeID, product).map { DTO ->
+            DTO.toProduct()
+        }
+    }
 }

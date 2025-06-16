@@ -14,7 +14,7 @@ sealed interface AddProductAction {
     data object OnVariantSwitchToggle : AddProductAction
     data class OnProductNameChange(val name: String) : AddProductAction
     data class OnProductDescriptionChange(val description: String) : AddProductAction
-    data class OnProductCategoryChange(val productCategory: String) : AddProductAction
+    data class OnProductCategoryChange(val category: Category) : AddProductAction
     data class OnAvailableCategoriesChange(val categories: List<Category>) : AddProductAction
     data class OnStartPriceChange(val price: String) : AddProductAction
     data object OnProductPublishToggle : AddProductAction
@@ -28,4 +28,6 @@ sealed interface AddProductAction {
     data class OnBrandNameChange(val name: String) : AddProductAction
     data class OnProductGenerateDescription(val name: String, val images: List<String>) :
         AddProductAction
+    data class OnProductCreate(val storeID: Int) : AddProductAction
+
 }
