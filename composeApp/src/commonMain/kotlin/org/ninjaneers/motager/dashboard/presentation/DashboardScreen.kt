@@ -52,12 +52,14 @@ fun DashboardScreen(
     coreState: CoreState,
     dashboardAction: suspend (DashboardAction) -> Unit,
     coreAction: (CoreAction) -> Unit,
+    onLogout: () -> Unit,
 ) {
     DashboardScreenContent(
         dashboardState = dashboardState,
         coreState = coreState,
         dashboardAction = dashboardAction,
         coreAction = coreAction,
+        onLogout = onLogout
     )
 }
 
@@ -67,6 +69,7 @@ private fun DashboardScreenContent(
     coreState: CoreState,
     dashboardAction: suspend (DashboardAction) -> Unit,
     coreAction: (CoreAction) -> Unit,
+    onLogout: () -> Unit,
 ) {
     LaunchedEffect(Unit) {
         coreAction(CoreAction.OnStoreChange(coreState.user?.stores!!.first()!!))
@@ -89,7 +92,10 @@ private fun DashboardScreenContent(
                 TopBar(
                     onAction = dashboardAction,
                     dashboardState = dashboardState,
-                    coreState = coreState
+                    coreState = coreState,
+                    onLogout = {
+                        onLogout()
+                    }
                 )
             }
         ) { innerPadding ->

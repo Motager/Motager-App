@@ -2,6 +2,7 @@
 <network-security-config>
     <domain-config cleartextTrafficPermitted="true">
         <domain includeSubdomains="true">10.0.2.2</domain>
-        <domain includeSubdomains="true">63.178.242.0</domain>
+        <domain includeSubdomains="true">3.77.237.198</domain>
+        <domain includeSubdomains="true">robaa-motagerai.hf.space</domain>
     </domain-config>
 </network-security-config>

@@ -23,7 +23,7 @@ import org.ninjaneers.motager.mainscreen.MainScreen
 @Composable
 fun NavigationGraph(
     coreState: CoreState,
-    coreAction: (CoreAction) -> Unit
+    coreAction: (CoreAction) -> Unit,
 ) {
     val navController = rememberNavController()
     NavHost(navController = navController, startDestination = Route.MotagerGraph) {
@@ -88,6 +88,15 @@ fun NavigationGraph(
                         coreState = coreState,
                         dashboardAction = viewModel::onAction,
                         coreAction = coreAction,
+                        onLogout = {
+                            navController.navigate(Route.Login) {
+                                launchSingleTop = true
+                                popUpTo<Route.Login> {
+                                    inclusive = true
+                                }
+                            }
+                            coreAction(CoreAction.OnUserChange(null))
+                        }
                     )
                 }
             }

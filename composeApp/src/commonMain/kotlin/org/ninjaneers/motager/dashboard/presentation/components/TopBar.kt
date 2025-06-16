@@ -64,6 +64,7 @@ fun TopBar(
     coreState: CoreState,
     dashboardState: DashboardState,
     onAction: suspend (DashboardAction) -> Unit,
+    onLogout: () -> Unit,
 ) {
     val coroutineScope = rememberCoroutineScope()
     Row(
@@ -241,7 +242,12 @@ fun TopBar(
                         modifier = Modifier.padding(horizontal = 4.dp).padding(top = 4.dp)
                             .clip(RoundedCornerShape(6.dp))
                             .background(MaterialTheme.colorScheme.error.copy(alpha = 0.25f)),
-                        onClick = {},
+                        onClick = {
+                            coroutineScope.launch {
+                                onAction(DashboardAction.OnProfileMenuToggle)
+                            }
+                            onLogout()
+                        },
                         contentPadding = PaddingValues(vertical = 4.dp, horizontal = 6.dp),
                         text = {
                             Text(

@@ -246,7 +246,7 @@ private fun OrdersScreenContent(
                                         Column(
                                             modifier = Modifier
                                                 .clip(RoundedCornerShape(6.dp))
-                                                .fillMaxSize()
+                                                .fillMaxWidth()
                                                 .border(
                                                     width = 1.5f.dp,
                                                     color = MaterialTheme.colorScheme.outline,

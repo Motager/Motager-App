@@ -54,7 +54,7 @@ import org.ninjaneers.motager.mainscreen.components.MainNavBar
 @Composable
 fun MainScreen(
     coreState: CoreState,
-    navigateToLogin: () -> Unit
+    navigateToLogin: () -> Unit,
 ) {
     MainScreenContent(
         coreState = coreState,
