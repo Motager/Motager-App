@@ -50,6 +50,7 @@ import motager.composeapp.generated.resources.bell
 import motager.composeapp.generated.resources.panels
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
+import org.ninjaneers.motager.core.data.network.AVATAR_HOST
 import org.ninjaneers.motager.core.presentation.CoreState
 import org.ninjaneers.motager.core.presentation.components.PrimaryIconButton
 import org.ninjaneers.motager.core.presentation.theme.FontFamily
@@ -133,7 +134,7 @@ fun TopBar(
                                 onAction(DashboardAction.OnProfileMenuToggle)
                             }
                         },
-                    model = "https://api.dicebear.com/7.x/initials/svg?seed=ahmed+elmalky",
+                    model = (AVATAR_HOST + coreState.user?.name),
                     contentDescription = "Logo"
                 )
                 DropdownMenu(

@@ -11,8 +11,8 @@ import org.ninjaneers.motager.core.data.network.MOTAGER_SERVICES_HOST
 import org.ninjaneers.motager.core.data.network.safeCall
 import org.ninjaneers.motager.core.domain.RemoteError
 import org.ninjaneers.motager.core.domain.Result
-import org.ninjaneers.motager.dashboard.presentation.customers.data.dto.CustomerDTO
 import org.ninjaneers.motager.dashboard.presentation.customers.data.dto.CustomerPostDTO
+import org.ninjaneers.motager.dashboard.presentation.customers.data.dto.CustomerPostResponseDTO
 import org.ninjaneers.motager.dashboard.presentation.customers.data.dto.CustomersResponseDTO
 
 class CustomersServiceImpl(
@@ -36,10 +36,10 @@ class CustomersServiceImpl(
 
     override suspend fun createCustomer(
         storeID: Int,
-        email: String
-    ): Result<CustomerDTO, RemoteError> {
+        email: String,
+    ): Result<CustomerPostResponseDTO, RemoteError> {
         val customer = CustomerPostDTO(email)
-        return safeCall<CustomerDTO> {
+        return safeCall<CustomerPostResponseDTO> {
             client.post {
                 url {
                     protocol = URLProtocol.HTTP

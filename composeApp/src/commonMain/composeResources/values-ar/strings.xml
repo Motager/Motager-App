@@ -132,6 +132,8 @@
     <string name="Create_Store">أنشئ متجر</string>
     <string name="Correct_Credentials">بيانات التسجيل الخاصة بك صحيحة، وهذا البريد الإلكتروني موجود بالفعل، ما عليك سوى إنشاء متجر على موقع الويب للوصول إلى لوحة التحكم الخاصة بك</string>
     <string name="Main_image">اختر الصورة الأولي لتكون الصورة الاساسية للمنتج</string>
+    <string name="Add_Customer">أضف عميل</string>
+    <string name="Add_New_Customer">أضف عميل جديد إالي متجرك</string>
 
 
 </resources>

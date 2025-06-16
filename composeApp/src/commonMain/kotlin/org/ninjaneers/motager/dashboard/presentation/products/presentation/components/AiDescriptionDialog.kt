@@ -51,7 +51,6 @@ import com.mohamedrejeb.calf.picker.rememberFilePickerLauncher
 import kotlinx.coroutines.launch
 import motager.composeapp.generated.resources.AI_description
 import motager.composeapp.generated.resources.AI_information
-import motager.composeapp.generated.resources.Apple
 import motager.composeapp.generated.resources.Brand_name
 import motager.composeapp.generated.resources.Choose_images
 import motager.composeapp.generated.resources.Click_to_add_images
@@ -154,13 +153,6 @@ fun AiDescriptionDialog(
                             value = state.brandName,
                             onValueChange = {
                                 onAction(AddProductAction.OnBrandNameChange(it))
-                            },
-                            placeholder = {
-                                Text(
-                                    text = stringResource(Res.string.Apple),
-                                    fontSize = 14.sp,
-                                    color = MaterialTheme.colorScheme.surfaceVariant
-                                )
                             },
                             keyboardOptions = KeyboardOptions(
                                 keyboardType = KeyboardType.Text,

@@ -50,6 +50,7 @@ import org.ninjaneers.motager.dashboard.presentation.components.TableActionCell
 import org.ninjaneers.motager.dashboard.presentation.components.TableCell
 import org.ninjaneers.motager.dashboard.presentation.components.TableHeader
 import org.ninjaneers.motager.dashboard.presentation.components.TableRow
+import org.ninjaneers.motager.dashboard.presentation.customers.presentation.components.CustomerDialog
 
 @Composable
 fun CustomersScreen(
@@ -71,6 +72,13 @@ private fun CustomerScreenContent(
     coreState: CoreState,
     onAction: (CustomerAction) -> Unit
 ) {
+    if (state.isCustomerDialogVisible) {
+        CustomerDialog(
+            coreState = coreState,
+            state = state,
+            onAction = onAction
+        )
+    }
     LaunchedEffect(Unit) {
         onAction(CustomerAction.OnCustomersGet(coreState.store.id))
     }
@@ -124,7 +132,9 @@ private fun CustomerScreenContent(
                         modifier = Modifier
                             .height(42.dp)
                             .wrapContentWidth(),
-                        onClick = {},
+                        onClick = {
+                            onAction(CustomerAction.OnCustomerDialogToggleVisibility)
+                        },
                         contentPadding = PaddingValues(
                             horizontal = 16.dp,
                             vertical = 8.dp
@@ -261,7 +271,7 @@ private fun CustomerScreenContent(
                                 }
                                 Pagination(
                                     language = coreState.language,
-                                    resultsCount = state.customersCount
+                                    resultsCount = state.customers.size
                                 )
                             }
                         }
