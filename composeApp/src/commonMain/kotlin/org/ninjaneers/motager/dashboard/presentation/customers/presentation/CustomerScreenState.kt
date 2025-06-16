@@ -23,4 +23,5 @@ data class CustomerScreenState(
     val isCustomerDialogVisible: Boolean = false,
     val isAddCustomerLoading: Boolean = false,
     val isAddCustomerError: UiText? = null,
+    val filteredCustomers: List<Customer> = customers,
 )

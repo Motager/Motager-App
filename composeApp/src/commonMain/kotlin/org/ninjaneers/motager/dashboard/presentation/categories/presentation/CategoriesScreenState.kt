@@ -19,5 +19,11 @@ data class CategoriesScreenState(
         Res.string.Description,
         Res.string.Actions
     ),
-    val isDataExportationMenuExpanded: Boolean = false
+    val isDataExportationMenuExpanded: Boolean = false,
+    val name: String = "",
+    val description: String = "",
+    val isAddCategoryLoading: Boolean = false,
+    val isAddCategoryError: UiText? = null,
+    val isCategoryDialogVisible: Boolean = false,
+    val filteredCategories: List<Category> = categories,
 )

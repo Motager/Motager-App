@@ -134,6 +134,8 @@
     <string name="Main_image">اختر الصورة الأولي لتكون الصورة الاساسية للمنتج</string>
     <string name="Add_Customer">أضف عميل</string>
     <string name="Add_New_Customer">أضف عميل جديد إالي متجرك</string>
+    <string name="Add_Category">أضف فئة منتجات</string>
+    <string name="Add_New_Category">أضف فئة منتجات جديده إالي متجرك</string>
 
 
 </resources>
