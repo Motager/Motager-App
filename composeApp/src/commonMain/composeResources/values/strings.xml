@@ -135,5 +135,8 @@
     <string name="Add_New_Customer">Add new customer to your store</string>
     <string name="Add_Category">Add Category</string>
     <string name="Add_New_Category">Add new category to your store</string>
+    <string name="Try_Again">Try Again</string>
+    <string name="Empty">Empty till now</string>
+
 
 </resources>

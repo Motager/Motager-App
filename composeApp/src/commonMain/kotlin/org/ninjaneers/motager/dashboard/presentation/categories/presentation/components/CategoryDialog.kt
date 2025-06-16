@@ -18,6 +18,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusDirection
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
@@ -27,7 +29,6 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import motager.composeapp.generated.resources.Add_Category
-import motager.composeapp.generated.resources.Add_Customer
 import motager.composeapp.generated.resources.Add_New_Category
 import motager.composeapp.generated.resources.Description
 import motager.composeapp.generated.resources.Name
@@ -46,6 +47,7 @@ fun CategoryDialog(
     state: CategoriesScreenState,
     onAction: (CategoriesAction) -> Unit,
 ) {
+    val focusRequestManager = LocalFocusManager.current
     Dialog(
         onDismissRequest = {
             onAction(CategoriesAction.OnCategoryDialogToggleVisibility)
@@ -118,10 +120,12 @@ fun CategoryDialog(
                             },
                             keyboardOptions = KeyboardOptions(
                                 keyboardType = KeyboardType.Text,
-                                imeAction = ImeAction.Done
+                                imeAction = ImeAction.Next
                             ),
                             keyboardActions = KeyboardActions(
-                                onDone = {}
+                                onNext = {
+                                    focusRequestManager.moveFocus(FocusDirection.Down)
+                                }
                             )
                         )
                         Text(
@@ -147,7 +151,15 @@ fun CategoryDialog(
                                 imeAction = ImeAction.Done
                             ),
                             keyboardActions = KeyboardActions(
-                                onDone = {}
+                                onDone = {
+                                    onAction(
+                                        CategoriesAction.OnCategoryAdd(
+                                            coreState.store.id,
+                                            state.name,
+                                            state.description
+                                        )
+                                    )
+                                }
                             )
                         )
                         Row(
@@ -168,9 +180,10 @@ fun CategoryDialog(
                                     )
                                 },
                                 shape = RoundedCornerShape(6.dp),
+                                enabled = state.name.isNotEmpty() && state.description.isNotEmpty()
                             ) {
                                 Text(
-                                    text = stringResource(Res.string.Add_Customer),
+                                    text = stringResource(Res.string.Add_Category),
                                     fontFamily = FontFamily(
                                         language = coreState.language,
                                         weight = FontWeight.Normal

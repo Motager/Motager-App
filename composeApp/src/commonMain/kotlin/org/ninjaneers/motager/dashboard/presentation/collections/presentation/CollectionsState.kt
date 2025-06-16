@@ -10,7 +10,7 @@ import org.ninjaneers.motager.core.domain.UiText
 import org.ninjaneers.motager.dashboard.presentation.collections.domain.Collection
 
 data class CollectionsState(
-    val isLoading: Boolean = false,
+    val isLoading: Boolean = true,
     val isError: UiText? = null,
     val searchQuery: String = "",
     val searchLimit: Int = 10,
@@ -20,5 +20,5 @@ data class CollectionsState(
         Res.string.Description,
         Res.string.Products,
         Res.string.Actions,
-    )
+    ),
 )

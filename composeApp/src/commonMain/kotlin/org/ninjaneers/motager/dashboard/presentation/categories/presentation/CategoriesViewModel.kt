@@ -54,6 +54,8 @@ class CategoriesViewModel(
                 .onSuccess { category ->
                     _state.update {
                         it.copy(
+                            name = "",
+                            description = "",
                             isAddCategoryLoading = false,
                             categories = it.categories.toMutableList().apply { add(category) },
                             filteredCategories = it.filteredCategories.toMutableList()
@@ -64,7 +66,11 @@ class CategoriesViewModel(
                 .onError { error ->
                     _state.update {
                         it.copy(
+                            name = "",
+                            description = "",
                             isAddCategoryLoading = false,
+                            categories = emptyList(),
+                            filteredCategories = emptyList(),
                             isAddCategoryError = error.toUiText()
                         )
                     }

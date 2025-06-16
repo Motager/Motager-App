@@ -14,7 +14,7 @@ import org.ninjaneers.motager.core.domain.UiText
 import org.ninjaneers.motager.dashboard.presentation.orders.domain.Order
 
 data class OrdersScreenState(
-    val isLoading: Boolean = false,
+    val isLoading: Boolean = true,
     val isError: UiText? = null,
     val searchQuery: String = "",
     val searchLimit: Int = 10,
@@ -28,5 +28,5 @@ data class OrdersScreenState(
         Res.string.Shipping_Method,
         Res.string.Status,
         Res.string.Actions,
-    )
+    ),
 )

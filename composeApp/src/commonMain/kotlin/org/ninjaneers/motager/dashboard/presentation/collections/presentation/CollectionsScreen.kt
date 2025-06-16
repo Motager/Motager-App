@@ -1,12 +1,14 @@
 package org.ninjaneers.motager.dashboard.presentation.collections.presentation
 
 import androidx.compose.animation.AnimatedContent
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -33,8 +35,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import motager.composeapp.generated.resources.Collections
 import motager.composeapp.generated.resources.Create
+import motager.composeapp.generated.resources.Empty
 import motager.composeapp.generated.resources.Res
 import motager.composeapp.generated.resources.Search
+import motager.composeapp.generated.resources.Try_Again
+import motager.composeapp.generated.resources.empty_cart
+import motager.composeapp.generated.resources.error
 import motager.composeapp.generated.resources.grid_plus
 import motager.composeapp.generated.resources.hellipsis
 import motager.composeapp.generated.resources.switch
@@ -45,7 +51,6 @@ import org.ninjaneers.motager.core.presentation.components.PrimaryButton
 import org.ninjaneers.motager.core.presentation.components.PrimaryIconButton
 import org.ninjaneers.motager.core.presentation.components.PrimaryTextField
 import org.ninjaneers.motager.core.presentation.theme.FontFamily
-import org.ninjaneers.motager.dashboard.presentation.components.Pagination
 import org.ninjaneers.motager.dashboard.presentation.components.Table
 import org.ninjaneers.motager.dashboard.presentation.components.TableActionCell
 import org.ninjaneers.motager.dashboard.presentation.components.TableCell
@@ -69,7 +74,7 @@ fun CollectionsScreen(
 private fun CollectionsScreenContent(
     state: CollectionsState,
     coreState: CoreState,
-    onAction: (CollectionsAction) -> Unit
+    onAction: (CollectionsAction) -> Unit,
 ) {
     LaunchedEffect(Unit) {
         onAction(CollectionsAction.OnCollectionsGet(coreState.store.id))
@@ -164,107 +169,164 @@ private fun CollectionsScreenContent(
             targetState = state.isLoading
         ) { isLoading ->
             when (isLoading) {
-                (false && state.isError == null) -> {
+                false -> {
                     Column(
                         modifier = Modifier.fillMaxWidth(),
                         verticalArrangement = Arrangement.spacedBy(8.dp),
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
-                        Row(
-                            modifier = Modifier
-                                .height(40.dp)
-                                .fillMaxWidth(),
-                            verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.spacedBy(8.dp)
-                        ) {
-                            PrimaryTextField(
-                                value = "",
-                                onValueChange = {},
-                                modifier = Modifier
-                                    .fillMaxHeight()
-                                    .weight(1f),
-                                placeholder = {
-                                    Text(
-                                        modifier = Modifier.padding(horizontal = 2.dp),
-                                        text = stringResource(Res.string.Search),
-                                        fontFamily = FontFamily(
-                                            weight = FontWeight.Normal,
-                                            language = coreState.language
-                                        ),
-                                        color = MaterialTheme.colorScheme.surfaceVariant,
-                                        textAlign = TextAlign.Start,
-                                        fontSize = 14.sp
+                        if (state.isError == null) {
+                            if (state.collections.isNotEmpty()) {
+                                Row(
+                                    modifier = Modifier
+                                        .height(40.dp)
+                                        .fillMaxWidth(),
+                                    verticalAlignment = Alignment.CenterVertically,
+                                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                                ) {
+                                    PrimaryTextField(
+                                        value = "",
+                                        onValueChange = {},
+                                        modifier = Modifier
+                                            .fillMaxHeight()
+                                            .weight(1f),
+                                        placeholder = {
+                                            Text(
+                                                modifier = Modifier.padding(horizontal = 2.dp),
+                                                text = stringResource(Res.string.Search),
+                                                fontFamily = FontFamily(
+                                                    weight = FontWeight.Normal,
+                                                    language = coreState.language
+                                                ),
+                                                color = MaterialTheme.colorScheme.surfaceVariant,
+                                                textAlign = TextAlign.Start,
+                                                fontSize = 14.sp
+                                            )
+                                        }
+
                                     )
-                                }
-                            )
-                            Row(
-                                verticalAlignment = Alignment.CenterVertically,
-                                horizontalArrangement = Arrangement.spacedBy(4.dp)
-                            ) {
-                                PrimaryTextField(
-                                    value = "",
-                                    onValueChange = {},
-                                    modifier = Modifier.size(40.dp),
-                                    placeholder = {
-                                        Text(
-                                            text = "10",
-                                            fontFamily = FontFamily(
-                                                weight = FontWeight.Normal,
-                                                language = coreState.language
+                                    Row(
+                                        verticalAlignment = Alignment.CenterVertically,
+                                        horizontalArrangement = Arrangement.spacedBy(4.dp)
+                                    ) {
+                                        PrimaryTextField(
+                                            value = "",
+                                            onValueChange = {},
+                                            modifier = Modifier.size(40.dp),
+                                            placeholder = {
+                                                Text(
+                                                    text = "10",
+                                                    fontFamily = FontFamily(
+                                                        weight = FontWeight.Normal,
+                                                        language = coreState.language
+                                                    ),
+                                                    color = MaterialTheme.colorScheme.surfaceVariant,
+                                                    textAlign = TextAlign.Start,
+                                                    fontSize = 14.sp
+                                                )
+                                            }
+                                        )
+                                        PrimaryIconButton(
+                                            onClick = {},
+                                            painter = painterResource(Res.drawable.switch),
+                                            iconTint = MaterialTheme.colorScheme.onBackground,
+                                            colors = ButtonDefaults.buttonColors(
+                                                containerColor = MaterialTheme.colorScheme.background,
+                                                contentColor = MaterialTheme.colorScheme.surfaceContainerLowest
                                             ),
-                                            color = MaterialTheme.colorScheme.surfaceVariant,
-                                            textAlign = TextAlign.Start,
-                                            fontSize = 14.sp
+                                            language = coreState.language
                                         )
                                     }
-                                )
-                                PrimaryIconButton(
-                                    onClick = {},
-                                    painter = painterResource(Res.drawable.switch),
-                                    iconTint = MaterialTheme.colorScheme.onBackground,
-                                    colors = ButtonDefaults.buttonColors(
-                                        containerColor = MaterialTheme.colorScheme.background,
-                                        contentColor = MaterialTheme.colorScheme.surfaceContainerLowest
-                                    ),
-                                    language = coreState.language
-                                )
-                            }
-                        }
-                        Column(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .weight(1f),
-                            horizontalAlignment = Alignment.CenterHorizontally,
-                            verticalArrangement = Arrangement.SpaceBetween
-                        ) {
-                            Column(
-                                modifier = Modifier
-                                    .clip(RoundedCornerShape(6.dp))
-                                    .weight(1f)
-                                    .border(
-                                        width = 1.5f.dp,
-                                        color = MaterialTheme.colorScheme.outline,
-                                        shape = RoundedCornerShape(6.dp)
-                                    )
-                            ) {
-                                Table(
-                                    items = state.collections,
-                                    header = {
-                                        TableHeader(state.tableHeaders)
-                                    },
-                                ) { collection ->
-                                    TableRow {
-                                        TableCell(collection.name)
-                                        TableCell(collection.description)
-                                        TableCell(collection.productsNumber.toString())
-                                        TableActionCell()
+                                }
+                                Column(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .weight(1f),
+                                    horizontalAlignment = Alignment.CenterHorizontally,
+                                    verticalArrangement = Arrangement.SpaceBetween
+                                ) {
+                                    Column(
+                                        modifier = Modifier
+                                            .clip(RoundedCornerShape(6.dp))
+                                            .fillMaxSize()
+                                            .border(
+                                                width = 1.5f.dp,
+                                                color = MaterialTheme.colorScheme.outline,
+                                                shape = RoundedCornerShape(6.dp)
+                                            )
+                                    ) {
+                                        Table(
+                                            items = state.collections,
+                                            header = {
+                                                TableHeader(state.tableHeaders)
+                                            },
+                                        ) { collection ->
+                                            TableRow {
+                                                TableCell(collection.name)
+                                                TableCell(collection.description)
+                                                TableCell(collection.productsNumber.toString())
+                                                TableActionCell()
+                                            }
+                                        }
                                     }
                                 }
+                            } else {
+                                Column(
+                                    modifier = Modifier.fillMaxSize(),
+                                    horizontalAlignment = Alignment.CenterHorizontally,
+                                    verticalArrangement = Arrangement.Center
+                                ) {
+                                    Image(
+                                        modifier = Modifier.fillMaxWidth(0.9f).aspectRatio(1f)
+                                            .padding(horizontal = 12.dp),
+                                        painter = painterResource(Res.drawable.empty_cart),
+                                        contentDescription = "Empty"
+                                    )
+                                    Text(
+                                        text = stringResource(Res.string.Empty),
+                                        fontSize = 20.sp,
+                                        color = MaterialTheme.colorScheme.onBackground,
+                                        fontFamily = FontFamily(
+                                            weight = FontWeight.Medium,
+                                            language = coreState.language
+                                        )
+                                    )
+                                }
                             }
-                            Pagination(
-                                language = coreState.language,
-                                resultsCount = state.collections.size
+                        } else {
+                            Image(
+                                modifier = Modifier.fillMaxWidth().aspectRatio(1f)
+                                    .padding(horizontal = 12.dp),
+                                painter = painterResource(Res.drawable.error),
+                                contentDescription = "Error"
                             )
+                            Text(
+                                modifier = Modifier.padding(bottom = 8.dp),
+                                text = state.isError.asString(),
+                                color = MaterialTheme.colorScheme.onBackground,
+                                fontSize = 20.sp,
+                                fontFamily = FontFamily(
+                                    weight = FontWeight.Medium,
+                                    language = coreState.language
+                                ),
+                                textAlign = TextAlign.Center
+                            )
+                            PrimaryButton(
+                                onClick = {
+                                    onAction(CollectionsAction.OnCollectionsGet(coreState.store.id))
+                                },
+                                shape = RoundedCornerShape(6.dp)
+                            ) {
+                                Text(
+                                    text = stringResource(Res.string.Try_Again),
+                                    fontSize = 18.sp,
+                                    color = MaterialTheme.colorScheme.onPrimary,
+                                    fontFamily = FontFamily(
+                                        weight = FontWeight.Medium,
+                                        language = coreState.language
+                                    )
+                                )
+                            }
                         }
                     }
                 }
@@ -277,14 +339,8 @@ private fun CollectionsScreenContent(
                         verticalArrangement = Arrangement.Center,
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
-                        CircularProgressIndicator(
-                            modifier = Modifier.size(60.dp),
-                            trackColor = MaterialTheme.colorScheme.primary
-                        )
+                        CircularProgressIndicator()
                     }
-                }
-                else -> {
-
                 }
             }
         }

@@ -12,7 +12,7 @@ import org.ninjaneers.motager.core.domain.UiText
 import org.ninjaneers.motager.dashboard.presentation.products.domain.Product
 
 data class ProductsState(
-    val isLoading: Boolean = false,
+    val isLoading: Boolean = true,
     val isError: UiText? = null,
     val searchQuery: String = "",
     val searchLimit: Int = 10,
