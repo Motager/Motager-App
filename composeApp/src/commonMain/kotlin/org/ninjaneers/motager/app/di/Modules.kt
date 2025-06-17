@@ -14,7 +14,6 @@ import org.ninjaneers.motager.core.domain.AppSettingsRepository
 import org.ninjaneers.motager.core.domain.SessionRepository
 import org.ninjaneers.motager.core.presentation.CoreViewModel
 import org.ninjaneers.motager.dashboard.presentation.DashboardViewModel
-import org.ninjaneers.motager.dashboard.presentation.analytics.presentation.AnalyticsViewModel
 import org.ninjaneers.motager.dashboard.presentation.categories.data.remote.CategoriesService
 import org.ninjaneers.motager.dashboard.presentation.categories.data.remote.CategoriesServiceImpl
 import org.ninjaneers.motager.dashboard.presentation.categories.data.repository.CategoriesRepositoryImpl
@@ -43,7 +42,6 @@ import org.ninjaneers.motager.dashboard.presentation.products.data.repository.Pr
 import org.ninjaneers.motager.dashboard.presentation.products.domain.ProductsRepository
 import org.ninjaneers.motager.dashboard.presentation.products.presentation.ProductsViewModel
 import org.ninjaneers.motager.dashboard.presentation.products.presentation.addproduct.AddProductViewModel
-import org.ninjaneers.motager.dashboard.presentation.settings.presentations.SettingsViewModel
 import org.ninjaneers.motager.login.data.remote.AuthenticationService
 import org.ninjaneers.motager.login.data.remote.AuthenticationServiceImpl
 import org.ninjaneers.motager.login.data.repository.AuthenticationRepositoryImpl
@@ -64,9 +62,7 @@ val sharedModule = module {
     viewModelOf(::CollectionsViewModel)
     viewModelOf(::CategoriesViewModel)
     viewModelOf(::CustomersViewModel)
-    viewModelOf(::AnalyticsViewModel)
     viewModelOf(::DiscountsViewModel)
-    viewModelOf(::SettingsViewModel)
     viewModelOf(::AddProductViewModel)
 
 //    Repositories

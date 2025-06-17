@@ -21,6 +21,4 @@ sealed interface DashboardContent {
 
     data object Discounts : DashboardContent
 
-    data object Settings : DashboardContent
-
 }

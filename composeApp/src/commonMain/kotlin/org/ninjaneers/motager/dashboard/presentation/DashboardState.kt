@@ -11,7 +11,6 @@ import motager.composeapp.generated.resources.Home
 import motager.composeapp.generated.resources.Orders
 import motager.composeapp.generated.resources.Products
 import motager.composeapp.generated.resources.Res
-import motager.composeapp.generated.resources.Settings
 import motager.composeapp.generated.resources.boxes
 import motager.composeapp.generated.resources.chart
 import motager.composeapp.generated.resources.customers
@@ -20,7 +19,6 @@ import motager.composeapp.generated.resources.grid_plus
 import motager.composeapp.generated.resources.home
 import motager.composeapp.generated.resources.orders
 import motager.composeapp.generated.resources.products
-import motager.composeapp.generated.resources.settings
 import org.ninjaneers.motager.dashboard.domain.DashboardContent
 import org.ninjaneers.motager.dashboard.domain.NavDrawerItem
 
@@ -66,11 +64,6 @@ data class DashboardState(
             label = Res.string.Discounts,
             icon = Res.drawable.discounts,
             content = DashboardContent.Discounts
-        ),
-        NavDrawerItem(
-            label = Res.string.Settings,
-            icon = Res.drawable.settings,
-            content = DashboardContent.Settings
         )
     ),
     val content: DashboardContent = DashboardContent.Home,

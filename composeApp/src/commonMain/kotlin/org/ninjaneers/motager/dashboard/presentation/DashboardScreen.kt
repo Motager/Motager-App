@@ -44,7 +44,6 @@ import org.ninjaneers.motager.dashboard.presentation.products.presentation.Produ
 import org.ninjaneers.motager.dashboard.presentation.products.presentation.ProductsViewModel
 import org.ninjaneers.motager.dashboard.presentation.products.presentation.addproduct.AddProductScreen
 import org.ninjaneers.motager.dashboard.presentation.products.presentation.addproduct.AddProductViewModel
-import org.ninjaneers.motager.dashboard.presentation.settings.presentations.SettingsScreen
 
 @Composable
 fun DashboardScreen(
@@ -194,11 +193,6 @@ private fun DashboardScreenContent(
                             )
                         }
 
-                        is DashboardContent.Settings -> {
-                            SettingsScreen(
-                                coreState = coreState,
-                            )
-                        }
 
                         DashboardContent.AddProduct -> {
                             val viewModel = koinViewModel<AddProductViewModel>()
