@@ -45,7 +45,6 @@ import motager.composeapp.generated.resources.Help
 import motager.composeapp.generated.resources.Logout
 import motager.composeapp.generated.resources.Profile
 import motager.composeapp.generated.resources.Res
-import motager.composeapp.generated.resources.User
 import motager.composeapp.generated.resources.bell
 import motager.composeapp.generated.resources.panels
 import org.jetbrains.compose.resources.painterResource
@@ -164,15 +163,17 @@ fun TopBar(
                                 horizontalAlignment = Alignment.Start,
                                 verticalArrangement = Arrangement.spacedBy(4.dp)
                             ) {
-                                Text(
-                                    text = stringResource(Res.string.User),
-                                    fontSize = 16.sp,
-                                    color = MaterialTheme.colorScheme.inverseOnSurface,
-                                    fontFamily = FontFamily(
-                                        language = coreState.language,
-                                        weight = FontWeight.Medium
+                                coreState.user?.let {
+                                    Text(
+                                        text = it.name,
+                                        fontSize = 16.sp,
+                                        color = MaterialTheme.colorScheme.inverseOnSurface,
+                                        fontFamily = FontFamily(
+                                            language = coreState.language,
+                                            weight = FontWeight.Medium
+                                        )
                                     )
-                                )
+                                }
                                 coreState.user?.let { user ->
                                     Text(
                                         text = user.email,
