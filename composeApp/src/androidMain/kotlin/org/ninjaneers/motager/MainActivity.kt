@@ -10,12 +10,8 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        try {
-            setContent {
-                App()
-            }
-        } catch (e: Exception) {
-
+        setContent {
+            App()
         }
     }
 }

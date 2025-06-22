@@ -175,10 +175,24 @@ fun Step1(
                 onValueChange = {
                     onAction(AddProductAction.OnProductNameChange(it))
                 },
+                isError = state.isNameValid != null,
+                supportingText = {
+                    state.isNameValid?.let { errorText ->
+                        Text(
+                            text = errorText.asString(),
+                            fontSize = 12.sp,
+                            fontFamily = FontFamily(
+                                weight = FontWeight.Normal,
+                                language = coreState.language
+                            ),
+                            color = MaterialTheme.colorScheme.error
+                        )
+                    }
+                },
                 placeholder = {
                     Text(
                         text = stringResource(Res.string.Product_name),
-                        fontSize = 16.sp,
+                        fontSize = 14.sp,
                         fontFamily = FontFamily(
                             weight = FontWeight.Normal,
                             language = coreState.language
@@ -231,6 +245,20 @@ fun Step1(
                         color = MaterialTheme.colorScheme.surfaceVariant
                     )
                 },
+                isError = state.isDescriptionValid != null,
+                supportingText = {
+                    state.isDescriptionValid?.let { errorText ->
+                        Text(
+                            text = errorText.asString(),
+                            fontSize = 12.sp,
+                            fontFamily = FontFamily(
+                                weight = FontWeight.Normal,
+                                language = coreState.language
+                            ),
+                            color = MaterialTheme.colorScheme.error
+                        )
+                    }
+                },
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Text,
                     imeAction = ImeAction.Next
@@ -266,7 +294,7 @@ fun Step1(
                     .border(
                         width = 0.8f.dp,
                         shape = RoundedCornerShape(8.dp),
-                        color = (MaterialTheme.colorScheme.outline)
+                        color = if (state.isImagesValid != null) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.outline
                     )
                     .background(MaterialTheme.colorScheme.background),
                 contentAlignment = Alignment.Center
@@ -281,7 +309,7 @@ fun Step1(
                             modifier = Modifier.padding(bottom = 8.dp),
                             imageVector = Lucide.Image,
                             contentDescription = "Image",
-                            tint = MaterialTheme.colorScheme.onTertiary
+                            tint = if (state.isImagesValid != null) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.onTertiary
                         )
                         Text(
                             text = stringResource(Res.string.No_Images),
@@ -290,7 +318,7 @@ fun Step1(
                                 weight = FontWeight.Normal,
                                 language = coreState.language
                             ),
-                            color = MaterialTheme.colorScheme.onSurface
+                            color = if (state.isImagesValid != null) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.onSurface
                         )
                     } else {
                         LazyHorizontalGrid(
@@ -373,7 +401,7 @@ fun Step1(
                     contentPadding = PaddingValues(horizontal = 10.dp),
                     border = BorderStroke(
                         width = 0.8f.dp,
-                        color = MaterialTheme.colorScheme.outline
+                        color = if (state.isCategoryValid != null) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.outline
                     )
                 ) {
                     Row(
@@ -451,6 +479,20 @@ fun Step1(
                 value = state.product.startPrice,
                 onValueChange = {
                     onAction(AddProductAction.OnStartPriceChange(it))
+                },
+                isError = state.isStartingPriceValid != null,
+                supportingText = {
+                    state.isStartingPriceValid?.let { errorText ->
+                        Text(
+                            text = errorText.asString(),
+                            fontSize = 12.sp,
+                            fontFamily = FontFamily(
+                                weight = FontWeight.Normal,
+                                language = coreState.language
+                            ),
+                            color = MaterialTheme.colorScheme.error
+                        )
+                    }
                 },
                 placeholder = {
                     Text(

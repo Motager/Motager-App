@@ -38,4 +38,16 @@ data class AddProductState(
             Res.string.SKUs,
             Res.string.Review
         ),
+    val isNameValid: UiText? = null,
+    val isDescriptionValid: UiText? = null,
+    val isImagesValid: UiText? = null,
+    val isCategoryValid: UiText? = null,
+    val isStartingPriceValid: UiText? = null,
+    val isStockValid: UiText? = null,
+    val isPriceValid: UiText? = null,
+    val isComparePriceValid: UiText? = null,
+    val isCostPerItemValid: UiText? = null,
+    val isStep1Valid: Boolean = false,
+    val isStep2Valid: Boolean = false,
+    val isStep3Valid: Boolean = false,
 )

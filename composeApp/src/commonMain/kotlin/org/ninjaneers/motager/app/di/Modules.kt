@@ -39,6 +39,7 @@ import org.ninjaneers.motager.dashboard.presentation.orders.presentation.OrdersV
 import org.ninjaneers.motager.dashboard.presentation.products.data.remote.ProductServiceImpl
 import org.ninjaneers.motager.dashboard.presentation.products.data.remote.ProductsService
 import org.ninjaneers.motager.dashboard.presentation.products.data.repository.ProductsRepositoryImpl
+import org.ninjaneers.motager.dashboard.presentation.products.domain.ProductDataValidator
 import org.ninjaneers.motager.dashboard.presentation.products.domain.ProductsRepository
 import org.ninjaneers.motager.dashboard.presentation.products.presentation.ProductsViewModel
 import org.ninjaneers.motager.dashboard.presentation.products.presentation.addproduct.AddProductViewModel
@@ -155,5 +156,6 @@ val sharedModule = module {
     }.bind<OrdersService>()
 
     singleOf(::UserDataValidator)
+    singleOf(::ProductDataValidator)
 
 }

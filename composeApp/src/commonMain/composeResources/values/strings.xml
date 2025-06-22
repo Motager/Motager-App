@@ -138,6 +138,15 @@
     <string name="Try_Again">Try Again</string>
     <string name="Empty">Empty till now</string>
     <string name="Coming_Soon">Coming Soon</string>
-
+    <string name="Product_name_empty">Name can't be empty</string>
+    <string name="Product_description_empty">Description can't be empty</string>
+    <string name="Product_price_empty">Price can't be empty</string>
+    <string name="Product_price_negative">Price can't be negative</string>
+    <string name="Product_price_not_number">Price isn't a number</string>
+    <string name="Product_images_empty">No images selected</string>
+    <string name="Product_category_empty">No category selected</string>
+    <string name="Product_stock_empty">Stock can't be empty</string>
+    <string name="Product_stock_not_number">Stock isn't a number</string>
+    <string name="Product_stock_negative">Stock can't be negative</string>
 
 </resources>

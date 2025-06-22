@@ -22,6 +22,7 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.composables.icons.lucide.Bot
@@ -83,196 +84,286 @@ fun Step3(
                 )
             }
         }
-        Column(
-            modifier = Modifier
-                .fillMaxWidth(),
-            horizontalAlignment = Alignment.Start,
-            verticalArrangement = Arrangement.spacedBy(8.dp)
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(6.dp)
         ) {
-            Text(
-                text = stringResource(Res.string.Stock),
-                fontSize = 14.sp,
-                fontFamily = FontFamily(
-                    weight = FontWeight.Medium,
-                    language = coreState.language
-                ),
-                color = MaterialTheme.colorScheme.onSurface
-            )
-            PrimaryTextField(
-                modifier = Modifier.fillMaxWidth(),
-                value = state.product.stock,
-                onValueChange = {
-                    onAction(AddProductAction.OnProductStockChange(it))
-                },
-                keyboardOptions = KeyboardOptions(
-                    keyboardType = KeyboardType.Number,
-                    imeAction = ImeAction.Next
-                ),
-                keyboardActions = KeyboardActions(
-                    onNext = {
-                        focusRequestManager.moveFocus(FocusDirection.Down)
-                    }
-                )
-            )
-        }
-        Column(
-            modifier = Modifier
-                .fillMaxWidth(),
-            horizontalAlignment = Alignment.Start,
-            verticalArrangement = Arrangement.spacedBy(8.dp)
-        ) {
-            Text(
-                text = stringResource(Res.string.Price),
-                fontSize = 14.sp,
-                fontFamily = FontFamily(
-                    weight = FontWeight.Medium,
-                    language = coreState.language
-                ),
-                color = MaterialTheme.colorScheme.onSurface
-            )
-            PrimaryTextField(
-                modifier = Modifier.fillMaxWidth(),
-                value = state.product.price,
-                onValueChange = {
-                    onAction(AddProductAction.OnProductPriceChange(it))
-                },
-                keyboardOptions = KeyboardOptions(
-                    keyboardType = KeyboardType.Number,
-                    imeAction = ImeAction.Next
-                ),
-                keyboardActions = KeyboardActions(
-                    onNext = {
-                        focusRequestManager.moveFocus(FocusDirection.Down)
-                    }
-                )
-            )
-        }
-        Column(
-            modifier = Modifier
-                .fillMaxWidth(),
-            horizontalAlignment = Alignment.Start,
-            verticalArrangement = Arrangement.spacedBy(8.dp)
-        ) {
-            Text(
-                text = stringResource(Res.string.Compare_at_price),
-                fontSize = 14.sp,
-                fontFamily = FontFamily(
-                    weight = FontWeight.Medium,
-                    language = coreState.language
-                ),
-                color = MaterialTheme.colorScheme.onSurface
-            )
-            PrimaryTextField(
+            Column(
                 modifier = Modifier
-                    .fillMaxWidth(),
-                value = state.product.compareAtPrice,
-                onValueChange = {
-                    onAction(AddProductAction.OnComparePriceChange(it))
-                },
-                keyboardOptions = KeyboardOptions(
-                    keyboardType = KeyboardType.Number,
-                    imeAction = ImeAction.Next
-                ),
-                keyboardActions = KeyboardActions(
-                    onNext = {
-                        focusRequestManager.moveFocus(FocusDirection.Down)
-                    }
+                    .weight(1f),
+                horizontalAlignment = Alignment.Start,
+                verticalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                Text(
+                    text = stringResource(Res.string.Stock),
+                    fontSize = 14.sp,
+                    fontFamily = FontFamily(
+                        weight = FontWeight.Medium,
+                        language = coreState.language
+                    ),
+                    color = MaterialTheme.colorScheme.onSurface
                 )
-            )
-        }
-        Column(
-            modifier = Modifier
-                .fillMaxWidth(),
-            horizontalAlignment = Alignment.Start,
-            verticalArrangement = Arrangement.spacedBy(8.dp)
-        ) {
-            Text(
-                text = stringResource(Res.string.Profit),
-                fontSize = 14.sp,
-                fontFamily = FontFamily(
-                    weight = FontWeight.Medium,
-                    language = coreState.language
-                ),
-                color = MaterialTheme.colorScheme.onSurface
-            )
-            PrimaryTextField(
-                modifier = Modifier
-                    .fillMaxWidth(),
-                value = state.product.profit,
-                onValueChange = {
-                    onAction(AddProductAction.OnProfitChange(it))
-                },
-                keyboardOptions = KeyboardOptions(
-                    keyboardType = KeyboardType.Number,
-                    imeAction = ImeAction.Next
-                ),
-                keyboardActions = KeyboardActions(
-                    onNext = {
-                        focusRequestManager.moveFocus(FocusDirection.Down)
-                    }
+                PrimaryTextField(
+                    modifier = Modifier.fillMaxWidth(),
+                    value = state.product.stock,
+                    onValueChange = {
+                        onAction(AddProductAction.OnProductStockChange(it))
+                    },
+                    singleLine = true,
+                    isError = state.isStockValid != null,
+                    supportingText = {
+                        state.isStockValid?.let { errorText ->
+                            Text(
+                                text = errorText.asString(),
+                                color = MaterialTheme.colorScheme.error,
+                                fontSize = 12.sp,
+                                fontFamily = FontFamily(
+                                    weight = FontWeight.Medium,
+                                    language = coreState.language
+                                ),
+                                maxLines = 1,
+                                overflow = TextOverflow.Ellipsis
+                            )
+                        }
+                    },
+                    keyboardOptions = KeyboardOptions(
+                        keyboardType = KeyboardType.Number,
+                        imeAction = ImeAction.Next
+                    ),
+                    keyboardActions = KeyboardActions(
+                        onNext = {
+                            focusRequestManager.moveFocus(FocusDirection.Down)
+                        }
+                    )
                 )
-            )
-        }
-        Column(
-            modifier = Modifier
-                .fillMaxWidth(),
-            horizontalAlignment = Alignment.Start,
-            verticalArrangement = Arrangement.spacedBy(8.dp)
-        ) {
-            Text(
-                text = stringResource(Res.string.Cost_per_item),
-                fontSize = 14.sp,
-                fontFamily = FontFamily(
-                    weight = FontWeight.Medium,
-                    language = coreState.language
-                ),
-                color = MaterialTheme.colorScheme.onSurface
-            )
-            PrimaryTextField(
+            }
+            Column(
                 modifier = Modifier
-                    .fillMaxWidth(),
-                value = state.product.costPerItem,
-                onValueChange = {
-                    onAction(AddProductAction.OnCostPerItemChange(it))
-                },
-                keyboardOptions = KeyboardOptions(
-                    keyboardType = KeyboardType.Number,
-                    imeAction = ImeAction.Next
-                ),
-                keyboardActions = KeyboardActions(
-                    onNext = {
-                        focusRequestManager.moveFocus(FocusDirection.Down)
-                    }
+                    .weight(1f),
+                horizontalAlignment = Alignment.Start,
+                verticalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                Text(
+                    text = stringResource(Res.string.Price),
+                    fontSize = 14.sp,
+                    fontFamily = FontFamily(
+                        weight = FontWeight.Medium,
+                        language = coreState.language
+                    ),
+                    color = MaterialTheme.colorScheme.onSurface
                 )
-            )
+                PrimaryTextField(
+                    modifier = Modifier.fillMaxWidth(),
+                    value = state.product.price,
+                    onValueChange = {
+                        onAction(AddProductAction.OnProductPriceChange(it))
+                    },
+                    singleLine = true,
+                    isError = state.isPriceValid != null,
+                    supportingText = {
+                        state.isPriceValid?.let { errorText ->
+                            Text(
+                                text = errorText.asString(),
+                                color = MaterialTheme.colorScheme.error,
+                                fontSize = 12.sp,
+                                fontFamily = FontFamily(
+                                    weight = FontWeight.Medium,
+                                    language = coreState.language
+                                ),
+                                maxLines = 1,
+                                overflow = TextOverflow.Ellipsis
+                            )
+                        }
+                    },
+                    keyboardOptions = KeyboardOptions(
+                        keyboardType = KeyboardType.Number,
+                        imeAction = ImeAction.Next
+                    ),
+                    keyboardActions = KeyboardActions(
+                        onNext = {
+                            focusRequestManager.moveFocus(FocusDirection.Down)
+                        }
+                    )
+                )
+            }
         }
-        Column(
-            modifier = Modifier
-                .fillMaxWidth(),
-            horizontalAlignment = Alignment.Start,
-            verticalArrangement = Arrangement.spacedBy(8.dp)
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(6.dp)
         ) {
-            Text(
-                text = stringResource(Res.string.Margin),
-                fontSize = 14.sp,
-                fontFamily = FontFamily(
-                    weight = FontWeight.Medium,
-                    language = coreState.language
-                ),
-                color = MaterialTheme.colorScheme.onSurface
-            )
-            PrimaryTextField(
+            Column(
                 modifier = Modifier
-                    .fillMaxWidth(),
-                value = state.product.margin,
-                onValueChange = {
-                    onAction(AddProductAction.OnMarginChange(it))
-                },
-                keyboardOptions = KeyboardOptions(
-                    keyboardType = KeyboardType.Number,
-                    imeAction = ImeAction.Done
-                ),
-            )
+                    .weight(1f),
+                horizontalAlignment = Alignment.Start,
+                verticalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                Text(
+                    text = stringResource(Res.string.Compare_at_price),
+                    fontSize = 14.sp,
+                    fontFamily = FontFamily(
+                        weight = FontWeight.Medium,
+                        language = coreState.language
+                    ),
+                    color = MaterialTheme.colorScheme.onSurface
+                )
+                PrimaryTextField(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    value = state.product.compareAtPrice,
+                    onValueChange = {
+                        onAction(AddProductAction.OnComparePriceChange(it))
+                    },
+                    singleLine = true,
+                    isError = state.isComparePriceValid != null,
+                    supportingText = {
+                        state.isComparePriceValid?.let { errorText ->
+                            Text(
+                                text = errorText.asString(),
+                                color = MaterialTheme.colorScheme.error,
+                                fontSize = 12.sp,
+                                fontFamily = FontFamily(
+                                    weight = FontWeight.Medium,
+                                    language = coreState.language
+                                ),
+                                maxLines = 1,
+                                overflow = TextOverflow.Ellipsis
+                            )
+                        }
+                    },
+                    keyboardOptions = KeyboardOptions(
+                        keyboardType = KeyboardType.Number,
+                        imeAction = ImeAction.Next
+                    ),
+                    keyboardActions = KeyboardActions(
+                        onNext = {
+                            focusRequestManager.moveFocus(FocusDirection.Down)
+                        }
+                    )
+                )
+            }
+            Column(
+                modifier = Modifier
+                    .weight(1f),
+                horizontalAlignment = Alignment.Start,
+                verticalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                Text(
+                    text = stringResource(Res.string.Cost_per_item),
+                    fontSize = 14.sp,
+                    fontFamily = FontFamily(
+                        weight = FontWeight.Medium,
+                        language = coreState.language
+                    ),
+                    color = MaterialTheme.colorScheme.onSurface
+                )
+                PrimaryTextField(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    value = state.product.costPerItem,
+                    onValueChange = {
+                        onAction(AddProductAction.OnCostPerItemChange(it))
+                    },
+                    singleLine = true,
+                    isError = state.isCostPerItemValid != null,
+                    supportingText = {
+                        state.isCostPerItemValid?.let { errorText ->
+                            Text(
+                                text = errorText.asString(),
+                                color = MaterialTheme.colorScheme.error,
+                                fontSize = 12.sp,
+                                fontFamily = FontFamily(
+                                    weight = FontWeight.Medium,
+                                    language = coreState.language
+                                ),
+                                maxLines = 1,
+                                overflow = TextOverflow.Ellipsis
+                            )
+                        }
+                    },
+                    keyboardOptions = KeyboardOptions(
+                        keyboardType = KeyboardType.Number,
+                        imeAction = ImeAction.Next
+                    ),
+                    keyboardActions = KeyboardActions(
+                        onNext = {
+                            focusRequestManager.moveFocus(FocusDirection.Down)
+                        }
+                    )
+                )
+            }
+        }
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(6.dp)
+        ) {
+            Column(
+                modifier = Modifier
+                    .weight(1f),
+                horizontalAlignment = Alignment.Start,
+                verticalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                Text(
+                    text = stringResource(Res.string.Profit),
+                    fontSize = 14.sp,
+                    fontFamily = FontFamily(
+                        weight = FontWeight.Medium,
+                        language = coreState.language
+                    ),
+                    color = MaterialTheme.colorScheme.onSurface
+                )
+                PrimaryTextField(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    value = state.product.profit,
+                    onValueChange = {
+                        onAction(AddProductAction.OnProfitChange(it))
+                    },
+                    singleLine = true,
+                    enabled = false,
+                    keyboardOptions = KeyboardOptions(
+                        keyboardType = KeyboardType.Number,
+                        imeAction = ImeAction.Next
+                    ),
+                    keyboardActions = KeyboardActions(
+                        onNext = {
+                            focusRequestManager.moveFocus(FocusDirection.Down)
+                        }
+                    )
+                )
+            }
+            Column(
+                modifier = Modifier
+                    .weight(1f),
+                horizontalAlignment = Alignment.Start,
+                verticalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                Text(
+                    text = stringResource(Res.string.Margin),
+                    fontSize = 14.sp,
+                    fontFamily = FontFamily(
+                        weight = FontWeight.Medium,
+                        language = coreState.language
+                    ),
+                    color = MaterialTheme.colorScheme.onSurface
+                )
+                PrimaryTextField(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    value = state.product.margin,
+                    onValueChange = {
+                        onAction(AddProductAction.OnMarginChange(it))
+                    },
+                    singleLine = true,
+                    enabled = false,
+                    keyboardOptions = KeyboardOptions(
+                        keyboardType = KeyboardType.Number,
+                        imeAction = ImeAction.Done
+                    ),
+                )
+            }
         }
     }
 }

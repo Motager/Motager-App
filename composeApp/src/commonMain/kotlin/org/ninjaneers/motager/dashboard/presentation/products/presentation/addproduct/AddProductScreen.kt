@@ -252,7 +252,7 @@ private fun AddProductScreenContent(
                                     )
                                 }
                             } else {
-                                onAction(AddProductAction.OnStepChange(state.currentStep - 1))
+                                onAction(AddProductAction.OnStepBack)
                             }
                         }
                     ) {
@@ -286,12 +286,12 @@ private fun AddProductScreenContent(
                         modifier = Modifier.animateContentSize(),
                         onClick = {
                             if (!isLastStep) {
-                                onAction(AddProductAction.OnStepChange(state.currentStep + 1))
+                                onAction(AddProductAction.OnStepChange(state.currentStep))
                             } else {
                                 onAction(AddProductAction.OnProductCreate(coreState.store.id))
                             }
                         },
-                        shape = RoundedCornerShape(6.dp)
+                        shape = RoundedCornerShape(6.dp),
                     ) {
                         Row(
                             verticalAlignment = Alignment.CenterVertically,

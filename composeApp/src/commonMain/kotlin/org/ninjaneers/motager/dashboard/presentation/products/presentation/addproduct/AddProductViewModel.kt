@@ -2,7 +2,6 @@ package org.ninjaneers.motager.dashboard.presentation.products.presentation.addp
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import co.touchlab.kermit.Logger
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -14,11 +13,13 @@ import org.ninjaneers.motager.core.domain.onSuccess
 import org.ninjaneers.motager.core.presentation.toUiText
 import org.ninjaneers.motager.dashboard.presentation.categories.domain.CategoriesRepository
 import org.ninjaneers.motager.dashboard.presentation.categories.domain.Category
+import org.ninjaneers.motager.dashboard.presentation.products.domain.ProductDataValidator
 import org.ninjaneers.motager.dashboard.presentation.products.domain.ProductsRepository
 
 class AddProductViewModel(
     private val repository: ProductsRepository,
     private val categoriesRepository: CategoriesRepository,
+    private val validator: ProductDataValidator,
 ) : ViewModel() {
     private val _state = MutableStateFlow(AddProductState())
     val state = _state.asStateFlow()
@@ -54,6 +55,15 @@ class AddProductViewModel(
             )
 
             is AddProductAction.OnProductCreate -> onProductCreate(action.storeID)
+            AddProductAction.OnStepBack -> onStepBack()
+        }
+    }
+
+    private fun onStepBack() {
+        _state.update {
+            it.copy(
+                currentStep = it.currentStep - 1,
+            )
         }
     }
 
@@ -83,6 +93,220 @@ class AddProductViewModel(
                     }
                 }
         }
+    }
+
+    private fun onStep1Validate() {
+        onNameValidate(_state.value.product.name)
+        onDescriptionValidate(_state.value.product.description)
+        onCategoryValidate(_state.value.product.category.name)
+        onStartingPriceValidate(_state.value.product.startPrice)
+        onImagesValidate(_state.value.product.imagesUrls)
+        if (
+            _state.value.isNameValid == null &&
+            _state.value.isDescriptionValid == null &&
+            _state.value.isImagesValid == null &&
+            _state.value.isCategoryValid == null &&
+            _state.value.isStartingPriceValid == null
+        ) {
+            _state.update {
+                it.copy(
+                    isStep1Valid = true
+                )
+            }
+        } else {
+            _state.update {
+                it.copy(
+                    isStep1Valid = false
+                )
+            }
+        }
+    }
+
+    private fun onStep3Validate() {
+        onStockValidate(_state.value.product.stock)
+        onPriceValidate(_state.value.product.price)
+        onComparePriceValidate(_state.value.product.compareAtPrice)
+        onCostPerItemValidate(_state.value.product.costPerItem)
+        if (
+            _state.value.isStockValid == null &&
+            _state.value.isPriceValid == null &&
+            _state.value.isComparePriceValid == null &&
+            _state.value.isCostPerItemValid == null
+        ) {
+            _state.update {
+                it.copy(
+                    isStep3Valid = true
+                )
+            }
+        } else {
+            _state.update {
+                it.copy(
+                    isStep3Valid = false
+                )
+            }
+        }
+    }
+
+    private fun onDescriptionValidate(description: String) {
+        validator.validateDescription(description)
+            .onSuccess {
+                _state.update {
+                    it.copy(
+                        isDescriptionValid = null
+                    )
+                }
+            }
+            .onError { error ->
+                _state.update {
+                    it.copy(
+                        isDescriptionValid = error.toUiText()
+                    )
+                }
+            }
+    }
+
+    private fun onNameValidate(name: String) {
+        validator.validateName(name)
+            .onSuccess {
+                _state.update {
+                    it.copy(
+                        isNameValid = null
+                    )
+                }
+            }
+            .onError { error ->
+                _state.update {
+                    it.copy(
+                        isNameValid = error.toUiText()
+                    )
+                }
+            }
+    }
+
+    private fun onStartingPriceValidate(price: String) {
+        validator.validatePrice(price)
+            .onSuccess {
+                _state.update {
+                    it.copy(
+                        isStartingPriceValid = null
+                    )
+                }
+            }
+            .onError { error ->
+                _state.update {
+                    it.copy(
+                        isStartingPriceValid = error.toUiText()
+                    )
+                }
+            }
+    }
+
+    private fun onImagesValidate(images: List<String>) {
+        validator.validateImageSelected(images)
+            .onSuccess {
+                _state.update {
+                    it.copy(
+                        isImagesValid = null
+                    )
+                }
+            }
+            .onError { error ->
+                _state.update {
+                    it.copy(
+                        isImagesValid = error.toUiText()
+                    )
+                }
+            }
+    }
+
+    private fun onCategoryValidate(category: String) {
+        validator.validateCategorySelected(category)
+            .onSuccess {
+                _state.update {
+                    it.copy(
+                        isCategoryValid = null
+                    )
+                }
+            }
+            .onError { error ->
+                _state.update {
+                    it.copy(
+                        isCategoryValid = error.toUiText()
+                    )
+                }
+            }
+    }
+
+    private fun onStockValidate(stock: String) {
+        validator.validateStock(stock)
+            .onSuccess {
+                _state.update {
+                    it.copy(
+                        isStockValid = null
+                    )
+                }
+            }
+            .onError { error ->
+                _state.update {
+                    it.copy(
+                        isStockValid = error.toUiText()
+                    )
+                }
+            }
+    }
+
+    private fun onPriceValidate(price: String) {
+        validator.validatePrice(price)
+            .onSuccess {
+                _state.update {
+                    it.copy(
+                        isPriceValid = null
+                    )
+                }
+            }
+            .onError { error ->
+                _state.update {
+                    it.copy(
+                        isPriceValid = error.toUiText()
+                    )
+                }
+            }
+    }
+
+    private fun onComparePriceValidate(price: String) {
+        validator.validatePrice(price)
+            .onSuccess {
+                _state.update {
+                    it.copy(
+                        isComparePriceValid = null
+                    )
+                }
+            }
+            .onError { error ->
+                _state.update {
+                    it.copy(
+                        isComparePriceValid = error.toUiText()
+                    )
+                }
+            }
+    }
+
+    private fun onCostPerItemValidate(cost: String) {
+        validator.validatePrice(cost)
+            .onSuccess {
+                _state.update {
+                    it.copy(
+                        isCostPerItemValid = null
+                    )
+                }
+            }
+            .onError { error ->
+                _state.update {
+                    it.copy(
+                        isCostPerItemValid = error.toUiText()
+                    )
+                }
+            }
     }
 
     private fun onProductGenerateDescription(name: String, images: List<String>) {
@@ -142,9 +366,12 @@ class AddProductViewModel(
         _state.update {
             it.copy(
                 productImages = it.productImages.toMutableList().apply { removeAt(index) },
+                product = it.product.copy(
+                    imagesUrls = it.product.imagesUrls.toMutableList().apply { removeAt(index) }
+                )
             )
         }
-
+        onImagesValidate(_state.value.product.imagesUrls)
     }
 
     private fun onAiImageDelete(index: Int) {
@@ -177,6 +404,7 @@ class AddProductViewModel(
     }
 
     private fun onProductStockChange(stock: String) {
+        onStockValidate(stock)
         _state.update {
             it.copy(
                 product = it.product.copy(
@@ -197,6 +425,7 @@ class AddProductViewModel(
     }
 
     private fun onProductPriceChange(price: String) {
+        onPriceValidate(price)
         _state.update {
             it.copy(
                 product = it.product.copy(
@@ -207,6 +436,7 @@ class AddProductViewModel(
     }
 
     private fun onComparePriceChange(price: String) {
+        onComparePriceValidate(price)
         _state.update {
             it.copy(
                 product = it.product.copy(
@@ -227,6 +457,7 @@ class AddProductViewModel(
     }
 
     private fun onCostPerItemChange(cost: String) {
+        onCostPerItemValidate(cost)
         _state.update {
             it.copy(
                 product = it.product.copy(
@@ -247,6 +478,7 @@ class AddProductViewModel(
     }
 
     private fun onStartPriceChange(price: String) {
+        onStartingPriceValidate(price)
         _state.update {
             it.copy(
                 product = it.product.copy(
@@ -257,6 +489,7 @@ class AddProductViewModel(
     }
 
     private fun onProductNameChange(name: String) {
+        onNameValidate(name)
         _state.update {
             it.copy(
                 product = it.product.copy(
@@ -267,6 +500,7 @@ class AddProductViewModel(
     }
 
     private fun onProductDescriptionChange(description: String) {
+        onDescriptionValidate(description)
         _state.update {
             it.copy(
                 product = it.product.copy(
@@ -290,7 +524,7 @@ class AddProductViewModel(
                     )
                 }
             }
-            Logger.i(tag = "ImagesURL", messageString = _state.value.product.imagesUrls.toString())
+            onImagesValidate(_state.value.product.imagesUrls)
         }
     }
 
@@ -343,6 +577,7 @@ class AddProductViewModel(
                 isCategoryExpanded = false
             )
         }
+        onCategoryValidate(_state.value.product.category.name)
     }
 
     private fun onCategoryMenuToggle() {
@@ -353,12 +588,32 @@ class AddProductViewModel(
         }
     }
 
-    private fun onStepChange(currentStep: Int) {
-        _state.update {
-            it.copy(
-                currentStep = currentStep
-            )
+    private fun onStepChange(step: Int) {
+        when (step) {
+            1 -> {
+                onStep1Validate()
+                if (_state.value.isStep1Valid)
+                    _state.update {
+                        it.copy(
+                            currentStep = step + 1
+                        )
+                    }
+            }
+
+            2 -> {
+                if (!_state.value.hasVariants) {
+                    onStep3Validate()
+                    if (_state.value.isStep3Valid) {
+                        _state.update {
+                            it.copy(
+                                currentStep = step + 1
+                            )
+                        }
+                    }
+                }
+            }
         }
+
     }
 
     private fun onVariantSwitchChange() {
