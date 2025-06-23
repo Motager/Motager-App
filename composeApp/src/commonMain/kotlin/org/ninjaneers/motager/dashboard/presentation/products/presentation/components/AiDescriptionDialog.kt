@@ -62,8 +62,8 @@ import org.ninjaneers.motager.core.domain.Language
 import org.ninjaneers.motager.core.presentation.components.PrimaryButton
 import org.ninjaneers.motager.core.presentation.components.PrimaryTextField
 import org.ninjaneers.motager.core.presentation.theme.FontFamily
-import org.ninjaneers.motager.dashboard.presentation.products.presentation.addproduct.AddProductAction
-import org.ninjaneers.motager.dashboard.presentation.products.presentation.addproduct.AddProductState
+import org.ninjaneers.motager.dashboard.presentation.products.presentation.addproduct.presentation.AddProductAction
+import org.ninjaneers.motager.dashboard.presentation.products.presentation.addproduct.presentation.AddProductState
 
 @Composable
 fun AiDescriptionDialog(

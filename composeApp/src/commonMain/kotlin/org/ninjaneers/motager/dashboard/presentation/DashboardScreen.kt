@@ -42,8 +42,8 @@ import org.ninjaneers.motager.dashboard.presentation.orders.presentation.OrdersS
 import org.ninjaneers.motager.dashboard.presentation.orders.presentation.OrdersViewModel
 import org.ninjaneers.motager.dashboard.presentation.products.presentation.ProductsScreen
 import org.ninjaneers.motager.dashboard.presentation.products.presentation.ProductsViewModel
-import org.ninjaneers.motager.dashboard.presentation.products.presentation.addproduct.AddProductScreen
-import org.ninjaneers.motager.dashboard.presentation.products.presentation.addproduct.AddProductViewModel
+import org.ninjaneers.motager.dashboard.presentation.products.presentation.addproduct.presentation.AddProductScreen
+import org.ninjaneers.motager.dashboard.presentation.products.presentation.addproduct.presentation.AddProductViewModel
 
 @Composable
 fun DashboardScreen(

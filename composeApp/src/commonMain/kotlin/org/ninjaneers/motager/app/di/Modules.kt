@@ -42,7 +42,7 @@ import org.ninjaneers.motager.dashboard.presentation.products.data.repository.Pr
 import org.ninjaneers.motager.dashboard.presentation.products.domain.ProductDataValidator
 import org.ninjaneers.motager.dashboard.presentation.products.domain.ProductsRepository
 import org.ninjaneers.motager.dashboard.presentation.products.presentation.ProductsViewModel
-import org.ninjaneers.motager.dashboard.presentation.products.presentation.addproduct.AddProductViewModel
+import org.ninjaneers.motager.dashboard.presentation.products.presentation.addproduct.presentation.AddProductViewModel
 import org.ninjaneers.motager.login.data.remote.AuthenticationService
 import org.ninjaneers.motager.login.data.remote.AuthenticationServiceImpl
 import org.ninjaneers.motager.login.data.repository.AuthenticationRepositoryImpl

@@ -67,8 +67,8 @@ import org.ninjaneers.motager.core.presentation.components.PrimarySwitch
 import org.ninjaneers.motager.core.presentation.components.PrimaryTextField
 import org.ninjaneers.motager.core.presentation.components.SecondaryButton
 import org.ninjaneers.motager.core.presentation.theme.FontFamily
-import org.ninjaneers.motager.dashboard.presentation.products.presentation.addproduct.AddProductAction
-import org.ninjaneers.motager.dashboard.presentation.products.presentation.addproduct.AddProductState
+import org.ninjaneers.motager.dashboard.presentation.products.presentation.addproduct.presentation.AddProductAction
+import org.ninjaneers.motager.dashboard.presentation.products.presentation.addproduct.presentation.AddProductState
 
 @Composable
 fun Step1(
@@ -416,13 +416,13 @@ fun Step1(
                                 weight = FontWeight.Normal,
                                 language = coreState.language
                             ),
-                            color = MaterialTheme.colorScheme.onBackground
+                            color = MaterialTheme.colorScheme.onTertiary
                         )
                         Icon(
                             modifier = Modifier.size(16.dp).rotate(animateRotation),
                             imageVector = Lucide.ChevronDown,
                             contentDescription = "Explore categories",
-                            tint = MaterialTheme.colorScheme.onSurface
+                            tint = MaterialTheme.colorScheme.onTertiary
                         )
                     }
                 }

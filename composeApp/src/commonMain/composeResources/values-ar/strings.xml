@@ -149,5 +149,8 @@
     <string name="Product_stock_empty">المخزون لا يمكن ان يكون فارغاً</string>
     <string name="Product_stock_not_number">المخزون ليس رقماً</string>
     <string name="Product_stock_negative">المخزون لا يمكن ان يكون بالسالب</string>
+    <string name="Color">لون</string>
+    <string name="Size">حجم</string>
+    <string name="Material">خامة</string>
 
 </resources>

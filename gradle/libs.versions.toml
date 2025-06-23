@@ -30,6 +30,7 @@ calf = "0.8.0"
 calf-coil = "0.5.1"
 lucide-icons = "1.0.0"
 gradle-secret = "2.0.1"
+colorpicker = "1.1.2"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
@@ -95,6 +96,8 @@ calf-coil = { module = "com.mohamedrejeb.calf:calf-file-picker-coil", version.re
 
 #Lucide Icons
 lucide-icons = { module = "com.composables:icons-lucide", version.ref = "lucide-icons" }
+
+colorpicker = { module = "com.github.skydoves:colorpicker-compose", version.ref = "colorpicker" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

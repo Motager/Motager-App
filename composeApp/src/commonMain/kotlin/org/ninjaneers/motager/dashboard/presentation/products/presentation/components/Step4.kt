@@ -47,8 +47,8 @@ import motager.composeapp.generated.resources.review_cheking
 import org.jetbrains.compose.resources.stringResource
 import org.ninjaneers.motager.core.presentation.CoreState
 import org.ninjaneers.motager.core.presentation.theme.FontFamily
-import org.ninjaneers.motager.dashboard.presentation.products.presentation.addproduct.AddProductAction
-import org.ninjaneers.motager.dashboard.presentation.products.presentation.addproduct.AddProductState
+import org.ninjaneers.motager.dashboard.presentation.products.presentation.addproduct.presentation.AddProductAction
+import org.ninjaneers.motager.dashboard.presentation.products.presentation.addproduct.presentation.AddProductState
 
 @Composable
 fun Step4(

@@ -1,4 +1,4 @@
-package org.ninjaneers.motager.dashboard.presentation.products.presentation.addproduct
+package org.ninjaneers.motager.dashboard.presentation.products.presentation.addproduct.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -15,6 +15,8 @@ import org.ninjaneers.motager.dashboard.presentation.categories.domain.Categorie
 import org.ninjaneers.motager.dashboard.presentation.categories.domain.Category
 import org.ninjaneers.motager.dashboard.presentation.products.domain.ProductDataValidator
 import org.ninjaneers.motager.dashboard.presentation.products.domain.ProductsRepository
+import org.ninjaneers.motager.dashboard.presentation.products.domain.Variant
+import org.ninjaneers.motager.dashboard.presentation.products.presentation.addproduct.domain.Variants
 
 class AddProductViewModel(
     private val repository: ProductsRepository,
@@ -53,9 +55,35 @@ class AddProductViewModel(
                 action.name,
                 action.images,
             )
-
             is AddProductAction.OnProductCreate -> onProductCreate(action.storeID)
             AddProductAction.OnStepBack -> onStepBack()
+            AddProductAction.OnVariantMenuToggle -> onVariantMenuToggle()
+            is AddProductAction.OnCurrentVariantChange -> onCurrentVariantChange(action.variant)
+            is AddProductAction.OnAddVariant -> onAddVariant(action.variant)
+        }
+    }
+
+    private fun onAddVariant(variant: Variant) {
+        _state.update {
+            it.copy(
+                variants = it.variants.toMutableList().apply { add(variant) }
+            )
+        }
+    }
+
+    private fun onCurrentVariantChange(variant: Variants) {
+        _state.update {
+            it.copy(
+                currentVariant = variant
+            )
+        }
+    }
+
+    private fun onVariantMenuToggle() {
+        _state.update {
+            it.copy(
+                isVariantsMenuExpanded = !it.isVariantsMenuExpanded
+            )
         }
     }
 

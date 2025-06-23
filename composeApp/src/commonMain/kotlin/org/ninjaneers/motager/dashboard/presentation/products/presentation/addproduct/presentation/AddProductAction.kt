@@ -1,6 +1,8 @@
-package org.ninjaneers.motager.dashboard.presentation.products.presentation.addproduct
+package org.ninjaneers.motager.dashboard.presentation.products.presentation.addproduct.presentation
 
 import org.ninjaneers.motager.dashboard.presentation.categories.domain.Category
+import org.ninjaneers.motager.dashboard.presentation.products.domain.Variant
+import org.ninjaneers.motager.dashboard.presentation.products.presentation.addproduct.domain.Variants
 
 sealed interface AddProductAction {
     data class OnStepChange(val currentStep: Int) : AddProductAction
@@ -30,5 +32,8 @@ sealed interface AddProductAction {
         AddProductAction
     data class OnProductCreate(val storeID: Int) : AddProductAction
     data object OnStepBack : AddProductAction
+    data object OnVariantMenuToggle : AddProductAction
+    data class OnCurrentVariantChange(val variant: Variants) : AddProductAction
+    data class OnAddVariant(val variant: Variant) : AddProductAction
 
 }

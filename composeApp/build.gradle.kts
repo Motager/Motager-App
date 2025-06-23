@@ -58,7 +58,7 @@ kotlin {
             implementation(libs.calf)
             implementation(libs.calf.coil)
             implementation(libs.lucide.icons)
-
+            implementation(libs.colorpicker)
             api(libs.koin.core)
             api(libs.datastore)
             api(libs.datastore.preferences)

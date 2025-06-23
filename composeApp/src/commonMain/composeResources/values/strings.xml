@@ -148,5 +148,8 @@
     <string name="Product_stock_empty">Stock can't be empty</string>
     <string name="Product_stock_not_number">Stock isn't a number</string>
     <string name="Product_stock_negative">Stock can't be negative</string>
+    <string name="Color">Color</string>
+    <string name="Size">Size</string>
+    <string name="Material">Material</string>
 
 </resources>

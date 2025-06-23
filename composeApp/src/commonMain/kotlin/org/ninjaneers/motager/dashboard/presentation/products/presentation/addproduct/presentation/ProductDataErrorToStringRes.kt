@@ -1,4 +1,4 @@
-package org.ninjaneers.motager.dashboard.presentation.products.presentation.addproduct
+package org.ninjaneers.motager.dashboard.presentation.products.presentation.addproduct.presentation
 
 import motager.composeapp.generated.resources.Product_category_empty
 import motager.composeapp.generated.resources.Product_description_empty
@@ -11,7 +11,6 @@ import motager.composeapp.generated.resources.Product_stock_empty
 import motager.composeapp.generated.resources.Product_stock_negative
 import motager.composeapp.generated.resources.Product_stock_not_number
 import motager.composeapp.generated.resources.Res
-import org.jetbrains.compose.resources.StringResource
 import org.ninjaneers.motager.core.domain.UiText
 import org.ninjaneers.motager.dashboard.presentation.products.domain.ProductDataValidator
 
