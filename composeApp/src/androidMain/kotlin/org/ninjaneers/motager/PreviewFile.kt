@@ -2,13 +2,13 @@ package org.ninjaneers.motager
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
-import org.ninjaneers.motager.Authentication.presentation.mainScreen.MainScreen
 import org.ninjaneers.motager.core.presentation.theme.MotagerTheme
 
 @Composable
-@Preview(locale = "ar")
+@Preview
 fun Preview() {
     MotagerTheme {
-        MainScreen()
+
     }
 }
+
